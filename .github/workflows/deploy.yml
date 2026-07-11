@@ -1,0 +1,45 @@
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# ponytail: single deploy workflow doubles as project bootstrap + domain attach.
+# Split out once real render CI (entry rendering, bot) lands in planning.
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    concurrency: deploy-pages
+    steps:
+      - uses: actions/checkout@v4
+
+      # Idempotent: fails harmlessly if the project already exists.
+      - name: Ensure Pages project
+        continue-on-error: true
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages project create ocx-index --production-branch=main
+
+      - name: Deploy public/ to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy public --project-name=ocx-index --branch=main
+
+      # Same-account zone → attaching the apex auto-provisions the DNS record + cert.
+      # Idempotent: 409 when already attached, ignored.
+      - name: Attach custom domain ocx.rs
+        run: |
+          curl -sS -X POST \
+            "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/pages/projects/ocx-index/domains" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            --data '{"name":"ocx.rs"}' | tee /tmp/domain.json
+          grep -q '"success":true' /tmp/domain.json || grep -qi 'already\|exists\|duplicate' /tmp/domain.json
