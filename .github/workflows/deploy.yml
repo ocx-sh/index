@@ -34,12 +34,15 @@ jobs:
           command: pages deploy public --project-name=ocx-index --branch=main
 
       # Same-account zone → attaching the apex auto-provisions the DNS record + cert.
-      # Idempotent: 409 when already attached, ignored.
+      # Idempotent: a re-run hits the "already exists" error, treated as success.
       - name: Attach custom domain ocx.rs
         run: |
-          curl -sS -X POST \
+          resp=$(curl -sS -X POST \
             "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/pages/projects/ocx-index/domains" \
             -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
             -H "Content-Type: application/json" \
-            --data '{"name":"ocx.rs"}' | tee /tmp/domain.json
-          grep -q '"success":true' /tmp/domain.json || grep -qi 'already\|exists\|duplicate' /tmp/domain.json
+            --data '{"name":"ocx.rs"}')
+          echo "$resp"
+          [ "$(echo "$resp" | jq -r '.success')" = "true" ] && exit 0
+          echo "$resp" | jq -e '[.errors[]?.message] | join(" ") | test("exist"; "i")' >/dev/null && exit 0
+          exit 1
