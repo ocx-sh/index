@@ -33,21 +33,28 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy public --project-name=ocx-index --branch=main
 
-      # Same-account zone → attaching the apex auto-provisions the DNS record + cert.
-      # Idempotent by check-then-act: skip if already attached (no reliance on error text).
-      - name: Attach custom domain ocx.rs
+      # Attach the Pages custom domain AND ensure the apex DNS record. The domain
+      # attach alone does not create the apex record (unlike subdomains), so the
+      # site is unreachable at ocx.rs until a proxied CNAME → pages.dev exists
+      # (Cloudflare flattens CNAME at apex). Both checks are check-then-act idempotent.
+      - name: Ensure custom domain + apex DNS record
         env:
           CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ZONE: e7e05c1d7edc241e4a7fde08e423483f  # ocx.rs zone id (stable; update if zone recreated)
         run: |
-          api="https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT/pages/projects/ocx-index/domains"
-          if curl -sS "$api" -H "Authorization: Bearer $CF_TOKEN" \
-               | jq -e '.result[]?.name == "ocx.rs"' >/dev/null; then
-            echo "ocx.rs already attached"; exit 0
+          set -euo pipefail
+          domains="https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT/pages/projects/ocx-index/domains"
+          recs="https://api.cloudflare.com/client/v4/zones/$CF_ZONE/dns_records"
+          auth="Authorization: Bearer $CF_TOKEN"
+          json="Content-Type: application/json"
+          # 1. Attach the Pages custom domain if not present.
+          if ! curl -sS -H "$auth" "$domains" | jq -e 'any(.result[]?; .name=="ocx.rs")' >/dev/null; then
+            curl -sS -X POST -H "$auth" -H "$json" "$domains" --data '{"name":"ocx.rs"}' | jq -e '.success'
           fi
-          resp=$(curl -sS -X POST "$api" \
-            -H "Authorization: Bearer $CF_TOKEN" \
-            -H "Content-Type: application/json" \
-            --data '{"name":"ocx.rs"}')
-          echo "$resp"
-          [ "$(echo "$resp" | jq -r '.success')" = "true" ]
+          # 2. Ensure a proxied apex CNAME to the pages.dev target.
+          if ! curl -sS -H "$auth" "$recs?type=CNAME&name=ocx.rs" | jq -e 'any(.result[]?; .name=="ocx.rs")' >/dev/null; then
+            curl -sS -X POST -H "$auth" -H "$json" "$recs" \
+              --data '{"type":"CNAME","name":"ocx.rs","content":"ocx-index.pages.dev","proxied":true,"comment":"OCX index apex to Pages"}' \
+              | jq -e '.success'
+          fi
