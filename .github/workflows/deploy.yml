@@ -34,15 +34,20 @@ jobs:
           command: pages deploy public --project-name=ocx-index --branch=main
 
       # Same-account zone → attaching the apex auto-provisions the DNS record + cert.
-      # Idempotent: a re-run hits the "already exists" error, treated as success.
+      # Idempotent by check-then-act: skip if already attached (no reliance on error text).
       - name: Attach custom domain ocx.rs
+        env:
+          CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: |
-          resp=$(curl -sS -X POST \
-            "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/pages/projects/ocx-index/domains" \
-            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+          api="https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT/pages/projects/ocx-index/domains"
+          if curl -sS "$api" -H "Authorization: Bearer $CF_TOKEN" \
+               | jq -e '.result[]?.name == "ocx.rs"' >/dev/null; then
+            echo "ocx.rs already attached"; exit 0
+          fi
+          resp=$(curl -sS -X POST "$api" \
+            -H "Authorization: Bearer $CF_TOKEN" \
             -H "Content-Type: application/json" \
             --data '{"name":"ocx.rs"}')
           echo "$resp"
-          [ "$(echo "$resp" | jq -r '.success')" = "true" ] && exit 0
-          echo "$resp" | jq -e '[.errors[]?.message] | join(" ") | test("exist"; "i")' >/dev/null && exit 0
-          exit 1
+          [ "$(echo "$resp" | jq -r '.success')" = "true" ]
