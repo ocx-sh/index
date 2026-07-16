@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+#
+# Bootstrap taskfile. `verify` is the repo gate contract (swarm skills call it).
+# Grows during the design phase (schema validation, workflow lint, render checks).
+
+version: '3'
+
+tasks:
+  default:
+    cmds:
+      - task --list
+    silent: true
+
+  verify:
+    desc: Full gate — bootstrap version (JSON well-formedness); grows with design
+    cmds:
+      - find public -name '*.json' -print0 | xargs -0 -n1 jq empty
