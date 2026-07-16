@@ -1,9 +1,18 @@
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
 #
-# Bootstrap taskfile. `verify` is the repo gate contract (swarm skills call it).
-# Grows during the design phase (schema validation, workflow lint, render checks).
+# Repo gate contract. `verify` == the exact CI job set in
+# .github/workflows/ci.yml (schema-validate, bot-lint, bot-test, bot-audit,
+# workflows-lint), plus placeholder:check (local-only, public/ retires in
+# Phase 3). No drift between this file and ci.yml — see
+# .claude/state/plans/plan_index_v1.md WP1-C and
+# .claude/artifacts/adr_index_bot_and_workflow_security.md.
 
 version: '3'
+
+includes:
+  bot:
+    taskfile: ./bot/taskfile.yml
+    dir: ./bot
 
 tasks:
   default:
@@ -11,7 +20,67 @@ tasks:
       - task --list
     silent: true
 
-  verify:
-    desc: Full gate — bootstrap version (JSON well-formedness); grows with design
+  schema:validate:
+    desc: >-
+      check-jsonschema metaschema check on schema/*.schema.json; every
+      fixture in schema/fixtures/valid/ must pass, every fixture in
+      schema/fixtures/invalid/ must FAIL validation (fixture name prefix up
+      to -valid-/-invalid- selects the schema file).
+    set: [e, u, pipefail]
+    cmds:
+      - |
+        echo "== metaschema: schema/*.schema.json =="
+        uvx check-jsonschema --check-metaschema schema/*.schema.json
+
+        echo "== valid fixtures (must pass) =="
+        for f in schema/fixtures/valid/*.json; do
+          base=$(basename "$f")
+          schema="schema/${base%%-valid-*}.schema.json"
+          if [ ! -f "$schema" ]; then
+            echo "no schema found for fixture $f (derived: $schema)" >&2
+            exit 1
+          fi
+          echo "-- $f vs $schema"
+          uvx check-jsonschema --schemafile "$schema" "$f"
+        done
+
+        echo "== invalid fixtures (must FAIL validation) =="
+        for f in schema/fixtures/invalid/*.json; do
+          base=$(basename "$f")
+          schema="schema/${base%%-invalid-*}.schema.json"
+          if [ ! -f "$schema" ]; then
+            echo "no schema found for fixture $f (derived: $schema)" >&2
+            exit 1
+          fi
+          echo "-- $f vs $schema (expect failure)"
+          if uvx check-jsonschema --schemafile "$schema" "$f"; then
+            echo "FIXTURE SHOULD HAVE FAILED VALIDATION BUT PASSED: $f" >&2
+            exit 1
+          fi
+        done
+
+        echo "schema:validate: OK"
+
+  workflows:lint:
+    desc: >-
+      zizmor security lint (exactly ci.yml's workflows-lint job), scoped to
+      the workflows/actions that must stay clean today. Excludes deploy.yml
+      (legacy unpinned actions, retired by Phase 3's render-deploy.yml —
+      widen to the whole directory once that lands).
+    cmds:
+      - uvx zizmor --min-severity medium .github/workflows/ci.yml .github/workflows/dependency-review.yml .github/workflows/mutmut.yml .github/actions/setup-bot/action.yml
+
+  placeholder:check:
+    desc: JSON well-formedness of public/ (bootstrap placeholder — retired Phase 3, not a CI job)
     cmds:
       - find public -name '*.json' -print0 | xargs -0 -n1 jq empty
+
+  verify:
+    desc: Full gate — exactly the CI job set, plus the local-only placeholder:check
+    cmds:
+      - task: schema:validate
+      - task: bot:lint
+      - task: bot:test
+      - task: bot:audit
+      - task: workflows:lint
+      - task: placeholder:check

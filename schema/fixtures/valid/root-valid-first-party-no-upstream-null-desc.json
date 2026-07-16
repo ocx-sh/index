@@ -1,0 +1,19 @@
+{
+  "name": "ocx.sh/ocx/cli",
+  "repository": "oci://ghcr.io/ocx-contrib/cli",
+  "owners": [{ "github": "OCXbot", "github_id": 999999 }],
+  "status": "deprecated",
+  "deprecated_message": "Superseded by ocx.sh/ocx/mirror; see docs.",
+  "created": "2026-06-01",
+  "desc": null,
+  "tags": {
+    "0.1.0": {
+      "content": "sha256:6ad719f6259afaa5bed18249caf9da727fa16efaa7f2f99958a735e6520d8fc7",
+      "observed": "2026-06-01T00:00:00Z",
+      "yanked": {
+        "reason": "security issue in bundled dependency",
+        "at": "2026-06-02T00:00:00Z"
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "platforms": [
+    {
+      "platform": { "architecture": "amd64", "os": "linux" },
+      "digest": "sha256:c669343d28ef287d354208c5f0d628d8ed4734c82909cdef1365acf1725f3fdf"
+    },
+    {
+      "platform": { "architecture": "arm64", "os": "linux" },
+      "digest": "sha256:242bc053fe03e3d49eddea08a34a95c5ed596e6faf2a426b0d78485dc91a5294"
+    },
+    {
+      "platform": { "architecture": "amd64", "os": "windows" },
+      "digest": "sha256:3e02992408ff4f94ebe72d9e5a1cdb096332f94a143c6472606101066fdd13a5"
+    }
+  ]
+}

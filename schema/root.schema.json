@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://index.ocx.sh/schema/root.schema.json",
+  "title": "OCX Index Package Root",
+  "description": "Hot, mutable package root at /p/<namespace>/<package>.json (ADR: adr_locked_observation_index_format.md D2). Governance fields (name, repository, owners, status, deprecated_message, created, upstream) are human-set via PR; desc and tags[*] (except tags[*].yanked) are bot-regenerated from observed registry state.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Logical package name, ocx.sh/<namespace>/<package>.",
+      "pattern": "^ocx\\.sh/[a-z0-9](?:[a-z0-9]|-(?=[a-z0-9])){0,38}/[a-z0-9]+((\\.|_|__|-+)[a-z0-9]+)*$",
+      "maxLength": 147
+    },
+    "repository": {
+      "type": "string",
+      "description": "Physical OCI repository this entry points to, oci://<host>/<repo path>. Host is validated against an allowlist at CI time (ADR: adr_index_bot_and_workflow_security.md) — this pattern only fixes the URI shape.",
+      "pattern": "^oci://[a-z0-9]([a-z0-9-]*[a-z0-9])?(\\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*(:[0-9]{1,5})?/[a-z0-9]+((\\.|_|__|-+)[a-z0-9]+)*(/[a-z0-9]+((\\.|_|__|-+)[a-z0-9]+)*)*$"
+    },
+    "owners": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/owner" }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "deprecated", "yanked"]
+    },
+    "deprecated_message": {
+      "type": ["string", "null"]
+    },
+    "created": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "description": "Date the entry was first claimed, set once."
+    },
+    "upstream": {
+      "$ref": "#/$defs/upstream",
+      "description": "Attribution of the real upstream vendor/project the namespace names. Mandatory (by governance, not by this schema) on every entry whose namespace names a real third-party vendor; omitted only for OCX's own first-party namespaces (ADR: adr_namespace_policy.md ND-9/ND-10)."
+    },
+    "desc": {
+      "description": "Nullable — a package that has never published __ocx.desc on the physical registry has desc: null (ADR: adr_locked_observation_index_format.md D6).",
+      "oneOf": [
+        { "type": "null" },
+        { "$ref": "#/$defs/desc" }
+      ]
+    },
+    "tags": {
+      "type": "object",
+      "description": "Every tag ever observed on the physical repository, no filtering. Two tags are aliases of each other exactly when their content digests are equal (emergent aliasing, no declared aliases field).",
+      "propertyNames": {
+        "pattern": "^[a-zA-Z0-9_][a-zA-Z0-9._-]{0,127}$"
+      },
+      "additionalProperties": { "$ref": "#/$defs/tagEntry" }
+    }
+  },
+  "required": [
+    "name",
+    "repository",
+    "owners",
+    "status",
+    "deprecated_message",
+    "created",
+    "desc",
+    "tags"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "sha256Digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "description": "OCI-style content digest, algorithm sha256, lowercase hex."
+    },
+    "owner": {
+      "type": "object",
+      "properties": {
+        "github": {
+          "type": "string",
+          "pattern": "^[a-zA-Z\\d](?:[a-zA-Z\\d]|-(?=[a-zA-Z\\d])){0,38}$",
+          "description": "GitHub login, human-readable display only — not the ownership key."
+        },
+        "github_id": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Numeric GitHub user id. Mandatory: survives GitHub username rename/recycling, unlike the login string."
+        }
+      },
+      "required": ["github", "github_id"],
+      "additionalProperties": false
+    },
+    "upstream": {
+      "type": "object",
+      "description": "Attribution of the real upstream vendor the namespace names, distinct from the namespace owner (owners[]).",
+      "properties": {
+        "org": { "type": "string", "minLength": 1 },
+        "repository_url": { "type": "string", "format": "uri" },
+        "disclaimer": { "type": ["string", "null"] }
+      },
+      "required": ["org"],
+      "additionalProperties": false
+    },
+    "desc": {
+      "type": "object",
+      "properties": {
+        "digest": {
+          "$ref": "#/$defs/sha256Digest",
+          "description": "Digest of the currently observed __ocx.desc internal tag, used to detect change and avoid gratuitous re-copy."
+        },
+        "title": { "type": "string", "minLength": 1 },
+        "description": { "type": "string" },
+        "keywords": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Sourced from the sh.ocx.keywords annotation; packages that never publish it render []."
+        },
+        "readme": {
+          "$ref": "#/$defs/sha256Digest",
+          "description": "CAS digest of the copied readme blob (o/sha256/<hex>.md)."
+        },
+        "logo": {
+          "$ref": "#/$defs/sha256Digest",
+          "description": "CAS digest of the copied logo blob (o/sha256/<hex>.svg or .png)."
+        }
+      },
+      "required": ["digest", "title", "description", "keywords"],
+      "additionalProperties": false
+    },
+    "tagEntry": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "$ref": "#/$defs/sha256Digest",
+          "description": "Digest of the observation object in this index's own package-local CAS — not an OCI manifest or image-index digest."
+        },
+        "observed": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "yanked": {
+          "$ref": "#/$defs/yanked",
+          "description": "Presence marks the row yanked. Human-set via PR; bot never writes this field."
+        }
+      },
+      "required": ["content", "observed"],
+      "additionalProperties": false
+    },
+    "yanked": {
+      "type": "object",
+      "properties": {
+        "reason": { "type": "string", "minLength": 1 },
+        "at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["reason", "at"],
+      "additionalProperties": false
+    }
+  }
+}

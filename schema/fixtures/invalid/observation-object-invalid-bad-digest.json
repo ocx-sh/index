@@ -1,0 +1,8 @@
+{
+  "platforms": [
+    {
+      "platform": { "architecture": "amd64", "os": "linux" },
+      "digest": "sha1:c669343d28ef287d354208c5f0d628d8ed4734c"
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  # Nightly, independent of `bot/**` PR activity — pip-audit's vulnerability
+  # database moves even when no code changes (ADR-4 BD-7: "pip-audit | Every
+  # PR + nightly"). `bot-audit` has no `if:` guard so it runs on every
+  # trigger; the other four jobs skip the schedule trigger to avoid a
+  # pointless nightly re-run of unrelated gates.
+  schedule:
+    - cron: "0 4 * * *" # nightly, 04:00 UTC
+
+permissions: {}
+
+jobs:
+  schema-validate:
+    name: schema-validate
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4.3.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-bot
+      - name: task schema:validate
+        run: task schema:validate
+
+  bot-lint:
+    name: bot-lint
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4.3.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-bot
+      - name: task bot:lint
+        run: task bot:lint
+
+  bot-test:
+    name: bot-test
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4.3.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-bot
+      - name: task bot:test
+        run: task bot:test
+
+  bot-audit:
+    name: bot-audit
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4.3.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-bot
+      - name: task bot:audit
+        run: task bot:audit
+
+  workflows-lint:
+    name: workflows-lint
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4.3.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-bot
+      # NOTE for the `workflows:lint` taskfile target (owned by WP1-C, not this
+      # workflow): `uvx zizmor --min-severity medium .github/workflows/` flags
+      # deploy.yml's unpinned actions (known legacy, replaced by WP3-A's
+      # render-deploy.yml). Scope the task target's invocation to the files
+      # that must stay clean today instead of silencing with inline zizmor
+      # ignores; widen to the whole directory once WP3-A lands.
+      - name: task workflows:lint
+        run: task workflows:lint
