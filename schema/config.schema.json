@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://index.ocx.sh/schema/config.schema.json",
+  "title": "OCX Index Root Config",
+  "description": "Format-version discovery document served at /config.json. A fixed path convention, not a runtime-discoverable one: a client that understands format_version already knows the full /p/<ns>/<pkg>... path grammar, so there is no packages prefix and no free-text note field (ADR: adr_locked_observation_index_format.md D7).",
+  "type": "object",
+  "properties": {
+    "format_version": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Monotonically increasing wire-format generation counter. Named format_version, not version, to stay lexically distinct from package-level version concepts."
+    }
+  },
+  "required": ["format_version"],
+  "additionalProperties": false
+}

@@ -1,0 +1,10 @@
+{
+  "name": "ocx.sh/a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a/x",
+  "repository": "oci://ghcr.io/ocx-contrib/x",
+  "owners": [{ "github": "alice", "github_id": 123456 }],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-07-17",
+  "desc": null,
+  "tags": {}
+}

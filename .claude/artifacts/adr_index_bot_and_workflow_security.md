@@ -95,9 +95,18 @@ at every layer. Every architectural decision in BD-1 follows from that one findi
 `bot/` lives at the repo root as a real [uv](https://docs.astral.sh/uv/)-managed
 package — never loose `.github/scripts/*.py` files, per `quality-python.md`'s "ship as
 a real uv package" rule. Import name `indexbot`. Python floor: **3.12**, pinned in
-`bot/.python-version` — chosen specifically because it enables coverage.py's
+`bot/.python-version` — a recent, boring stable version. **Correction (verified
+empirically post-implementation):** coverage.py's
 `sys.monitoring`-based (["sysmon"](https://docs.python.org/3/library/sys.monitoring.html),
-[PEP 669](https://peps.python.org/pep-0669/)) low-overhead coverage backend used in BD-3.
+[PEP 669](https://peps.python.org/pep-0669/)) backend exists from 3.12, but its
+*branch*-coverage measurement — the mode BD-3's gate actually uses (`branch = true`) —
+requires Python 3.14+ (coverage.py's own `env.py` gate); on 3.12 it silently falls back
+to the classic trace-based core. The 3.12 floor is kept for its own sake (boring,
+already-adopted stable version), not because it unlocks a faster branch-coverage
+backend today; `bot/pyproject.toml` no longer requests `core = "sysmon"` explicitly
+(see BD-3) so no misleading `CoverageWarning` prints. Revisit the floor if the
+sys.monitoring branch backend's overhead reduction becomes worth chasing once 3.14
+is a reasonable minimum.
 
 One console script, `indexbot`, with subcommands:
 
@@ -193,7 +202,9 @@ contract the workflows are written against, not the internal wiring.
 ```toml
 [tool.coverage.run]
 branch = true
-core = "sysmon"          # Python 3.12+ sys.monitoring backend — low overhead, matches BD-1's floor
+# No explicit `core` override — sys.monitoring branch coverage needs Python
+# 3.14+ (BD-1's correction); requesting core="sysmon" on the 3.12 floor only
+# prints a CoverageWarning before falling back to the classic trace core.
 source = ["src"]
 relative_files = true
 
@@ -514,3 +525,4 @@ reconcile.yml (nightly cron + workflow_dispatch)
 | Date | Author | Change |
 |------|--------|--------|
 | 2026-07-17 | Michael + Claude design swarm | Initial record from the 2026-07-16 design discussion |
+| 2026-07-17 | Phase 1 review-fix | BD-1/BD-3 corrected: sys.monitoring branch-coverage support needs Python 3.14+, not 3.12 — verified empirically (coverage 7.15.2 `CoverageWarning: Can't use core=sysmon`). Dropped the now-inert `core = "sysmon"` / `COVERAGE_CORE` settings from `bot/pyproject.toml`, `bot/taskfile.yml`, `ci.yml`; 3.12 floor kept for its own sake, not as a sysmon prerequisite. |

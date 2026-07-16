@@ -1,0 +1,15 @@
+{
+  "name": "ocx.sh/kitware/cmake",
+  "repository": "oci://ghcr.io/ocx-contrib/cmake",
+  "owners": [{ "github": "alice", "github_id": 123456 }],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-07-17",
+  "desc": null,
+  "tags": {
+    ".28.1": {
+      "content": "sha256:117e8843f4b2ca9ba9b13d9f884a03eaa285ba540476deda67f24a686ce7b484",
+      "observed": "2026-07-17T00:00:00Z"
+    }
+  }
+}

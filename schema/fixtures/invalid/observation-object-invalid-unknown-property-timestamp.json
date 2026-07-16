@@ -1,0 +1,9 @@
+{
+  "platforms": [
+    {
+      "platform": { "architecture": "amd64", "os": "linux" },
+      "digest": "sha256:c669343d28ef287d354208c5f0d628d8ed4734c82909cdef1365acf1725f3fdf",
+      "observed": "2026-07-17T00:00:00Z"
+    }
+  ]
+}

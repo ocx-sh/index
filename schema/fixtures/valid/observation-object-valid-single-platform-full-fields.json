@@ -1,0 +1,15 @@
+{
+  "platforms": [
+    {
+      "platform": {
+        "architecture": "arm",
+        "os": "linux",
+        "os.version": "5.15.0",
+        "os.features": ["headless"],
+        "variant": "v7",
+        "features": ["sse4"]
+      },
+      "digest": "sha256:86bde44fe3cb38dae8e9279a262e30defe00f30ea0bc2e44fbb3bab9a1b1f9aa"
+    }
+  ]
+}
