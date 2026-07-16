@@ -86,6 +86,8 @@ publish via the ocx-contrib org).
 
 ### D3 — Entry content: pointer + governance, NOT a metadata mirror
 
+**Superseded by:** [adr_locked_observation_index_format.md](./adr_locked_observation_index_format.md) (2026-07-17) — lock unit is the platform manifest, not the version-pointer shape recorded here.
+
 Per-package entry holds: logical name, physical repository pointer, owners, status
 (deprecation / yanked versions). It does **not** mirror tags/versions/descriptions.
 

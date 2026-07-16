@@ -1,26 +1,47 @@
 # ocx-sh/index
 
-Public package index for **OCX** — namespace governance + sparse HTTP index served at
-**https://index.ocx.sh**.
+Source of truth for the **OCX public package index**, served as a static sparse
+HTTP index at **https://index.ocx.sh** — no server, no database, no API. OCX is
+the OCI-backed package manager at [ocx-sh/ocx](https://github.com/ocx-sh/ocx).
 
-- Logical package names (`ocx.sh/<pkg>`) resolve through pointer files here to
-  physical OCI repositories (GHCR, `ocx-contrib`).
-- Static files in `public/` deploy to Cloudflare Pages via `.github/workflows/deploy.yml`.
-- `public/config.json` is the machine entrypoint (`format_version` + `packages` prefix).
+Clients resolve logical package names (`ocx.sh/<namespace>/<package>`, e.g.
+`ocx.sh/kitware/cmake`) through JSON files in this repo to physical
+[OCI](https://opencontainers.org/) registries (`ghcr.io/ocx-contrib/<package>`).
 
-Status: bootstrap. Entry schema, validate/render/announce/reconcile CI, and the seeded
-catalog are being designed — see `.claude/artifacts/handover_from_ocx.md` for the
-inherited design record (ADR, design spec, research).
+## Wire format at a glance
+
+Three frozen URL shapes, gated by `format_version`:
+
+- `/config.json` — `{"format_version": 1}`
+- `/p/<namespace>/<package>.json` — package root: governance fields + a `tags`
+  map from every observed tag to a content digest
+- `/p/<namespace>/<package>/o/sha256/<hex>.json` — immutable observation
+  object: the set of OCI platforms and the manifest digest each resolved to
+
+**Locked observation**: an observation object is a frozen record of which
+platform resolved to which manifest digest at the moment the index bot last
+observed the registry — not a live query, not a cache.
+
+Published shapes and field semantics are a one-way door once OCX clients bake
+the endpoint in: additive changes only, `format_version` gates the rest. See
+[`.claude/artifacts/`](.claude/artifacts/) for the design record (ADRs,
+decision log) and [product-context.md](.claude/rules/product-context.md) for
+the full contract. Human-facing docs land at `index.ocx.sh/docs` (incoming,
+built with [VitePress](https://vitepress.dev/)).
+
+## Repo state
+
+`public/` is a temporary placeholder (`config.json` + `index.html`) deployed
+verbatim to [Cloudflare Pages](https://pages.cloudflare.com/) by
+`.github/workflows/deploy.yml`. It is retired once the render pipeline lands
+and replaces it with output generated from `p/`.
 
 ## Operating rules
 
-- **Wire contract is a one-way door**: published URL shapes (`/config.json`,
-  `/p/<namespace>/<package>.json`) and JSON field semantics stay backward compatible;
-  `format_version` gates breaking evolution.
-- **Cache Rule**: never enable CDN caching for `*.json` on the index zone — client
-  freshness relies on origin ETags.
+- **Wire contract is a one-way door** — see above.
+- **Cache Rule**: never enable CDN caching for `*.json` on the index zone —
+  client freshness relies on origin ETags.
 
 ## Development
 
-Task runner: [`task`](https://taskfile.dev). `task verify` = repo gate (bootstrap:
-JSON well-formedness; grows with the design phase).
+Task runner: [`task`](https://taskfile.dev). `task verify` is the repo gate.
