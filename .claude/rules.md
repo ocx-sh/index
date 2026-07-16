@@ -14,6 +14,7 @@ must reflect here in the same commit.
 | Shell scripts | [quality-bash.md](./rules/quality-bash.md) |
 | Python scripts | [quality-python.md](./rules/quality-python.md) |
 | CI workflows / security | [quality-security.md](./rules/quality-security.md) |
+| Vite / VitePress build tooling | [quality-vite.md](./rules/quality-vite.md) |
 | Swarm / multi-agent workflows | [workflow-swarm.md](./rules/workflow-swarm.md), skills `swarm-plan`, `swarm-execute`, `swarm-review` |
 | Plan status tracking | [meta-ai-config.md](./rules/meta-ai-config.md) "Plan Status Protocol" |
 
@@ -24,6 +25,7 @@ must reflect here in the same commit.
 | `**/*.sh`, `**/*.bash` | [quality-bash.md](./rules/quality-bash.md) |
 | `**/*.py` | [quality-python.md](./rules/quality-python.md) |
 | `.github/workflows/**`, `.github/actions/**` | [quality-security.md](./rules/quality-security.md) |
+| `**/vite.config.*`, `**/vitest.config.*`, `**/.vitepress/config.*` | [quality-vite.md](./rules/quality-vite.md) |
 | `.claude/**` | [meta-ai-config.md](./rules/meta-ai-config.md) |
 
 Globals (no `paths:`): [quality-core.md](./rules/quality-core.md),
