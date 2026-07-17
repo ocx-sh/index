@@ -233,6 +233,11 @@ otherwise distinguish which position collides):
 | Brand | `ocx`, `ocx-sh`, `ocx-contrib`, `ocx-rs` | OCX's own project and org identities; claiming one of these as a third-party vendor namespace would be indistinguishable from an OCX-first-party entry. |
 | Generic/ambiguous | `admin`, `root`, `system`, `std`, `core`, `official`, `public`, `test`, `example`, `internal` | Words whose plain-English meaning implies a privileged or non-existent-vendor status the two-level model explicitly refuses to grant (ND-2) — reserving them removes the temptation to reintroduce a `library`-style tier by convention rather than by design. |
 
+The Brand row is reserved from third-party claims without exception; it does not by
+itself decide whether OCX's own first-party packages may use it — see
+[Amendment A1](#amendment-a1-2026-07-17-first-party-use-of-brand-segments) below
+(PROPOSED, not yet accepted) for that carve-out.
+
 This list is deliberately small and collision-driven, not an exhaustive trademark
 denylist — GitHub itself does not formally reserve usernames as policy (research §3,
 citing the
@@ -339,6 +344,12 @@ Every non-first-party seed entry carries the `upstream` object (ND-9). First-par
 packages (`ocx/cli`, `ocx/mirror`) omit `upstream` entirely — there is no third-party
 identity to attribute.
 
+`ocx` is a reserved Brand segment under ND-4. As written, ND-4 and this worked example
+contradict each other — `ocx/cli` cannot pass `check_namespace_not_reserved` without a
+carve-out. [Amendment A1](#amendment-a1-2026-07-17-first-party-use-of-brand-segments)
+below resolves this; until it is accepted, `ocx/cli` and `ocx/mirror` cannot actually be
+claimed.
+
 ## Relationship to the Original ADR
 
 This ADR amends, not supersedes, the original
@@ -352,6 +363,69 @@ This ADR amends, not supersedes, the original
   become two-level, vendor-identity namespaces (ND-1, ND-2). The "index maps logical →
   physical, N:1 allowed" property D7 established is unchanged — only what the namespace
   segment *names* changes.
+
+## Amendments
+
+### Amendment A1 (2026-07-17): First-Party Use of Brand Segments
+
+**Status:** PROPOSED — pending owner sign-off, not accepted. The enforcement code this
+amendment specifies ships in the same PR default-off (see "Enforcement" below); do not
+treat brand-segment first-party claims as permitted until the owner accepts this
+amendment.
+
+> Disambiguation: this is ADR-2's own Amendment A1, distinct from the unrelated
+> "ADR Amendment A1" cited in
+> [adr_public_index_registry_indirection.md](./adr_public_index_registry_indirection.md)
+> and `handover_from_ocx.md` (2026-07-12, the `ocx.sh`-canonical/`ocx.rs`-parked
+> decision). The two share a label by coincidence of numbering, not by relation —
+> always qualify as "ADR-2 Amendment A1" when the ADR is ambiguous from context.
+
+**Problem.** ND-4 reserves the Brand segments (`ocx`, `ocx-sh`, `ocx-contrib`,
+`ocx-rs`) unconditionally, in either the namespace or package position —
+`core/validate_entry.py`'s `check_namespace_not_reserved` rejects any of them found in
+`RESERVED_NAMESPACE_SEGMENTS`, with no carve-out in the code or in ND-4's text. ND-10's
+own worked example, in this same ADR, lists `ocx/cli` as a legitimate seed entry —
+"OCX itself — first-party, `upstream` omitted." As written, ND-4 and ND-10 contradict
+each other: `ocx/cli` cannot pass `check_namespace_not_reserved` (`ocx` is in
+`RESERVED_NAMESPACE_SEGMENTS`), yet ND-10 presents it as an already-settled seed.
+Surfaced during the Phase 4 seeding pilot (2026-07-17), when a first-party seed-import
+of `ocx/cli` failed namespace validation.
+
+**Resolution.** Brand segments are reserved *from third parties*, *for first-party
+use* — the three rows in ND-4's table are not, on reflection, the same kind of
+reservation, and this amendment only changes one of them:
+
+- **Control-path segments** (`p`, `o`, `docs`, `assets`, `config`, `schema`, `api`,
+  `static`, `data`) stay reserved unconditionally, no exceptions, first-party included.
+  These guard routing collisions with the wire contract and the colocated site, not
+  identity — there is no first-party/third-party distinction that applies to a path
+  collision.
+- **Generic/ambiguous segments** (`admin`, `root`, `system`, `std`, `core`, `official`,
+  `public`, `test`, `example`, `internal`) stay reserved unconditionally, unchanged from
+  ND-4's original rationale — a word whose plain-English meaning implies privileged or
+  non-existent-vendor status is exactly as misleading coming from OCX itself as from a
+  third party.
+- **Brand segments** (`ocx`, `ocx-sh`, `ocx-contrib`, `ocx-rs`) remain reserved from
+  third-party claims without exception — unchanged, a third party may never claim one of
+  these — but become available for genuine first-party OCX entries, subject to **both**:
+  1. The same G-04 human-review PR gate every namespace first-claim already goes
+     through (ND-5) — a brand claim gets no weaker review than any other first claim.
+  2. An explicit tooling override at the enforcement layer: `--allow-reserved-namespace`
+     (brand-segment-only — the flag refuses to lift the check for control-path or
+     generic segments; only the four Brand values above are eligible). A reviewer
+     approving the PR is not sufficient by itself; the tool must also be told,
+     explicitly, that this specific claim is a deliberate first-party exception, not an
+     oversight that slipped past review.
+
+**Enforcement.** `seed-import` and `validate` gain the `--allow-reserved-namespace`
+flag in this PR, shipped default-off — nothing currently invokes it. ND-10's `ocx/cli`
+and `ocx/mirror` seed entries cannot land until (a) the owner accepts this amendment and
+(b) the flag is passed explicitly for that `seed-import` run. Until both are true,
+`check_namespace_not_reserved` continues to enforce ND-4's unconditional reservation in
+practice — this amendment describes intended future behavior, not current behavior.
+
+**Cross-references updated:** ND-4's Brand row and ND-10's first-party-omission
+paragraph (above) both now point here.
 
 ## Links
 
@@ -371,3 +445,4 @@ This ADR amends, not supersedes, the original
 | Date | Author | Change |
 |------|--------|--------|
 | 2026-07-17 | Michael Herwig + Claude design swarm | Initial ADR from the 2026-07-16 design discussion |
+| 2026-07-17 | Claude (docs) | Added Amendment A1 (PROPOSED, pending owner sign-off): first-party carve-out for Brand namespace segments, resolving the ND-4/ND-10 contradiction found during the Phase 4 seeding pilot. Updated ND-4/ND-10 cross-references. |
