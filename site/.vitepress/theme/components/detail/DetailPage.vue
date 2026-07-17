@@ -219,7 +219,7 @@ onMounted(() => {
     gap: 14px;
   }
 
-  .detail-rail > :deep(.rail-card:last-child) {
+  .detail-rail > :deep(.rail-block:last-child) {
     grid-column: 1 / -1;
   }
 }

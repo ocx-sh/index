@@ -10,6 +10,7 @@ import {
   PopoverContent,
 } from 'reka-ui'
 import TagBadge from './TagBadge.vue'
+import CopyIcon from '../shared/CopyIcon.vue'
 import { useCopyState } from '../../composables/useCopyState'
 import type { MinorGroup, VariantRow, VersionTable } from '../../utils/version'
 
@@ -47,7 +48,21 @@ const defaultPrimaryDigest = computed(() => {
   return row.aliasChain.find(m => m.tag === row.primaryTag)?.digest ?? null
 })
 
+// `PopoverContent` below renders through `PopoverPortal` — teleported to
+// `document.body`, outside `.version-table`'s DOM subtree (and, since it's
+// `position`-anchored to the trigger rather than laid out inline, usually
+// outside `.version-table`'s bounding box too). Moving the pointer from a
+// minor-group's popover trigger into the popover's own patch badges
+// therefore crosses `.version-table`'s rendered edge and fires this
+// `mouseleave` mid-hover — reverting the platform-matrix preview back to
+// the default digest before the patch badge's own `hover-tag` ever lands
+// (contributing cause, alongside TagBadge.vue's `$attrs` fix, of
+// "platform matrix doesn't show the right platforms" for any tag reachable
+// only via a minor-group popover). Guarded on `openPopovers` (already
+// tracked below for the copy-closes-popover behavior) so a leave that's
+// really "into an open popover" is a no-op.
 function handleLeave() {
+  if ([...openPopovers.values()].some(Boolean)) return
   if (defaultPrimaryDigest.value) emit('hover-tag', defaultPrimaryDigest.value)
 }
 
@@ -116,7 +131,6 @@ function patchLabel(count: number): string {
       v-for="row in table.rows"
       :key="row.label"
       class="variant-row"
-      :default-open="row.isDefault"
     >
       <div class="variant-row-header">
         <span class="variant-label" :class="{ default: row.isDefault }">
@@ -136,7 +150,10 @@ function patchLabel(count: number): string {
             }"
             @click="copyAliasMember(member.tag)"
             @mouseenter="emit('hover-tag', member.digest)"
-          >{{ member.tag }}</button>
+          >
+            <span class="alias-text">{{ member.tag }}</span>
+            <CopyIcon :copied="true" :size="11" check-class="alias-check" />
+          </button>
         </span>
 
         <!-- Yanked rolling tags (e.g. a yanked "latest") never make the
@@ -346,6 +363,10 @@ function patchLabel(count: number): string {
 }
 
 .alias-segment {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   font-weight: 500;
@@ -371,8 +392,29 @@ function patchLabel(count: number): string {
   background: color-mix(in srgb, var(--c-accent) 8%, transparent);
 }
 
-.alias-segment.copied {
+/* Copy feedback — check-icon fade (unified with TagBadge's pattern, not a
+   text-color highlight — see components/shared/CopyIcon.vue docblock). */
+.alias-text {
+  transition: opacity 0.15s ease-in;
+}
+
+.alias-check {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  opacity: 0;
   color: var(--c-ok);
+  transition: opacity 0.15s ease-in;
+}
+
+.alias-segment.copied .alias-text {
+  opacity: 0;
+  transition: opacity 0.1s ease-out;
+}
+
+.alias-segment.copied .alias-check {
+  opacity: 1;
+  transition: opacity 0.1s ease-out;
 }
 
 /* Yanked rolling tags (e.g. a yanked "latest") — sit next to the
@@ -541,13 +583,14 @@ function patchLabel(count: number): string {
   color: var(--c-warn);
 }
 
-/* Responsive — see plan_site_redesign.md WP-D responsive contract.
-   ponytail: the collapsible default-open state is fixed at build time
-   (`row.isDefault`, not viewport-dependent) — mobile's "collapses to
-   key-tag chips" reads as the segmented control alone (the breakdown below
-   still opens on tap, it's just not auto-collapsed purely by CSS). Upgrade
-   path: a `matchMedia` check in the parent to force `default-open: false`
-   under 640px if that gap ever matters in review. */
+/* Responsive — see plan_site_redesign.md WP-D responsive contract. Every
+   row's breakdown (CollapsibleRoot below) starts closed — `default-open`
+   is intentionally omitted, relying on reka-ui's own `false` default —
+   uniformly, on every viewport (user finding: versions box collapsed by
+   default, same on mobile as desktop). The row header (segmented
+   alias-chain control) stays visible regardless of collapse state; only
+   the major/minor breakdown is gated behind each row's own expand-toggle
+   chevron. */
 @media (max-width: 640px) {
   .variant-label {
     min-width: 3.5rem;
