@@ -27,7 +27,12 @@ const query = ref('')
 const inputEl = ref<HTMLInputElement>()
 const selectedIndex = ref(0)
 
-const { catalog } = useCatalog()
+// Lazy — `SearchModal` mounts once globally (every page, not just the
+// catalog route), so eagerly fetching the catalog on mount would hit the
+// network on every page load even when the palette never opens. `load()`
+// only runs once the user actually opens it (below); `fetchCatalog`'s own
+// module-level cache makes repeat opens free.
+const { catalog, load: loadCatalog } = useCatalog()
 
 interface DocHit { title: string, titles: string[] }
 
@@ -62,6 +67,7 @@ async function ensureDocsIndex() {
 watch(isOpen, (open) => {
   if (open) {
     ensureDocsIndex()
+    loadCatalog()
     query.value = ''
     selectedIndex.value = 0
     nextTick(() => inputEl.value?.focus())
