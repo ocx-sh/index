@@ -11,6 +11,25 @@ import CopyIcon from '../shared/CopyIcon.vue'
 // Relocated verbatim from `components/TagBadge.vue` (pre-redesign) into
 // `components/detail/` — WP-D owns this rework. The five copy actions'
 // command strings + 1300/1500ms timing are UNCHANGED from the original.
+
+// This component's template root is `<ContextMenuRoot>`, a reka-ui
+// component that ships `inheritAttrs: false` and never forwards `$attrs`
+// to its rendered slot content (confirmed against
+// node_modules/reka-ui/dist/ContextMenu/ContextMenuRoot.js — its render
+// function only spreads named props onto `MenuRoot`, nothing else). Vue's
+// automatic attrs-fallthrough would otherwise land any caller-supplied,
+// non-prop/non-emit listener (every `<TagBadge ... @mouseenter="...">` in
+// VersionTree.vue — the hover-driven platform-matrix preview) on
+// `ContextMenuRoot` itself, where reka-ui silently drops it: the hover
+// never reaches the real DOM element at all (diagnosis: "detail page does
+// not show the correct matrix of platforms" — confirmed via a synthetic
+// `dispatchEvent('mouseenter', ...)` on the badge producing no effect).
+// `inheritAttrs: false` + explicit `v-bind="$attrs"` on the actual
+// interactive `<code>` element below re-targets the fallthrough past
+// `ContextMenuRoot` to where it belongs — the standard Vue 3 fix for a
+// non-forwarding wrapper root.
+defineOptions({ inheritAttrs: false })
+
 const props = withDefaults(defineProps<{
   tag: string
   qualifiedName: string
@@ -74,6 +93,7 @@ async function handleClick() {
         class="tag-badge"
         :class="[variant, { copied, yanked }]"
         :title="yanked ? 'Yanked — click to copy identifier' : 'Click to copy identifier'"
+        v-bind="$attrs"
         @click="handleClick"
       >
         <span class="tag-text">{{ tag }}</span>

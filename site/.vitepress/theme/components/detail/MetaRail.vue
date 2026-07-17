@@ -50,60 +50,71 @@ const safeUpstreamUrl = computed(() => safeHref(props.root.upstream?.repository_
 
 <template>
   <div class="meta-rail">
-    <div class="rail-card">
-      <span class="rail-heading">INSTALL</span>
-
-      <div v-if="installCommand" class="install-toggle-wrap">
-        <span v-if="canToggle" class="install-toggle">
-          <button type="button" :class="{ active: mode === 'latest' }" @click="mode = 'latest'">latest</button>
-          <button type="button" :class="{ active: mode === 'pinned' }" @click="mode = 'pinned'">pinned :{{ latestVersionLabel }}</button>
-        </span>
-        <button
-          type="button"
-          class="install-command"
-          :class="{ copied, deemphasized: root.status === 'deprecated' }"
-          @click="copyText(installCommand)"
-        >
-          <span class="install-prefix">$</span>
-          <span class="install-cmd">{{ installCommand }}</span>
-          <CopyIcon :copied="copied" />
-        </button>
+    <div class="rail-block">
+      <div class="rail-header">
+        <span class="rail-heading">INSTALL</span>
       </div>
-      <p v-else class="rail-empty">No installable version.</p>
-    </div>
-
-    <div class="rail-card">
-      <span class="rail-heading">PLATFORMS</span>
-      <PlatformMatrix :platforms="activeObservation?.platforms ?? []" />
-    </div>
-
-    <div class="rail-card">
-      <span class="rail-heading">METADATA</span>
-      <div class="metadata-rows">
-        <div class="metadata-row">
-          <span class="metadata-key">registry</span>
-          <span class="metadata-value truncate">{{ root.repository }}</span>
-        </div>
-        <div class="metadata-row">
-          <span class="metadata-key">owners</span>
-          <span class="metadata-value">
-            <a v-for="(owner, i) in owners" :key="owner.github" :href="`https://github.com/${owner.github}`" target="_blank" rel="noopener noreferrer">
-              @{{ owner.github }}<template v-if="i < owners.length - 1">, </template>
-            </a>
+      <div class="rail-card">
+        <div v-if="installCommand" class="install-toggle-wrap">
+          <span v-if="canToggle" class="install-toggle">
+            <button type="button" :class="{ active: mode === 'latest' }" @click="mode = 'latest'">latest</button>
+            <button type="button" :class="{ active: mode === 'pinned' }" @click="mode = 'pinned'">pinned :{{ latestVersionLabel }}</button>
           </span>
+          <button
+            type="button"
+            class="install-command"
+            :class="{ copied, deemphasized: root.status === 'deprecated' }"
+            @click="copyText(installCommand)"
+          >
+            <span class="install-prefix">$</span>
+            <span class="install-cmd">{{ installCommand }}</span>
+            <CopyIcon :copied="copied" />
+          </button>
         </div>
-        <div v-if="root.upstream" class="metadata-row">
-          <span class="metadata-key">upstream</span>
-          <a v-if="safeUpstreamUrl" class="metadata-value" :href="safeUpstreamUrl" target="_blank" rel="noopener noreferrer">{{ root.upstream.org }} ↗</a>
-          <span v-else class="metadata-value">{{ root.upstream.org }}</span>
-        </div>
-        <div v-if="latestVersionLabel" class="metadata-row">
-          <span class="metadata-key">latest</span>
-          <span class="metadata-value plain">{{ latestVersionLabel }}</span>
-        </div>
-        <div class="metadata-row">
-          <span class="metadata-key">tags</span>
-          <span class="metadata-value plain">{{ tagCount }}</span>
+        <p v-else class="rail-empty">No installable version.</p>
+      </div>
+    </div>
+
+    <div class="rail-block">
+      <div class="rail-header">
+        <span class="rail-heading">PLATFORMS</span>
+      </div>
+      <div class="rail-card">
+        <PlatformMatrix :platforms="activeObservation?.platforms ?? []" />
+      </div>
+    </div>
+
+    <div class="rail-block">
+      <div class="rail-header">
+        <span class="rail-heading">METADATA</span>
+      </div>
+      <div class="rail-card">
+        <div class="metadata-rows">
+          <div class="metadata-row">
+            <span class="metadata-key">registry</span>
+            <span class="metadata-value truncate">{{ root.repository }}</span>
+          </div>
+          <div class="metadata-row">
+            <span class="metadata-key">owners</span>
+            <span class="metadata-value">
+              <a v-for="(owner, i) in owners" :key="owner.github" :href="`https://github.com/${owner.github}`" target="_blank" rel="noopener noreferrer">
+                @{{ owner.github }}<template v-if="i < owners.length - 1">, </template>
+              </a>
+            </span>
+          </div>
+          <div v-if="root.upstream" class="metadata-row">
+            <span class="metadata-key">upstream</span>
+            <a v-if="safeUpstreamUrl" class="metadata-value" :href="safeUpstreamUrl" target="_blank" rel="noopener noreferrer">{{ root.upstream.org }} ↗</a>
+            <span v-else class="metadata-value">{{ root.upstream.org }}</span>
+          </div>
+          <div v-if="latestVersionLabel" class="metadata-row">
+            <span class="metadata-key">latest</span>
+            <span class="metadata-value plain">{{ latestVersionLabel }}</span>
+          </div>
+          <div class="metadata-row">
+            <span class="metadata-key">tags</span>
+            <span class="metadata-value plain">{{ tagCount }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -115,6 +126,22 @@ const safeUpstreamUrl = computed(() => safeHref(props.root.upstream?.repository_
   display: flex;
   flex-direction: column;
   gap: 14px;
+}
+
+/* Header OUTSIDE the box — mirrors the left column's versions-header /
+   versions-card split (DetailPage.vue) so the two columns' first boxes
+   line up: same header font-size + same 10px header-to-box gap on both
+   sides (user finding: rail cards should match the left column's style,
+   and the two first boxes should align vertically). */
+.rail-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rail-header {
+  display: flex;
+  align-items: baseline;
 }
 
 .rail-card {
