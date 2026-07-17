@@ -105,7 +105,7 @@ onMounted(() => {
           :tag-count="tagCount"
         />
 
-        <ReadmePane v-if="root.desc?.readme" class="readme-section" :bare-name="bareName" :digest="root.desc.readme" />
+        <ReadmePane class="readme-section" :bare-name="bareName" :digest="root.desc?.readme ?? null" />
       </div>
     </template>
   </main>
