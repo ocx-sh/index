@@ -70,27 +70,39 @@ export function usePackageRoot(ns: MaybeRefOrGetter<string>, pkg: MaybeRefOrGett
   const error = ref<string | null>(null)
   const notFound = ref(false)
 
+  // Monotonic request token: guards every state write below against a
+  // slow, now-superseded response landing after a newer navigation already
+  // fired its own fetch — without this, a stale package-A response can
+  // overwrite package-B's state after a quick A→B nav (URL shows B, page
+  // renders A).
+  let requestToken = 0
+
   onMounted(() => {
     watch(
       () => [toValue(ns), toValue(pkg)] as const,
       async ([nsVal, pkgVal]) => {
+        const token = ++requestToken
         loading.value = true
         error.value = null
         notFound.value = false
         try {
           const resp = await fetch(`/p/${nsVal}/${pkgVal}.json`)
+          if (token !== requestToken) return
           if (resp.status === 404) {
             notFound.value = true
             root.value = null
             return
           }
           if (!resp.ok) throw new Error(`HTTP ${resp.status}`)
-          root.value = await resp.json()
+          const data = await resp.json()
+          if (token !== requestToken) return
+          root.value = data
         } catch (e) {
+          if (token !== requestToken) return
           error.value = e instanceof Error ? e.message : 'Failed to load package'
           root.value = null
         } finally {
-          loading.value = false
+          if (token === requestToken) loading.value = false
         }
       },
       { immediate: true },

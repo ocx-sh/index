@@ -1,8 +1,9 @@
 // Operating-system glyph data — pure, framework-agnostic. Linux (Tux) and
-// Apple artwork are Simple Icons (CC0-1.0), same paths as the current
-// `components/PlatformIcons.vue`; Windows is a trademark-neutral four-pane
-// grid drawn inline. Single-colour, `currentColor`-filled — a consuming
-// component supplies color/size, this module only supplies shape + label.
+// Apple artwork are Simple Icons (CC0-1.0), carried over from the retired
+// pre-redesign `components/PlatformIcons.vue`; Windows is a
+// trademark-neutral four-pane grid drawn inline. Single-colour,
+// `currentColor`-filled — a consuming component supplies color/size, this
+// module only supplies shape + label.
 
 export interface OsGlyph {
   label: string

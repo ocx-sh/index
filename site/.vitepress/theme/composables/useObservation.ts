@@ -71,9 +71,18 @@ export function useObservation() {
   const observation = ref<ObservationObject | null>(null)
   const loading = ref(false)
 
+  // Sequence token scoped to this composable instance — guards against a
+  // rapid double-`load()` (e.g. two hover targets in quick succession)
+  // resolving out of order, which would otherwise let the first (now
+  // stale) call's response overwrite the second's.
+  let requestToken = 0
+
   async function load(ns: string, pkg: string, digest: string) {
+    const token = ++requestToken
     loading.value = true
-    observation.value = await fetchObservation(ns, pkg, digest)
+    const result = await fetchObservation(ns, pkg, digest)
+    if (token !== requestToken) return
+    observation.value = result
     loading.value = false
   }
 

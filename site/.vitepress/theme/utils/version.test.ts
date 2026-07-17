@@ -24,11 +24,50 @@ describe('buildVersionTable', () => {
     expect(row.showLatestHighlight).toBe(true)
     expect(row.aliasChain.map(m => m.tag)).toEqual(['latest', '3', '3.31', '3.31.7'])
     expect(row.aliasChain.every(m => m.digest === 'sha256:aaa')).toBe(true)
+    expect(row.preciseAliasTag).toBe('3.31.7')
 
     // 3.31.6 is a different digest — grouped, not part of the chain.
     const major = row.majorGroups.find(mg => mg.major === 3)!
     const minor = major.minorGroups.find(m => m.minorTag === '3.31')!
     expect(minor.patches.map(p => p.tag)).toEqual(['3.31.7', '3.31.6'])
+  })
+
+  test('preciseAliasTag: same-depth multi-alias picks the newest, not the last-sorted', () => {
+    // latest + 2.0.0 + 1.0.0 all share one digest — both versions are depth
+    // 3 (equal precision). The "latest x.y.z" pin must read 2.0.0 (newest),
+    // not 1.0.0 (what a naive `.at(-1)` over the depth-then-newest-first
+    // sorted alias chain would wrongly pick).
+    const table = buildVersionTable(
+      {
+        latest: { content: 'sha256:eee', observed: '2026-01-01T00:00:00Z' },
+        '2.0.0': { content: 'sha256:eee', observed: '2026-01-01T00:00:00Z' },
+        '1.0.0': { content: 'sha256:eee', observed: '2025-01-01T00:00:00Z' },
+      },
+      'active',
+    )
+
+    const row = table.rows.find(r => r.isDefault)!
+    expect(row.aliasChain.map(m => m.tag)).toEqual(['latest', '2.0.0', '1.0.0'])
+    expect(row.preciseAliasTag).toBe('2.0.0')
+  })
+
+  test('yanked rolling tag: yanked "latest" surfaces in yankedRolling, absent from the chain', () => {
+    const table = buildVersionTable(
+      {
+        latest: {
+          content: 'sha256:fff',
+          observed: '2026-01-01T00:00:00Z',
+          yanked: { reason: 'bad rolling pointer', at: '2026-01-02T00:00:00Z' },
+        },
+        '1.2.3': { content: 'sha256:aba', observed: '2026-01-01T00:00:00Z' },
+      },
+      'active',
+    )
+
+    const row = table.rows.find(r => r.isDefault)!
+    expect(row.yankedRolling).toEqual([{ tag: 'latest', digest: 'sha256:fff', yanked: { reason: 'bad rolling pointer', at: '2026-01-02T00:00:00Z' } }])
+    expect(row.aliasChain.map(m => m.tag)).not.toContain('latest')
+    expect(row.primaryTag).toBe('1.2.3')
   })
 
   test('yank threading: yanked patch is struck and carries its reason inline', () => {
@@ -93,5 +132,43 @@ describe('buildVersionTable', () => {
       'active',
     )
     expect(table.unknownTags).toEqual([{ tag: 'nightly_build', digest: 'sha256:999', yanked: undefined }])
+  })
+
+  test('primaryTag depth-fallback: depth-4 tag only (prerelease/build) wins with no shallower tags', () => {
+    const table = buildVersionTable(
+      { '1.2.3-rc1': { content: 'sha256:d4', observed: '2026-01-01T00:00:00Z' } },
+      'active',
+    )
+    const row = table.rows.find(r => r.isDefault)!
+    expect(row.primaryTag).toBe('1.2.3-rc1')
+  })
+
+  test('primaryTag depth-fallback: depth-2 tag only (major.minor) wins with no shallower tags', () => {
+    const table = buildVersionTable(
+      { '1.2': { content: 'sha256:d2', observed: '2026-01-01T00:00:00Z' } },
+      'active',
+    )
+    const row = table.rows.find(r => r.isDefault)!
+    expect(row.primaryTag).toBe('1.2')
+  })
+
+  test('primaryTag depth-fallback: depth-1 tag only (bare major) wins with no shallower tags', () => {
+    const table = buildVersionTable(
+      { 1: { content: 'sha256:d1', observed: '2026-01-01T00:00:00Z' } },
+      'active',
+    )
+    const row = table.rows.find(r => r.isDefault)!
+    expect(row.primaryTag).toBe('1')
+  })
+
+  test('latest-only package: no versioned tags at all, majorGroups stays empty', () => {
+    const table = buildVersionTable(
+      { latest: { content: 'sha256:only', observed: '2026-01-01T00:00:00Z' } },
+      'active',
+    )
+    const row = table.rows.find(r => r.isDefault)!
+    expect(row.primaryTag).toBe('latest')
+    expect(row.majorGroups).toEqual([])
+    expect(row.preciseAliasTag).toBeNull()
   })
 })

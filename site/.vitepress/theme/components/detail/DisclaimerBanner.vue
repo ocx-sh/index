@@ -1,12 +1,20 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { safeHref } from '../../utils/safeHref'
+
 // MANDATORY whenever `upstream.disclaimer` is present — a governance
 // invariant (adr_namespace_policy.md ND-9), never conditionally hidden.
 // DetailPage owns the `v-if="root.upstream?.disclaimer"` gate; this
 // component assumes it's always called with a real string.
-defineProps<{
+const props = defineProps<{
   disclaimer: string
   repositoryUrl?: string
 }>()
+
+// `repositoryUrl` is third-party wire metadata — allowlist the scheme
+// before it reaches an `:href` (CWE-79 guard, see `utils/safeHref.ts`).
+// `null` degrades to plain text rather than dropping the line entirely.
+const safeRepositoryUrl = computed(() => safeHref(props.repositoryUrl))
 </script>
 
 <template>
@@ -19,7 +27,7 @@ defineProps<{
     <span class="disclaimer-text">
       {{ disclaimer }}
       <template v-if="repositoryUrl">
-        Upstream: <a :href="repositoryUrl" target="_blank" rel="noreferrer">{{ repositoryUrl.replace(/^https?:\/\//, '') }} ↗</a>
+        Upstream: <a v-if="safeRepositoryUrl" :href="safeRepositoryUrl" target="_blank" rel="noopener noreferrer">{{ repositoryUrl.replace(/^https?:\/\//, '') }} ↗</a><span v-else>{{ repositoryUrl.replace(/^https?:\/\//, '') }}</span>
       </template>
     </span>
   </div>

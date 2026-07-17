@@ -2,6 +2,7 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useCatalog } from '../../composables/useCatalog'
 import { filterPackages } from '../../utils/filterPackages'
+import { isEditableTarget } from '../../utils/dom'
 import SearchInput from './SearchInput.vue'
 import FilterChips from './FilterChips.vue'
 import ResultMeta from './ResultMeta.vue'
@@ -10,9 +11,13 @@ import PackageCard from './PackageCard.vue'
 import SkeletonGrid from './SkeletonGrid.vue'
 import EmptyState from './EmptyState.vue'
 
-// Sole `useCatalog()` consumer — every other catalog component is a plain
-// props-in/events-out leaf. This component owns all search/filter state.
-const { catalog, loading } = useCatalog()
+// Sole `useCatalog()` consumer among `catalog/**` components — every other
+// catalog component is a plain props-in/events-out leaf, and this one owns
+// all search/filter state. (The command palette also calls `useCatalog()`,
+// lazily on first open, for its package results — see `useCatalog.ts` and
+// `search/SearchModal.vue`.)
+const { catalog, loading, load: loadCatalog } = useCatalog()
+onMounted(loadCatalog)
 
 const query = ref('')
 const activePlatforms = ref<string[]>([])
@@ -82,13 +87,10 @@ function clearFilters() {
 // Page-scoped "/" handler — focuses the inline SearchInput. This is
 // deliberately separate from WP-E's global ⌘K command palette (frozen
 // cross-WP decision, plan_site_redesign.md Status block): no import from
-// or dependency on any `search/`/`useCommandPalette` module here.
+// or dependency on any `search/`/`useCommandPalette` module here (`utils/
+// dom.ts` is a neutral leaf, not scoped under either, so importing it
+// doesn't break that rule).
 const searchInputRef = ref<InstanceType<typeof SearchInput> | null>(null)
-
-function isEditableTarget(target: EventTarget | null): boolean {
-  if (!(target instanceof HTMLElement)) return false
-  return target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable
-}
 
 function onKeydown(event: KeyboardEvent) {
   if (event.key !== '/' || isEditableTarget(event.target)) return

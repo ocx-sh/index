@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
-import MarkdownIt from 'markdown-it'
 import { casUrl } from '../../utils/cas'
 
 // DetailPage owns the `v-if="root.desc?.readme"` gate — this component
@@ -12,10 +11,6 @@ const props = defineProps<{
   bareName: string
   digest: string
 }>()
-
-// `html: false` is non-negotiable — README content is semi-trusted (bot-
-// mirrored from a third-party registry's __ocx.desc, not authored here).
-const md = new MarkdownIt({ html: false })
 
 const html = ref<string | null>(null)
 const loading = ref(true)
@@ -34,9 +29,16 @@ async function load() {
     return
   }
   try {
-    const resp = await fetch(url)
+    // Dynamic import — `markdown-it` only reaches the browser as its own
+    // chunk, fetched the first time a README actually renders, instead of
+    // a static import pulling it into the shared every-page bundle.
+    const [resp, { default: MarkdownIt }] = await Promise.all([fetch(url), import('markdown-it')])
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`)
     const text = await resp.text()
+    // `html: false` is non-negotiable — README content is semi-trusted
+    // (bot-mirrored from a third-party registry's __ocx.desc, not authored
+    // here).
+    const md = new MarkdownIt({ html: false })
     html.value = md.render(text)
   } catch {
     failed.value = true
@@ -125,7 +127,7 @@ watch(() => [props.bareName, props.digest], load)
 /* Flat-colored fences — no client-side Shiki (design mock 1c/1f: "code
    blocks always dark, both themes"). */
 .readme-content :deep(pre) {
-  background: #14181f;
+  background: var(--c-code-bg);
   border-radius: var(--radius-lg);
   padding: 12px 16px;
   overflow-x: auto;

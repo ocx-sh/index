@@ -27,7 +27,7 @@ function isActive(prefix: string): boolean {
     <nav class="site-nav">
       <a href="/" class="nav-link" :class="{ active: isActive('/') }">catalog</a>
       <a href="/docs/" class="nav-link" :class="{ active: isActive('/docs/') }">docs</a>
-      <a :href="theme.githubUrl" target="_blank" rel="noreferrer" class="nav-link">github ↗</a>
+      <a :href="theme.githubUrl" target="_blank" rel="noopener noreferrer" class="nav-link">github ↗</a>
     </nav>
     <span class="nav-divider" />
     <button type="button" class="search-trigger" aria-label="Search (Ctrl+K)" @click="openPalette">

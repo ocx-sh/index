@@ -27,16 +27,6 @@ const table = computed(() => (root.value ? buildVersionTable(root.value.tags, ro
 const defaultRow = computed(() => table.value?.rows.find(r => r.isDefault) ?? null)
 const tagCount = computed(() => (root.value ? Object.keys(root.value.tags).length : 0))
 
-// Most precise live version tag aliased to the row's primary — shared by
-// IdentityBlock's "latest x.y.z" pill and MetaRail's install/metadata
-// cards, computed once here rather than duplicated in each.
-const latestVersionLabel = computed(() => {
-  const row = defaultRow.value
-  if (!row || row.primaryTag !== 'latest') return null
-  const precise = row.aliasChain.filter(m => m.tag !== 'latest').at(-1)
-  return precise?.tag ?? null
-})
-
 // Observation object driving MetaRail's Platforms card: eager-loaded for
 // the default row's primary tag on package load, then swapped on
 // version-tag hover (debounced) and reverted on mouseleave (VersionTree
@@ -91,7 +81,7 @@ onMounted(() => {
         :superseded-by="root.superseded_by ?? null"
       />
 
-      <IdentityBlock :root="root" :bare-name="bareName" :latest-version-label="latestVersionLabel" />
+      <IdentityBlock :root="root" :bare-name="bareName" :latest-version-label="defaultRow?.preciseAliasTag ?? null" />
 
       <div class="detail-columns">
         <div class="versions-section">
@@ -100,7 +90,7 @@ onMounted(() => {
             <span class="versions-hint">click = copy identifier · right-click = more</span>
           </div>
           <div v-if="tagCount" class="versions-card">
-            <VersionTree :tags="root.tags" :status="root.status" :qualified-name="root.name" @hover-tag="onTagHover" />
+            <VersionTree :table="table" :status="root.status" :qualified-name="root.name" @hover-tag="onTagHover" />
           </div>
           <p v-else class="detail-status">No versions available.</p>
         </div>
@@ -110,7 +100,7 @@ onMounted(() => {
           :root="root"
           :qualified-name="root.name"
           :primary-tag="defaultRow?.primaryTag ?? null"
-          :latest-version-label="latestVersionLabel"
+          :latest-version-label="defaultRow?.preciseAliasTag ?? null"
           :active-observation="activeObservation"
           :tag-count="tagCount"
         />
@@ -127,10 +117,10 @@ onMounted(() => {
   max-width: 1240px;
   width: 100%;
   margin: 0 auto;
-  padding: 18px 24px 44px;
+  padding: var(--space-5) var(--space-6) var(--space-8);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--space-4);
 }
 
 .detail-status {
@@ -170,7 +160,7 @@ onMounted(() => {
   display: grid;
   grid-template-columns: 1fr 300px;
   grid-template-areas: 'versions rail' 'readme rail';
-  gap: 24px 28px;
+  gap: var(--space-6) var(--space-7);
   align-items: start;
 }
 

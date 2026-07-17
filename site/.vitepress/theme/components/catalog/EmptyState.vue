@@ -32,7 +32,7 @@ const requestQueryUrl = computed(() => {
         The index is live but the first seeds haven't landed. Watch the repo, or bring a mirror of your own.
       </p>
       <div class="empty-ctas">
-        <a :href="REQUEST_PACKAGE_URL" target="_blank" rel="noreferrer" class="cta-primary">request a package</a>
+        <a :href="REQUEST_PACKAGE_URL" target="_blank" rel="noopener noreferrer" class="cta-primary">request a package</a>
         <a :href="CONTRIBUTE_MIRROR_URL" class="cta-secondary">contribute a mirror</a>
       </div>
     </template>
@@ -41,7 +41,7 @@ const requestQueryUrl = computed(() => {
       <p class="empty-copy">Check the spelling or drop a filter — {{ total }} packages total.</p>
       <div class="empty-ctas">
         <button type="button" class="cta-outline" @click="$emit('clear-search')">clear search</button>
-        <a :href="requestQueryUrl" target="_blank" rel="noreferrer" class="cta-ghost">request &ldquo;{{ query }}&rdquo; →</a>
+        <a :href="requestQueryUrl" target="_blank" rel="noopener noreferrer" class="cta-ghost">request &ldquo;{{ query }}&rdquo; →</a>
       </div>
     </template>
   </div>

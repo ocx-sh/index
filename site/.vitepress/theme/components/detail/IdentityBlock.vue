@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useCopyState } from '../../composables/useCopyState'
+import { useImageFallback } from '../../composables/useImageFallback'
 import { casUrl, LOGO_EXT_CANDIDATES } from '../../utils/cas'
 import { monogramHue, monogramInitials, MONOGRAM_HUES } from '../../utils/monogram'
+import CopyIcon from '../shared/CopyIcon.vue'
 import type { PackageRoot } from '../../composables/usePackageRoot'
 
 const props = defineProps<{
@@ -24,17 +26,11 @@ const qualifiedDisplayName = computed(() => `ocx.sh/${props.bareName}`)
 
 const { copied, copyText } = useCopyState(1500)
 
-// Logo fallback chain: svg -> png -> monogram tile (same guess-and-retry
-// pattern as the catalog's PackageCard — see utils/cas.ts's ponytail note).
-const logoAttempt = ref(0)
-const logoSrc = computed(() => {
-  const ext = LOGO_EXT_CANDIDATES[logoAttempt.value]
-  if (!ext) return null
-  return casUrl(props.bareName, props.root.desc?.logo, ext)
-})
-function onLogoError() {
-  logoAttempt.value += 1
-}
+// Logo fallback chain: svg -> png -> monogram tile (see utils/cas.ts's
+// ponytail note on why extension guess-and-retry is needed at all) —
+// `useImageFallback` owns the shared retry-chain mechanics.
+const logoCandidates = computed(() => LOGO_EXT_CANDIDATES.map(ext => casUrl(props.bareName, props.root.desc?.logo, ext)))
+const { src: logoSrc, onError: onLogoError } = useImageFallback(logoCandidates)
 
 const hue = computed(() => monogramHue(props.bareName))
 const initials = computed(() => monogramInitials(props.bareName.split('/').pop() ?? props.bareName))
@@ -67,13 +63,7 @@ const monogramStyle = computed(() => ({
         <h1 class="identity-title">{{ title }}</h1>
         <button type="button" class="identity-name-badge" @click="copyText(qualifiedDisplayName)">
           <span>{{ qualifiedDisplayName }}</span>
-          <svg v-if="!copied" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <rect x="9" y="9" width="13" height="13" rx="2" />
-            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-          </svg>
-          <svg v-else width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="identity-check">
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
+          <CopyIcon :copied="copied" :size="12" check-class="identity-check" />
         </button>
         <span v-if="latestVersionLabel" class="identity-latest">latest {{ latestVersionLabel }}</span>
         <span v-if="root.status === 'deprecated'" class="identity-deprecated">DEPRECATED</span>
