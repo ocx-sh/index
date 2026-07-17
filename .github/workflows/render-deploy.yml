@@ -34,11 +34,14 @@ jobs:
           no-cache: true
 
       # ADR (adr_catalog_docs_colocation.md) "Build pipeline order" -- fixed,
-      # non-reorderable sequence: `indexbot render --site-dist` (pre-build
-      # wrapper pages) -> `bun run build` (VitePress `emptyOutDir: true`
-      # wipes site/.vitepress/dist clean) -> `indexbot render --out`
-      # (config.json + /p/** + /data/catalog/**, written INTO the same
-      # freshly-emptied tree). Swapping the last two steps silently deletes
+      # non-reorderable sequence (reshaped by plan_site_redesign WP-bot/
+      # WP-ci: dynamic routes replaced the bot-generated wrapper pages this
+      # comment used to describe as a first step): `bun run build` (VitePress
+      # `emptyOutDir: true` wipes site/.vitepress/dist clean, compiling
+      # site/src/[ns]/[pkg].paths.ts's dynamic routes straight from the
+      # committed p/*/*.json tree) -> `indexbot render --out` (config.json +
+      # /p/** + /c/index.json + /data/catalog/catalog.json, written INTO the
+      # same freshly-emptied tree). Swapping the two steps silently deletes
       # the wire JSON on the next deploy -- see taskfile.yml's render:build
       # target, which encodes this order, not this workflow directly.
       - name: task render:build

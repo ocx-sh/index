@@ -89,18 +89,19 @@ tasks:
       Full render pipeline against the committed p/ source tree, sandwiching
       the VitePress build per the fixed build order (ADR
       adr_catalog_docs_colocation.md "Build pipeline order", plan Phase 3
-      WP3-A): (1) `indexbot render --site-dist` emits per-package wrapper
-      Markdown into site/src/** — VitePress compile input, must exist before
-      the build; (2) `bun run build` (via site:build) compiles
-      {{.RENDER_OUT}}, wiping it clean (`emptyOutDir: true`); (3) `indexbot
-      render --out` emits config.json + the /p/** wire mirror +
-      /data/catalog/** directly into {{.RENDER_OUT}}, only AFTER step 2 —
-      reversing steps 2 and 3 silently deletes the wire JSON on the next
-      deploy. With no p/ tree yet (pre-seed), step 1 emits no wrapper pages
-      and step 3 still emits config.json + an empty
-      /data/catalog/packages.json — no separate p/-absent code path needed.
+      WP3-A, reshaped by plan_site_redesign WP-bot/WP-ci): (1) `bun run
+      build` (via site:build) compiles {{.RENDER_OUT}}, wiping it clean
+      (`emptyOutDir: true`) — dynamic routes (`site/src/[ns]/[pkg].paths.ts`)
+      glob the committed `p/*/*.json` tree directly at build time, so no
+      bot-generated wrapper-page pre-emission step is needed any more; (2)
+      `indexbot render --out` emits config.json + the /p/** wire mirror +
+      /c/index.json + /data/catalog/catalog.json directly into
+      {{.RENDER_OUT}}, only AFTER step 1 — reversing the two steps silently
+      deletes the wire JSON on the next deploy. With no p/ tree yet
+      (pre-seed), step 2 still emits config.json + an empty
+      /data/catalog/catalog.json (`{"generated": null, "packages": []}`) —
+      no separate p/-absent code path needed.
     cmds:
-      - uv run --project bot -- indexbot render --index-dir "" --site-dist site/src
       - task: site:build
       - uv run --project bot -- indexbot render --index-dir "" --out {{.RENDER_OUT}}
 

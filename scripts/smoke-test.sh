@@ -18,9 +18,12 @@ IFS=$'\n\t'
 # format_version), conditional GET (If-None-Match -> 304), c/index.json
 # (200, ETag) with its own conditional GET (If-None-Match -> 304), a sample
 # root's digest chain (root tags[].content -> observation object ->
-# recomputed sha256), catalog "/" (200, text/html), "/docs/" (200). Every
-# fetch is wrapped in a bounded retry (3 attempts, 5s apart) to absorb CDN
-# warm-up.
+# recomputed sha256), data/catalog/catalog.json (200 + has a "packages"
+# key — render always emits this tree, even an empty "packages": [] before
+# Phase 4 seeds land, so a non-200 here is tolerated only under
+# --allow-empty, same as the digest-chain section), catalog "/" (200,
+# text/html), "/docs/" (200). Every fetch is wrapped in a bounded retry (3
+# attempts, 5s apart) to absorb CDN warm-up.
 #
 # Exit codes (independent of indexbot's sysexits contract in
 # adr_index_bot_and_workflow_security.md BD-2 — this is a bash ops tool, not
@@ -242,6 +245,29 @@ check_c_index_conditional_get() {
   fail "conditional GET (c/index.json)" "expected 304, got ${status}" "$EXIT_HTTP"
 }
 
+check_catalog_json() {
+  local body="${WORKDIR}/catalog-json.body" headers="${WORKDIR}/catalog-json.headers" status
+  status=$(fetch "${BASE_URL}/data/catalog/catalog.json" "$body" "$headers")
+  if [[ "$status" != "200" ]]; then
+    # render always emits this tree, even pre-seed ("packages": []) — a
+    # non-200 here is a real gap, tolerated only under --allow-empty (same
+    # pre-seed carve-out as the digest-chain section below).
+    if [[ "$ALLOW_EMPTY" -eq 1 ]]; then
+      skip "data/catalog/catalog.json" "HTTP ${status} tolerated (--allow-empty)"
+    else
+      fail "data/catalog/catalog.json" "expected HTTP 200, got ${status}" "$EXIT_HTTP"
+    fi
+    return
+  fi
+  pass "data/catalog/catalog.json" "HTTP 200"
+
+  if jq -e 'has("packages")' "$body" >/dev/null 2>&1; then
+    pass "data/catalog/catalog.json shape" "has \"packages\" key"
+  else
+    fail "data/catalog/catalog.json shape" "missing \"packages\" key" "$EXIT_SCHEMA"
+  fi
+}
+
 discover_root() {
   if [[ -n "$ROOT_PKG" ]]; then
     return 0
@@ -431,6 +457,7 @@ main() {
   check_conditional_get
   check_c_index
   check_c_index_conditional_get
+  check_catalog_json
   check_digest_chain
   check_catalog
   check_docs
