@@ -115,9 +115,20 @@ tasks:
       var, default "") overrides indexbot's own `--index-dir` -- a prefix
       BEFORE the literal `p/` component (`cli/render.py`'s `_p_prefix`), not
       a replacement for it, so "demo" (not "demo/p") reads `demo/p/**`.
-      demo:serve is the one caller that overrides it, to "demo".
+      demo:serve is the one caller that overrides it, to "demo". Forwards its
+      own resolved RENDER_INDEX_DIR to the site:build sub-task call
+      explicitly -- Task does NOT propagate a var override through a nested
+      `task:` call unless it's passed via that call's own `vars:` block, so
+      without this, site:build always saw its unoverridden global default
+      (""), OCX_RENDER_INDEX_DIR was never "demo" in the VitePress build, and
+      site/src/[ns]/[pkg].paths.ts silently discovered zero routes even
+      under `task demo:serve` (every detail page 404s) while step 2 below
+      still rendered demo/p/** correctly, since it references
+      {{.RENDER_INDEX_DIR}} directly in its own scope.
     cmds:
       - task: site:build
+        vars:
+          RENDER_INDEX_DIR: '{{.RENDER_INDEX_DIR}}'
       - uv run --project bot -- indexbot render --index-dir "{{.RENDER_INDEX_DIR}}" --out {{.RENDER_OUT}}
 
   schema:validate:rendered:
