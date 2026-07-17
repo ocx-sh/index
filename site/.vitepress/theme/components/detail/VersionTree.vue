@@ -10,6 +10,7 @@ import {
   PopoverContent,
 } from 'reka-ui'
 import TagBadge from './TagBadge.vue'
+import CopyContextMenu, { buildTagCopyActions } from '../shared/CopyContextMenu.vue'
 import CopyIcon from '../shared/CopyIcon.vue'
 import { useCopyState } from '../../composables/useCopyState'
 import { minorGroupHasYanked, rowHasHiddenYanked } from '../../utils/version'
@@ -70,9 +71,17 @@ function handleLeave() {
 const { copied: aliasCopied, copyText: copyAliasText } = useCopyState(1500)
 const lastCopiedAliasTag = ref<string | null>(null)
 
-function copyAliasMember(tag: string) {
+// Shared by the segment's own left-click (always copies the identifier,
+// matching every other click-to-copy element on this page) and its
+// right-click menu's five actions (`buildTagCopyActions` below) — one
+// "copied" flag/checkmark for both, same pattern TagBadge itself uses.
+function copyAliasAction(tag: string, text: string) {
   lastCopiedAliasTag.value = tag
-  copyAliasText(`${props.qualifiedName}:${tag}`)
+  copyAliasText(text)
+}
+
+function copyAliasMember(tag: string) {
+  copyAliasAction(tag, `${props.qualifiedName}:${tag}`)
 }
 
 // Track open state of minor popovers so we can close on copy
@@ -121,6 +130,28 @@ function minorKey(major: number, minor: MinorGroup): string {
   return `${major}:${minor.minorTag}`
 }
 
+/**
+ * Digest to preview on hovering a minor-group badge. `minor.digest` is
+ * `undefined` when the group has no real minor-precision tag of its own
+ * (`buildVersionTable`'s synthesized-label case, e.g. terraform's "1.8"
+ * label standing in for the lone "1.8.0" patch) — falling straight through
+ * to `emit('hover-tag', minor.digest)` with that guarded on truthiness (the
+ * pre-fix code) made hovering such a badge a silent no-op: the
+ * platform-matrix preview stayed stuck on whatever digest was last loaded
+ * instead of reflecting the group the user is actually pointing at
+ * (completeness bug — "platforms not showing all badges" for the digest
+ * actually in view). `minor.patches` is sorted newest-first, so its head is
+ * the best single-digest stand-in for the group's own preview.
+ */
+function minorPreviewDigest(minor: MinorGroup): string | undefined {
+  return minor.digest ?? minor.patches[0]?.digest
+}
+
+function onMinorHover(minor: MinorGroup) {
+  const digest = minorPreviewDigest(minor)
+  if (digest) emit('hover-tag', digest)
+}
+
 function patchLabel(count: number): string {
   return count === 1 ? '1 PATCH RELEASE' : `${count} PATCH RELEASES`
 }
@@ -139,22 +170,32 @@ function patchLabel(count: number): string {
           <template v-else>{{ row.label }}</template>
         </span>
 
+        <!-- Segmented alias-chain control — the one tag-rendering surface on
+             this page that was never a `TagBadge` (custom segmented-button
+             styling instead), so it never picked up a right-click menu even
+             after `TagBadge` grew one (right-click-menu-coverage fix: every
+             visible tag badge, everywhere, now offers the same menu). -->
         <span v-if="row.aliasChain.length" class="alias-chain">
-          <button
+          <CopyContextMenu
             v-for="member in row.aliasChain"
             :key="member.tag"
-            type="button"
-            class="alias-segment"
-            :class="{
-              latest: row.showLatestHighlight && member.tag === 'latest',
-              copied: aliasCopied && lastCopiedAliasTag === member.tag,
-            }"
-            @click="copyAliasMember(member.tag)"
-            @mouseenter="emit('hover-tag', member.digest)"
+            :actions="buildTagCopyActions(qualifiedName, member.tag)"
+            :copy-text="(text: string) => copyAliasAction(member.tag, text)"
           >
-            <span class="alias-text">{{ member.tag }}</span>
-            <CopyIcon :copied="true" :size="11" check-class="alias-check" />
-          </button>
+            <button
+              type="button"
+              class="alias-segment"
+              :class="{
+                latest: row.showLatestHighlight && member.tag === 'latest',
+                copied: aliasCopied && lastCopiedAliasTag === member.tag,
+              }"
+              @click="copyAliasMember(member.tag)"
+              @mouseenter="emit('hover-tag', member.digest)"
+            >
+              <span class="alias-text">{{ member.tag }}</span>
+              <CopyIcon :copied="true" :size="11" check-class="alias-check" />
+            </button>
+          </CopyContextMenu>
         </span>
 
         <!-- Yanked rolling tags (e.g. a yanked "latest") never make the
@@ -229,7 +270,7 @@ function patchLabel(count: number): string {
                   variant="minor"
                   :yanked="!!minor.yanked"
                   :yanked-reason="minor.yanked?.reason"
-                  @mouseenter="minor.digest && emit('hover-tag', minor.digest)"
+                  @mouseenter="onMinorHover(minor)"
                 />
                 <PopoverRoot
                   v-if="minor.patches.length"
