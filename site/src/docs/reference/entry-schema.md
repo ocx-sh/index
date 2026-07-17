@@ -13,6 +13,7 @@ anything this table simplifies.
 - Root: [`https://index.ocx.sh/schema/root.schema.json`](https://index.ocx.sh/schema/root.schema.json)
 - Observation object: [`https://index.ocx.sh/schema/observation-object.schema.json`](https://index.ocx.sh/schema/observation-object.schema.json)
 - Config: [`https://index.ocx.sh/schema/config.schema.json`](https://index.ocx.sh/schema/config.schema.json)
+- Enumeration index: [`https://index.ocx.sh/schema/c-index.schema.json`](https://index.ocx.sh/schema/c-index.schema.json)
 
 See [Wire Format](./wire-format) for URL shapes and freshness semantics, and
 [Namespace Policy](./namespace-policy) for the `name`/`repository` charset.
@@ -23,6 +24,16 @@ See [Wire Format](./wire-format) for URL shapes and freshness semantics, and
 |---|---|---|---|
 | `format_version` | integer, ≥1 | yes | Monotonically increasing wire-format generation counter |
 
+## Enumeration Index — `/c/index.json`
+
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| `format_version` | integer, ≥1 | yes | same counter as `config.json` |
+| `packages` | map: bare `<namespace>/<package>` → `sha256:<hex>` | yes | sorted by key; value is the digest of the **exact bytes** served at that package's root (`/p/<key>.json`) — not a canonical-JSON CAS digest; empty map is a valid state |
+
+See [Wire Format](./wire-format#c-index-json-—-enumeration-index) for the
+sync protocol built on top of this shape.
+
 ## Package Root — `/p/<namespace>/<package>.json`
 
 | Field | Type | Required | Governed by | Notes |
@@ -32,6 +43,7 @@ See [Wire Format](./wire-format) for URL shapes and freshness semantics, and
 | `owners` | array of [Owner](#owner) | yes, ≥1 item | human (PR) | |
 | `status` | enum | yes | human (PR) | `active` \| `deprecated` \| `yanked` |
 | `deprecated_message` | string \| null | yes | human (PR) | |
+| `superseded_by` | string \| null | no | human (PR) | bare `<namespace>/<package>` naming a successor package, ≤140 chars; omitted or `null` when unset; self-reference invalid, no coupling to `status` |
 | `created` | string, `YYYY-MM-DD` | yes | human (PR), set once | date first claimed |
 | `upstream` | [Upstream](#upstream) object | no | human (PR) | mandatory by governance for third-party vendor namespaces; omitted for OCX first-party entries |
 | `desc` | [Desc](#desc) object \| `null` | yes (nullable) | bot-regenerated | `null` if `__ocx.desc` never published |
@@ -112,7 +124,7 @@ Two disjoint sets, never cross-contaminated (see
 [Governance Contracts](./governance-contracts) G-09):
 
 - **Human-governed** (only changed by a merged PR): `name`, `repository`,
-  `owners`, `status`, `deprecated_message`, `created`, `upstream`, and
-  `tags[*].yanked`.
+  `owners`, `status`, `deprecated_message`, `superseded_by`, `created`,
+  `upstream`, and `tags[*].yanked`.
 - **Bot-regenerated** (rewritten from registry truth on every
   announce/reconcile): `desc` and the rest of every `tags[*]` row.

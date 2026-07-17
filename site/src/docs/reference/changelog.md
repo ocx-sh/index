@@ -27,6 +27,18 @@ Initial locked-observation wire format.
   status; observation objects are never deleted, only pruned by
   render-time reachability when no tag references them.
 
+Additive, same `format_version`:
+
+- `/c/index.json` — enumeration index: a sorted map from every published
+  bare `<namespace>/<package>` name to the exact-bytes digest of its package
+  root, for whole-catalog sync via conditional GET + digest diff. A fourth
+  frozen URL shape; names and digests only, never metadata. See
+  [Wire Format](./wire-format#c-index-json-—-enumeration-index).
+- `/p/<namespace>/<package>.json` gains an optional `superseded_by` field:
+  bare `<namespace>/<package>` naming a successor package, human-governed,
+  omitted or `null` when unset. Existing consumers already ignore unknown
+  fields per the additive-evolution rule, so this costs nothing to add.
+
 No prior `format_version` was ever served to a real client, so this entry
 carries no migration notes. Two deltas exist against the placeholder
 `config.json`/flat-pointer shape that predated it (`config.json` dropped a

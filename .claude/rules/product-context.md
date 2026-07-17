@@ -23,7 +23,7 @@ Design authority: [adr_locked_observation_index_format.md](../artifacts/adr_lock
 (index format) and [adr_namespace_policy.md](../artifacts/adr_namespace_policy.md)
 (namespace segment, reserved names).
 
-Three frozen URL shapes:
+Four frozen URL shapes:
 
 - `/config.json` — `{"format_version": 1}`, nothing else
 - `/p/<namespace>/<package>.json` — package root: governance fields (`name`,
@@ -35,6 +35,11 @@ Three frozen URL shapes:
   `platform` is an OCI platform object and `digest` is the manifest digest it
   resolved to. Lock unit is the **platform manifest**, never the image index
   (revises inherited D3)
+- `/c/index.json` — enumeration index: `{"format_version": 1, "packages":
+  {"<ns>/<pkg>": "sha256:<hex>", ...}}`, a sorted map from every published
+  package to the exact-bytes digest of its package root, for whole-catalog
+  sync via conditional GET + digest diff (additive, 2026-07-17; see
+  [adr_enumeration_index.md](../artifacts/adr_enumeration_index.md))
 
 Desc blobs (`/p/<namespace>/<package>/o/sha256/<hex>.{md,svg,png}` — README,
 logo) reuse the same content-addressed CAS convention as the observation
@@ -65,7 +70,9 @@ both ported from the ocx repo — see `handover_from_ocx.md`.
 ## Non-Goals
 
 - Not a registry (no blobs — pointers only)
-- Not a search service (`all.json` snapshot deferred)
+- Not a search service — full-text/browse search stays deferred; name+digest
+  enumeration exists at `/c/index.json` (see
+  [adr_enumeration_index.md](../artifacts/adr_enumeration_index.md))
 - No signing/provenance in v1 (deferred ADR)
 
 ## Operating Constraints

@@ -89,6 +89,6 @@ landed, so the deployed tree currently renders `config.json` only.
 ## Wire Contract = One-Way Door
 
 Published URL shapes (`/config.json`, `/p/<ns>/<pkg>.json`,
-`/p/<ns>/<pkg>/o/sha256/<hex>.json`) + JSON field semantics must stay backward
-compatible once ocx clients bake the endpoint. Additive changes only;
-`format_version` gates breaking evolution.
+`/p/<ns>/<pkg>/o/sha256/<hex>.json`, `/c/index.json`) + JSON field semantics
+must stay backward compatible once ocx clients bake the endpoint. Additive
+changes only; `format_version` gates breaking evolution.

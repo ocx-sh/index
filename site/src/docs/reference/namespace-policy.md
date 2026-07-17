@@ -60,7 +60,7 @@ the namespace and the package position:
 
 | Category | Segments | Why reserved |
 |---|---|---|
-| Control paths | `p`, `o`, `docs`, `assets`, `config`, `schema`, `api`, `static`, `data` | Top-level directories in the index git tree and/or top-level URL paths on the colocated `index.ocx.sh` deployment. `o` specifically is the CAS-objects marker inside every package's own subtree — a namespace or package segment equal to `o` would make that path ambiguous to a tool doing prefix matching. |
+| Control paths | `p`, `o`, `c`, `docs`, `assets`, `config`, `schema`, `api`, `static`, `data` | Top-level directories in the index git tree and/or top-level URL paths on the colocated `index.ocx.sh` deployment. `o` specifically is the CAS-objects marker inside every package's own subtree — a namespace or package segment equal to `o` would make that path ambiguous to a tool doing prefix matching. `c` is the top-level enumeration-index segment (`/c/index.json`) — reserved for the same routing-collision reason. |
 | Brand | `ocx`, `ocx-sh`, `ocx-contrib`, `ocx-rs` | OCX's own project and org identities. |
 | Generic/ambiguous | `admin`, `root`, `system`, `std`, `core`, `official`, `public`, `test`, `example`, `internal` | Words whose plain-English meaning implies a privileged or non-existent-vendor status the two-level model refuses to grant. |
 

@@ -16,7 +16,7 @@ locked-observation wire format. Design authority:
 | G-02 | `name` equals the path-derived logical name (`p/<ns>/<pkg>.json` → `<ns>/<pkg>`) | Kept — hand-rolled check, not schema-expressible |
 | G-03 | `repository` host allowlist, checked before any network call | Kept — SSRF-ordering guard |
 | G-04 | New entry file → `new-package` label, mandatory human review, never auto-merge | Kept — namespace-fit judgment is [Namespace Policy](./namespace-policy)'s contract; this gate is the mechanical enforcement |
-| G-05 | Green refresh → auto-merge eligible; yank/deprecate/transfer/owners/pointer change → human review always | Kept, key set expanded — human-review-required keys are `repository`, `owners`, `status`, `deprecated_message`, and any mutation of an existing tag row's `yanked` field |
+| G-05 | Green refresh → auto-merge eligible; yank/deprecate/transfer/owners/pointer change → human review always | Kept, key set expanded — human-review-required keys are `repository`, `owners`, `status`, `deprecated_message`, `superseded_by`, and any mutation of an existing tag row's `yanked` field |
 | G-06 | Render: source tree → deploy tree | Reinterpreted — no longer an identity copy; reachability-filtered CAS copy, `config.json` emission, `/data/catalog/**` emission, per-package wrapper-page emission |
 | G-07 | Deploy is idempotent; no-op on an unchanged tree | Kept |
 | G-08 | `repository_dispatch` payload validated via env-var indirection, regex-checked before use | Kept, regex reinterpreted — exact 2-segment package-id form (see [Namespace Policy](./namespace-policy)) |

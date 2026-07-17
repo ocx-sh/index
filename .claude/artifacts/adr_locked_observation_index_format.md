@@ -216,6 +216,7 @@ string; the corresponding CAS file is the same digest with `:` replaced by `/`.
 | `deprecated_message` | string \| null | human (PR) | |
 | `created` | string (date) | human (PR), set once | |
 | `upstream` | `{org, repository_url?, disclaimer?}` | human (PR) | attribution of the upstream project the package mirrors, distinct from the namespace owner; feeds the catalog's upstream-disclaimer badge |
+| `superseded_by` | string \| null | human (PR) | optional; bare `<namespace>/<package>` naming a successor package, ≤140 chars; omitted or `null` when unset — **added 2026-07-17** by [`adr_enumeration_index.md`](./adr_enumeration_index.md) D7, not part of this ADR's original decision |
 | `desc` | `{digest, title, description, keywords[], readme?, logo?}` \| null | bot-regenerated | nullable — see D6 |
 | `tags` | map: tag name → `{content, observed, yanked?}` | bot-regenerated, except `yanked` (human, PR) | **every** observed tag, no filtering — see below |
 
@@ -469,3 +470,4 @@ duplicated here.
 | Date | Author | Change |
 |------|--------|--------|
 | 2026-07-17 | Michael Herwig + Claude design swarm | Initial record from the 2026-07-16 design discussion; supersedes D3 of `adr_public_index_registry_indirection.md` and §2e of `design_spec_registry_indirection.md` |
+| 2026-07-17 | Michael Herwig + Claude design swarm | Amendment: D2's root-field table gains `superseded_by` (optional, human-governed), added by `adr_enumeration_index.md` D7 |

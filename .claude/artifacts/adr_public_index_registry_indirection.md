@@ -374,7 +374,9 @@ nightly: reconcile cron regenerates all entries (drift self-heal)
   accepts TOFU-until-lockfile; supply-chain hardening is a separate ADR
 - Yank semantics spec (CLI behavior on yanked version; resolve vs install vs lock)
 - Namespace transfer / dispute process
-- `all.json` search snapshot + website search
+- `all.json` search snapshot + website search — name+digest enumeration
+  resolved by [`adr_enumeration_index.md`](./adr_enumeration_index.md)'s
+  `/c/index.json`; full-text/website search stays deferred
 - Index published as OCI artifact for air-gapped mirrors (ocx-mirror consumes catalog
   the same way it mirrors packages)
 - Sparse-index sharding (crates.io prefix scheme) — trigger: per-directory file counts
@@ -450,3 +452,4 @@ Owner decision after the ocx.rs infra went live: **stay with `ocx.sh` for now, p
 |------|--------|--------|
 | 2026-07-11 | Michael + Claude | Initial record from design discussion (2026-07-10/11) |
 | 2026-07-12 | Michael + Claude | Amendment A1: D14 reversed — canonical stays ocx.sh, ocx.rs parked fully |
+| 2026-07-17 | Michael + Claude | Deferred `all.json`/search-snapshot bullet partially resolved: name+digest enumeration now covered by `adr_enumeration_index.md`'s `/c/index.json`; full-text search remains deferred |
