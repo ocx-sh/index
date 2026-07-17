@@ -2,8 +2,8 @@
 #
 # Repo gate contract. `verify` == the exact CI job set in
 # .github/workflows/ci.yml (schema-validate, bot-lint, bot-test, bot-audit,
-# workflows-lint), plus placeholder:check (local-only, public/ retires in
-# Phase 3). No drift between this file and ci.yml — see
+# workflows-lint, site-build), plus placeholder:check (local-only, public/
+# retires in Phase 3). No drift between this file and ci.yml — see
 # .claude/state/plans/plan_index_v1.md WP1-C and
 # .claude/artifacts/adr_index_bot_and_workflow_security.md.
 
@@ -75,6 +75,18 @@ tasks:
     cmds:
       - find public -name '*.json' -print0 | xargs -0 -n1 jq empty
 
+  site:build:
+    desc: >-
+      VitePress catalog+docs site build (exactly ci.yml's site-build job).
+      Builds against no runtime /data/catalog and no generated
+      site/src/<ns>/<pkg>.md wrapper pages — the catalog/docs components must
+      render a degraded/empty state, never fail the build, when that data is
+      absent (see site/README.md).
+    dir: site
+    cmds:
+      - bun install --frozen-lockfile
+      - bun run build
+
   verify:
     desc: Full gate — exactly the CI job set, plus the local-only placeholder:check
     cmds:
@@ -83,4 +95,5 @@ tasks:
       - task: bot:test
       - task: bot:audit
       - task: workflows:lint
+      - task: site:build
       - task: placeholder:check

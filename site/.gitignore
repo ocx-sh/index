@@ -1,0 +1,18 @@
+# Build/cache artifacts (VitePress build output is the render-deploy.yml
+# deploy artifact — never committed; see WP3-A).
+.vitepress/cache/
+.vitepress/dist/
+
+node_modules/
+
+# Per-package wrapper pages, generated at render time (bot core/render,
+# WP2-F) directly into site/src/<namespace>/<package>.md — VitePress
+# compile *input*, not build output, per
+# .claude/artifacts/adr_catalog_docs_colocation.md ("site/ layout"). Never
+# committed. Namespaces are dynamic (case-folded seed table, ADR-2), so an
+# explicit allowlist of the hand-authored paths is more robust than trying
+# to glob every non-reserved top-level name: everything directly under
+# src/ is ignored by default, and only the paths below are un-ignored.
+/src/*
+!/src/docs/
+!/src/index.md
