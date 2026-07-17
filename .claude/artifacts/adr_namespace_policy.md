@@ -236,7 +236,7 @@ otherwise distinguish which position collides):
 The Brand row is reserved from third-party claims without exception; it does not by
 itself decide whether OCX's own first-party packages may use it — see
 [Amendment A1](#amendment-a1-2026-07-17-first-party-use-of-brand-segments) below
-(PROPOSED, not yet accepted) for that carve-out.
+(Accepted 2026-07-17) for that carve-out.
 
 This list is deliberately small and collision-driven, not an exhaustive trademark
 denylist — GitHub itself does not formally reserve usernames as policy (research §3,
@@ -368,10 +368,10 @@ This ADR amends, not supersedes, the original
 
 ### Amendment A1 (2026-07-17): First-Party Use of Brand Segments
 
-**Status:** PROPOSED — pending owner sign-off, not accepted. The enforcement code this
-amendment specifies ships in the same PR default-off (see "Enforcement" below); do not
-treat brand-segment first-party claims as permitted until the owner accepts this
-amendment.
+**Status:** Accepted — owner sign-off 2026-07-17 (Michael Herwig, session decision
+record). The enforcement mechanism (`--allow-reserved-namespace`, brand segments only)
+remains default-off; first-party brand-segment claims pass through the same G-04
+human-review PR gate as any other first claim.
 
 > Disambiguation: this is ADR-2's own Amendment A1, distinct from the unrelated
 > "ADR Amendment A1" cited in

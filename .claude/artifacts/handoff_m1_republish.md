@@ -1,4 +1,4 @@
-# Handoff: M-1 Republish — Registry Reality, Seeding Procedure, Open Decisions
+# Handoff: M-1 Republish — Registry Reality, Population Model, Open Decisions
 
 Registry-scope handoff for the Phase 5 "M-1 handoff notes" item in
 `plan_index_v1` (`.claude/state/plans/plan_index_v1.md`, gitignored — named here, not
@@ -6,6 +6,18 @@ linked). Supersedes that plan bullet's registry-scope content with what the Phas
 seeding pilot (2026-07-16/17, branch `fix/registry-reality`) actually found: Phase 4
 is blocked on M-1, not merely sequenced after it — `p/` cannot be seeded against the
 registry as it exists today.
+
+> **Owner decision (2026-07-17), supersedes the batch-seeding procedure below:**
+> the index will NOT be batch-seeded via `seed-import`. Population happens the way
+> the system is designed to run in steady state: (1) ocx/ocx-mirror get the
+> prerequisite changes, (2) mirrors are patched and republished to public
+> `ghcr.io/ocx-contrib/*`, (3) each package is then **announced gradually over
+> time** through the `repository_dispatch` announce mechanism (bot opens the PR,
+> G-04 human review at first claim). `seed-import` remains available as manual
+> tooling only. Tracking issue:
+> [ocx-sh/ocx-mirror#18](https://github.com/ocx-sh/ocx-mirror/issues/18). The
+> "Index-Side Seeding Procedure" section below is retained as reference for
+> manual use, not as the population plan.
 
 ## Metadata
 
