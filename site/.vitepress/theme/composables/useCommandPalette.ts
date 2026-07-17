@@ -1,5 +1,6 @@
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRoute } from 'vitepress'
+import { isEditableTarget } from '../utils/dom'
 
 // Module-singleton — `isOpen` is one shared ref so every consumer (the
 // SiteHeader trigger button, the global shortcut listener below, and
@@ -15,12 +16,6 @@ export function useCommandPalette() {
     close: () => { isOpen.value = false },
     toggle: () => { isOpen.value = !isOpen.value },
   }
-}
-
-function isEditableTarget(el: Element | null): boolean {
-  if (!el) return false
-  const tag = el.tagName
-  return tag === 'INPUT' || tag === 'TEXTAREA' || (el as HTMLElement).isContentEditable
 }
 
 /**

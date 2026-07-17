@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useCopyState } from '../../composables/useCopyState'
+import { safeHref } from '../../utils/safeHref'
 import PlatformMatrix from './PlatformMatrix.vue'
+import CopyIcon from '../shared/CopyIcon.vue'
 import type { PackageRoot } from '../../composables/usePackageRoot'
 import type { ObservationObject } from '../../composables/useObservation'
 
@@ -39,6 +41,11 @@ const installCommand = computed(() => {
 const { copied, copyText } = useCopyState(1500)
 
 const owners = computed(() => props.root.owners)
+
+// `upstream.repository_url` is third-party metadata (wire-sourced, not
+// authored here) — allowlist the scheme before it ever reaches an `:href`
+// (CWE-79 guard, see `utils/safeHref.ts`). `null` degrades to plain text.
+const safeUpstreamUrl = computed(() => safeHref(props.root.upstream?.repository_url))
 </script>
 
 <template>
@@ -59,13 +66,7 @@ const owners = computed(() => props.root.owners)
         >
           <span class="install-prefix">$</span>
           <span class="install-cmd">{{ installCommand }}</span>
-          <svg v-if="!copied" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <rect x="9" y="9" width="13" height="13" rx="2" />
-            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-          </svg>
-          <svg v-else width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
+          <CopyIcon :copied="copied" />
         </button>
       </div>
       <p v-else class="rail-empty">No installable version.</p>
@@ -86,14 +87,14 @@ const owners = computed(() => props.root.owners)
         <div class="metadata-row">
           <span class="metadata-key">owners</span>
           <span class="metadata-value">
-            <a v-for="(owner, i) in owners" :key="owner.github" :href="`https://github.com/${owner.github}`" target="_blank" rel="noreferrer">
+            <a v-for="(owner, i) in owners" :key="owner.github" :href="`https://github.com/${owner.github}`" target="_blank" rel="noopener noreferrer">
               @{{ owner.github }}<template v-if="i < owners.length - 1">, </template>
             </a>
           </span>
         </div>
         <div v-if="root.upstream" class="metadata-row">
           <span class="metadata-key">upstream</span>
-          <a v-if="root.upstream.repository_url" class="metadata-value" :href="root.upstream.repository_url" target="_blank" rel="noreferrer">{{ root.upstream.org }} ↗</a>
+          <a v-if="safeUpstreamUrl" class="metadata-value" :href="safeUpstreamUrl" target="_blank" rel="noopener noreferrer">{{ root.upstream.org }} ↗</a>
           <span v-else class="metadata-value">{{ root.upstream.org }}</span>
         </div>
         <div v-if="latestVersionLabel" class="metadata-row">

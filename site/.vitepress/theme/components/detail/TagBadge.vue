@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useClipboard } from '@vueuse/core'
 import {
   ContextMenuRoot,
   ContextMenuTrigger,
   ContextMenuContent,
   ContextMenuItem,
 } from 'reka-ui'
+import { useCopyState } from '../../composables/useCopyState'
+import CopyIcon from '../shared/CopyIcon.vue'
 
 // Relocated verbatim from `components/TagBadge.vue` (pre-redesign) into
 // `components/detail/` — WP-D owns this rework. The five copy actions'
@@ -26,8 +26,12 @@ const props = withDefaults(defineProps<{
 
 const emit = defineEmits<{ copied: [] }>()
 
-const { copy } = useClipboard()
-const copied = ref(false)
+// useCopyState.ts's docstring names TagBadge as one of its intended
+// consumers — the 1500ms copied-flag reset is its job now; the extra
+// 1300ms `emit('copied')` timer (fires 200ms before the checkmark fades,
+// so the popover it closes doesn't visibly outlast the badge's own
+// feedback) stays TagBadge's own layer on top.
+const { copied, copyText: copyViaState } = useCopyState(1500)
 
 function addProjectCmd() {
   return `ocx add ${props.qualifiedName}:${props.tag}`
@@ -50,10 +54,8 @@ function execCmd() {
 
 async function copyText(text: string) {
   if (copied.value) return
-  await copy(text)
-  copied.value = true
+  await copyViaState(text)
   setTimeout(() => emit('copied'), 1300) // start fade-out 200ms before checkmark ends
-  setTimeout(() => { copied.value = false }, 1500)
 }
 
 function identifier() {
@@ -75,26 +77,13 @@ async function handleClick() {
         @click="handleClick"
       >
         <span class="tag-text">{{ tag }}</span>
-        <svg
-          class="tag-check"
-          width="12"
-          height="12"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="3"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        ><polyline points="20 6 9 17 4 12" /></svg>
+        <CopyIcon :copied="true" :size="12" check-class="tag-check" />
       </code>
     </ContextMenuTrigger>
 
     <ContextMenuContent class="ctx-menu">
         <ContextMenuItem class="ctx-item" @select="copyText(identifier())">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-          </svg>
+          <CopyIcon :copied="false" :size="14" />
           <span>Copy identifier</span>
         </ContextMenuItem>
         <ContextMenuItem class="ctx-item" @select="copyText(tag)">

@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import type { CatalogPackage } from '../../composables/useCatalog'
+import { useImageFallback } from '../../composables/useImageFallback'
 import { monogramHue, monogramInitials } from '../../utils/monogram'
 import { OS_GLYPHS, osRank } from '../../utils/osGlyphs'
 import MonogramTile from './MonogramTile.vue'
@@ -22,23 +23,17 @@ const initials = computed(() => monogramInitials(props.pkg.package))
 // `package` is non-empty per schema) rather than a designed "sometimes"
 // toggle; the mock's own two example tile styles are visual variety in
 // the fixture generator, not two independently-random UI states.
-const triedPng = ref(false)
-const imgFailed = ref(false)
-
-const imgSrc = computed(() => {
-  if (!props.pkg.logoUrl) return null
-  return triedPng.value ? props.pkg.logoUrl.replace(/\.svg$/, '.png') : props.pkg.logoUrl
+// `useImageFallback` owns the svg->png retry mechanics (shared with
+// `IdentityBlock`'s logo chain); a non-svg `logoUrl` gets exactly one
+// candidate — retrying the same URL after it already 404'd is pointless.
+const logoCandidates = computed<(string | null)[]>(() => {
+  const url = props.pkg.logoUrl
+  if (!url) return []
+  return url.endsWith('.svg') ? [url, url.replace(/\.svg$/, '.png')] : [url]
 })
+const { src: imgSrc, onError: onImgError } = useImageFallback(logoCandidates)
 
-function onImgError() {
-  if (!triedPng.value && props.pkg.logoUrl?.endsWith('.svg')) {
-    triedPng.value = true
-    return
-  }
-  imgFailed.value = true
-}
-
-const showImg = computed(() => !!imgSrc.value && !imgFailed.value)
+const showImg = computed(() => !!imgSrc.value)
 
 const platforms = computed(() =>
   [...new Set(props.pkg.platforms.map(p => p.split('/')[0]))].sort((a, b) => osRank(a) - osRank(b)),

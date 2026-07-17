@@ -2,12 +2,11 @@ import { ref } from 'vue'
 import { useClipboard } from '@vueuse/core'
 
 /**
- * Clipboard copy + timed "copied" flag reset — the boilerplate duplicated
- * across `CopySnippet.vue`/`TagBadge.vue` today, factored out for every
- * WP-C/D copy affordance (`InstallRow.vue` and beyond) to share.
+ * Clipboard copy + timed "copied" flag reset — shared by every WP-C/D copy
+ * affordance (`InstallRow.vue`, `IdentityBlock.vue`, `MetaRail.vue`,
+ * `TagBadge.vue`) that used to hand-roll this boilerplate.
  *
- * `timeoutMs` defaults to 1500 (the existing `CopySnippet.vue` convention;
- * design mock: "green check 1.5s").
+ * `timeoutMs` defaults to 1500 (design mock: "green check 1.5s").
  */
 export function useCopyState(timeoutMs = 1500) {
   const { copy } = useClipboard()
