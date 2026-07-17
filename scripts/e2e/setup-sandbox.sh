@@ -24,7 +24,8 @@ PUBLISHER="ocx-e2e-publisher"
 PKG="ocx-e2e-dummy"
 NS="e2e-lab"
 PKG_LOGICAL="dummy"
-readonly OWNER ORG SANDBOX PUBLISHER PKG NS PKG_LOGICAL
+TAG="${E2E_TAG:-1.0.0}"
+readonly OWNER ORG SANDBOX PUBLISHER PKG NS PKG_LOGICAL TAG
 
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 REPO_ROOT=$(cd "${SCRIPT_DIR}/../.." && pwd)
@@ -158,8 +159,13 @@ stage_harness() {
   git -C "${workdir}" push --force "${publisher_url}" main:main
   echo "harness: pushed publisher-harness/ -> ${OWNER}/${PUBLISHER}#main"
 
-  echo "harness: dispatching push-package.yml (tag=1.0.0)"
-  gh workflow run push-package.yml -R "${OWNER}/${PUBLISHER}" -f tag=1.0.0
+  # Same race guard as stage_content: the workflow file was just introduced
+  # by the push above, and dispatching before it registers 404s.
+  wait_for_workflow_registered "${OWNER}/${PUBLISHER}" "push-package.yml" ||
+    echo "harness: push-package.yml registration check timed out, dispatching anyway" >&2
+
+  echo "harness: dispatching push-package.yml (tag=${TAG})"
+  gh workflow run push-package.yml -R "${OWNER}/${PUBLISHER}" -f "tag=${TAG}"
 
   # ponytail: gh workflow run doesn't return a run id -- poll for the latest
   # run of this workflow. Fine at this scale (one dispatch per invocation).
@@ -188,6 +194,10 @@ stage_seed() {
 stage_protect() {
   echo "== stage: protect =="
 
+  # enforce_admins stays false (reviewed + rejected as a should-fix): `seed`
+  # and content re-syncs push directly to sandbox main as an admin.
+  # enforce_admins=true would block every such direct push, since required
+  # checks can never be green on a push that isn't a PR.
   gh api -X PUT "repos/${OWNER}/${SANDBOX}/branches/main/protection" \
     -H "Accept: application/vnd.github+json" \
     -F "required_status_checks[strict]=true" \
@@ -202,12 +212,16 @@ stage_protect() {
   gh repo edit "${OWNER}/${SANDBOX}" --enable-auto-merge --enable-squash-merge
   echo "protect: auto-merge + squash-merge enabled on ${OWNER}/${SANDBOX}"
 
+  # default_workflow_permissions=read (fail-safe default -- every real
+  # workflow declares its own explicit `permissions:` block anyway) and
+  # can_approve_pull_request_reviews=false (nothing here approves PRs;
+  # auto-merge enable, above, isn't gated by this setting).
   gh api -X PUT "repos/${OWNER}/${SANDBOX}/actions/permissions/workflow" \
     -H "Accept: application/vnd.github+json" \
-    -f "default_workflow_permissions=write" \
-    -F "can_approve_pull_request_reviews=true" \
+    -f "default_workflow_permissions=read" \
+    -F "can_approve_pull_request_reviews=false" \
     >/dev/null
-  echo "protect: Actions workflow permissions set to write + can-approve-PR-reviews"
+  echo "protect: Actions workflow permissions set to read + no PR-review approval"
 }
 
 stage_smoke() {
@@ -224,10 +238,10 @@ stage_smoke() {
   status=$(curl -sS -o "${manifest_file}" -w '%{http_code}' \
     -H "Authorization: Bearer ${token}" \
     -H "Accept: application/vnd.oci.image.index.v1+json" \
-    "https://ghcr.io/v2/${OWNER}/${PKG}/manifests/1.0.0")
+    "https://ghcr.io/v2/${OWNER}/${PKG}/manifests/${TAG}")
 
   if [[ "${status}" != "200" ]]; then
-    echo "smoke: anonymous pull of ${OWNER}/${PKG}:1.0.0 failed (HTTP ${status})" >&2
+    echo "smoke: anonymous pull of ${OWNER}/${PKG}:${TAG} failed (HTTP ${status})" >&2
     echo "smoke: package is likely still private -- flip visibility at ${settings_url}" >&2
     exit 1
   fi

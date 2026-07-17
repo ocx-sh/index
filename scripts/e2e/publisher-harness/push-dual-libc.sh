@@ -8,9 +8,11 @@ IFS=$'\n\t'
 # vs ["musl"]) -- a stand-in "dual-libc" artifact for the announce-revamp
 # E2E sandbox, not a real runnable image. Config blob is shared between
 # variants; only the layer content (and therefore each manifest's digest)
-# differs. Re-running with the same TAG is a no-op: every digest below is
-# deterministic from this script's fixed content, so oras just re-pushes
-# blobs/manifests the registry already has.
+# differs. Layer content includes $TAG, so re-pushing the SAME tag is a
+# no-op (identical digests, oras just re-pushes blobs/manifests the
+# registry already has) while a NEW tag produces genuinely new digests --
+# Phase 5 dispatches new tags through this to exercise indexbot's
+# new-observation path.
 
 : "${REGISTRY:?REGISTRY env var required}"
 : "${REPO:?REPO env var required}"
@@ -37,7 +39,9 @@ push_variant() {
   local manifest_file="manifest-${variant}.json"
   local layer_digest layer_size manifest_digest manifest_size
 
-  printf '%s payload\n' "${variant}" >"${layer_file}"
+  # Plain text, not an actual tar, despite the layer.v1.tar mediaType below --
+  # fine here, nothing ever extracts this dummy artifact.
+  printf '%s payload %s\n' "${variant}" "${TAG}" >"${layer_file}"
   layer_digest=$(sha256sum "${layer_file}" | cut -d' ' -f1)
   layer_size=$(wc -c <"${layer_file}")
   oras blob push "${TARGET}@sha256:${layer_digest}" "${layer_file}"
