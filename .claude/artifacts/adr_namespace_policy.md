@@ -446,3 +446,4 @@ paragraph (above) both now point here.
 |------|--------|--------|
 | 2026-07-17 | Michael Herwig + Claude design swarm | Initial ADR from the 2026-07-16 design discussion |
 | 2026-07-17 | Claude (docs) | Added Amendment A1 (PROPOSED, pending owner sign-off): first-party carve-out for Brand namespace segments, resolving the ND-4/ND-10 contradiction found during the Phase 4 seeding pilot. Updated ND-4/ND-10 cross-references. |
+| 2026-07-17 | Michael Herwig (owner sign-off) | Amendment A1 status flipped from PROPOSED to Accepted — owner sign-off recorded as a session decision (Michael Herwig); enforcement mechanism (`--allow-reserved-namespace`, brand segments only) confirmed default-off. |

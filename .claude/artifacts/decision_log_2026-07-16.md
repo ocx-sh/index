@@ -80,10 +80,13 @@ publisher for failure modes that are rare and mostly self-inflicted (an index
 push discarding an existing platform entry is a publisher bug; a build-tag
 overwrite is a convention violation; aggressive retention tooling is
 self-inflicted) — and index-side reconcile already detects dangling or
-mutated digests regardless of whether canonical tags exist. Landed instead as
-an opt-in `ocx package push --canonical-tag` flag on the ocx side: cheap
+mutated digests regardless of whether canonical tags exist. Landed initially
+as an opt-in `ocx package push --canonical-tag` flag on the ocx side: cheap
 insurance, publisher's choice, out of this repo's scope but recorded as an
-ocx follow-up.
+ocx follow-up. **Superseded 2026-07-17:** the ocx-side flag flipped to
+default ON with an explicit `--no-canonical-tag` opt-out — still a pure
+registry-side deletion safety net this index remains agnostic to, not a
+change to this repo's scope. See ADR-1 Fork 4/D8.
 
 **Owning ADR:** ADR-1, [`adr_locked_observation_index_format.md`](./adr_locked_observation_index_format.md).
 
@@ -313,3 +316,4 @@ human (never auto-healed), `75` transient failure with backoff exhausted.
 | Date | Author | Change |
 |------|--------|--------|
 | 2026-07-16 | Michael + Claude | Initial record from design discussion (2026-07-16) |
+| 2026-07-17 | Michael Herwig + Claude design swarm | Amendment: §2's canonical-tag conclusion noted as superseded — ocx-side flag flipped from opt-in to default-on with `--no-canonical-tag` opt-out (ocx#215 follow-up); see ADR-1 Fork 4/D8 |

@@ -96,11 +96,13 @@ Two independent, independently scoped mechanisms:
   objects and `desc` entries reference, and emits only reachable objects
   into the deployment artifact. This prunes the deployed tree, not
   source-tree git history.
-- **Registry-side (out of scope, `ocx` client concern)**: opt-in canonical
-  tags, a digest-named tag pinning a manifest against registry-side
-  garbage collection — a publisher choice, not an index requirement,
-  tracked as an [ocx#215](https://github.com/ocx-sh/ocx/issues/215)
-  follow-up.
+- **Registry-side (out of scope, `ocx` client concern)**: default-on
+  canonical tags (`ocx package push --[no-]canonical-tag`, opt-out via
+  `--no-canonical-tag`), a digest-named tag pinning a manifest against
+  registry-side garbage collection — a publisher choice, not an index
+  requirement, tracked as an
+  [ocx#215](https://github.com/ocx-sh/ocx/issues/215) follow-up. This
+  index ignores canonical tags either way (ADR-1 D8).
 
 ## `__ocx.desc`: Floating by Design
 

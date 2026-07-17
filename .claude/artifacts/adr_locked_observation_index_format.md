@@ -143,13 +143,19 @@ split rather than inventing a new one.
 
 ### Fork 4 — Canonical tags
 
-#### Option A (chosen): opt-in ocx-side `--canonical-tag` push flag
+#### Option A (chosen): ocx-side `--[no-]canonical-tag` push flag, default ON
 
 | Pros | Cons |
 |---|---|
-| Zero burden on publishers who don't need the guarantee | Manifests without a canonical tag stay exposed to naive untagged-child GC on registries that implement it |
-| The realistic failure modes (index push dropping an existing platform entry, build-tag overwrite, naive retention tooling) are publisher bugs or convention violations, not systemic risk | The guarantee is only as good as adoption |
+| Every publish gets the GC-pinning guarantee without an opt-in step — the common case is the safe case | Adds a tag per pushed platform manifest even for publishers who never needed the guarantee, unless they pass `--no-canonical-tag` |
+| The realistic failure modes (index push dropping an existing platform entry, build-tag overwrite, naive retention tooling) are publisher bugs or convention violations, not systemic risk — the flag is a cheap safety net, not a load-bearing contract | |
 | Reconcile already detects dangling/mutated digests independently of canonical tags | |
+| Opt-out (`--no-canonical-tag`) still exists for publishers who want to skip it | |
+
+Revises the original opt-in default: `ocx#215`'s 2026-07-17 follow-up decision flipped the
+ocx-side flag to default-on with an explicit `--no-canonical-tag` opt-out — a pure
+registry-side deletion safety net that costs nothing for this index to remain agnostic
+to (see D8).
 
 #### Option B (rejected): canonical tags as an ecosystem-wide requirement
 
@@ -162,8 +168,8 @@ split rather than inventing a new one.
 ## Decision Outcome
 
 **Chosen:** platform-manifest-digest locking (Fork 1A), emergent aliasing (Fork 2A),
-root+CAS storage split (Fork 3A), opt-in canonical tags (Fork 4A) — elaborated as D1–D10
-below.
+root+CAS storage split (Fork 3A), default-on canonical tags with opt-out (Fork 4A) —
+elaborated as D1–D10 below.
 
 **Rationale:** all four choices share one throughline — push complexity and
 convention-specific behavior to the edges (ocx-side opt-in flags, derived/client-side
@@ -304,6 +310,12 @@ is the OCI manifest digest for that platform on the physical registry — a diff
 digest namespace from the root's `tags[].content`, which addresses this index's own
 CAS (see D2, D5).
 
+`schema/observation-object.schema.json`'s `platform` definition sets
+`additionalProperties: false`, so this field set tracks the OCI image-spec's `Platform`
+object in lockstep: if a future image-spec revision extends or un-reserves the field
+set, this schema must bump in the same change, or newly-observed manifests carrying the
+new field start failing schema validation.
+
 Observation objects carry **no timestamps** — deliberately, for maximum dedup. Two
 observations that see an identical platform→digest set produce byte-identical JSON,
 hence the identical `sha256` digest, hence automatic storage as one object regardless
@@ -382,9 +394,12 @@ canonical tag is a digest-named tag (`sha256.<hex>`) pointing at exactly the man
 its name encodes, pinning that manifest against registry-side GC (the realistic
 failure case is naive untagged-child cleanup, not a scenario [GHCR](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry)
 implements today per `research_ghcr_constraints.md`). This is **not** required by this
-wire format or by this index's governance — it is an opt-in `ocx package push
---canonical-tag` flag, tracked as an ocx#215 follow-up in the plan's Out of Scope
-section, not an index-repo deliverable.
+wire format or by this index's governance — this index ignores canonical tags either
+way (it reads the physical registry's manifest digests directly, D5). It is a pure
+registry-side deletion safety net implemented as an `ocx package push
+--[no-]canonical-tag` flag, default ON with an explicit opt-out (revised 2026-07-17
+from the original opt-in default), tracked as an ocx#215 follow-up in the plan's Out of
+Scope section, not an index-repo deliverable.
 
 ### D9 — G-13 registry-state file eliminated
 
@@ -471,3 +486,5 @@ duplicated here.
 |------|--------|--------|
 | 2026-07-17 | Michael Herwig + Claude design swarm | Initial record from the 2026-07-16 design discussion; supersedes D3 of `adr_public_index_registry_indirection.md` and §2e of `design_spec_registry_indirection.md` |
 | 2026-07-17 | Michael Herwig + Claude design swarm | Amendment: D2's root-field table gains `superseded_by` (optional, human-governed), added by `adr_enumeration_index.md` D7 |
+| 2026-07-17 | Michael Herwig + Claude design swarm | Amendment: Fork 4/D8 canonical-tag stance revised — ocx-side `--canonical-tag` push flag flips from opt-in to default-on with `--no-canonical-tag` opt-out (ocx#215 follow-up); no change to this index's own posture, which ignores canonical tags either way |
+| 2026-07-17 | Michael Herwig + Claude design swarm | Amendment: D4 gains a sentence noting `schema/observation-object.schema.json`'s `platform` definition's `additionalProperties: false` tracks the OCI image-spec `Platform` field set in lockstep |
