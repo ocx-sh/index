@@ -28,6 +28,14 @@
   --c-warn-bg: rgba(250, 184, 51, 0.16);
   --c-kw: #6f5bd0;
   --c-kw-bg: rgba(111, 91, 208, 0.09);
+
+  /* Theme-invariant — deliberately NOT redefined under `.dark` below.
+   * --c-code-bg: mock 1f "code blocks always dark (both themes)" — Shiki
+   * fences stay this exact color regardless of site appearance.
+   * --c-overlay: modal/drawer backdrop scrim (WP-E SearchModal +
+   * DocsMobileNav) — one dim value works over either theme's page content. */
+  --c-code-bg: #14181f;
+  --c-overlay: rgba(15, 18, 23, 0.55);
 }
 
 .dark {

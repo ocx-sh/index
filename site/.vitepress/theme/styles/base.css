@@ -1,6 +1,7 @@
 @import './tokens/palette.css';
 @import './tokens/type.css';
 @import './tokens/shape.css';
+@import './docs-prose.css';
 
 *,
 *::before,

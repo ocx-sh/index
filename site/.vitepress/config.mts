@@ -36,8 +36,17 @@ export default defineConfig<ThemeConfig>({
   // Single dark Shiki theme — design mock 1f: "code blocks always dark
   // (both themes)", not the DefaultTheme convention of a light/dark pair
   // that follows site appearance.
+  //
+  // `headers` is OFF by default at the core-markdown level (verified
+  // against alpha.18's `resolveConfig`/`createMarkdownRenderer` — it's
+  // DefaultTheme's own config that normally turns this on, and this is a
+  // blank theme, no `extends`). WP-E's OnThisPage.vue scroll-spy reads
+  // `page.headers`, so it must be explicitly enabled here. `level: [2, 3]`
+  // caps extraction to match OnThisPage.vue's two-tier (h2 + nested h3)
+  // render — verified no `src/docs/**` page goes deeper than h3.
   markdown: {
     theme: 'github-dark',
+    headers: { level: [2, 3] },
   },
 
   themeConfig: {
