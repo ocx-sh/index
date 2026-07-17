@@ -156,6 +156,61 @@ tasks:
     cmds:
       - scripts/smoke-test.sh {{.CLI_ARGS}}
 
+  site:preview:
+    desc: >-
+      `bun run preview` in site/ — serves an already-built {{.RENDER_OUT}}
+      tree as-is (no rebuild). Run `task render:build` (or `task
+      site:serve`, which chains both) first.
+    dir: site
+    cmds:
+      - bun run preview
+
+  site:serve:
+    desc: >-
+      Local design review server: task render:build then bun run preview —
+      serves the exact production-shaped dist tree (incl. /p/** wire files,
+      /c/index.json, /data/catalog/catalog.json) Cloudflare Pages would
+      deploy. `p/` is empty pre-seed (see CLAUDE.md "Current State"); run
+      `task demo:seed` first for a non-empty catalog. Ctrl-C to stop.
+    cmds:
+      - task: render:build
+      - task: site:preview
+
+  demo:seed:
+    desc: >-
+      Populate p/ with throwaway demo packages via scripts/demo-seed.sh, for
+      `task site:serve` local design review (plan_site_redesign.md
+      "Verification" item 3). Source: the 7 bot/tests/golden/render/
+      golden-fixture cases. Refuses (non-zero exit) if p/ already has
+      untracked files, so it never clobbers real work — run `task
+      demo:clean` first if re-seeding. Demo digests are NOT schema-hex-valid
+      (readability letters, see script header) — always `task demo:clean`
+      before `task verify`. Never commit p/'s seeded contents.
+    cmds:
+      - scripts/demo-seed.sh
+
+  demo:clean:
+    desc: >-
+      Remove demo:seed's untracked files under p/ (`git clean -fd -- p/`).
+      Refuses (non-zero exit) if p/ contains tracked (committed) files —
+      today p/ is empty pre-seed (Phase 4), so a blanket untracked-file wipe
+      is safe; once real seed data is committed this task must switch to a
+      manifest-based cleanup instead of re-verifying that guard by hand.
+    set: [e, u, pipefail]
+    cmds:
+      - |
+        if [ -n "$(git ls-files p/)" ]; then
+          echo "demo:clean: p/ has tracked (committed) files -- refusing a blanket 'git clean', switch to a manifest-based cleanup" >&2
+          exit 1
+        fi
+        git clean -fd -- p/
+
+  demo:serve:
+    desc: Convenience chain — demo:seed then site:serve, for a one-shot local design review.
+    cmds:
+      - task: demo:seed
+      - task: site:serve
+
   verify:
     desc: Full gate — exactly the CI job set (schema-validate, bot-lint, bot-test, bot-audit, workflows-lint, site-build, render-check)
     cmds:
