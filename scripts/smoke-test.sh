@@ -172,13 +172,26 @@ check_conditional_get() {
     skip "conditional GET" "no ETag from config.json check"
     return
   fi
-  local body="${WORKDIR}/config-cond.body" headers="${WORKDIR}/config-cond.headers" status
-  status=$(fetch "${BASE_URL}/config.json" "$body" "$headers" -H "If-None-Match: ${CONFIG_ETAG}")
-  if [[ "$status" == "304" ]]; then
-    pass "conditional GET" "If-None-Match -> 304"
-  else
-    fail "conditional GET" "expected 304, got ${status}" "$EXIT_HTTP"
-  fi
+  local body="${WORKDIR}/config-cond.body" headers="${WORKDIR}/config-cond.headers" status attempt
+  # A 200 here right after a deploy can be edge-propagation flap (the colo
+  # served two deployments between our two requests — observed on the first
+  # live render-deploy run). fetch() only retries 000/5xx, so retry the
+  # 200-instead-of-304 case explicitly, re-reading the current ETag each time.
+  for ((attempt = 1; attempt <= MAX_ATTEMPTS; attempt++)); do
+    status=$(fetch "${BASE_URL}/config.json" "$body" "$headers" -H "If-None-Match: ${CONFIG_ETAG}")
+    if [[ "$status" == "304" ]]; then
+      pass "conditional GET" "If-None-Match -> 304"
+      return
+    fi
+    if [[ "$status" == "200" && $attempt -lt $MAX_ATTEMPTS ]]; then
+      CONFIG_ETAG=$(header_value "$headers" "etag")
+      log "conditional GET attempt ${attempt}/${MAX_ATTEMPTS}: got 200 (propagation flap?), retrying with current ETag ${CONFIG_ETAG}"
+      sleep "$RETRY_SLEEP"
+      continue
+    fi
+    break
+  done
+  fail "conditional GET" "expected 304, got ${status}" "$EXIT_HTTP"
 }
 
 discover_root() {
