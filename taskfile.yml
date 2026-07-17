@@ -66,9 +66,10 @@ tasks:
       zizmor security lint (exactly ci.yml's workflows-lint job), scoped to
       the workflows/actions that must stay clean today. Excludes deploy.yml
       (legacy unpinned actions, retired by Phase 3's render-deploy.yml —
-      widen to the whole directory once that lands).
+      widen to the whole directory once that lands). validate.yml/
+      announce.yml/reconcile.yml (WP2-S/T/U) added once they landed clean.
     cmds:
-      - uvx zizmor --min-severity medium .github/workflows/ci.yml .github/workflows/dependency-review.yml .github/workflows/mutmut.yml .github/actions/setup-bot/action.yml
+      - uvx zizmor --min-severity medium .github/workflows/ci.yml .github/workflows/dependency-review.yml .github/workflows/mutmut.yml .github/workflows/validate.yml .github/workflows/announce.yml .github/workflows/reconcile.yml .github/actions/setup-bot/action.yml
 
   placeholder:check:
     desc: JSON well-formedness of public/ (bootstrap placeholder — retired Phase 3, not a CI job)

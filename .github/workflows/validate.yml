@@ -1,0 +1,148 @@
+name: validate
+
+# ADR-4 (adr_index_bot_and_workflow_security.md) BD-5 — privileged/unprivileged
+# split for the index bot's PR-review surface. Two jobs, deliberately
+# different trust levels, composed with branch protection (no custom merge
+# logic in either job):
+#
+#   schema-validate-pr (pull_request, zero secrets, checks out PR head — safe,
+#     GitHub strips secrets for this trigger): schema/fixture check + indexbot
+#     validate against this PR's changed p/**/*.json roots.
+#   governance-gate (pull_request_target, GITHUB_TOKEN only, NEVER checks out
+#     PR head): classifies the diff via the GitHub API only, labels the PR,
+#     sets the "governance/review-required" commit status, and requests
+#     auto-merge for refresh-class PRs. GitHub itself merges once branch
+#     protection's required checks (schema-validate-pr +
+#     governance/review-required) are both green — no polling, no second bot.
+#
+# job1 is named "schema-validate-pr", not ADR-4's literal "schema-validate",
+# because ci.yml already owns that name for a different, unrelated check
+# (schema/*.schema.json + fixtures only, not this-PR's diff) — see this WP's
+# open_questions for the branch-protection required-check-list follow-up this
+# implies.
+
+on:
+  pull_request:
+  # zizmor: ignore[dangerous-triggers] ADR-4 BD-5's deliberate privileged
+  # split: governance-gate never checks out PR-head content (default base-ref
+  # checkout, verified above), never runs PR-controlled code, and only ever
+  # reads the diff through the GitHub API — the exact posture this audit
+  # otherwise warns is usually missing.
+  pull_request_target:
+
+permissions: {}
+
+jobs:
+  schema-validate-pr:
+    name: schema-validate-pr
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: schema-validate-pr-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
+    permissions:
+      contents: read # checkout PR head + local git diff only, no write ever needed
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4.3.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: ./.github/actions/setup-bot
+      - name: task schema:validate
+        run: task schema:validate
+
+      - name: Determine changed p/<namespace>/<package>.json files
+        id: changed
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          # Exactly two path segments under p/ — a package root, never a CAS
+          # object (p/<ns>/<pkg>/o/sha256/<hex>.json) or anything else.
+          changed="$(git diff --name-only --diff-filter=ACMR "$BASE_SHA" HEAD -- 'p/*/*.json')"
+          if [ -z "$changed" ]; then
+            echo "::notice title=indexbot validate::No p/<namespace>/<package>.json changes in this PR (p/ may not be seeded yet) - skipping indexbot validate."
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # ponytail: random-ish delimiter, not attacker-input-hardened crypto
+          # — these are repo-tree filenames from an already-checked-out PR
+          # diff, not a client_payload field. Collision just self-corrupts
+          # this unprivileged, secret-less job's own output parsing.
+          delim="INDEXBOT_CHANGED_FILES_$(date +%s%N)"
+          if grep -qxF "$delim" <<<"$changed"; then
+            echo "changed file list collided with output delimiter" >&2
+            exit 1
+          fi
+          echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          {
+            echo "files<<$delim"
+            printf '%s\n' "$changed"
+            echo "$delim"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: indexbot validate
+        if: steps.changed.outputs.has_changes == 'true'
+        env:
+          CHANGED_FILES: ${{ steps.changed.outputs.files }}
+        run: |
+          set -euo pipefail
+          mapfile -t files <<< "$CHANGED_FILES"
+          uv run --project bot -- indexbot validate "${files[@]}"
+
+  governance-gate:
+    name: governance-gate
+    if: github.event_name == 'pull_request_target'
+    runs-on: ubuntu-latest
+    # Serialize per-PR: BD-5 Risk 1 flags label/status races between
+    # concurrent classification runs (e.g. two rapid pushes) as untested
+    # territory. Queuing (not cancelling) avoids a run being cut off between
+    # its label-apply and status-set steps.
+    concurrency:
+      group: governance-gate-${{ github.event.pull_request.number }}
+    permissions:
+      contents: read # checkout base ref only, to run bot/'s source
+      pull-requests: write # classify-pr's add_labels + auto-merge request
+      statuses: write # governance-check's set_commit_status (governance/review-required); a separate scope from pull-requests
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      # pull_request_target's default checkout ref is the BASE branch tip —
+      # deliberately left unset (never github.event.pull_request.head.sha).
+      # This job only ever runs base-branch code against an API-derived diff.
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4.3.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-bot
+
+      - name: indexbot classify-pr
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          uv run --project bot -- indexbot classify-pr --pr-number "$PR_NUMBER"
+
+      - name: indexbot governance-check
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          uv run --project bot -- indexbot governance-check --pr-number "$PR_NUMBER"
+
+      - name: Enable auto-merge for refresh-class PRs
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          # classify-pr (above) is the source of truth for the label; read it
+          # back rather than re-deriving classification here, so this job
+          # never hand-rolls the G-04/G-05 diff logic a second time.
+          if gh pr view "$PR_NUMBER" --repo "$REPO" --json labels --jq '.labels[].name' | grep -qxF 'refresh'; then
+            gh pr merge "$PR_NUMBER" --repo "$REPO" --auto --squash
+          else
+            echo "::notice title=auto-merge skipped::PR #$PR_NUMBER is not refresh-class - human review required, auto-merge not requested."
+          fi

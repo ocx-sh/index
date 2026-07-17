@@ -1,0 +1,134 @@
+name: reconcile
+
+# Nightly full-index regenerate-from-registry-truth (ADR-4 BD-1/BD-2, G-12/G-13
+# carry-forward). Single privileged job — reads the `index-write` Environment
+# credential, so it gets harden-runner (audit mode, BD-6) and a `concurrency`
+# group that never cancels a run mid-write (a cancelled commit/PR step is
+# worse than a slow one).
+#
+# Partial-success semantics (ADR-4 BD-2's exit-code contract):
+#   exit 0  -> OK. `indexbot reconcile` itself opens/updates the clean-subset
+#              PR when there's drift (CONTRACTS.md §12) — nothing further to
+#              do here.
+#   exit 65 -> ANOMALY. Never auto-healed (G-13). This workflow opens or
+#              updates a tracking issue and fails the job so a human notices.
+#   exit 75 -> TRANSIENT. Backoff exhausted (G-10). Fail the job; the nightly
+#              cron itself is the retry.
+#   anything else -> treated as a hard failure, never silently passed.
+on:
+  schedule:
+    - cron: "17 3 * * *" # nightly, 03:17 UTC (off-peak, avoids the top-of-hour queue)
+  workflow_dispatch: {}
+
+permissions: {}
+
+concurrency:
+  group: reconcile
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    name: reconcile
+    runs-on: ubuntu-latest
+    environment: index-write
+    permissions:
+      contents: read # checkout only — the write path uses the environment's own credential, not GITHUB_TOKEN
+      issues: write # default GITHUB_TOKEN opens/updates the anomaly-tracking issue (exit 65); no self-trigger concern for issues
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920 # v2.20.0
+        with:
+          egress-policy: audit
+
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: false
+
+      - uses: ./.github/actions/setup-bot
+
+      - name: Resolve dry-run flag
+        id: dry_run
+        env:
+          RECONCILE_DRY_RUN: ${{ vars.RECONCILE_DRY_RUN }}
+        run: |
+          set -euo pipefail
+          # G-18 default-true semantics: unset/empty repo variable keeps
+          # dry-run on until the 42-package parity batch is verified. Flip
+          # via `gh variable set RECONCILE_DRY_RUN false` (ops runbook).
+          value="${RECONCILE_DRY_RUN:-true}"
+          echo "value=$value" >>"$GITHUB_OUTPUT"
+
+      - name: Run indexbot reconcile
+        id: reconcile
+        working-directory: bot
+        env:
+          # NOTE (open_questions): `INDEX_WRITE_TOKEN` is this workflow's
+          # assumed name for the `index-write` Environment secret (ADR-4
+          # BD-6) — no other WP has fixed this name yet. `adapters/
+          # github_api.py` (WP2-D) must read the write credential from the
+          # `GITHUB_TOKEN` env var for this wiring to work; confirm/align at
+          # integration time.
+          GITHUB_TOKEN: ${{ secrets.INDEX_WRITE_TOKEN }}
+          DRY_RUN_VALUE: ${{ steps.dry_run.outputs.value }}
+        run: |
+          set -euo pipefail
+          args=(reconcile)
+          if [ "$DRY_RUN_VALUE" != "false" ]; then
+            args+=(--dry-run)
+          fi
+          if uv run indexbot "${args[@]}" 2>&1 | tee reconcile.log; then
+            ec=0
+          else
+            ec=$?
+          fi
+          echo "exit_code=$ec" >>"$GITHUB_OUTPUT"
+
+      - name: Fail on transient backoff exhaustion
+        if: steps.reconcile.outputs.exit_code == '75'
+        run: |
+          set -euo pipefail
+          echo "::error::indexbot reconcile hit a transient failure (backoff exhausted, exit 75) — nightly cron is the retry." >&2
+          exit 1
+
+      - name: Open or update anomaly issue
+        if: steps.reconcile.outputs.exit_code == '65'
+        working-directory: bot
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          title="indexbot reconcile: integrity anomaly detected"
+          body_file="$(mktemp)"
+          {
+            echo "\`indexbot reconcile\` detected an integrity anomaly — a"
+            echo "previously observed pinned tag's content digest changed."
+            echo "This is never auto-healed (G-13); a human must confirm"
+            echo "whether this is a legitimate republish or tampering."
+            echo
+            echo '```'
+            cat reconcile.log
+            echo '```'
+          } >"$body_file"
+
+          existing="$(gh issue list --search "in:title \"$title\"" --state open --json number --jq '.[0].number // empty')"
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body-file "$body_file"
+          else
+            gh issue create --title "$title" --body-file "$body_file"
+          fi
+
+          echo "::error::indexbot reconcile detected an integrity anomaly (exit 65) — see the opened/updated issue. Never auto-healed." >&2
+          exit 1
+
+      - name: Fail on unrecognized exit code
+        if: |
+          steps.reconcile.outputs.exit_code != '0' &&
+          steps.reconcile.outputs.exit_code != '65' &&
+          steps.reconcile.outputs.exit_code != '75'
+        env:
+          EXIT_CODE: ${{ steps.reconcile.outputs.exit_code }}
+        run: |
+          set -euo pipefail
+          echo "::error::indexbot reconcile exited with an unrecognized code ($EXIT_CODE) — treating as a hard failure rather than silently passing." >&2
+          exit 1
