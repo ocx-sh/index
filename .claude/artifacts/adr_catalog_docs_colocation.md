@@ -292,6 +292,69 @@ here.
 - [ ] Cache Rule match expression manually reviewed against the path-scoped
       requirement above before first colocated production deploy.
 
+## Amendments
+
+### Amendment A1 (2026-07-17): Dynamic Routes Replace Bot-Generated Wrapper Pages
+
+**Status:** Accepted — landed in `plan_site_redesign` Waves 1–2 (PRs #21–#26,
+merged), recorded here in Wave 3 (WP-docs).
+
+**Problem.** This ADR's original design (Technical Details, `site/` layout
+above) had `core/render.py` emit one bot-generated wrapper Markdown file per
+package (`site/src/<ns>/<pkg>.md`, gitignored, VitePress compile *input*)
+ahead of the VitePress build, embedding a `<PackageDetail />` component that
+fetched its own runtime data. `plan_site_redesign`'s Designer-handover
+redesign (`handover_site_redesign.md`, brief; PR #18 return) re-implemented
+`site/` against a new visual design and, in doing so, exposed that the
+wrapper-page step existed only to give VitePress a route to build against —
+it carried no package data of its own, only routing. VitePress 2's own
+dynamic-route mechanism (`defineRoutes`/`.paths.ts` loaders, confirmed
+against the installed `vitepress@2.0.0-alpha.18` resolver) can derive that
+same routing directly from the committed `p/` source tree, at build time,
+with no bot-emitted intermediate file.
+
+**Resolution.** `site/src/[ns]/[pkg].paths.ts` globs `p/*/*.json` at
+VitePress build time and produces one `{ns, pkg}` route per package root
+found; `site/src/[ns]/[pkg].md` carries only `layout: detail` frontmatter,
+no per-package content. `DetailPage.vue` fetches everything at runtime via
+the same composable fetch layer the catalog already uses (`usePackageRoot`,
+`useObservation`) — see `site/README.md`. `core/render.py`'s
+`build_render_plan` now returns a single flat `tuple[FileWrite, ...]`
+(`config.json`, `/p/**`, `/c/index.json`,
+`/data/catalog/catalog.json`) rather than the two-tree `RenderPlan`
+(`wrapper_pages` + `dist_files`) this ADR originally specified;
+`core/catalog_md.py` (the wrapper-page-Markdown renderer) is deleted, and
+`cli/render.py` drops its `--site-dist` flag along with the second
+render invocation the Technical Details build-order section described.
+`site/` is therefore self-contained at build time over the committed `p/`
+tree — no bot pre-pass required before `bun run build` — with the wire
+mirror + catalog view-model still written into the same dist tree strictly
+*after* the VitePress build (the `emptyOutDir` footgun this ADR already
+documented survives unchanged, now as a two-step rather than three-step
+pipeline; see `taskfile.yml`'s `render:build` task).
+
+**Consequences:**
+- **Positive:** one render-pipeline output tree instead of two — a smaller
+  footgun surface (one build-order seam, not two); `site/` builds
+  standalone against the committed `p/` tree with no generated-file
+  dependency; `core/render.py` loses an entire code path
+  (`core/catalog_md.py`, its tests, its golden-fixture `wrapper_pages/`
+  subtree).
+- **Negative:** per-package detail pages can no longer carry hand-authored
+  publisher prose alongside the generated view (the original design's
+  stated purpose for embedding `<PackageDetail />` inside an otherwise-free
+  Markdown file) — out of scope for `plan_site_redesign`, not reintroduced
+  elsewhere.
+- **Unchanged:** the `emptyOutDir`-ordering risk this ADR already flagged;
+  the Cache Rule scoping requirement; `/data/catalog/**` and `/`, `/docs/**`
+  remaining outside the wire contract.
+
+**Cross-references updated:** the "`site/` layout" and "Build pipeline
+order" Technical Details subsections above describe the original
+three-step, two-output-tree design and are **not** rewritten in place — this
+amendment is the current-state correction; see `site/README.md` and
+`bot/CONTRACTS.md` §8/§12 for the landed shapes.
+
 ## Links
 
 - [`plan_index_v1.md`](../state/plans/plan_index_v1.md) — canonical phase/work-package
@@ -321,3 +384,4 @@ here.
 | Date | Author | Change |
 |------|--------|--------|
 | 2026-07-17 | Michael Herwig + Claude design swarm | Initial record: colocation decision, VitePress reversal of mdBook research recommendation |
+| 2026-07-17 | Claude (docs) | Added Amendment A1 (Accepted): dynamic routes (`site/src/[ns]/[pkg].paths.ts`) replace bot-generated wrapper pages, per `plan_site_redesign` WP-docs (Waves 1-2 landed as PRs #21-#26). |
