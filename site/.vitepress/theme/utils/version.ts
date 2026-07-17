@@ -4,6 +4,10 @@
  *
  * Handles OCX's variant-prefix tag format: `{variant}-{version}` where
  * variants match `[a-z][a-z0-9.]*` and versions start with a digit.
+ *
+ * Drift risk: this port isn't mechanically checked against the Rust source
+ * (no shared test-vector fixture, no CI cross-check) — accepted as-is; a
+ * future contract test is the upgrade path if the two ever silently diverge.
  */
 
 import type { TagEntry } from '../composables/usePackageRoot'
@@ -87,6 +91,18 @@ export interface VariantRow {
    * rolling → major → minor → patch/build. Empty when `primaryTag` is
    * `null`. */
   aliasChain: AliasMember[]
+  /** The most precise (highest-depth) member of `aliasChain`, excluding
+   * `primaryTag` itself — among ties at the same depth, the newest version.
+   * `null` unless `primaryTag` is a live `latest` (`showLatestHighlight`).
+   * Single owner of the "latest x.y.z" pin label (IdentityBlock's title-row
+   * pill, MetaRail's install/metadata cards) — computed here, not
+   * re-derived per consumer. */
+  preciseAliasTag: string | null
+  /** Depth-0 (rolling) tags for this variant that are yanked — excluded
+   * from `live`/`aliasChain` (a yanked `latest` never wins primary
+   * selection) but yanking must still be visible somewhere: rendered as a
+   * struck-through, dashed-amber segment next to the alias-chain control. */
+  yankedRolling: RenderedTag[]
   majorGroups: MajorGroup[]   // expanded view: grouped by major version, sorted descending
 }
 
@@ -316,6 +332,7 @@ export function buildVersionTable(
     const showLatestHighlight = primaryTag === 'latest'
 
     const aliasChain: AliasMember[] = []
+    let preciseAliasTag: string | null = null
     if (primaryEntry) {
       const seen = new Set<string>()
       const members = live
@@ -326,7 +343,29 @@ export function buildVersionTable(
         seen.add(m.tag)
         aliasChain.push({ tag: m.tag, digest: m.digest, yanked: m.yanked })
       }
+
+      // Most precise (highest-depth) alias, newest among ties at that
+      // depth — `members` is sorted depth-ascending with newest-first
+      // within each depth, so the first non-primary entry at the max depth
+      // is exactly that (NOT `.at(-1)`, which lands on the oldest entry at
+      // the deepest level when multiple tags share a depth — the bug this
+      // field replaces).
+      if (showLatestHighlight) {
+        const nonPrimary = members.filter(m => m.tag !== primaryEntry.tag)
+        if (nonPrimary.length) {
+          const maxDepth = Math.max(...nonPrimary.map(m => m.depth))
+          preciseAliasTag = nonPrimary.find(m => m.depth === maxDepth)!.tag
+        }
+      }
     }
+
+    // Yanked rolling (depth-0) tags for this row — excluded from `live` so
+    // they never win primary/alias-chain selection, but a yanked `latest`
+    // (or bare variant rolling tag) still needs to render *somewhere*, or
+    // yanking it silently hides exactly what yank exists to surface.
+    const yankedRolling: RenderedTag[] = entries
+      .filter(e => e.depth === 0 && e.yanked)
+      .map(e => ({ tag: e.tag, digest: e.digest, yanked: e.yanked }))
 
     // Build major groups from ALL versioned tags (existing lexical grouping
     // logic, unchanged shape — extended with digest/yanked per tag).
@@ -410,6 +449,8 @@ export function buildVersionTable(
       primaryTag,
       showLatestHighlight,
       aliasChain,
+      preciseAliasTag,
+      yankedRolling,
       majorGroups,
     }
   })

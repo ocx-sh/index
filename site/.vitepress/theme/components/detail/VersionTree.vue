@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue'
+import { reactive, ref, computed } from 'vue'
 import {
   CollapsibleRoot,
   CollapsibleTrigger,
@@ -11,15 +11,17 @@ import {
 } from 'reka-ui'
 import TagBadge from './TagBadge.vue'
 import { useCopyState } from '../../composables/useCopyState'
-import { buildVersionTable } from '../../utils/version'
-import type { TagEntry } from '../../composables/usePackageRoot'
-import type { MinorGroup, VariantRow } from '../../utils/version'
+import type { MinorGroup, VariantRow, VersionTable } from '../../utils/version'
 
 // Relocated + reworked from `components/VersionTree.vue` (pre-redesign).
 // WP-D is the single owner of `buildVersionTable`'s redesign (plan
 // "Version-table ownership") — this component only renders its output.
+// `table` is pre-built by `DetailPage` (which already calls
+// `buildVersionTable` once for its own derived state) and passed down —
+// this component never calls `buildVersionTable` itself, so the table is
+// computed exactly once per package load, not once per consumer.
 const props = defineProps<{
-  tags: Record<string, TagEntry>
+  table: VersionTable
   status: 'active' | 'deprecated' | 'yanked'
   /** `root.name` — already carries the `ocx.sh/` prefix, safe to use
    * directly as the copy-command identifier (unlike CAS URLs, which need
@@ -36,15 +38,13 @@ const emit = defineEmits<{
   'hover-tag': [digest: string]
 }>()
 
-const table = computed(() => buildVersionTable(props.tags, props.status))
-
 /** Digest to revert to on mouseleave — the default row's own primary tag,
  * so hovering away from the tree falls back to the package's eager-loaded
  * observation rather than leaving the last-hovered tag's platforms shown. */
 const defaultPrimaryDigest = computed(() => {
-  const row = table.value.rows.find(r => r.isDefault)
-  const tag = row?.primaryTag
-  return tag ? (props.tags[tag]?.content ?? null) : null
+  const row = props.table.rows.find(r => r.isDefault)
+  if (!row?.primaryTag) return null
+  return row.aliasChain.find(m => m.tag === row.primaryTag)?.digest ?? null
 })
 
 function handleLeave() {
@@ -138,6 +138,23 @@ function patchLabel(count: number): string {
             @mouseenter="emit('hover-tag', member.digest)"
           >{{ member.tag }}</button>
         </span>
+
+        <!-- Yanked rolling tags (e.g. a yanked "latest") never make the
+             live alias chain, but yanking one must still be visible —
+             render struck-through/dashed-amber right next to the chain
+             (TagBadge's existing yanked styling). -->
+        <span v-if="row.yankedRolling.length" class="yanked-rolling">
+          <TagBadge
+            v-for="rt in row.yankedRolling"
+            :key="rt.tag"
+            :tag="rt.tag"
+            :qualified-name="qualifiedName"
+            variant="rolling"
+            :yanked="true"
+            @mouseenter="emit('hover-tag', rt.digest)"
+          />
+        </span>
+
         <span v-if="row.aliasChain.length > 1" class="alias-hint">= same digest, one copy target</span>
         <span v-else-if="row.isDefault && status === 'deprecated'" class="alias-hint">no "latest" tag — deprecated</span>
 
@@ -356,6 +373,15 @@ function patchLabel(count: number): string {
 
 .alias-segment.copied {
   color: var(--c-ok);
+}
+
+/* Yanked rolling tags (e.g. a yanked "latest") — sit next to the
+   alias-chain control; TagBadge's own `.yanked` modifier carries the
+   struck-through/dashed-amber styling. */
+.yanked-rolling {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
 }
 
 .alias-hint {
