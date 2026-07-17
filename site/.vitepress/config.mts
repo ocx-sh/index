@@ -22,6 +22,11 @@ export default defineConfig<ThemeConfig>({
   description:
     'Package catalog and wire-format docs for the OCX public index (index.ocx.sh).',
 
+  // `src/public/favicon.svg` — verbatim design-mock ocx-logo.svg (same
+  // provenance as theme/components/layout/Logo.vue), served from the
+  // `srcDir`-relative public dir VitePress copies as-is into dist root.
+  head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }]],
+
   // Per-package detail pages are a dynamic route (`src/[ns]/[pkg].md` +
   // `[ns]/[pkg].paths.ts`, globbing `p/*/*.json` at build) — the wire
   // mirror `indexbot render --out` writes into THIS SAME dist tree, but

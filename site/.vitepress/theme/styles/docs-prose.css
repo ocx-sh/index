@@ -127,6 +127,18 @@
   color: inherit;
 }
 
+/* VitePress core (`preWrapperPlugin`, independent of theme — DefaultTheme
+ * just supplies the CSS) injects a `button.copy` + `span.lang` label
+ * before every fence's `.shiki`, and the click-to-copy handler is wired
+ * globally too (`app/index.js`), not a DefaultTheme feature. Our blank
+ * theme never styled them, so they rendered as raw stacked elements above
+ * the code box. Design mock 1f renders fences with zero chrome — hide
+ * rather than build an affordance the mock doesn't call for. */
+.docs-prose :where(div[class*='language-'] > .copy),
+.docs-prose :where(div[class*='language-'] > .lang) {
+  display: none;
+}
+
 .docs-prose :where(p > code) {
   white-space: nowrap;
 }
