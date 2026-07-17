@@ -10,6 +10,14 @@
  * one rule: "coral is the only interactive color", light and dark alike.
  * The other accents (ok/warn/kw) shift per theme for contrast, also
  * verbatim from the mock.
+ *
+ * WP-C addition: --c-accent-tint-bg/--c-accent-tint-border (active filter
+ * chip tint) — the mock only shows this rgba pair on dark-themed panels
+ * (1b's active platform/status chips: `rgba(255,96,71,.10)` background,
+ * `rgba(255,96,71,.55)` border); no light-themed active-chip example
+ * exists in the mock, so this reuses the same values in both themes,
+ * consistent with coral's own identical-both-themes rule above. Flagged
+ * for WP-E, which also renders active/selected states in the ⌘K palette.
  */
 
 :root {
@@ -23,6 +31,8 @@
 
   --c-accent: #ff6047;
   --c-accent-hover: #ff8570;
+  --c-accent-tint-bg: rgba(255, 96, 71, 0.1);
+  --c-accent-tint-border: rgba(255, 96, 71, 0.55);
   --c-ok: #0e9f6e;
   --c-warn: #9a6b13;
   --c-warn-bg: rgba(250, 184, 51, 0.16);
@@ -41,6 +51,8 @@
 
   --c-accent: #ff6047;
   --c-accent-hover: #ff8570;
+  --c-accent-tint-bg: rgba(255, 96, 71, 0.1);
+  --c-accent-tint-border: rgba(255, 96, 71, 0.55);
   --c-ok: #3edea6;
   --c-warn: #fab833;
   --c-warn-bg: rgba(250, 184, 51, 0.1);

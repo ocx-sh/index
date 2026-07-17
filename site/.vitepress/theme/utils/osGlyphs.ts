@@ -32,8 +32,11 @@ export const OS_GLYPHS: Record<string, OsGlyph> = {
   },
 }
 
-/** Canonical display order: linux, darwin, windows, then anything unknown (alphabetical). */
-const OS_ORDER = ['linux', 'darwin', 'windows']
+/** Canonical display order: linux, darwin, windows, then anything unknown
+ * (alphabetical). Exported (WP-C addition) — `FilterChips.vue`'s 3 fixed
+ * platform toggles iterate this directly instead of re-declaring the same
+ * list; also the natural source for WP-D's `PlatformMatrix.vue` ordering. */
+export const OS_ORDER = ['linux', 'darwin', 'windows']
 
 export function osRank(os: string): number {
   const index = OS_ORDER.indexOf(os)
