@@ -14,7 +14,7 @@ Three frozen URL shapes, gated by `format_version`:
 
 - `/config.json` — `{"format_version": 1}`
 - `/p/<namespace>/<package>.json` — package root: governance fields + a `tags`
-  map from every observed tag to a content digest
+  map from every announced tag (owner-curated) to a content digest
 - `/p/<namespace>/<package>/o/sha256/<hex>.json` — immutable observation
   object: the set of OCI platforms and the manifest digest each resolved to
 
