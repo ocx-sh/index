@@ -164,9 +164,12 @@ tasks:
     desc: >-
       `bun run preview` in site/ — serves an already-built {{.RENDER_OUT}}
       tree as-is (no rebuild). Run `task render:build` (or `task
-      site:serve`, which chains both) first.
+      site:serve`, which chains both) first. Pre-kills any process already
+      bound to the preview port (4173) so re-running after a not-yet-exited
+      prior server doesn't fail with EADDRINUSE.
     dir: site
     cmds:
+      - lsof -t -i:4173 | xargs -r kill
       - bun run preview
 
   site:serve:
@@ -187,7 +190,8 @@ tasks:
       "Verification" item 3). Source: the 7 bot/tests/golden/render/
       golden-fixture cases. Refuses (non-zero exit) if p/ already has
       untracked files, so it never clobbers real work — run `task
-      demo:clean` first if re-seeding. Demo digests are NOT schema-hex-valid
+      demo:clean` first if re-seeding (`task demo:serve` does this
+      automatically). Demo digests are NOT schema-hex-valid
       (readability letters, see script header) — always `task demo:clean`
       before `task verify`. Never commit p/'s seeded contents.
     cmds:
@@ -210,8 +214,12 @@ tasks:
         git clean -fd -- p/
 
   demo:serve:
-    desc: Convenience chain — demo:seed then site:serve, for a one-shot local design review.
+    desc: >-
+      Convenience chain — demo:clean then demo:seed then site:serve, for a
+      one-shot local design review. Pre-cleans so repeat runs never hit
+      demo:seed's refuse-guard from a previous run's leftover data.
     cmds:
+      - task: demo:clean
       - task: demo:seed
       - task: site:serve
 
