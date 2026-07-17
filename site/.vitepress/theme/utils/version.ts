@@ -457,3 +457,29 @@ export function buildVersionTable(
 
   return { rows, unknownTags }
 }
+
+// --- Yank visibility (VersionTree's collapsed-state warning affordance) ---
+//
+// `buildVersionTable` above already threads `yanked` onto every
+// `RenderedTag` it produces (single owner, per its own docblock) — these two
+// pure functions are the single owner of *aggregating* that threaded data
+// into "does this collapsed group hide a yanked release", so VersionTree.vue
+// stays a pure renderer (never re-derives domain logic itself, per its own
+// docblock) and the aggregation is unit-testable here instead of only
+// reachable via a mounted-component/DOM test.
+
+/** True when `minor`'s own tag or any of its nested patches is yanked. */
+export function minorGroupHasYanked(minor: MinorGroup): boolean {
+  return !!minor.yanked || minor.patches.some(p => !!p.yanked)
+}
+
+/**
+ * True when `row`'s collapsed major/minor breakdown contains a yanked entry
+ * — drives the row's expand-toggle warning affordance. Deliberately excludes
+ * `row.yankedRolling` (already rendered unconditionally next to the alias
+ * chain, never hidden behind the collapse), so this only flags yank state a
+ * user can't already see without expanding.
+ */
+export function rowHasHiddenYanked(row: VariantRow): boolean {
+  return row.majorGroups.some(mg => !!mg.yanked || mg.minorGroups.some(minorGroupHasYanked))
+}

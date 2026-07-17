@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test'
-import { buildVersionTable } from './version'
+import { buildVersionTable, minorGroupHasYanked, rowHasHiddenYanked } from './version'
 
 // Micro-suite for buildVersionTable's redesigned ownership: alias chains,
 // yank threading, deprecated behavior. Parser fns (parseVersion/parseTag/
@@ -170,5 +170,66 @@ describe('buildVersionTable', () => {
     expect(row.primaryTag).toBe('latest')
     expect(row.majorGroups).toEqual([])
     expect(row.preciseAliasTag).toBeNull()
+  })
+})
+
+describe('rowHasHiddenYanked / minorGroupHasYanked', () => {
+  // Regression coverage for the "yanked tags render with zero distinction"
+  // bug: `buildVersionTable` threads `yanked` correctly (see the yank-
+  // threading tests above), but VersionTree.vue's collapsed default state
+  // (every row/minor-group starts closed) gave zero passive signal that a
+  // yanked release existed underneath — a user had to blindly expand a row
+  // *and* open the exact right minor popover to ever see it. These two
+  // functions are what VersionTree.vue now checks to color the collapsed
+  // expand-toggle/minor-toggle before that drill-down happens.
+
+  test('astral-sh/uv shape: a yanked patch nested under a synthesized minor group is flagged', () => {
+    const table = buildVersionTable(
+      {
+        '1.0.0': { content: 'sha256:xxx', observed: '2026-07-17T00:00:00Z' },
+        '0.9.0': {
+          content: 'sha256:yyy',
+          observed: '2026-07-01T00:00:00Z',
+          yanked: { reason: 'broken build', at: '2026-07-20T00:00:00Z' },
+        },
+      },
+      'active',
+    )
+    const row = table.rows.find(r => r.isDefault)!
+    expect(rowHasHiddenYanked(row)).toBe(true)
+
+    const yankedMinor = row.majorGroups.find(mg => mg.major === 0)!.minorGroups[0]
+    const liveMinor = row.majorGroups.find(mg => mg.major === 1)!.minorGroups[0]
+    expect(minorGroupHasYanked(yankedMinor)).toBe(true)
+    expect(minorGroupHasYanked(liveMinor)).toBe(false)
+  })
+
+  test('all-live package: no hidden yank anywhere', () => {
+    const table = buildVersionTable(
+      {
+        latest: { content: 'sha256:aaa', observed: '2026-01-01T00:00:00Z' },
+        '1.2.3': { content: 'sha256:aaa', observed: '2026-01-01T00:00:00Z' },
+      },
+      'active',
+    )
+    const row = table.rows.find(r => r.isDefault)!
+    expect(rowHasHiddenYanked(row)).toBe(false)
+  })
+
+  test('yanked rolling tag alone does not count as "hidden" — it already renders unconditionally', () => {
+    const table = buildVersionTable(
+      {
+        latest: {
+          content: 'sha256:fff',
+          observed: '2026-01-01T00:00:00Z',
+          yanked: { reason: 'bad rolling pointer', at: '2026-01-02T00:00:00Z' },
+        },
+        '1.2.3': { content: 'sha256:aba', observed: '2026-01-01T00:00:00Z' },
+      },
+      'active',
+    )
+    const row = table.rows.find(r => r.isDefault)!
+    expect(row.yankedRolling.length).toBe(1)
+    expect(rowHasHiddenYanked(row)).toBe(false)
   })
 })

@@ -12,6 +12,7 @@ import {
 import TagBadge from './TagBadge.vue'
 import CopyIcon from '../shared/CopyIcon.vue'
 import { useCopyState } from '../../composables/useCopyState'
+import { minorGroupHasYanked, rowHasHiddenYanked } from '../../utils/version'
 import type { MinorGroup, VariantRow, VersionTable } from '../../utils/version'
 
 // Relocated + reworked from `components/VersionTree.vue` (pre-redesign).
@@ -168,6 +169,7 @@ function patchLabel(count: number): string {
             :qualified-name="qualifiedName"
             variant="rolling"
             :yanked="true"
+            :yanked-reason="rt.yanked?.reason"
             @mouseenter="emit('hover-tag', rt.digest)"
           />
         </span>
@@ -177,7 +179,18 @@ function patchLabel(count: number): string {
 
         <span class="row-spacer" />
 
-        <CollapsibleTrigger v-if="hasBreakdown(row)" class="expand-toggle">
+        <!-- `warn` when the collapsed breakdown hides a yanked release —
+             without it, a yanked patch buried under an unopened row/minor
+             popover gave zero passive signal it existed at all (the
+             "renders like any live tag" bug: correct strike/dashed/reason
+             once you reach it, invisible until you blindly do). -->
+        <CollapsibleTrigger
+          v-if="hasBreakdown(row)"
+          class="expand-toggle"
+          :class="{ warn: rowHasHiddenYanked(row) }"
+          :title="rowHasHiddenYanked(row) ? 'Contains a yanked version' : undefined"
+        >
+          <svg v-if="rowHasHiddenYanked(row)" class="warn-icon" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" /></svg>
           <span class="expand-count">{{ remainingCount(row) }}</span>
           <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
         </CollapsibleTrigger>
@@ -198,6 +211,7 @@ function patchLabel(count: number): string {
                 :qualified-name="qualifiedName"
                 variant="rolling"
                 :yanked="!!mg.yanked"
+                :yanked-reason="mg.yanked?.reason"
                 @mouseenter="mg.digest && emit('hover-tag', mg.digest)"
               />
               <span v-else class="major-number">{{ mg.major }}</span>
@@ -214,6 +228,7 @@ function patchLabel(count: number): string {
                   :qualified-name="qualifiedName"
                   variant="minor"
                   :yanked="!!minor.yanked"
+                  :yanked-reason="minor.yanked?.reason"
                   @mouseenter="minor.digest && emit('hover-tag', minor.digest)"
                 />
                 <PopoverRoot
@@ -221,7 +236,18 @@ function patchLabel(count: number): string {
                   :open="isPopoverOpen(minorKey(mg.major, minor))"
                   @update:open="handlePopoverUpdate(minorKey(mg.major, minor), $event)"
                 >
-                  <PopoverTrigger class="expand-toggle minor-toggle">
+                  <!-- `warn` when a patch inside THIS minor's own popover is
+                       yanked — lets a user spot which of several sibling
+                       minor groups hides the yanked release without opening
+                       each one to check (same "zero distinction until you
+                       already knew where to look" gap as the row-level
+                       toggle above, one level down). -->
+                  <PopoverTrigger
+                    class="expand-toggle minor-toggle"
+                    :class="{ warn: minorGroupHasYanked(minor) }"
+                    :title="minorGroupHasYanked(minor) ? 'Contains a yanked version' : undefined"
+                  >
+                    <svg v-if="minorGroupHasYanked(minor)" class="warn-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" /></svg>
                     <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
                     <span class="expand-count">·{{ minor.patches.length }}</span>
                   </PopoverTrigger>
@@ -236,6 +262,7 @@ function patchLabel(count: number): string {
                           :qualified-name="qualifiedName"
                           variant="child"
                           :yanked="!!patch.yanked"
+                          :yanked-reason="patch.yanked?.reason"
                           @mouseenter="emit('hover-tag', patch.digest)"
                           @copied="closePopover(minorKey(mg.major, minor))"
                         />
@@ -270,6 +297,7 @@ function patchLabel(count: number): string {
             :tag="tag.tag"
             :qualified-name="qualifiedName"
             :yanked="!!tag.yanked"
+            :yanked-reason="tag.yanked?.reason"
             @mouseenter="emit('hover-tag', tag.digest)"
           />
         </div>
@@ -290,6 +318,7 @@ function patchLabel(count: number): string {
               :tag="tag.tag"
               :qualified-name="qualifiedName"
               :yanked="!!tag.yanked"
+              :yanked-reason="tag.yanked?.reason"
               @mouseenter="emit('hover-tag', tag.digest)"
             />
           </div>
@@ -465,6 +494,21 @@ function patchLabel(count: number): string {
 .expand-toggle:hover {
   background: var(--c-surface-2);
   color: var(--c-text-2);
+}
+
+/* Collapsed-state yank warning — the row/minor toggle's only passive signal
+   that a yanked release is hidden underneath (see `rowHasHiddenYanked` /
+   `minorGroupHasYanked` in utils/version.ts). */
+.expand-toggle.warn {
+  color: var(--c-warn);
+}
+
+.expand-toggle.warn:hover {
+  background: var(--c-warn-bg);
+}
+
+.warn-icon {
+  flex-shrink: 0;
 }
 
 .chevron {
