@@ -1,0 +1,31 @@
+{
+  "name": "ocx.sh/mitchellh/packer",
+  "repository": "oci://ghcr.io/ocx-contrib/packer",
+  "owners": [
+    {
+      "github": "alice",
+      "github_id": 1
+    }
+  ],
+  "status": "deprecated",
+  "deprecated_message": "packer has moved to the hashicorp/packer namespace; mitchellh/packer receives no further updates.",
+  "created": "2025-01-01",
+  "desc": {
+    "digest": "sha256:qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq",
+    "title": "Packer (legacy)",
+    "description": "Legacy machine-image build tool, superseded by hashicorp/packer.",
+    "keywords": [
+      "build",
+      "image",
+      "legacy"
+    ],
+    "readme": "sha256:kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk"
+  },
+  "superseded_by": "hashicorp/packer",
+  "tags": {
+    "1.7.0": {
+      "content": "sha256:jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj",
+      "observed": "2025-06-01T00:00:00Z"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "platforms": [
+    {
+      "platform": {
+        "architecture": "arm64",
+        "os": "darwin"
+      },
+      "digest": "sha256:manifest-nginx-1.1.5-darwin-arm64"
+    }
+  ]
+}

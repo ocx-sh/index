@@ -15,6 +15,7 @@ includes:
 
 vars:
   RENDER_OUT: site/.vitepress/dist
+  RENDER_INDEX_DIR: ""
 
 tasks:
   default:
@@ -82,8 +83,13 @@ tasks:
       /data/catalog/catalog.json, so the catalog/search UI has no runtime
       /data/catalog to read yet either; both must render a degraded/empty
       state, never fail the build, when that data is absent (see
-      site/README.md).
+      site/README.md). Forwards RENDER_INDEX_DIR (default "") to
+      OCX_RENDER_INDEX_DIR in bun's environment -- the paths.ts loader's
+      demo/real switch (site/README.md "Local design review"); default
+      leaves this task byte-identical to before that switch existed.
     dir: site
+    env:
+      OCX_RENDER_INDEX_DIR: '{{.RENDER_INDEX_DIR}}'
     cmds:
       - bun install --frozen-lockfile
       - bun run build
@@ -96,18 +102,23 @@ tasks:
       WP3-A, reshaped by plan_site_redesign WP-bot/WP-ci): (1) `bun run
       build` (via site:build) compiles {{.RENDER_OUT}}, wiping it clean
       (`emptyOutDir: true`) — dynamic routes (`site/src/[ns]/[pkg].paths.ts`)
-      glob the committed `p/*/*.json` tree directly at build time, so no
-      bot-generated wrapper-page pre-emission step is needed any more; (2)
-      `indexbot render --out` emits config.json + the /p/** wire mirror +
+      glob the committed `p/*/*.json` tree directly at build time (or
+      `demo/p/*/*.json` when RENDER_INDEX_DIR=demo, see demo:* tasks), so no
+      bot-generated wrapper-page pre-emission step is needed any more; (2) `indexbot
+      render --out` emits config.json + the /p/** wire mirror +
       /c/index.json + /data/catalog/catalog.json directly into
       {{.RENDER_OUT}}, only AFTER step 1 — reversing the two steps silently
       deletes the wire JSON on the next deploy. With no p/ tree yet
       (pre-seed), step 2 still emits config.json + an empty
       /data/catalog/catalog.json (`{"generated": null, "packages": []}`) —
-      no separate p/-absent code path needed.
+      no separate p/-absent code path needed. RENDER_INDEX_DIR (top-level
+      var, default "") overrides indexbot's own `--index-dir` -- a prefix
+      BEFORE the literal `p/` component (`cli/render.py`'s `_p_prefix`), not
+      a replacement for it, so "demo" (not "demo/p") reads `demo/p/**`.
+      demo:serve is the one caller that overrides it, to "demo".
     cmds:
       - task: site:build
-      - uv run --project bot -- indexbot render --index-dir "" --out {{.RENDER_OUT}}
+      - uv run --project bot -- indexbot render --index-dir "{{.RENDER_INDEX_DIR}}" --out {{.RENDER_OUT}}
 
   schema:validate:rendered:
     desc: >-
@@ -177,51 +188,53 @@ tasks:
       Local design review server: task render:build then bun run preview —
       serves the exact production-shaped dist tree (incl. /p/** wire files,
       /c/index.json, /data/catalog/catalog.json) Cloudflare Pages would
-      deploy. `p/` is empty pre-seed (see CLAUDE.md "Current State"); run
-      `task demo:seed` first for a non-empty catalog. Ctrl-C to stop.
+      deploy, from the real committed p/ tree. `p/` is empty pre-seed (see
+      CLAUDE.md "Current State"); for a non-empty local catalog use `task
+      demo:serve` instead, which renders the gitignored demo/p/ tree
+      (scripts/demo-seed.sh) rather than real p/. Ctrl-C to stop.
     cmds:
       - task: render:build
       - task: site:preview
 
   demo:seed:
     desc: >-
-      Populate p/ with throwaway demo packages via scripts/demo-seed.sh, for
-      `task site:serve` local design review (plan_site_redesign.md
-      "Verification" item 3). Source: the 7 bot/tests/golden/render/
-      golden-fixture cases. Refuses (non-zero exit) if p/ already has
-      untracked files, so it never clobbers real work — run `task
-      demo:clean` first if re-seeding (`task demo:serve` does this
-      automatically). Demo digests are NOT schema-hex-valid
-      (readability letters, see script header) — always `task demo:clean`
-      before `task verify`. Never commit p/'s seeded contents.
+      Populate the gitignored demo/p/ tree (never the real p/) with
+      throwaway demo packages via scripts/demo-seed.sh, for `task
+      demo:serve` local design review (plan_site_redesign.md "Verification"
+      item 3). Sources: the 7 bot/tests/golden/render/ golden-fixture cases
+      plus scripts/demo-fixtures/ (deprecation, multi-platform, alias-chain/
+      variant-tag coverage the golden fixtures don't have). Idempotent —
+      re-running over leftover demo/p/ content just skips already-seeded
+      packages, no refuse-guard needed since demo/ is gitignored (nothing to
+      clobber). Demo digests are NOT schema-hex-valid (readability letters,
+      see script header), but demo/ is never read by task verify's pipeline
+      (schema:validate:rendered renders real p/, not demo/p/), so no
+      pre-verify cleanup step is needed either.
     cmds:
       - scripts/demo-seed.sh
 
   demo:clean:
     desc: >-
-      Remove demo:seed's untracked files under p/ (`git clean -fd -- p/`).
-      Refuses (non-zero exit) if p/ contains tracked (committed) files —
-      today p/ is empty pre-seed (Phase 4), so a blanket untracked-file wipe
-      is safe; once real seed data is committed this task must switch to a
-      manifest-based cleanup instead of re-verifying that guard by hand.
-    set: [e, u, pipefail]
+      Remove demo/ (`rm -rf demo/`) — demo:seed's entire gitignored output
+      tree. No git-clean guard needed (unlike the old p/-seeding approach):
+      demo/ never holds tracked content, so a blanket removal is always
+      safe. Idempotent — a no-op if demo/ doesn't exist.
     cmds:
-      - |
-        if [ -n "$(git ls-files p/)" ]; then
-          echo "demo:clean: p/ has tracked (committed) files -- refusing a blanket 'git clean', switch to a manifest-based cleanup" >&2
-          exit 1
-        fi
-        git clean -fd -- p/
+      - rm -rf demo/
 
   demo:serve:
     desc: >-
-      Convenience chain — demo:clean then demo:seed then site:serve, for a
-      one-shot local design review. Pre-cleans so repeat runs never hit
-      demo:seed's refuse-guard from a previous run's leftover data.
+      Convenience chain — demo:clean, demo:seed, then render + serve the
+      demo/p/ tree (render:build with RENDER_INDEX_DIR=demo, then
+      site:preview) for a one-shot local design review. Pre-cleans so
+      repeat runs never accumulate stale demo packages.
     cmds:
       - task: demo:clean
       - task: demo:seed
-      - task: site:serve
+      - task: render:build
+        vars:
+          RENDER_INDEX_DIR: demo
+      - task: site:preview
 
   verify:
     desc: Full gate — exactly the CI job set (schema-validate, bot-lint, bot-test, bot-audit, workflows-lint, site-build, render-check)

@@ -1,0 +1,11 @@
+{
+  "platforms": [
+    {
+      "platform": {
+        "architecture": "amd64",
+        "os": "linux"
+      },
+      "digest": "sha256:manifest-nginx-1.2.0-linux-amd64"
+    }
+  ]
+}

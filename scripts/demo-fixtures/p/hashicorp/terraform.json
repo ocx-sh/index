@@ -1,0 +1,37 @@
+{
+  "name": "ocx.sh/hashicorp/terraform",
+  "repository": "oci://ghcr.io/ocx-contrib/terraform",
+  "owners": [
+    {
+      "github": "alice",
+      "github_id": 1
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2025-03-01",
+  "desc": {
+    "digest": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "title": "Terraform",
+    "description": "Infrastructure as code, multi-cloud provisioning.",
+    "keywords": [
+      "iac",
+      "cloud",
+      "provisioning"
+    ]
+  },
+  "tags": {
+    "latest": {
+      "content": "sha256:tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+      "observed": "2026-07-10T00:00:00Z"
+    },
+    "1.9.0": {
+      "content": "sha256:tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+      "observed": "2026-07-10T00:00:00Z"
+    },
+    "1.8.0": {
+      "content": "sha256:uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu",
+      "observed": "2026-06-01T00:00:00Z"
+    }
+  }
+}

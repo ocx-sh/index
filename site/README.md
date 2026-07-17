@@ -166,11 +166,17 @@ this repo already has a reachability-filtered CAS copy at
 
 ## Local design review
 
-`task demo:serve` (repo root) chains `task demo:seed` (populates `p/` with
-throwaway packages from the bot's golden render fixtures) and
-`task site:serve` (`task render:build` then `bun run preview`), serving the
-exact production-shaped dist tree — including `/p/**`, `/c/index.json`, and
-`/data/catalog/catalog.json` — that Cloudflare Pages would deploy. Run `task
-demo:clean` before `task verify`; demo digests are not schema-hex-valid, so
-seeded data fails `schema:validate:rendered`. Never commit `p/`'s seeded
-contents.
+`task demo:serve` (repo root) chains `task demo:clean`, `task demo:seed`
+(populates the gitignored `demo/p/` tree — never the real `p/` — with
+throwaway packages from the bot's golden render fixtures plus
+`scripts/demo-fixtures/`), and a render + serve pass over `demo/p/`
+(`task render:build` with `RENDER_INDEX_DIR=demo/p`, then `bun run
+preview`), serving the exact production-shaped dist tree — including
+`/p/**`, `/c/index.json`, and `/data/catalog/catalog.json` — that Cloudflare
+Pages would deploy. `src/[ns]/[pkg].paths.ts`'s route discovery prefers
+`demo/p/` over the real `p/` whenever `demo/p/` exists on disk (a build-time
+presence check, no flag/env var), so demo detail pages route the same way
+real ones do. `demo/` is gitignored and `task
+verify`'s pipeline never reads it, so no pre-verify cleanup is needed;
+`task demo:clean` (`rm -rf demo/`) is only for discarding a stale local
+preview.

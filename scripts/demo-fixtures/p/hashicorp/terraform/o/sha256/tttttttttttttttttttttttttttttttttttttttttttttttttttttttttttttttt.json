@@ -1,0 +1,32 @@
+{
+  "platforms": [
+    {
+      "platform": {
+        "architecture": "amd64",
+        "os": "linux"
+      },
+      "digest": "sha256:manifest-tf-1.9.0-linux-amd64"
+    },
+    {
+      "platform": {
+        "architecture": "arm64",
+        "os": "linux"
+      },
+      "digest": "sha256:manifest-tf-1.9.0-linux-arm64"
+    },
+    {
+      "platform": {
+        "architecture": "arm64",
+        "os": "darwin"
+      },
+      "digest": "sha256:manifest-tf-1.9.0-darwin-arm64"
+    },
+    {
+      "platform": {
+        "architecture": "amd64",
+        "os": "windows"
+      },
+      "digest": "sha256:manifest-tf-1.9.0-windows-amd64"
+    }
+  ]
+}
