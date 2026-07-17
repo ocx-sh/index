@@ -15,10 +15,12 @@ IFS=$'\n\t'
 #                    (default: auto-discovered from the local p/ tree)
 #
 # Checks: config.json (200, ETag, Cache-Control cache-rule guard,
-# format_version), conditional GET (If-None-Match -> 304), a sample root's
-# digest chain (root tags[].content -> observation object -> recomputed
-# sha256), catalog "/" (200, text/html), "/docs/" (200). Every fetch is
-# wrapped in a bounded retry (3 attempts, 5s apart) to absorb CDN warm-up.
+# format_version), conditional GET (If-None-Match -> 304), c/index.json
+# (200, ETag) with its own conditional GET (If-None-Match -> 304), a sample
+# root's digest chain (root tags[].content -> observation object ->
+# recomputed sha256), catalog "/" (200, text/html), "/docs/" (200). Every
+# fetch is wrapped in a bounded retry (3 attempts, 5s apart) to absorb CDN
+# warm-up.
 #
 # Exit codes (independent of indexbot's sysexits contract in
 # adr_index_bot_and_workflow_security.md BD-2 — this is a bash ops tool, not
@@ -57,6 +59,7 @@ BASE_URL="https://index.ocx.sh"
 ALLOW_EMPTY=0
 ROOT_PKG=""
 CONFIG_ETAG=""
+C_INDEX_ETAG=""
 WORKDIR=""
 
 RESULTS=()
@@ -192,6 +195,51 @@ check_conditional_get() {
     break
   done
   fail "conditional GET" "expected 304, got ${status}" "$EXIT_HTTP"
+}
+
+check_c_index() {
+  local body="${WORKDIR}/c-index.body" headers="${WORKDIR}/c-index.headers" status
+  status=$(fetch "${BASE_URL}/c/index.json" "$body" "$headers")
+  if [[ "$status" != "200" ]]; then
+    fail "c/index.json" "expected HTTP 200, got ${status}" "$EXIT_HTTP"
+    skip "c/index.json ETag" "c/index.json fetch did not return 200"
+    return
+  fi
+  pass "c/index.json" "HTTP 200"
+
+  C_INDEX_ETAG=$(header_value "$headers" "etag")
+  if [[ -z "$C_INDEX_ETAG" ]]; then
+    fail "c/index.json ETag" "no ETag header present" "$EXIT_HTTP"
+  else
+    pass "c/index.json ETag" "$C_INDEX_ETAG"
+  fi
+}
+
+check_c_index_conditional_get() {
+  if [[ -z "$C_INDEX_ETAG" ]]; then
+    skip "conditional GET (c/index.json)" "no ETag from c/index.json check"
+    return
+  fi
+  local body="${WORKDIR}/c-index-cond.body" headers="${WORKDIR}/c-index-cond.headers" status attempt
+  # Same edge-propagation-flap handling as check_conditional_get (commit
+  # 73c5220): a 200 here right after a deploy can mean the colo served two
+  # deployments between our two requests, so retry the 200-instead-of-304
+  # case explicitly, re-reading the current ETag each time.
+  for ((attempt = 1; attempt <= MAX_ATTEMPTS; attempt++)); do
+    status=$(fetch "${BASE_URL}/c/index.json" "$body" "$headers" -H "If-None-Match: ${C_INDEX_ETAG}")
+    if [[ "$status" == "304" ]]; then
+      pass "conditional GET (c/index.json)" "If-None-Match -> 304"
+      return
+    fi
+    if [[ "$status" == "200" && $attempt -lt $MAX_ATTEMPTS ]]; then
+      C_INDEX_ETAG=$(header_value "$headers" "etag")
+      log "conditional GET (c/index.json) attempt ${attempt}/${MAX_ATTEMPTS}: got 200 (propagation flap?), retrying with current ETag ${C_INDEX_ETAG}"
+      sleep "$RETRY_SLEEP"
+      continue
+    fi
+    break
+  done
+  fail "conditional GET (c/index.json)" "expected 304, got ${status}" "$EXIT_HTTP"
 }
 
 discover_root() {
@@ -381,6 +429,8 @@ main() {
 
   check_config
   check_conditional_get
+  check_c_index
+  check_c_index_conditional_get
   check_digest_chain
   check_catalog
   check_docs

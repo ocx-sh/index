@@ -107,12 +107,14 @@ tasks:
   schema:validate:rendered:
     desc: >-
       check-jsonschema on render:build's output tree ({{.RENDER_OUT}}):
-      config.json against schema/config.schema.json; every rendered
-      p/<ns>/<pkg>.json root against schema/root.schema.json; every rendered
+      config.json against schema/config.schema.json; c/index.json against
+      schema/c-index.schema.json (same always-rendered top-level shape as
+      config.json); every rendered p/<ns>/<pkg>.json root against
+      schema/root.schema.json; every rendered
       p/<ns>/<pkg>/o/sha256/<hex>.json CAS object against
       schema/observation-object.schema.json. Pre-seed (no p/ roots rendered
       yet) the latter two `find -exec` calls simply match (and invoke) zero
-      files — config.json is still validated. `-exec … +` (not a `read -d
+      files — config.json and c/index.json are still validated. `-exec … +` (not a `read -d
       ''` loop) because Task's own script interpreter isn't bash and
       doesn't support the GNU-only `read -d` flag; `find -exec +` is POSIX
       and file-safe with no shell involved in the match/dispatch step. The
@@ -132,6 +134,9 @@ tasks:
 
         echo "== $out/config.json vs schema/config.schema.json =="
         uvx check-jsonschema --schemafile schema/config.schema.json "$out/config.json"
+
+        echo "== $out/c/index.json vs schema/c-index.schema.json =="
+        uvx check-jsonschema --schemafile schema/c-index.schema.json "$out/c/index.json"
 
         echo "== rendered package roots vs schema/root.schema.json =="
         find "$out" -mindepth 3 -maxdepth 3 -path "$out/p/*/*.json" -exec uvx check-jsonschema --schemafile schema/root.schema.json {} +
