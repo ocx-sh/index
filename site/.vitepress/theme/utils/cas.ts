@@ -6,7 +6,19 @@
 // (the deliberate divergence from ocx-sh/ocx's website theme recorded in
 // `adr_catalog_docs_colocation.md`).
 
-const DIGEST_RE = /^sha256:([a-f0-9]{64})$/
+// ponytail: the wire *schema* pins this to strict `[a-f0-9]{64}` (real
+// digests are always hashlib-hex), but this guard's actual job is path
+// safety at a URL-building boundary — reject anything that could escape the
+// `/o/sha256/<seg>.<ext>` path segment (`/`, `..`, whitespace, etc.), not
+// re-enforce hex-ness the schema already owns. `[a-z0-9]` (not `[a-f0-9]`)
+// matches what `useObservation.ts`'s sibling CAS-URL path already accepts
+// unchecked for the exact same tags[*].content digest field. Previously
+// `[a-f0-9]` here silently dropped the fetch (`if (!url) failed = true`, no
+// error, no request) for any digest using a non-hex letter — the bug: every
+// `demo:seed`-sourced README (readability-letter placeholder digests, e.g.
+// "kkkk...") never fetched despite the exact CAS path existing and
+// returning 200 (confirmed via curl + Playwright network capture).
+const DIGEST_RE = /^sha256:([a-z0-9]{64})$/
 
 /**
  * `digest` is the bare `sha256:<hex>` string the wire root's `desc.logo` /

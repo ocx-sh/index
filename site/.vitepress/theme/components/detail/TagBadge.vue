@@ -38,9 +38,16 @@ const props = withDefaults(defineProps<{
    * never interactive-looking (still clickable/copyable; a yanked tag is
    * still a real, installable artifact, just discouraged). */
   yanked?: boolean
+  /** `tags[tag].yanked.reason`, when known. Surfaced via the badge's own
+   * `title` tooltip so a yank reason is reachable for every yanked badge —
+   * not just patch-level ones nested in a minor-group popover with its own
+   * dedicated reasons list (VersionTree.vue's `.yanked-reasons`). Ignored
+   * when `yanked` is false. */
+  yankedReason?: string
 }>(), {
   variant: 'default',
   yanked: false,
+  yankedReason: undefined,
 })
 
 const emit = defineEmits<{ copied: [] }>()
@@ -81,6 +88,11 @@ function identifier() {
   return `${props.qualifiedName}:${props.tag}`
 }
 
+function badgeTitle(): string {
+  if (!props.yanked) return 'Click to copy identifier'
+  return props.yankedReason ? `Yanked — ${props.yankedReason} — click to copy identifier` : 'Yanked — click to copy identifier'
+}
+
 async function handleClick() {
   await copyText(identifier())
 }
@@ -92,7 +104,7 @@ async function handleClick() {
       <code
         class="tag-badge"
         :class="[variant, { copied, yanked }]"
-        :title="yanked ? 'Yanked — click to copy identifier' : 'Click to copy identifier'"
+        :title="badgeTitle()"
         v-bind="$attrs"
         @click="handleClick"
       >
