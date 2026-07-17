@@ -34,6 +34,7 @@ const emit = defineEmits<{
       :key="os"
       type="button"
       class="chip"
+      tabindex="-1"
       :class="{ active: activePlatforms.includes(os) }"
       :aria-pressed="activePlatforms.includes(os)"
       @click="emit('toggle-platform', os)"
@@ -53,6 +54,7 @@ const emit = defineEmits<{
       :key="kw.keyword"
       type="button"
       class="chip"
+      tabindex="-1"
       :class="{ active: activeKeywords.includes(kw.keyword) }"
       :aria-pressed="activeKeywords.includes(kw.keyword)"
       @click="emit('toggle-keyword', kw.keyword)"
@@ -65,6 +67,7 @@ const emit = defineEmits<{
       v-if="hiddenKeywordCount > 0 || keywordsExpanded"
       type="button"
       class="chip-more"
+      tabindex="-1"
       @click="emit('toggle-expand')"
     >
       {{ keywordsExpanded ? 'show less' : `+${hiddenKeywordCount} more` }}
@@ -73,6 +76,7 @@ const emit = defineEmits<{
     <button
       type="button"
       class="chip"
+      tabindex="-1"
       :class="{ active: deprecatedActive }"
       :aria-pressed="deprecatedActive"
       @click="emit('toggle-deprecated')"
