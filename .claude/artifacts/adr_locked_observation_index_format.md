@@ -224,12 +224,9 @@ string; the corresponding CAS file is the same digest with `:` replaced by `/`.
 | `upstream` | `{org, repository_url?, disclaimer?}` | human (PR) | attribution of the upstream project the package mirrors, distinct from the namespace owner; feeds the catalog's upstream-disclaimer badge |
 | `superseded_by` | string \| null | human (PR) | optional; bare `<namespace>/<package>` naming a successor package, ≤140 chars; omitted or `null` when unset — **added 2026-07-17** by [`adr_enumeration_index.md`](./adr_enumeration_index.md) D7, not part of this ADR's original decision |
 | `desc` | `{digest, title, description, keywords[], readme?, logo?}` \| null | bot-regenerated | nullable — see D6 |
-| `tags` | map: tag name → `{content, observed, yanked?}` | owner-curated (PR); each row's content CI-verified; `yanked` human (PR) | **every announced tag** — see below; **provenance amended 2026-07-18** ([`adr_fork_pr_announce.md`](./adr_fork_pr_announce.md) FP-2; was bot-regenerated, "**every** observed tag, no filtering") |
+| `tags` | map: tag name → `{content, observed, yanked?}` | bot-regenerated, except `yanked` (human, PR) | **every** observed tag, no filtering — see below _(provenance amended 2026-07-18 → [`adr_fork_pr_announce.md`](./adr_fork_pr_announce.md) FP-2; note below)_ |
 
-`tags` is a map from every tag the owner announces (owner-curated set; each row's
-content CI-verified against the physical repository — **amended 2026-07-18**,
-[`adr_fork_pr_announce.md`](./adr_fork_pr_announce.md) FP-2; originally "every tag ever
-observed on the physical repository") to:
+`tags` is a map from every tag ever observed on the physical repository to:
 
 ```json
 {

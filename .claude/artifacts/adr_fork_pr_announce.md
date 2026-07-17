@@ -3,8 +3,9 @@
 <!--
 ADR-6. Companion to the 2026-07-17/18 announce-revamp discussion
 (decision_log_2026-07-18.md). Owns the announce transport, tag provenance,
-reconcile posture, and the governance lane split; amends ADR-0 (D4/D5),
-ADR-1 (`tags` provenance), and ADR-4 (BD-4/5/6 + the G-table).
+reconcile posture, and the governance lane split; amends
+adr_public_index_registry_indirection.md (D4/D5), ADR-1 (`tags` provenance),
+and ADR-4 (BD-4/5/6 + the G-table).
 -->
 
 ## Metadata
@@ -253,7 +254,11 @@ render detail. Two CI checks enforce it on every announce PR, both unprivileged:
 - **CAS objects** are already content-addressed — the file at `o/sha256/<hex>.json`
   must hash to `<hex>` (ADR-1 D5). A claimed CAS object whose bytes do not hash to its
   path fails. This check already existed; the fork-PR lane makes it load-bearing for
-  untrusted input.
+  untrusted input. It extends to **every** package-local CAS file a fork PR can claim:
+  the desc blobs `o/sha256/<hex>.{md,svg,png}` (readme/logo, ADR-1 D2/D6) are hash-
+  verified against their path digest the same way as observation objects — closing the
+  gap that, on the old doorbell path, only tag observation objects were hashed (this
+  gap closure is owner-decided for the fork-PR lane).
 - **The root** must be **canonical**: CI parses the claimed root, re-serializes it with
   the index's canonical serializer, and byte-compares. A root that is not already in
   canonical form fails. This closes the gap that the root — unlike a CAS object — has no
@@ -277,8 +282,9 @@ never by checking out PR head (BD-5, unchanged):
 - **Machine lane** (eligible for auto-merge): the change is a **tag content refresh
   and/or an owner-authored tag add/remove** (FP-2), *and* the PR author's `github_id` is
   in the committed root's `owners[]`, *and* no G-05 human-review key
-  (`repository`, `owners`, `status`, `deprecated_message`, an existing row's `yanked`)
-  is touched, *and* it is not a new package. Owner-authored tag add/remove is machine
+  (`repository`, `owners`, `status`, `deprecated_message`, `superseded_by`, or an
+  existing row's `yanked` value) is touched, *and* it is not a new package.
+  Owner-authored tag add/remove is machine
   lane because, under owner curation, adding/removing a tag *is* the owner exercising
   their curation authority — it needs no third party's review, only proof the author is
   an owner.
@@ -294,6 +300,12 @@ base-branch root (`owners[]`) — never from PR-head content, so a PR cannot aut
 itself by editing its own `owners[]` (that edit is a G-05 change, which is human lane by
 definition). G-19 is the machine-lane analog of BCR's "approvable by a listed
 maintainer."
+
+G-19 is evaluated **per root**: a PR touching *N* package roots is machine-lane only if
+its author passes the `owners[]` check on **every** touched root — one non-owned root
+routes the whole PR to the human lane. The reference tool (FP-9) produces single-package
+PRs by construction, but an arbitrary fork PR is not so constrained, so the check is
+per-root, not per-PR.
 
 Auto-merge itself is unchanged from BD-5: branch protection plus `gh pr merge --auto
 --squash` composed with the `governance/review-required` status check. The only new

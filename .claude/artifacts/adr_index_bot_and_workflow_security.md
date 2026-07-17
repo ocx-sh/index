@@ -609,6 +609,16 @@ the ledger), G-15 (ownership probe) and G-16 (the split itself) are **unchanged*
 is the "new package = human lane by design" rule the fork-PR lane relies on, and G-05's
 key set is the human-lane trigger.
 
+**Additive correction to G-05's enumeration (not a scope change).** The G-05 row above
+enumerates the human-review key set as `repository`, `owners`, `status`,
+`deprecated_message`, and an existing tag row's `yanked` value — it omits
+**`superseded_by`**, which pre-dates this branch. The authoritative, complete set is
+`repository`, `owners`, `status`, `deprecated_message`, **`superseded_by`**, and a
+`yanked`-value change, as implemented by `core/diff.classify_change` and documented in
+`site/src/docs/reference/governance-contracts.md` and `.../entry-schema.md`. This note
+records the omission additively; the decided G-05 row is left verbatim per immutable-ADR
+discipline. ADR-6 FP-5 uses the corrected set.
+
 ## Changelog
 
 | Date | Author | Change |

@@ -47,7 +47,10 @@ Four frozen URL shapes:
 
 Desc blobs (`/p/<namespace>/<package>/o/sha256/<hex>.{md,svg,png}` — README,
 logo) reuse the same content-addressed CAS convention as the observation
-object path above, but are not one of the three enumerated frozen shapes:
+object path above, and — like all package-local CAS content — their bytes are
+CI hash-verified against their path digest on announce (see
+[adr_fork_pr_announce.md](../artifacts/adr_fork_pr_announce.md) FP-4). They are
+not, however, one of the three enumerated frozen shapes:
 `plan_index_v1.md`'s Wire Format block leaves the desc-blob path unannotated
 for frozen-contract status, and this doc does not resolve that ambiguity on
 its own.
