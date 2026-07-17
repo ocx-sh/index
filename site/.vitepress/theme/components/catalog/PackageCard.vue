@@ -56,6 +56,7 @@ const platforms = computed(() =>
         <div class="card-title-row">
           <span class="card-title">{{ pkg.title }}</span>
           <span v-if="pkg.latestVersion" class="card-version">{{ pkg.latestVersion }}</span>
+          <span v-if="pkg.status === 'deprecated'" class="card-deprecated">DEPRECATED</span>
         </div>
         <div class="card-name">{{ bareName }}</div>
       </div>
@@ -160,6 +161,22 @@ const platforms = computed(() =>
   font-size: var(--text-xs);
   font-weight: 500;
   color: var(--c-text-3);
+}
+
+/* Same shape/sizing as IdentityBlock's `.identity-deprecated` badge, but
+ * muted tokens instead of coral (`--c-accent-hover`) — a grid of cards is
+ * not the place for the site's one interactive/highlight color (see
+ * palette.css's "coral is the only interactive color" note); deprecated on
+ * a card is a status fact, not a call to action. */
+.card-deprecated {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  color: var(--c-text-3);
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-sm);
+  padding: 2px 8px;
+  letter-spacing: 0.05em;
 }
 
 .card-name {
