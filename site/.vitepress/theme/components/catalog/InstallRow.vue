@@ -63,7 +63,7 @@ function onClick(event: MouseEvent) {
 
 <template>
   <CopyContextMenu :actions="actions" :copy-text="copyText">
-    <button type="button" class="install-row" :class="{ copied }" @click="onClick">
+    <button type="button" class="install-row" tabindex="-1" :class="{ copied }" @click="onClick">
       <span class="install-prefix">$</span>
       <span class="install-cmd">{{ command }}</span>
       <CopyIcon :copied="copied" class="install-icon" check-class="install-icon-check" />

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useCatalog } from '../../composables/useCatalog'
 import { filterPackages } from '../../utils/filterPackages'
 import { isEditableTarget } from '../../utils/dom'
@@ -40,6 +40,38 @@ const filtered = computed(() =>
     deprecatedOnly: deprecatedOnly.value,
   }),
 )
+
+// Roving-tabindex grid nav (WAI-ARIA APG "grid" pattern): exactly one card
+// is a Tab stop at a time (index into `filtered`); arrow keys move it,
+// `PackageCard`'s own `<a>` picks up `tabindex` as a plain fallthrough
+// attribute (not declared as a prop there — no changes needed in
+// PackageCard.vue/CatalogGrid.vue to wire this). Resets to the first card
+// whenever the filtered set changes so a fresh Tab from the search bar
+// always lands on card 0, never a stale arrow-nav position.
+const activeCardIndex = ref(0)
+watch(filtered, () => { activeCardIndex.value = 0 })
+
+const ARROW_DELTA: Record<string, number> = { ArrowLeft: -1, ArrowRight: 1 }
+
+function onGridKeydown(event: KeyboardEvent) {
+  const grid = event.currentTarget as HTMLElement
+  const cards = [...grid.querySelectorAll<HTMLAnchorElement>('.package-card')]
+  const currentIndex = cards.indexOf(document.activeElement as HTMLAnchorElement)
+  if (currentIndex === -1) return
+
+  // Column count read straight off the resolved grid track list — cheap,
+  // and always right for the auto-fill/responsive breakpoints in
+  // CatalogGrid's CSS without duplicating its media queries here.
+  const columns = getComputedStyle(grid).gridTemplateColumns.split(' ').length
+  const delta = ARROW_DELTA[event.key] ?? (event.key === 'ArrowUp' ? -columns : event.key === 'ArrowDown' ? columns : undefined)
+  if (delta === undefined) return
+
+  event.preventDefault()
+  const nextIndex = Math.min(cards.length - 1, Math.max(0, currentIndex + delta))
+  if (nextIndex === currentIndex) return
+  activeCardIndex.value = nextIndex
+  cards[nextIndex]?.focus()
+}
 
 // Keyword chips = top-N by frequency across the WHOLE catalog (not the
 // filtered subset — the chip rail stays stable as filters are applied).
@@ -142,8 +174,13 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
         :total="catalog.packages.length"
         @clear-search="query = ''"
       />
-      <CatalogGrid v-else>
-        <PackageCard v-for="pkg in filtered" :key="pkg.name" :pkg="pkg" />
+      <CatalogGrid v-else @keydown="onGridKeydown">
+        <PackageCard
+          v-for="(pkg, i) in filtered"
+          :key="pkg.name"
+          :pkg="pkg"
+          :tabindex="i === activeCardIndex ? 0 : -1"
+        />
       </CatalogGrid>
     </template>
   </main>

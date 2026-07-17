@@ -39,7 +39,7 @@ onMounted(() => {
   <div class="result-meta">
     <span class="count">{{ filtered === total ? `${total} packages` : `${filtered} of ${total} packages` }}</span>
     <span class="filters">{{ activeFilterLabels.length ? activeFilterLabels.join(' · ') : 'sorted by name' }}</span>
-    <button v-if="activeFilterLabels.length" type="button" class="clear-btn" @click="$emit('clear-filters')">
+    <button v-if="activeFilterLabels.length" type="button" class="clear-btn" tabindex="-1" @click="$emit('clear-filters')">
       clear filters
     </button>
     <span class="spacer" />
