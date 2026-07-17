@@ -2,26 +2,33 @@
 import { onMounted, ref, watch } from 'vue'
 import { casUrl } from '../../utils/cas'
 
-// DetailPage owns the `v-if="root.desc?.readme"` gate — this component
-// assumes `digest` is always a real CAS digest when mounted, but still
-// degrades gracefully (muted message, no crash) if the fetch 404s anyway.
+// The pane is always rendered by DetailPage (no more `v-if="root.desc?.readme"`
+// gate) — `digest` is `null` when the package has no readme at all, in which
+// case `load()` skips the fetch and goes straight to the empty-state
+// placeholder below. A real digest that 404s/fails lands on the same
+// placeholder (muted message, no crash).
 const props = defineProps<{
   /** Bare `<ns>/<pkg>` route params — CAS URLs, NEVER `root.name` (see
    * `usePackageRoot`'s CAS-gotcha docblock). */
   bareName: string
-  digest: string
+  digest: string | null
 }>()
 
 const html = ref<string | null>(null)
 const loading = ref(true)
 const failed = ref(false)
 
-const digestShort = () => props.digest.replace(/^sha256:/, '').slice(0, 12)
+const digestShort = () => (props.digest ?? '').replace(/^sha256:/, '').slice(0, 12)
 
 async function load() {
   loading.value = true
   failed.value = false
   html.value = null
+  if (!props.digest) {
+    failed.value = true
+    loading.value = false
+    return
+  }
   const url = casUrl(props.bareName, props.digest, 'md')
   if (!url) {
     failed.value = true
@@ -56,10 +63,10 @@ watch(() => [props.bareName, props.digest], load)
     <span class="readme-heading">README</span>
     <div class="readme-card">
       <p v-if="loading" class="readme-status">Loading README…</p>
-      <p v-else-if="failed" class="readme-status">README unavailable.</p>
+      <div v-else-if="failed" class="readme-empty">No README available.</div>
       <!-- eslint-disable-next-line vue/no-v-html -- markdown-it html:false: source is escaped/non-HTML, safe to inject -->
       <div v-else class="readme-content" v-html="html" />
-      <span class="readme-provenance">fetched from CAS · README from <code>__ocx.desc</code> at {{ digestShort() }}</span>
+      <span v-if="digest && !loading" class="readme-provenance">fetched from CAS · README from <code>__ocx.desc</code> at {{ digestShort() }}</span>
     </div>
   </div>
 </template>
@@ -96,10 +103,27 @@ watch(() => [props.bareName, props.digest], load)
   margin: 0;
 }
 
+.readme-empty {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--c-text-3);
+  opacity: 0.6;
+  text-align: center;
+  padding: 32px 0;
+}
+
 .readme-provenance {
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
   color: var(--c-text-3);
+  align-self: flex-end;
+}
+
+/* First rendered block sits flush against the card's top padding — the UA
+   default top margin on the first heading/paragraph otherwise stacks on top
+   of `.readme-card`'s own padding, pushing content down too far. */
+.readme-content > :deep(*:first-child) {
+  margin-top: 0;
 }
 
 .readme-content :deep(h1),

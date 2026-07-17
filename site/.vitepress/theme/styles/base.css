@@ -50,6 +50,14 @@ button {
   outline-offset: 2px;
 }
 
+/* PackageCard paints its own :focus-visible via border-color (= its :hover
+   treatment, see PackageCard.vue) — suppress the generic outline above there
+   so keyboard focus shows exactly one ring, matching hover instead of
+   stacking outline + border-color. */
+.package-card:focus-visible {
+  outline: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
