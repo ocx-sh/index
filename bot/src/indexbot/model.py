@@ -170,12 +170,24 @@ class PullRequestInfo:
     a checkout (ADR-4 BD-5's `governance-gate` trust boundary: `changed_paths`
     is what G-04's "added `p/*.json` path" and G-05's human-review key-set
     checks key off).
+
+    `author_login`/`author_id` (fork-PR announce revamp, G-19): the PR
+    author's GitHub identity — `author_id` is the stable numeric id (survives
+    username rename/recycling, same rationale as `Owner.github_id`),
+    `author_login` the current login (self-review carve-out display /
+    reviewer-list filtering, `cli/governance_check.py`). `cli/classify_pr.py`
+    does not read either field; they exist for `governance_check.py`'s G-19
+    "PR author `github_id` in every touched package's `owners[]`" gate.
+    Defaulted (not required) so every existing `classify_pr`-only construction
+    site stays unchanged; a caller that needs G-19 always sets both.
     """
 
     number: int
     base_sha: str
     head_sha: str
     changed_paths: tuple[str, ...]
+    author_login: str = ""
+    author_id: int = 0
 
 
 def _empty_tags() -> dict[str, TagEntry]:
