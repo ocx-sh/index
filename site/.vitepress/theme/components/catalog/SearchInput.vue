@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-// Design mock 1a: 44px search field, ⌘K badge. The badge is decorative
+// Design mock 1a: 44px search field, "/" badge. The badge is decorative
 // only — the actual global ⌘K command palette is WP-E's
 // `useCommandPalette`, a separate module this component never imports (see
 // plan_site_redesign.md's frozen "/" decision). This component only
@@ -40,7 +40,7 @@ defineExpose({
       :value="modelValue"
       @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
     >
-    <span class="search-kbd">⌘K</span>
+    <span class="search-kbd">/</span>
   </div>
 </template>
 
