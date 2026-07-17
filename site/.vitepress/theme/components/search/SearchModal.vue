@@ -102,6 +102,21 @@ function go(href: string) {
   router.go(href)
 }
 
+// ponytail: reka-ui's DialogContent restores focus to the pre-open
+// activeElement on close by default. After a keyboard-invoked Esc, the
+// browser treats that programmatic restore as keyboard-originated and
+// paints a :focus-visible ring on it (repro: click the GitHub nav link,
+// return, Ctrl+K, Esc → coral ring on the link). Suppressing the restore
+// trades away focus-restore-on-abort for keyboard users. Ceiling: if a
+// keyboard user complains about losing their place after aborting the
+// palette, restore focus here but call `.blur()` immediately after instead
+// of skipping the restore outright, to drop the ring while keeping the
+// restore.
+function onCloseAutoFocus(e: Event) {
+  e.preventDefault()
+  ;(document.activeElement as HTMLElement | null)?.blur()
+}
+
 function onContentKeydown(e: KeyboardEvent) {
   if (e.key === 'ArrowDown') {
     e.preventDefault()
@@ -125,7 +140,12 @@ function onContentKeydown(e: KeyboardEvent) {
   <DialogRoot v-model:open="isOpen">
     <DialogPortal>
       <DialogOverlay class="palette-overlay" />
-      <DialogContent class="palette-content" aria-label="Search" @keydown="onContentKeydown">
+      <DialogContent
+        class="palette-content"
+        aria-label="Search"
+        @keydown="onContentKeydown"
+        @close-auto-focus="onCloseAutoFocus"
+      >
         <DialogTitle class="visually-hidden">Search</DialogTitle>
         <DialogDescription class="visually-hidden">
           Search packages by name or keyword, and documentation pages by title.
