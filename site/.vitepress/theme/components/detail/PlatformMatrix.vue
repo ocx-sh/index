@@ -13,26 +13,45 @@ const props = defineProps<{
 interface PlatformGroup {
   os: string
   label: string
-  arches: string[]
+  arches: Set<string>
 }
 
+// Fixed column order (design finding: "amd64 should be left to arm64" /
+// "same position regardless of whether one is missing") — amd64 and arm64
+// always lead, any other observed architecture follows alphabetically.
+// `columns` below is computed once across every OS row in the *whole*
+// observation (not per-row), so a row missing an arch renders an empty
+// cell in that arch's column instead of its neighbors packing left to fill
+// the gap — the bug: a flex row with only "arm64" present used to render
+// that badge in the "amd64" slot, visually indistinguishable from an actual
+// amd64 entry.
+const ARCH_PRIORITY = ['amd64', 'arm64']
+
+function archRank(arch: string): number {
+  const index = ARCH_PRIORITY.indexOf(arch)
+  return index === -1 ? ARCH_PRIORITY.length : index
+}
+
+const columns = computed<string[]>(() => {
+  const arches = new Set(props.platforms.map(p => p.platform.architecture))
+  return [...arches].sort((a, b) => archRank(a) - archRank(b) || a.localeCompare(b))
+})
+
 const groups = computed<PlatformGroup[]>(() => {
-  const byOs = new Map<string, string[]>()
+  const byOs = new Map<string, Set<string>>()
   for (const entry of props.platforms) {
     const os = entry.platform.os
-    const arch = entry.platform.architecture
-    const arches = byOs.get(os) ?? []
-    if (!arches.includes(arch)) arches.push(arch)
-    byOs.set(os, arches)
+    if (!byOs.has(os)) byOs.set(os, new Set())
+    byOs.get(os)!.add(entry.platform.architecture)
   }
   return [...byOs.entries()]
-    .map(([os, arches]) => ({ os, label: OS_GLYPHS[os]?.label ?? os, arches: [...arches].sort() }))
+    .map(([os, arches]) => ({ os, label: OS_GLYPHS[os]?.label ?? os, arches }))
     .sort((a, b) => osRank(a.os) - osRank(b.os) || a.os.localeCompare(b.os))
 })
 </script>
 
 <template>
-  <div v-if="groups.length" class="platform-matrix">
+  <div v-if="groups.length" class="platform-matrix" :style="{ '--arch-cols': columns.length }">
     <div v-for="group in groups" :key="group.os" class="platform-row">
       <span class="platform-glyph">
         <svg v-if="OS_GLYPHS[group.os]" width="16" height="16" :viewBox="OS_GLYPHS[group.os].viewBox" aria-hidden="true">
@@ -41,8 +60,18 @@ const groups = computed<PlatformGroup[]>(() => {
         </svg>
       </span>
       <span class="platform-label">{{ group.label }}</span>
-      <span class="platform-arches">
-        <span v-for="arch in group.arches" :key="arch" class="platform-arch">{{ arch }}</span>
+      <!-- One cell per arch column, always — a missing arch for this OS
+           renders an empty cell rather than being omitted, so every OS
+           row's badges land in the same fixed column across the card.
+           These cells are direct children of the shared grid below
+           (`.platform-row` is `display: contents`, see its style) rather
+           than a nested grid of their own — a per-row grid would size its
+           own columns from just that row's content, so an empty cell
+           (nothing to size against) collapses narrower than a filled one
+           and every row's columns drift out of alignment with each other,
+           the exact bug this fix exists to remove. -->
+      <span v-for="arch in columns" :key="arch" class="platform-arch-cell">
+        <span v-if="group.arches.has(arch)" class="platform-arch">{{ arch }}</span>
       </span>
     </div>
   </div>
@@ -50,24 +79,33 @@ const groups = computed<PlatformGroup[]>(() => {
 </template>
 
 <style scoped>
+/* One shared grid for the whole card, not one grid per row — a grid's
+   column tracks are sized (with `auto`) from the widest content *within
+   that one grid container*. Nesting a separate grid per `.platform-row`
+   would let each row size its arch columns independently, so an OS with a
+   missing arch (nothing in that cell) computes a narrower column than an
+   OS with every arch present — cells drift out of alignment between rows,
+   defeating the fixed-column point. One grid across every row (each
+   `.platform-row` participates via `display: contents` instead of being a
+   layout box itself) gives every column one width, shared by all rows —
+   OS glyph left-aligned, arch badges in fixed columns to its right, amd64
+   before arm64, stable position whether or not a given OS has that arch. */
 .platform-matrix {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: 18px 70px repeat(var(--arch-cols), auto);
+  align-items: center;
+  row-gap: 10px;
+  column-gap: 10px;
 }
 
 .platform-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display: contents;
 }
 
 .platform-glyph {
   color: var(--c-text-2);
   display: inline-flex;
-  width: 18px;
   justify-content: center;
-  flex-shrink: 0;
 }
 
 .platform-label {
@@ -75,14 +113,11 @@ const groups = computed<PlatformGroup[]>(() => {
   font-size: var(--text-sm);
   font-weight: 500;
   color: var(--c-text-1);
-  width: 70px;
-  flex-shrink: 0;
 }
 
-.platform-arches {
-  display: inline-flex;
-  gap: 6px;
-  flex-wrap: wrap;
+.platform-arch-cell {
+  display: flex;
+  justify-content: flex-start;
 }
 
 .platform-arch {

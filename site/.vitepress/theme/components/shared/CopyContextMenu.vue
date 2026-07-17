@@ -1,3 +1,41 @@
+<script lang="ts">
+// Plain (non-`setup`) script block: `buildTagCopyActions` is a runtime
+// function export, which `<script setup>` cannot contain (Vue SFC
+// compile-time restriction — only type-only exports are allowed there).
+// Module-scope exports from this block are available inside the
+// `<script setup>` block below same as any other SFC import.
+
+export interface CopyAction {
+  label: string
+  command: string
+  icon: 'identifier' | 'tag' | 'project' | 'global' | 'inspect' | 'exec'
+}
+
+/**
+ * The five copy actions (+ tentative sixth "Exec") for a single
+ * `qualifiedName:tag` identifier — single source of truth for the action
+ * list every per-tag context menu on the detail page builds (`TagBadge.vue`
+ * badges, `VersionTree.vue`'s alias-chain segments). Command strings +
+ * ordering match the original `TagBadge.vue` inline menu verbatim.
+ *
+ * `InstallRow.vue` (catalog card install box) does NOT use this — its
+ * identifier can fall back to a bare qualified name when no tag is known,
+ * a case this helper doesn't need to model since every detail-page tag
+ * badge always has a real tag.
+ */
+export function buildTagCopyActions(qualifiedName: string, tag: string): CopyAction[] {
+  const identifier = `${qualifiedName}:${tag}`
+  return [
+    { label: 'Copy identifier', command: identifier, icon: 'identifier' },
+    { label: 'Copy tag', command: tag, icon: 'tag' },
+    { label: 'Add to project', command: `ocx add ${identifier}`, icon: 'project' },
+    { label: 'Add globally', command: `ocx --global add ${identifier}`, icon: 'global' },
+    { label: 'Inspect command', command: `ocx package inspect ${identifier}`, icon: 'inspect' },
+    { label: 'Exec command', command: `ocx package exec ${identifier}`, icon: 'exec' },
+  ]
+}
+</script>
+
 <script setup lang="ts">
 import {
   ContextMenuRoot,
@@ -8,26 +46,28 @@ import {
 } from 'reka-ui'
 import CopyIcon from './CopyIcon.vue'
 
-// Right-click copy menu — same five actions (+ tentative Exec sixth) as
-// `components/detail/TagBadge.vue`'s inline context menu, factored out so a
-// second consumer (`InstallRow.vue`, the catalog card's install box) doesn't
-// have to paste the whole 130-line ContextMenu* block. TagBadge itself is
-// NOT migrated onto this component this wave (another worker owns that
-// file) — its `.ctx-menu`/`.ctx-item` styles stay separate from this
-// component's `.copy-ctx-menu`/`.copy-ctx-item` on purpose, see the <style>
-// block below.
+// Right-click copy menu — originally factored out of
+// `components/detail/TagBadge.vue`'s inline context menu so a second
+// consumer (`InstallRow.vue`, the catalog card's install box) didn't have
+// to paste the whole 130-line ContextMenu* block. `TagBadge.vue` is now
+// migrated onto this component too (detail-page right-click-menu-coverage
+// fix): every per-tag badge, everywhere, shares this one menu
+// implementation instead of two near-identical copies drifting apart.
 //
-// `ContextMenuPortal` (TagBadge doesn't use one — fine there, it's never
-// wrapped in an anchor) is required here: without it, `ContextMenuContent`
+// `ContextMenuPortal` is required here: without it, `ContextMenuContent`
 // renders inline in the DOM instead of teleporting to `<body>`, which for a
-// trigger nested in `.package-card`'s `<a>` leaves the whole menu — and
-// every item in it — a DOM descendant of that anchor. VitePress's router
-// intercepts clicks by walking up from `event.target` to the nearest `<a>`,
-// so without the portal, selecting ANY item (even one that itself calls
-// `preventDefault`) still gets caught by that walk and soft-navigates to
-// the card's detail route. Confirmed by reproduction: an un-portalled menu
-// item click fired `history.pushState` to the detail route even though the
-// item's own click handler had already run.
+// trigger nested in `.package-card`'s `<a>` (InstallRow's case) leaves the
+// whole menu — and every item in it — a DOM descendant of that anchor.
+// VitePress's router intercepts clicks by walking up from `event.target` to
+// the nearest `<a>`, so without the portal, selecting ANY item (even one
+// that itself calls `preventDefault`) still gets caught by that walk and
+// soft-navigates to the card's detail route. Confirmed by reproduction: an
+// un-portalled menu item click fired `history.pushState` to the detail
+// route even though the item's own click handler had already run. TagBadge
+// is never nested in an anchor, so it didn't strictly need the portal, but
+// sharing one implementation is simpler than forking it back out — and a
+// portal is harmless (in fact helpful for popover-nested badges, whose
+// `.minor-popover` ancestor is already teleported to `<body>` itself).
 //
 // Trigger content is a slot so any clickable element can host the menu.
 // `copyText` is deliberately a prop, not an owned `useCopyState` instance:
@@ -36,12 +76,6 @@ import CopyIcon from './CopyIcon.vue'
 // click and every menu action alike — exactly how TagBadge wires itself
 // today, just with the state living one level up instead of inside this
 // component.
-export interface CopyAction {
-  label: string
-  command: string
-  icon: 'identifier' | 'tag' | 'project' | 'global' | 'inspect' | 'exec'
-}
-
 defineProps<{
   actions: CopyAction[]
   copyText: (text: string) => void | Promise<void>

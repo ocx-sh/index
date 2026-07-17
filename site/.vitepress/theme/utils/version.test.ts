@@ -161,6 +161,33 @@ describe('buildVersionTable', () => {
     expect(row.primaryTag).toBe('1')
   })
 
+  test('bare variant tag joins its own alias chain as the head (nginx "alpine" shape)', () => {
+    // Regression coverage for a demo-fixtures data gap that shipped without
+    // the bare "alpine" tag alongside alpine-1/alpine-1.2/alpine-1.2.0 (all
+    // four sharing one digest, exactly like "latest" does for the default
+    // row) — the rendered variant row started at "alpine-1" instead of the
+    // bare rolling tag. `buildVersionTable` itself already threads a bare
+    // variant tag through as the row's depth-0 `primaryTag` and therefore
+    // the chain head; this test locks that behavior in so a future fixture
+    // gap fails loudly here instead of only being visible on the rendered
+    // detail page.
+    const table = buildVersionTable(
+      {
+        alpine: { content: 'sha256:alp', observed: '2026-07-15T00:00:00Z' },
+        'alpine-1': { content: 'sha256:alp', observed: '2026-07-15T00:00:00Z' },
+        'alpine-1.2': { content: 'sha256:alp', observed: '2026-07-15T00:00:00Z' },
+        'alpine-1.2.0': { content: 'sha256:alp', observed: '2026-07-15T00:00:00Z' },
+      },
+      'active',
+    )
+
+    const row = table.rows.find(r => r.variant === 'alpine')!
+    expect(row.primaryTag).toBe('alpine')
+    expect(row.showLatestHighlight).toBe(false)
+    expect(row.aliasChain.map(m => m.tag)).toEqual(['alpine', 'alpine-1', 'alpine-1.2', 'alpine-1.2.0'])
+    expect(row.aliasChain.every(m => m.digest === 'sha256:alp')).toBe(true)
+  })
+
   test('latest-only package: no versioned tags at all, majorGroups stays empty', () => {
     const table = buildVersionTable(
       { latest: { content: 'sha256:only', observed: '2026-01-01T00:00:00Z' } },
