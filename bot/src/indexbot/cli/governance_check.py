@@ -35,6 +35,7 @@ rather than reposting on every re-run.
 
 from __future__ import annotations
 
+import sys
 from typing import TYPE_CHECKING, Final, cast
 
 from indexbot.cli.classify_pr import classify_pull_request
@@ -105,7 +106,8 @@ def _committed_maintainers(github: GitHubPort, base_sha: str) -> tuple[Owner, ..
         return ()
     try:
         return parse_maintainers(raw)
-    except ValidationError:
+    except ValidationError as exc:
+        print(f"governance-check: malformed maintainers.yml ignored: {exc}", file=sys.stderr)
         return ()
 
 

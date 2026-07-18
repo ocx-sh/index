@@ -210,9 +210,12 @@ def test_missing_maintainers_file_assigns_no_reviewers_but_still_comments() -> N
     assert 1 in github.comments
 
 
-def test_malformed_maintainers_file_assigns_no_reviewers_but_still_comments() -> None:
+def test_malformed_maintainers_file_assigns_no_reviewers_but_still_comments(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
     # A corrupt committed maintainers.yml must never crash the gate — same
-    # graceful fallback as a missing file entirely.
+    # graceful fallback as a missing file entirely, plus a logged stderr
+    # line (never a silently swallowed error).
     before = _root(owners=(_OWNER,))
     after = _root(owners=(_OTHER_OWNER,))
     github = _github(pr_number=1, base=before, head=after, maintainers=b"not: valid\nmaintainers\n")
@@ -222,6 +225,7 @@ def test_malformed_maintainers_file_assigns_no_reviewers_but_still_comments() ->
     assert result == governance_check.ExitCode.OK
     assert github.requested_reviewers == {}
     assert 1 in github.comments
+    assert "malformed maintainers.yml ignored" in capsys.readouterr().err
 
 
 def test_comment_is_idempotent_across_repeated_runs() -> None:
