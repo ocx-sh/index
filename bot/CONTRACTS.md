@@ -175,12 +175,19 @@ Functions (each raises `ValidationError` on failure, never returns a bool):
   `.logo`) is validated through this one function before it is ever used to
   build a filesystem path — digest-hex `fullmatch` before path join, no
   exceptions.
+- `check_digest_self_consistent(digest: str, object_bytes: bytes) -> None`
+  (fork-PR announce revamp, 2026-07-18) — the general form: recomputes sha256
+  of `object_bytes` (§1's canonical form — the object was already serialized
+  canonically when written, so this is a byte-equality check, not a
+  re-serialization) and compares to `digest`; mismatch is `AnomalyError`
+  (this is CAS integrity, not a routine validation failure — the file's name
+  lies about its own content). Any claimed digest string works here, not
+  only a `TagEntry`'s — `cli/validate.py`'s blanket per-file CAS scan and
+  `core/verify_claims.py`'s desc-blob hash check both need this, closing the
+  byte-exact-discipline gap where only tag digests were ever verified.
 - `check_content_digest_self_consistent(tag: TagEntry, object_bytes: bytes) -> None`
-  — recomputes sha256 of `object_bytes` (§1's canonical form — the object was
-  already serialized canonically when written, so this is a byte-equality
-  check, not a re-serialization) and compares to `tag.content`; mismatch is
-  `AnomalyError` (this is CAS integrity, not a routine validation failure —
-  the file's name lies about its own content).
+  — thin `TagEntry`-shaped wrapper over `check_digest_self_consistent(tag.content,
+  object_bytes)`, kept for its pre-existing callers/tests.
 - `check_no_dangling_references(root: PackageRoot, cas_digests: frozenset[str]) -> None`
   — every `TagEntry.content` and `Desc.readme`/`Desc.logo` (when `desc` is
   not `None`) must appear in `cas_digests` (the set of digests actually
@@ -386,13 +393,15 @@ disposition. Two callers, two dispositions for the same taxonomy:
 `cli/validate.py`'s unprivileged PR gate treats any finding as a
 `ValidationError` (reject the PR — nothing was ever legitimately observed to
 mutate, the claim just isn't true right now); `cli/reconcile.py`'s
-verify-only nightly sweep escalates only the CAS-integrity-shaped findings
-(`"cas-object-*"`/`"desc-blob-*"`) to its `AnomalyError` exit-65 outcome —
-`"digest-mismatch"`/`"tag-missing-upstream"` on their own do not escalate
-there (see §12's `cli/reconcile.py` entry for the full rationale: floating-tag
-drift is expected cascade behavior, and a still-*pinned*-tag mutation is
-caught by the reused `core/anomaly.py::check_tag_mutations` instead, not by
-`verify_claims`).
+verify-only nightly sweep escalates every finding kind to its `AnomalyError`
+exit-65 outcome **except** a `"digest-mismatch"` on a floating (non-pinned)
+tag and a `"tag-missing-upstream"` on a *yanked* tag (ADR-6 FP-2/FP-3 — yank
+is grace, an explicit owner-authorized exemption from the
+registry-existence check; everything else vanished-upstream is an anomaly,
+not a silent drop) — see §12's `cli/reconcile.py` entry for the full
+disposition table: floating-tag drift is expected cascade behavior, and a
+still-*pinned*-tag mutation is caught by the reused
+`core/anomaly.py::check_tag_mutations` instead, not by `verify_claims`.
 
 ### `core/desc.py`
 
@@ -757,14 +766,19 @@ your module's `run` function and its own tests, leave wiring to WP2-M.
   `verify_claims`'s `"cas-object-*"`/`"desc-blob-*"` findings always escalate
   (structural CAS integrity, independent of tag semantics — the same
   unconditional treatment `check_no_dangling_references`/
-  `check_digest_self_consistent` already give); `"digest-mismatch"`/
-  `"tag-missing-upstream"` do **not** escalate on their own (floating-tag
-  drift is expected cascade behavior, ADR-1 D2/D3, and that same digest
-  mismatch on a *pinned* tag is already caught by the reused
-  `check_tag_mutations` — avoids double-flagging one phenomenon two ways).
-  A non-empty escalating-finding set opens/updates one anomaly issue via
-  `GitHubPort.create_or_update_issue` (promoted onto the port this stage,
-  see §3/§10) before raising.
+  `check_digest_self_consistent` already give); `"digest-mismatch"` does
+  **not** escalate on its own (floating-tag drift is expected cascade
+  behavior, ADR-1 D2/D3, and that same digest mismatch on a *pinned* tag is
+  already caught by the reused `check_tag_mutations` — avoids
+  double-flagging one phenomenon two ways). `"tag-missing-upstream"` **does**
+  escalate (ADR-6 FP-2/FP-3 — a decided rule, no longer an open question)
+  *unless* the committed `TagEntry.yanked is not None` for that tag: yank is
+  grace, an explicit owner-authorized exemption from the registry-existence
+  check — `_PackageReport` carries the committed root's yanked-tag names
+  precisely so `_escalating_findings` can tell a yanked-and-vanished tag
+  apart from a plain silent drop. A non-empty escalating-finding set
+  opens/updates one anomaly issue via `GitHubPort.create_or_update_issue`
+  (promoted onto the port this stage, see §3/§10) before raising.
 - **`cli/validate.py`** (extended, fork-PR announce revamp — byte-exact
   discipline): takes changed-file paths as CLI positional args (unchanged).
   New, before the existing structural gauntlet: parse the committed root
@@ -850,10 +864,14 @@ your module's `run` function and its own tests, leave wiring to WP2-M.
 1. **Yank-on-republish** (`core/regenerate.py`, §7): does a re-published
    digest under a yanked tag name clear the yank? Default: no. Confirm
    before Phase 3.
-2. **Silent tag disappearance** (`core/regenerate.py`, §7): is a tag
-   vanishing from the registry (not digest-mutating, just gone) worth
-   flagging to reconcile's operators, or is silent drop correct? Not
-   decided by either ADR.
+2. **Silent tag disappearance** — **resolved, ADR-6 FP-2/FP-3 (fork-PR
+   announce revamp, 2026-07-18)**: a tag vanishing from the registry
+   (`core/verify_claims.py`'s `"tag-missing-upstream"` finding) escalates to
+   an anomaly in `cli/reconcile.py`'s verify-only sweep *unless* the
+   committed `TagEntry.yanked is not None` for that tag — yank is grace, an
+   explicit owner-authorized exemption; everything else vanished-upstream is
+   an anomaly, never a silent drop. No longer decided by `core/regenerate.py`
+   (which never runs in the verify-only sweep at all any more, §12).
 3. **Pinned-vs-floating anomaly predicate** (`core/anomaly.py`, §7): ADR-4
    delegates this to ADR-1, which does not actually state it. Default: exact
    `X.Y.Z` only is pinned. This is the highest-stakes open question in this
@@ -890,7 +908,14 @@ authoritative implementation, this section documents their exact output byte
 **`p/<namespace>/<package>.json` (the package root — human-diffable, PR-review
 form, never digested itself):**
 
-- UTF-8 encoded.
+- UTF-8 encoded, `ensure_ascii=True` (the `json.dumps` default, not passed
+  explicitly but never overridden either) — non-ASCII field values (e.g. a
+  non-ASCII `deprecated_message`, `desc.title`/`.description`, or
+  `upstream.disclaimer`) serialize as `\uXXXX` escapes, never raw UTF-8
+  bytes, identical to the observation-object form below. A `serde_json`
+  (or any other) port that defaults to `to_string_pretty`'s
+  UTF-8-passthrough behavior instead will byte-diverge on the first
+  non-ASCII value it serializes — required reading for **ocx#216**.
 - `json.dumps(data, indent=2, sort_keys=False)` — **2-space indent**,
   **insertion-order preserved** (never alphabetized).
 - Key order is fixed and matches `model.PackageRoot`'s declared field order
@@ -904,6 +929,13 @@ form, never digested itself):**
 - `desc: None` serializes as the JSON literal `null` (the key itself is
   **never** omitted — this is the one field whose absence-vs-null semantics
   differ from `upstream`/`superseded_by` above).
+- `upstream`'s own three fields are **mixed** optional semantics, not a
+  single rule applied uniformly: `org` is always present (required,
+  non-nullable); `repository_url` is **omitted entirely** when `None`
+  (schema forbids `null` there, matching `upstream` itself); `disclaimer`
+  is **always present**, serialized as the JSON literal `null` when `None`
+  (schema allows `null` there — the one sub-field of `upstream` that
+  behaves like `desc` above rather than like `repository_url`).
 - A single trailing `\n` — **always** present, exactly one byte, no more.
 - Byte-exact discipline (this revamp): CI re-derives this exact form from
   the PR's own parsed root (`parse_package_root` -> `serialize_package_root`)
