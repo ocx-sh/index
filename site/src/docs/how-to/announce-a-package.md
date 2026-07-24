@@ -17,8 +17,8 @@ then, the raw dispatch below is the supported path.
 
 A [namespace claimed](./claim-a-namespace) and populated in this index, and
 a namespace-scoped announce PAT stored as a secret in your own publisher
-CI — see [Rotate the Announce PAT](../ops/rotate-announce-pat). The PAT can
-only fire the announce trigger; it cannot write to the index directly.
+CI. The PAT can only fire the announce trigger; it cannot write to the index
+directly.
 
 ## The Dispatch Contract
 
