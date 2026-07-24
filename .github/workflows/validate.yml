@@ -1,19 +1,28 @@
 name: validate
 
 # ADR-4 (adr_index_bot_and_workflow_security.md) BD-5 — privileged/unprivileged
-# split for the index bot's PR-review surface. Two jobs, deliberately
-# different trust levels, composed with branch protection (no custom merge
-# logic in either job):
+# split for the index bot's PR-review surface, extended by ADR-6
+# (adr_fork_pr_announce.md) for the fork-PR announce lane. Two jobs,
+# deliberately different trust levels, composed with branch protection (no
+# custom merge logic in either job):
 #
 #   schema-validate-pr (pull_request, zero secrets, checks out PR head — safe,
 #     GitHub strips secrets for this trigger): schema/fixture check + indexbot
-#     validate against this PR's changed p/**/*.json roots.
+#     validate against this PR's changed p/**/*.json roots. `indexbot
+#     validate` itself (unchanged invocation here) now also byte-verifies
+#     every CAS file under each changed root's `o/sha256/` tree and re-derives
+#     every claimed tag/desc-blob digest from registry truth (ADR-6 FP-1/FP-4)
+#     — no extra file-listing step needed here, the CLI walks the CAS tree
+#     itself from the root path it's given.
 #   governance-gate (pull_request_target, GITHUB_TOKEN only, NEVER checks out
 #     PR head): classifies the diff via the GitHub API only, labels the PR,
-#     sets the "governance/review-required" commit status, and requests
-#     auto-merge for refresh-class PRs. GitHub itself merges once branch
-#     protection's required checks (schema-validate-pr +
-#     governance/review-required) are both green — no polling, no second bot.
+#     sets the "governance/review-required" commit status (G-19 owners-
+#     membership + G-20 reviewer assignment), and arms auto-merge strictly on
+#     `indexbot governance-check`'s own `disposition` output — never on the
+#     raw classify-pr label, which can't see the G-19 ownership result.
+#     GitHub itself merges once branch protection's required checks
+#     (schema-validate-pr + governance/review-required) are both green — no
+#     polling, no second bot.
 #
 # job1 is named "schema-validate-pr", not ADR-4's literal "schema-validate",
 # because ci.yml already owns that name for a different, unrelated check
@@ -105,6 +114,7 @@ jobs:
       contents: read # checkout base ref only, to run bot/'s source
       pull-requests: write # classify-pr's add_labels + auto-merge request
       statuses: write # governance-check's set_commit_status (governance/review-required); a separate scope from pull-requests
+      issues: write # governance-check's create_comment (G-20) posts via the Issues API even for a PR — pull-requests: write alone 403s it
     env:
       GH_TOKEN: ${{ github.token }}
     steps:
@@ -125,6 +135,7 @@ jobs:
           uv run --project bot -- indexbot classify-pr --pr-number "$PR_NUMBER"
 
       - name: indexbot governance-check
+        id: governance_check
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           GITHUB_TOKEN: ${{ github.token }}
@@ -132,17 +143,23 @@ jobs:
           set -euo pipefail
           uv run --project bot -- indexbot governance-check --pr-number "$PR_NUMBER"
 
-      - name: Enable auto-merge for refresh-class PRs
+      # G-19: arm auto-merge only on governance-check's own `disposition`
+      # output — that's the ownership-checked machine-lane result (refresh
+      # classification AND the PR author owns every touched root), not the
+      # raw classify-pr label above, which cannot see the G-19 outcome.
+      - name: Enable auto-merge for machine-lane PRs (G-19)
+        if: steps.governance_check.outputs.disposition == 'success'
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           REPO: ${{ github.repository }}
         run: |
           set -euo pipefail
-          # classify-pr (above) is the source of truth for the label; read it
-          # back rather than re-deriving classification here, so this job
-          # never hand-rolls the G-04/G-05 diff logic a second time.
-          if gh pr view "$PR_NUMBER" --repo "$REPO" --json labels --jq '.labels[].name' | grep -qxF 'refresh'; then
-            gh pr merge "$PR_NUMBER" --repo "$REPO" --auto --squash
-          else
-            echo "::notice title=auto-merge skipped::PR #$PR_NUMBER is not refresh-class - human review required, auto-merge not requested."
-          fi
+          gh pr merge "$PR_NUMBER" --repo "$REPO" --auto --squash
+
+      - name: Auto-merge skipped — human lane
+        if: steps.governance_check.outputs.disposition != 'success'
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          echo "::notice title=auto-merge skipped::PR #$PR_NUMBER is not machine-lane (G-19) - human review required, auto-merge not requested."

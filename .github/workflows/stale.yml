@@ -1,0 +1,45 @@
+name: stale
+
+# ADR-6 (adr_fork_pr_announce.md) FP-8 spam posture, second half: fork PRs
+# `pr-checks-label.yml` already labeled `checks-failed` get stale-closed on
+# the ordinary open-source triage schedule — "no CAPTCHA, no allowlist, no
+# first-contributor approval wall in v1", just label + stale-close. Scoped
+# strictly to `checks-failed` PRs (`only-labels`); issue staling is disabled
+# entirely (`days-before-issue-stale: -1`) — this workflow owns PR triage
+# only, never touches the anomaly-tracking issues `reconcile`/`validate`
+# file.
+on:
+  schedule:
+    - cron: "0 5 * * *" # daily, 05:00 UTC
+  workflow_dispatch: {}
+
+permissions: {}
+
+concurrency:
+  group: stale
+  cancel-in-progress: false
+
+jobs:
+  stale:
+    name: stale
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write # actions/stale labels + closes stale PRs
+      issues: write # actions/stale's own required scope even in PR-only mode (label/comment API is shared with issues)
+    steps:
+      - name: Close stale failed-check fork PRs
+        uses: actions/stale@1e223db275d687790206a7acac4d1a11bd6fe629 # v10.4.0
+        with:
+          only-labels: checks-failed
+          days-before-stale: 14
+          days-before-close: 7
+          stale-pr-label: checks-failed-stale
+          stale-pr-message: >-
+            This pull request has failing checks (ADR-6 FP-8 spam posture) and
+            has had no activity for 14 days. It will be closed in 7 days
+            unless updated.
+          close-pr-message: >-
+            Closing this pull request: failing checks with no activity for 21
+            days (ADR-6 FP-8).
+          days-before-issue-stale: -1
+          days-before-issue-close: -1

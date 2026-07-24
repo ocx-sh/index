@@ -1,0 +1,76 @@
+name: pr-checks-label
+
+# ADR-6 (adr_fork_pr_announce.md) FP-8 spam posture: label fork PRs whose
+# checks failed, so `stale.yml` can later close them on the ordinary
+# open-source triage schedule. A dedicated `workflow_run` workflow because
+# `validate.yml`'s `governance-gate` job (`pull_request_target`) runs
+# alongside `schema-validate-pr` (`pull_request`), not after it, and so has
+# no way to see that job's conclusion (CONTRACTS.md §12/ADR-6 FP-8 open
+# question — resolved here).
+#
+# Trust boundary: this workflow never checks out any commit, PR-head or
+# otherwise, and never runs PR-controlled code — it only reads the completed
+# run's metadata and, through the GitHub API, the associated pull request's
+# head repository, then applies a label. The `workflow_run` trigger runs
+# with base-repo privileges regardless of who authored the workflow that
+# just completed, which is exactly why no repository content is ever
+# checked out here.
+on:
+  # zizmor: ignore[dangerous-triggers] workflow_run runs with base-repo
+  # privileges by design, but every job below never checks out any commit
+  # (fork or otherwise) and never executes PR-controlled code — GitHub API
+  # reads and one label write only.
+  workflow_run:
+    workflows: ["validate"]
+    types: [completed]
+
+permissions: {}
+
+concurrency:
+  group: pr-checks-label-${{ github.event.workflow_run.id }}
+  cancel-in-progress: false
+
+jobs:
+  label-checks-failed:
+    name: label-checks-failed
+    if: github.event.workflow_run.conclusion == 'failure'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write # label the fork PR associated with the failed run
+    env:
+      # Env-var indirection: every field below comes from the completed
+      # run's metadata, not from a PR-head payload we ever parse — still
+      # routed through env vars rather than interpolated into `run:`.
+      HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+      REPO: ${{ github.repository }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Label the fork PR for this failed run, if any
+        run: |
+          set -euo pipefail
+          # workflow_run's own `pull_requests` array is empty for fork PRs
+          # (GitHub only populates it for same-repo PRs) — the documented
+          # workaround is looking the PR up by its head commit instead, which
+          # works for fork-originated PRs too (GitHub indexes every open
+          # PR's head commit against its `refs/pull/<n>/head`). Filtered to
+          # an EXACT head-sha match, not just "first result": a commit can be
+          # part of more than one PR's history (e.g. a rebase/merge chain),
+          # and `.[0]` alone could pick an unrelated PR that merely contains
+          # this sha — labeling (and later stale-closing) an innocent PR.
+          commit_prs="$(gh api "repos/$REPO/commits/$HEAD_SHA/pulls")"
+          pr_number="$(jq -r --arg sha "$HEAD_SHA" '[.[] | select(.head.sha == $sha)][0].number // empty' <<<"$commit_prs")"
+          if [ -z "$pr_number" ]; then
+            echo "::notice title=pr-checks-label::No open pull request has $HEAD_SHA as its current head - nothing to label."
+            exit 0
+          fi
+          head_repo="$(jq -r --arg sha "$HEAD_SHA" '[.[] | select(.head.sha == $sha)][0].head.repo.full_name // empty' <<<"$commit_prs")"
+          if [ -z "$head_repo" ] || [ "$head_repo" = "$REPO" ]; then
+            echo "::notice title=pr-checks-label::PR #$pr_number is not fork-authored - FP-8 scopes checks-failed labeling to fork PRs only."
+            exit 0
+          fi
+          # Raw REST call (not `gh pr edit --add-label`), matching the bot's
+          # own labeling path (`GitHubApi.add_labels`, POST .../issues/{n}/
+          # labels) — that endpoint auto-creates a missing label, live-
+          # evidenced by `human-review-required` never having been manually
+          # created before `indexbot classify-pr` first applied it.
+          gh api "repos/$REPO/issues/$pr_number/labels" -f "labels[]=checks-failed"
