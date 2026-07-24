@@ -41,6 +41,21 @@ are bot-regenerated fields; a claim PR that also wants an initial tag set
 populated should let an announce (or `seed-import`, for batch seeding) do
 that work, not encode digests by hand.
 
+### Multi-Owner Support {#multi-owner-support}
+
+`owners[]` accepts more than one `{github, github_id}` pair. Every listed
+owner independently satisfies the machine-lane authorization check on that
+root (FP-5) — a PR from any one of them, refreshing or curating that
+package's tags, qualifies for auto-merge on its own. Co-maintained packages
+and org-owned namespaces should list every maintainer who should be able to
+auto-merge a refresh, not just the person who happened to file the claim.
+
+This is also why `github_id` is mandatory alongside the login: it's the
+actual authorization key the machine lane checks against, not the login
+string. `github_id` is immutable and survives a username change or account
+rename; a login string is display-only and is never what an ownership check
+compares against.
+
 ## 3. Automated Checks
 
 Two jobs run against the PR:
@@ -70,10 +85,17 @@ A maintainer reviews the PR for:
   physical mirror, `status` is `active` for a new claim.
 
 New-package PRs are never auto-merged, no matter how green the automated
-checks are — a human approval is required every time.
+checks are — a human approval is required every time. This holds regardless
+of how many owners are listed in `owners[]`: multiple owners let any one of
+them auto-merge a *later* refresh (see
+[Multi-Owner Support][multi-owner-support] above), but a first claim is
+always human lane (G-04) — curated tags don't change that either.
 
 ## After Merge
 
 The namespace is now claimed and immutable — there is no rename primitive.
 Trigger your first [announce](./announce-a-package) to populate `tags` from
 live registry state (or rely on the nightly reconcile to pick it up).
+
+<!-- internal -->
+[multi-owner-support]: #multi-owner-support
