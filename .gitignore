@@ -1,3 +1,7 @@
 .claude/state/
 .task/
 /demo/
+
+# Ephemeral agent worktrees — never tracked, keep `git status` clean.
+.agents/worktrees/
+.claude/worktrees/
