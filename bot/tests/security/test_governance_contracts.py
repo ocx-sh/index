@@ -4,7 +4,11 @@ Contract wording: `bot/CONTRACTS.md` §12, ADR-4
 (`adr_index_bot_and_workflow_security.md`) Governance-Contract table +
 Amendment A1, ADR-6 (`adr_fork_pr_announce.md`) FP-1..FP-9. G-08/G-17/G-18 are
 RETIRED under the fork-PR lane (ADR-4 Amendment A1) — their tests are ABSENCE
-tests. G-19/G-20 are the fork-PR additions.
+tests. G-19/G-20 are the fork-PR additions. ADR-6 FP-5 (machine-lane content
+is only authorized package refreshes) carries its own named test alongside
+G-19 — it is a distinct contract from G-19's ownership check, not a second
+test of it: FP-5 bounds *which files* may ride the machine lane, G-19 bounds
+*who* may send them.
 
 Every test names its contract id so this file reads as the audit index. Where
 an existing suite already pins the exact invariant (`test_validate_entry.py`,
@@ -575,9 +579,20 @@ def _github_output(  # pyright: ignore[reportUnusedFunction]
     return output_file
 
 
-def _refresh_pr_github(*, author_id: int, author_login: str = "alice") -> FakeGitHub:
+def _refresh_pr_github(
+    *,
+    author_id: int,
+    author_login: str = "alice",
+    extra_changed_paths: tuple[str, ...] = (),
+) -> FakeGitHub:
     """A refresh-class PR (only a tag's content changes) with `owners=(alice/1)`
-    on both base and head; the author identity is the variable under test."""
+    on both base and head; the author identity is the variable under test.
+
+    `extra_changed_paths` are appended to the PR's changed-file list without
+    any corresponding file content — `GitHubApi.get_pull_request_info` reads
+    only `item["filename"]` from the files API, so a changed path carries no
+    add/modify/delete status and an entry with no head content is exactly the
+    shape a deletion arrives in."""
     root_path = "p/kitware/cmake.json"
     base = _root(tags={"1.0.0": TagEntry(content=_DIGEST_A, observed=_TS)})
     head = _root(tags={"1.0.0": TagEntry(content=_DIGEST_B, observed="2026-07-18T00:00:00Z")})
@@ -593,11 +608,20 @@ def _refresh_pr_github(*, author_id: int, author_login: str = "alice") -> FakeGi
         number=1,
         base_sha="base-sha",
         head_sha="head-sha",
-        changed_paths=(root_path,),
+        changed_paths=(root_path, *extra_changed_paths),
         author_login=author_login,
         author_id=author_id,
     )
     return FakeGitHub(files=files, pull_request_info={1: info})
+
+
+def _disposition_of(github: FakeGitHub) -> str:
+    """The commit-status state `governance_check.run` set — the exact value it
+    also writes to `$GITHUB_OUTPUT` as `disposition`, which `validate.yml`'s
+    `gh pr merge --auto --squash` step gates on (`== 'success'`)."""
+    assert governance_check.run(argparse.Namespace(pr_number=1), github=github) == ExitCode.OK
+    _context, state, _description = github.statuses["head-sha"][0]
+    return state
 
 
 def test_g19_machine_lane_requires_author_owner(_github_output: Path) -> None:
@@ -616,6 +640,56 @@ def test_g19_machine_lane_requires_author_owner(_github_output: Path) -> None:
     _context, stranger_state, description = stranger_github.statuses["head-sha"][0]
     assert stranger_state == "pending"
     assert "G-19" in description
+
+
+# --- ADR-6 FP-5 (machine-lane scope; enforced in cli/classify_pr.py) --------
+
+_OUT_OF_SCOPE_PATHS: list[tuple[str, str]] = [
+    ("workflow", ".github/workflows/validate.yml"),
+    ("bot-source", "bot/src/indexbot/cli/governance_check.py"),
+    ("other-package-cas", f"p/acme/widget/o/sha256/{'c' * 64}.json"),
+    ("other-package-root", "p/acme/widget.json"),
+    ("deleted-repo-file", "README.md"),
+    ("repo-config", ".github/maintainers.yml"),
+]
+
+
+@pytest.mark.parametrize(
+    "extra_path",
+    [path for _id, path in _OUT_OF_SCOPE_PATHS],
+    ids=[case_id for case_id, _path in _OUT_OF_SCOPE_PATHS],
+)
+def test_fp5_machine_lane_rejects_out_of_scope_paths(extra_path: str, _github_output: Path) -> None:
+    """ADR-6 FP-5: machine-lane content consists only of authorized package
+    refreshes. A PR from a *legitimate owner* (author_id=1 is in the base-ref
+    `owners[]`, so G-19 itself passes) whose refresh diff also touches any
+    path outside the announce write-set must not reach the machine lane —
+    the disposition stays `pending`, so `validate.yml`'s
+    `gh pr merge --auto --squash` step never arms.
+
+    Four of these cases have the scope gate as their *only* defense
+    (`workflow`, `bot-source`, `other-package-cas`, `deleted-repo-file`,
+    `repo-config`); `other-package-root` is defense-in-depth — an unowned
+    root is separately caught by G-19, and a root absent at head by the
+    deleted-root rule. Delete the scope gate and every other case
+    auto-merges arbitrary repository content."""
+    github = _refresh_pr_github(author_id=1, extra_changed_paths=(extra_path,))
+    assert _disposition_of(github) == "pending"
+
+
+def test_fp5_machine_lane_admits_the_announce_write_set(_github_output: Path) -> None:
+    """The complementary half of FP-5 — the gate rejects out-of-scope paths
+    without breaking the lane it exists to protect: the exact file set
+    `cli/announce.py` writes (the root plus that same package's observation
+    object and readme/logo desc blobs) stays machine-lane (`success`)."""
+    own_cas = (
+        f"p/kitware/cmake/o/sha256/{'b' * 64}.json",  # observation object
+        f"p/kitware/cmake/o/sha256/{'c' * 64}.md",  # readme desc blob
+        f"p/kitware/cmake/o/sha256/{'d' * 64}.svg",  # logo desc blob (svg)
+        f"p/kitware/cmake/o/sha256/{'e' * 64}.png",  # logo desc blob (png)
+    )
+    github = _refresh_pr_github(author_id=1, extra_changed_paths=own_cas)
+    assert _disposition_of(github) == "success"
 
 
 # --- G-20 ------------------------------------------------------------------

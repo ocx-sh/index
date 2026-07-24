@@ -42,6 +42,7 @@ _PR_NUMBER = 1
 _BASE_SHA = "base-sha"
 _HEAD_SHA = "head-sha"
 _ROOT_PATH = "p/kitware/cmake.json"
+_OWN_CAS_PATH = f"p/kitware/cmake/o/sha256/{'b' * 64}.json"
 _ROOT_SEGMENTS = ("contents", "p", "kitware", "cmake.json")
 _OWNER = Owner(github="alice", github_id=1)
 _OTHER_OWNER = Owner(github="bob", github_id=2)
@@ -86,11 +87,17 @@ def _setup_env(monkeypatch: pytest.MonkeyPatch, forge: FakeForgeServer, output_f
 
 
 def _stub_pr(
-    forge: FakeForgeServer, *, base_root: PackageRoot | None, head_root: PackageRoot
+    forge: FakeForgeServer,
+    *,
+    base_root: PackageRoot | None,
+    head_root: PackageRoot,
+    changed_paths: tuple[str, ...],
 ) -> None:
     forge.stub_json("GET", forge.repo_path("pulls", str(_PR_NUMBER)), _pr_payload())
     forge.stub_json(
-        "GET", forge.repo_path("pulls", str(_PR_NUMBER), "files"), [{"filename": _ROOT_PATH}]
+        "GET",
+        forge.repo_path("pulls", str(_PR_NUMBER), "files"),
+        [{"filename": path} for path in changed_paths],
     )
     if base_root is not None:
         forge.stub_json(
@@ -117,10 +124,11 @@ def _classify(
     *,
     base_root: PackageRoot | None,
     head_root: PackageRoot,
+    changed_paths: tuple[str, ...] = (_ROOT_PATH,),
 ) -> str:
     output_file = tmp_path / "github_output.txt"
     _setup_env(monkeypatch, forge, output_file)
-    _stub_pr(forge, base_root=base_root, head_root=head_root)
+    _stub_pr(forge, base_root=base_root, head_root=head_root, changed_paths=changed_paths)
 
     exit_code = main(["classify-pr", "--pr-number", str(_PR_NUMBER)])
 
@@ -142,10 +150,41 @@ def test_new_package_lane(
 def test_refresh_lane(
     fake_forge: FakeForgeServer, monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
+    """The machine lane over a realistic announce diff: the root *plus* the
+    observation object it now points at, which is what `indexbot announce`
+    actually commits — a single-path diff would not exercise the refresh-scope
+    allowlist at all."""
     before = _root(tags={"1.0.0": TagEntry(content="sha256:" + "a" * 64, observed="T0")})
     after = _root(tags={"1.0.0": TagEntry(content="sha256:" + "b" * 64, observed="T1")})
-    output = _classify(monkeypatch, fake_forge, tmp_path, base_root=before, head_root=after)
+    output = _classify(
+        monkeypatch,
+        fake_forge,
+        tmp_path,
+        base_root=before,
+        head_root=after,
+        changed_paths=(_ROOT_PATH, _OWN_CAS_PATH),
+    )
     assert "refresh" in output
+
+
+def test_out_of_scope_path_forces_human_lane(
+    fake_forge: FakeForgeServer, monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """ADR-6 FP-5 end-to-end: the same refresh-shaped root change, carrying one
+    workflow edit alongside it, must NOT classify `refresh` — otherwise
+    `governance-check` greens it and `validate.yml` auto-merges the workflow
+    edit. Fails if the refresh-scope allowlist is removed."""
+    before = _root(tags={"1.0.0": TagEntry(content="sha256:" + "a" * 64, observed="T0")})
+    after = _root(tags={"1.0.0": TagEntry(content="sha256:" + "b" * 64, observed="T1")})
+    output = _classify(
+        monkeypatch,
+        fake_forge,
+        tmp_path,
+        base_root=before,
+        head_root=after,
+        changed_paths=(_ROOT_PATH, ".github/workflows/validate.yml"),
+    )
+    assert "human-review-required" in output
 
 
 def test_human_review_required_lane_on_owners_touched(
