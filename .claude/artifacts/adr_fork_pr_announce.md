@@ -457,6 +457,16 @@ reconcile.yml (nightly cron)  — VERIFY-ONLY (FP-3)
 
 ## E2E Validation Strategy
 
+> **Superseded 2026-07-24:** the sandbox topology below (`ocx-index-e2e` +
+> its `ocx-contrib` fork) was deleted by the owner on 2026-07-19 and replaced
+> with validation against the real index — no stand-in repo. See
+> [`handover_announce_alignment.md`](./handover_announce_alignment.md)
+> ("Target E2E topology") for the replacement topology and
+> `plan_announce_track_b_indexbot` (Track-B, index-bot hardening) for the
+> cleanup that retired `scripts/e2e/setup-sandbox.sh` and
+> `scripts/e2e/publisher-harness/`. The original decisions below are kept
+> for the historical record, not as current instructions.
+
 The lane is validated end-to-end against a live GitHub + GHCR sandbox (topology and
 scripts in [`plan_announce_revamp.md`](../state/plans/plan_announce_revamp.md) Phase 0/5),
 because the load-bearing behavior (fork PR → real `pull_request` / `pull_request_target`
@@ -520,3 +530,4 @@ runs → auto-merge) only exists across real repos, not in unit tests:
 | Date | Author | Change |
 |------|--------|--------|
 | 2026-07-18 | Michael Herwig + Claude design swarm | Initial record from the 2026-07-17/18 announce-revamp discussion: fork-PR announce transport (FP-1), owner-curated tags (FP-2), verify-only reconcile (FP-3), byte-exact root discipline (FP-4), two-lane governance + G-19 (FP-5), maintainers-YAML reviewer assignment + G-20 (FP-6), threat-model reframe (FP-7), spam posture (FP-8), reference impl + ocx#216 (FP-9) |
+| 2026-07-24 | Claude (Track-B WP-B7, `announce-b-b7`) | Added superseded-by note to E2E Validation Strategy: the `ocx-index-e2e` sandbox pair was deleted 2026-07-19, replaced by validation against the real index (see `handover_announce_alignment.md`). Original decisions unchanged. |

@@ -1,47 +1,52 @@
-# E2E Sandbox (announce-revamp, Phase 0)
+# E2E Topology (announce revamp)
 
-Disposable, all-public sandbox topology so E2E testing of announce/reconcile
-never touches the real `ocx-sh/index` repo or `ghcr.io/ocx-contrib/*`.
+The fork-PR announce lane (ADR-6) is validated end-to-end against the real
+index — no disposable stand-in repo. The prior stand-in pair was removed by
+the owner on 2026-07-19; see `handover_announce_alignment.md` (linked below,
+"Target E2E topology") for that decision record.
+
+```
+michael-herwig/ocx-e2e-publisher       (small REAL Rust app; CI builds it,
+  │                                     packages with a dev-channel ocx build)
+  │  ocx package push ghcr.io/michael-herwig/... --announce-file tags.txt
+  │  ocx package announce --tags-file tags.txt --fork michael-herwig/index
+  ▼
+michael-herwig/index                   (true GitHub fork of ocx-sh/index --
+                                        parent verified, default branch main)
+  │  fork PR, publisher's own identity, zero index-side credential
+  ▼
+ocx-sh/index                           (THE REAL INDEX: validate.yml
+                                        verify-claims + governance gate)
+```
 
 | Repo | Role |
 |---|---|
-| `michael-herwig/ocx-index-e2e` | sandbox index (plain-push copy of this repo's `main`, not a fork) |
-| `ocx-contrib/ocx-index-e2e` | GitHub fork of the sandbox -- plays the publisher's fork |
-| `michael-herwig/ocx-e2e-publisher` | publisher harness -- pushes `ghcr.io/michael-herwig/ocx-e2e-dummy` |
+| `michael-herwig/ocx-e2e-publisher` | Rust app + CI: builds, pushes a real package, announces via a fork PR |
+| `michael-herwig/index` | true GitHub fork of `ocx-sh/index` -- the publisher's PR target, not a copy |
+| `ocx-sh/index` | this repo -- the real index the PR lands against |
 
-Pseudo package: logical `e2e-lab/dummy`, physical `ghcr.io/michael-herwig/ocx-e2e-dummy`.
+## Governance lanes exercised
 
-## Stages
+- **First claim -- human lane (G-04).** The E2E package is a brand-new root
+  under the `michael-herwig` namespace, so its first announce PR is human
+  lane by design (new package always is). Since the maintainer *is* the
+  package owner, this is a self-review formality -- but it must go through
+  the real lane, not be special-cased away.
+- **Subsequent refreshes -- machine lane (G-19).** Once the root exists,
+  later tag-content-refresh PRs from the same owner-authenticated publisher
+  qualify for the machine lane and auto-merge, gated on `github_id`
+  membership in the root's `owners[]`.
 
-Run `scripts/e2e/setup-sandbox.sh [stage...]` (no args = all, in order). Every
-stage is idempotent -- re-running is always safe.
+See [`adr_fork_pr_announce.md`](../../.claude/artifacts/adr_fork_pr_announce.md)
+(FP-5, G-19/G-20) for the full lane-classification rules, and
+[`handover_announce_alignment.md`](../../.claude/artifacts/handover_announce_alignment.md)
+for the topology decision record and exit criteria.
 
-1. `repos` -- create the sandbox + publisher repos
-2. `content` -- push this repo's `main` to the sandbox, fork it, disable its `render-deploy.yml`
-   (fork lives here, not in `repos`: GitHub refuses to fork an empty repo)
-3. `harness` -- publish + dispatch the publisher harness (pushes the dual-libc package)
-4. `seed` -- (stub, waits on Phase 2 -- `owners[]` gains `github_id`, root shape may change)
-   generate `p/e2e-lab/dummy.json` + CAS objects from registry truth
-5. `protect` -- sandbox branch protection, auto-merge, Actions workflow permissions
-6. `smoke` -- verify anonymous GHCR pull of the dummy package (200, 2 manifests, glibc+musl)
+## `scripts/e2e/publisher-harness/`
 
-## Package visibility
-
-No manual step needed: a package first pushed from a **public** repo's own
-Actions run, carrying the `org.opencontainers.image.source` annotation (both
-true here), lands **public automatically** -- confirmed live. If a future
-push ever comes up private anyway, the fallback fix is the GHCR UI toggle:
-https://github.com/users/michael-herwig/packages/container/ocx-e2e-dummy/settings
-
-## `index-write` environment / `INDEX_WRITE_TOKEN`
-
-Not provisioned in the sandbox, and likely never needed here: the
-announce-revamp plan deletes `announce.yml` and drops `reconcile.yml` to
-`issues: write` with the default `github.token`, so neither privileged path
-this sandbox exists to test will require the `index-write` Environment or an
-`INDEX_WRITE_TOKEN` secret. Revisit only if that Phase-3 assumption changes.
-
-## Re-running
-
-Safe to re-run the whole script or any single stage at any time -- each stage
-checks its target state first.
+Retired. It hand-crafted a dummy dual-libc OCI package via `oras` for the
+removed stand-in topology and never used the real `ocx` client -- nothing in
+it serves the repurposed `ocx-e2e-publisher`, which is a real Rust app built
+and published through the actual `ocx package push` / `ocx package announce`
+CLI in its own repo. That repo owns its own CI; this repo has no
+publisher-side scripts to maintain.
