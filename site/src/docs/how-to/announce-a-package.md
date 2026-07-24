@@ -87,35 +87,61 @@ concurrent jobs happen to land on that machine, which breaks the file's
 per-package, per-run scratch lifecycle the moment two runs overlap (C2).
 `$RUNNER_TEMP` is scoped to the job by construction. The filename folds in
 the package name, the run id, and the run attempt, so retries and concurrent
-packages in the same workflow never collide over the same path. It's
-truncated (`: >`) before the first push step, because GitHub reuses
-`$RUNNER_TEMP` across retries of the same run and a stale leftover file could
-resurrect a tag you meant to drop. The cleanup step runs `if: always()`, so a
-failed push or announce still leaves the runner's temp directory clean
-instead of accumulating scratch files across retries.
+packages in the same workflow never collide over the same path. The prepare
+step both truncates it (`: >`) and publishes the resolved path to
+`$GITHUB_ENV`, so the later steps name one variable instead of rebuilding the
+same path expression three times and drifting. Truncation matters because
+GitHub reuses `$RUNNER_TEMP` across retries of the same run, and a stale
+leftover file could resurrect a tag you meant to drop. The cleanup step runs
+`if: always()`, so a failed push or announce still leaves the runner's temp
+directory clean instead of accumulating scratch files across retries.
 
 ```yaml
-- uses: ocx-sh/setup-ocx@<sha> # v1.x.y
+# At job level, alongside `runs-on:`.
+env:
+  OCX_ANNOUNCE_TOKEN: ${{ secrets.OCX_ANNOUNCE_TOKEN }}
+  REF_NAME: ${{ github.ref_name }}
 
-- name: Reset announce-tags scratch file
-  run: |
-    : > "$RUNNER_TEMP/announce-tags-<pkg>-${{ github.run_id }}-${{ github.run_attempt }}.txt"
+steps:
+  - uses: ocx-sh/setup-ocx@<sha> # v1.x.y
 
-- name: Push and announce
-  if: ${{ secrets.OCX_ANNOUNCE_TOKEN != '' }}
-  env:
-    OCX_ANNOUNCE_TOKEN: ${{ secrets.OCX_ANNOUNCE_TOKEN }}
-  run: |
-    tags_file="$RUNNER_TEMP/announce-tags-<pkg>-${{ github.run_id }}-${{ github.run_attempt }}.txt"
-    ocx package push -i <ns>/<pkg>:${{ github.ref_name }} --cascade \
-      --announce-file "$tags_file" <artifact-layers>...
-    ocx package announce --package <ns>/<pkg> \
-      --tags-file "$tags_file" --fork <your-account>/index
+  - name: Prepare announce-tags scratch file
+    run: |
+      tags_file="$RUNNER_TEMP/announce-tags-<pkg>-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT.txt"
+      : > "$tags_file"
+      echo "TAGS_FILE=$tags_file" >> "$GITHUB_ENV"
 
-- name: Clean up announce-tags scratch file
-  if: always()
-  run: rm -f "$RUNNER_TEMP/announce-tags-<pkg>-${{ github.run_id }}-${{ github.run_attempt }}.txt"
+  - name: Push and announce
+    if: ${{ env.OCX_ANNOUNCE_TOKEN != '' }}
+    run: |
+      ocx package push -i "<ns>/<pkg>:$REF_NAME" --cascade \
+        --announce-file "$TAGS_FILE" <artifact-layers>...
+      ocx package announce --package <ns>/<pkg> \
+        --tags-file "$TAGS_FILE" --fork <your-account>/index
+
+  - name: Clean up announce-tags scratch file
+    if: always()
+    run: rm -f "$TAGS_FILE"
 ```
+
+Two details in that block are load-bearing rather than stylistic, and both
+are easy to "simplify" back into bugs.
+
+**No `${{ }}` inside any `run:` script.** Everything a script needs arrives as
+an environment variable — `REF_NAME` and the token from the job's `env:` block,
+`TAGS_FILE` via `$GITHUB_ENV`, and `$RUNNER_TEMP` / `$GITHUB_RUN_ID` /
+`$GITHUB_RUN_ATTEMPT` from the runner's own defaults. `${{ }}` is textual
+substitution performed *before* the shell sees the script, so a value
+containing `$(...)` or a backtick inside `run:` executes as code. A git tag is
+a perfectly legal place to hide such a payload, and `github.ref_name` on a
+tag-triggered release workflow is exactly that tag. Quoting the expansion does
+not help; only keeping it out of the script text does.
+
+**The token gate reads `env`, not `secrets`.** `secrets` is not one of the
+contexts available to a step-level `if:` — `if: ${{ secrets.X != '' }}` is not
+a subtly weaker check, it is a workflow that fails to parse. Mapping the secret
+into the job's `env:` once and testing `env.OCX_ANNOUNCE_TOKEN` is both valid
+and the reason the `env:` block sits at job level.
 
 The exact `setup-ocx` version pin and the flag names above should be checked
 against the shipped [`ocx-sh/setup-ocx`][setup-ocx] README and `ocx package
