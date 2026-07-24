@@ -31,7 +31,7 @@ and its Amendment A1, [`adr_fork_pr_announce.md`](https://github.com/ocx-sh/inde
 | G-16 | Privileged/unprivileged workflow split | Kept in full — `schema-validate` runs unprivileged against PR-head content; `governance-gate` is the privileged, API-only job that never checks out PR-head code |
 | G-17 | Announce abuse bounds: namespace-scoped PAT, per-package concurrency groups, schema-validated payload | Retired — no namespace-scoped PAT under the fork-PR lane; abuse bounds are the fork-PR spam posture (label failed-check PRs, stale-close) |
 | G-18 | Reconcile disabled/dry-run until the seed republish batch is parity-verified | Reinterpreted — a repo Actions variable, `RECONCILE_DRY_RUN`, gates mutation; flip documented at [M-1 Flip](../ops/m1-flip) |
-| G-19 | Owners-membership gate for the machine lane | New — a fork PR qualifies for auto-merge only if its author's `github_id` is in the target root's committed `owners[]`; evaluated by the privileged governance job from PR metadata + base-branch root, never PR-head content |
+| G-19 | Owners-membership gate for the machine lane | New — a fork PR qualifies for auto-merge only if BOTH hold: its author's `github_id` is in the target root's committed `owners[]`, AND every changed path stays inside those roots' refresh scope (the roots themselves plus their own packages' `p/<ns>/<pkg>/o/sha256/<64-hex>.{json,md,svg,png}` CAS objects). Both are evaluated by the privileged governance job from PR metadata + base-branch root, never PR-head content. The path condition fails closed: any path outside that scope — a workflow file, `bot/**` source, another package's files, an unrelated deletion — routes the PR to the human lane, so an owner of one package cannot attach arbitrary repository content to a refresh-classified PR (ADR-6 FP-5) |
 | G-20 | Maintainers-YAML reviewer assignment | New — human-lane PRs get reviewers assigned from a committed `maintainers.yml` (list of `{github, github_id}`) by the privileged governance job, plus an idempotent bot review-request comment |
 
 ## Auto-Merge Decision
@@ -40,6 +40,7 @@ and its Amendment A1, [`adr_fork_pr_announce.md`](https://github.com/ocx-sh/inde
 PR opened (announce or reconcile)
   ├─ schema-validate green?
   ├─ classified refresh (no G-05 key touched)?
+  ├─ every changed path inside the touched roots' refresh scope?
   └─ governance/review-required green?
        all yes → gh pr merge --auto (branch protection completes the merge)
        any no  → blocked until a human approves
@@ -47,4 +48,6 @@ PR opened (announce or reconcile)
 
 New-package PRs (G-04) and any PR touching a G-05 human-review-required key
 are never auto-merge eligible, regardless of how green the automated checks
-are.
+are. Nor is a PR that changes anything outside the refresh scope of the roots
+it touches — the classifier selects which files are *classified*, never which
+files are *allowed*.
