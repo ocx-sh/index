@@ -14,6 +14,7 @@ must reflect here in the same commit.
 | Shell scripts | [quality-bash.md](./rules/quality-bash.md) |
 | Python scripts | [quality-python.md](./rules/quality-python.md) |
 | CI workflows / security | [quality-security.md](./rules/quality-security.md) |
+| Index bot security (highest-risk surface) | [quality-indexbot-security.md](./rules/quality-indexbot-security.md) |
 | Vite / VitePress build tooling | [quality-vite.md](./rules/quality-vite.md) |
 | Swarm / multi-agent workflows | [workflow-swarm.md](./rules/workflow-swarm.md), skills `swarm-plan`, `swarm-execute`, `swarm-review` |
 | Plan status tracking | [meta-ai-config.md](./rules/meta-ai-config.md) "Plan Status Protocol" |
@@ -29,7 +30,8 @@ must reflect here in the same commit.
 | `.claude/**` | [meta-ai-config.md](./rules/meta-ai-config.md) |
 
 Globals (no `paths:`): [quality-core.md](./rules/quality-core.md),
-[product-context.md](./rules/product-context.md), this catalog.
+[product-context.md](./rules/product-context.md),
+[quality-indexbot-security.md](./rules/quality-indexbot-security.md), this catalog.
 
 ## Skills
 
