@@ -64,6 +64,9 @@ class _ForgeState:
     routes: list[_StubbedRoute] = field(default_factory=list[_StubbedRoute])
     lock: threading.Lock = field(default_factory=threading.Lock)
     requests: list[tuple[str, str]] = field(default_factory=list[tuple[str, str]])
+    received_headers: list[dict[str, str]] = field(default_factory=list[dict[str, str]])
+    """Headers of every request the forge received — the X6 leak seam that lets
+    a flow prove no registry credential ever reaches a forge request."""
 
     def resolve(self, method: str, path: str, query: Mapping[str, str]) -> ScriptedResponse:
         for route in self.routes:
@@ -101,6 +104,7 @@ class _ForgeHandler(BaseHTTPRequestHandler):
         query = {key: values[0] for key, values in parse_qs(parsed.query).items()}
         with state.lock:
             state.requests.append((method, path))
+            state.received_headers.append(dict(self.headers.items()))
             response = state.resolve(method, path, query)
         write_response(self, response, include_body=(method != "HEAD"))
 
@@ -141,6 +145,11 @@ class FakeForgeServer:
     def requests(self) -> list[tuple[str, str]]:
         with self._state.lock:
             return list(self._state.requests)
+
+    @property
+    def received_headers(self) -> list[dict[str, str]]:
+        with self._state.lock:
+            return [dict(headers) for headers in self._state.received_headers]
 
     def __enter__(self) -> Self:
         self._thread.start()
