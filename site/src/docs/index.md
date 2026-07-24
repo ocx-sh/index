@@ -22,7 +22,7 @@ Look something up. Precise, exhaustive, no narrative.
 - [Namespace Policy](/docs/reference/namespace-policy) — the
   `<namespace>/<package>` charset, reserved segments, dispute policy
 - [Governance Contracts](/docs/reference/governance-contracts) — the
-  G-01–G-18 automated/human review contracts
+  G-01–G-20 automated/human review contracts
 - [Changelog](/docs/reference/changelog) — `format_version`-keyed history
 
 ## How-To
@@ -38,7 +38,6 @@ Get a specific task done.
 
 Run the index itself.
 
-- [Rotate the Announce PAT](/docs/ops/rotate-announce-pat)
 - [Run a Reconcile Dry Run](/docs/ops/run-reconcile-dry-run)
 - [M-1 Flip](/docs/ops/m1-flip) — enabling live reconcile writes
 

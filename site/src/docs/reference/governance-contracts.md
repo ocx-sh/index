@@ -4,11 +4,12 @@ title: Governance Contracts
 
 # Governance Contracts
 
-The index bot and its workflows enforce eighteen governance contracts,
+The index bot and its workflows enforce twenty governance contracts,
 originally defined in `design_spec_registry_indirection.md` against the
 pointer-only index and carried forward — several reinterpreted — under the
 locked-observation wire format. Design authority:
-[`adr_index_bot_and_workflow_security.md`](https://github.com/ocx-sh/index/blob/main/.claude/artifacts/adr_index_bot_and_workflow_security.md).
+[`adr_index_bot_and_workflow_security.md`](https://github.com/ocx-sh/index/blob/main/.claude/artifacts/adr_index_bot_and_workflow_security.md)
+and its Amendment A1, [`adr_fork_pr_announce.md`](https://github.com/ocx-sh/index/blob/main/.claude/artifacts/adr_fork_pr_announce.md).
 
 | ID | Contract | Status |
 |---|---|---|
@@ -28,8 +29,10 @@ locked-observation wire format. Design authority:
 | G-14 | Sibling-repo CI hardening: `permissions:` default-deny + SHA-pinned actions everywhere | Kept |
 | G-15 | Ownership proof: fetch the physical manifest, verify the embedded canonical identifier equals the entry's logical `name` | Reinterpreted as a pluggable loud-skip seam — the identifier-embedding convention is unconfirmed against actual publishing behaviour, so the probe returns `confirmed`, `mismatch` (blocking), or `unconfirmed` (warns, surfaced on the PR, never a silent pass) |
 | G-16 | Privileged/unprivileged workflow split | Kept in full — `schema-validate` runs unprivileged against PR-head content; `governance-gate` is the privileged, API-only job that never checks out PR-head code |
-| G-17 | Announce abuse bounds: namespace-scoped PAT, per-package concurrency groups, schema-validated payload | Kept — see [Rotate the Announce PAT](../ops/rotate-announce-pat) |
+| G-17 | Announce abuse bounds: namespace-scoped PAT, per-package concurrency groups, schema-validated payload | Retired — no namespace-scoped PAT under the fork-PR lane; abuse bounds are the fork-PR spam posture (label failed-check PRs, stale-close) |
 | G-18 | Reconcile disabled/dry-run until the seed republish batch is parity-verified | Reinterpreted — a repo Actions variable, `RECONCILE_DRY_RUN`, gates mutation; flip documented at [M-1 Flip](../ops/m1-flip) |
+| G-19 | Owners-membership gate for the machine lane | New — a fork PR qualifies for auto-merge only if its author's `github_id` is in the target root's committed `owners[]`; evaluated by the privileged governance job from PR metadata + base-branch root, never PR-head content |
+| G-20 | Maintainers-YAML reviewer assignment | New — human-lane PRs get reviewers assigned from a committed `maintainers.yml` (list of `{github, github_id}`) by the privileged governance job, plus an idempotent bot review-request comment |
 
 ## Auto-Merge Decision
 

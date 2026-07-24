@@ -54,7 +54,6 @@ export const DOCS_NAV: DocsNavGroup[] = [
     link: '/docs/ops/',
     items: [
       { text: 'M-1 Flip', link: '/docs/ops/m1-flip' },
-      { text: 'Rotate the Announce PAT', link: '/docs/ops/rotate-announce-pat' },
       { text: 'Run a Reconcile Dry Run', link: '/docs/ops/run-reconcile-dry-run' },
     ],
   },
