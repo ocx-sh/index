@@ -59,7 +59,31 @@ jobs:
           persist-credentials: false
       - uses: ./.github/actions/setup-bot
       - name: task schema:validate
-        run: task schema:validate
+        run: |
+          set -euo pipefail
+          # Observability floor (BCR #176): a publisher-visible failure never
+          # exits with a bare error — on non-zero it emits a structured
+          # ::error annotation AND a job-summary block, then preserves the
+          # exit so the required check still fails (exit-code contract intact).
+          if task schema:validate 2>&1 | tee schema-validate.log; then
+            ec=0
+          else
+            ec=$?
+          fi
+          if [ "$ec" -ne 0 ]; then
+            reason="schema/fixture validation failed (exit $ec) - a schema, a valid fixture, or an invalid fixture did not behave as required. See the log tail below."
+            echo "::error title=indexbot schema:validate failed::$reason"
+            {
+              echo "## indexbot schema:validate failed"
+              echo ""
+              echo "$reason"
+              echo ""
+              echo '```'
+              tail -n 20 schema-validate.log
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+          exit "$ec"
 
       - name: Determine changed p/<namespace>/<package>.json files
         id: changed
@@ -81,7 +105,10 @@ jobs:
           # this unprivileged, secret-less job's own output parsing.
           delim="INDEXBOT_CHANGED_FILES_$(date +%s%N)"
           if grep -qxF "$delim" <<<"$changed"; then
-            echo "changed file list collided with output delimiter" >&2
+            reason="changed-file list collided with the output delimiter - retry the run (astronomically unlikely; a timestamped delimiter matched a literal filename)."
+            echo "::error title=indexbot validate: changed-file detection failed::$reason"
+            printf '## indexbot validate: changed-file detection failed\n\n%s\n' "$reason" >> "$GITHUB_STEP_SUMMARY"
+            echo "$reason" >&2
             exit 1
           fi
           echo "has_changes=true" >> "$GITHUB_OUTPUT"
@@ -98,7 +125,31 @@ jobs:
         run: |
           set -euo pipefail
           mapfile -t files <<< "$CHANGED_FILES"
-          uv run --project bot -- indexbot validate "${files[@]}"
+          # `indexbot`'s own main() already lands a structured reason on the
+          # job summary for any IndexBotError it maps (register §5 chokepoint).
+          # This workflow wrapper is the belt to that suspenders: it emits the
+          # ::error annotation the checks UI surfaces AND captures the reason
+          # even when the CLI dies on a non-IndexBotError traceback (which
+          # main() deliberately does not swallow, so it writes no summary).
+          if uv run --project bot -- indexbot validate "${files[@]}" 2>&1 | tee indexbot-validate.log; then
+            ec=0
+          else
+            ec=$?
+          fi
+          if [ "$ec" -ne 0 ]; then
+            reason="indexbot validate rejected this PR's package roots (exit $ec). See the log tail below and the CLI's own summary block above."
+            echo "::error title=indexbot validate failed::$reason"
+            {
+              echo "## indexbot validate failed"
+              echo ""
+              echo "$reason"
+              echo ""
+              echo '```'
+              tail -n 20 indexbot-validate.log
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+          exit "$ec"
 
   governance-gate:
     name: governance-gate

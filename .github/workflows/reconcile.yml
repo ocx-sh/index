@@ -71,7 +71,12 @@ jobs:
         if: steps.reconcile.outputs.exit_code == '75'
         run: |
           set -euo pipefail
-          echo "::error::indexbot reconcile hit a transient failure (backoff exhausted, exit 75) — nightly cron is the retry." >&2
+          # Observability floor (BCR #176): surface a structured reason on the
+          # job summary as well as the ::error annotation and stderr line — no
+          # publisher-visible failure exits bare.
+          reason="indexbot reconcile hit a transient failure (backoff exhausted, exit 75) - the nightly cron is the retry."
+          echo "::error title=indexbot reconcile: transient failure::$reason" >&2
+          printf '## indexbot reconcile: transient failure\n\n%s\n' "$reason" >> "$GITHUB_STEP_SUMMARY"
           exit 1
 
       - name: Anomaly detected — CLI already filed the issue, stay green
@@ -85,6 +90,11 @@ jobs:
           # extra API call, so this step needs no additional token scope.
           issues_url="$GITHUB_SERVER_URL/$REPO/issues?q=is%3Aissue+is%3Aopen+in%3Atitle+%22indexbot+reconcile%3A+anomalies+detected%22"
           echo "::warning title=indexbot reconcile: anomaly detected::indexbot reconcile detected an integrity anomaly and already filed/updated the tracking issue itself (never auto-healed, ADR-6 FP-3) - see $issues_url. This stays green on purpose: the filed issue is the human signal, a red nightly build on top of it is just alarm fatigue."
+          # Observability floor (BCR #176, register §4): mirror a one-liner to
+          # the job summary (the filed issue body carries the full detail). The
+          # CLI's own main() already lands its "## indexbot reconcile failed"
+          # block above; this adds the deep link to the tracking issue.
+          printf '## indexbot reconcile: anomaly detected\n\nAn integrity anomaly was detected; the tracking issue is already filed/updated (never auto-healed, ADR-6 FP-3). See %s\n' "$issues_url" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Fail on unrecognized exit code
         if: |
@@ -95,5 +105,9 @@ jobs:
           EXIT_CODE: ${{ steps.reconcile.outputs.exit_code }}
         run: |
           set -euo pipefail
-          echo "::error::indexbot reconcile exited with an unrecognized code ($EXIT_CODE) — treating as a hard failure rather than silently passing." >&2
+          # Observability floor (BCR #176): structured reason to the job summary
+          # alongside the ::error annotation and stderr line.
+          reason="indexbot reconcile exited with an unrecognized code ($EXIT_CODE) - treating as a hard failure rather than silently passing."
+          echo "::error title=indexbot reconcile: unrecognized exit code::$reason" >&2
+          printf '## indexbot reconcile: unrecognized exit code\n\n%s\n' "$reason" >> "$GITHUB_STEP_SUMMARY"
           exit 1
