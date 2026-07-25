@@ -25,7 +25,8 @@ IFS=$'\n\t'
 # "packages": [], so a non-200/invalid-shape here is always a real failure,
 # never tolerated by --allow-empty), catalog "/" (200, text/html), "/docs/"
 # (200). Every fetch is wrapped in a bounded retry (3 attempts, 5s apart) to
-# absorb CDN warm-up.
+# absorb CDN warm-up, plus a run-wide ~2 min window in which a 404 is retried
+# as "deploy not propagated to the edge yet" rather than "asset absent".
 #
 # Exit codes (independent of indexbot's sysexits contract in
 # adr_index_bot_and_workflow_security.md BD-2 — this is a bash ops tool, not
@@ -47,6 +48,13 @@ readonly EXIT_NO_ROOT=5
 readonly MAX_ATTEMPTS=3
 readonly RETRY_SLEEP=5
 readonly MAX_CACHE_SECONDS=60
+
+# How far into the run a 404 may still mean "not propagated yet" rather than
+# "absent". Anchored to script start, which in CI is seconds after the deploy
+# job finished, so it measures Cloudflare Pages propagation -- the thing that
+# actually races here. One budget shared by every fetch (bash $SECONDS), so a
+# wholly-missing site costs ~2 min in total, not ~2 min per asset.
+readonly NOT_FOUND_DEADLINE=120
 
 # Basic ns/pkg shape guard for --root / discovered values before they are
 # spliced into a URL. NOT the authoritative package-id grammar — that regex
@@ -94,7 +102,7 @@ skip() { record "$1" "SKIP" "$2"; }
 fail() { # name detail exit_code
   record "$1" "FAIL" "$2"
   local code="$3"
-  if (( code > OVERALL_EXIT )); then
+  if ((code > OVERALL_EXIT)); then
     OVERALL_EXIT=$code
   fi
 }
@@ -113,25 +121,51 @@ header_value() { # headers_file name
   grep -i "^${2}:" "$1" 2>/dev/null | tail -n1 | sed -E 's/^[^:]*:[[:space:]]*//' | tr -d '\r\n' || true
 }
 
-# Bounded retry around every fetch, for CDN warm-up right after deploy.
-# Retries only on connect failure or 5xx (transient); a deterministic 4xx/2xx
-# returns immediately. 3 attempts, 5s apart.
-# ponytail: fixed 3/5s, no backoff curve — bump if CDN warm-up proves longer.
+# Bounded retry around every fetch, for CDN warm-up right after deploy. Two
+# retryable cases, each with its own bound; anything else is definitive and
+# returns immediately.
+#
+#   000 / 5xx  transient — MAX_ATTEMPTS attempts, RETRY_SLEEP apart.
+#   404        an asset added by *this* deploy that has not reached the edge
+#              yet. Retried until NOT_FOUND_DEADLINE seconds into the run,
+#              then reported as the 404 it is. Observed on run 30150305262:
+#              /p/<ns>/<pkg>.json 404'd ~1 min after deploy on the very first
+#              run that had a p/ root to check, and served 200 later — the
+#              deploy was fine, the check raced it.
+#
+# No check in this script ever expects a 404, so retrying it weakens no
+# assertion: a genuinely absent asset still fails, just later. Retries go to
+# the canonical URL, no cache-buster, because a negative-cached 404 is not the
+# failure mode here: Cloudflare does not cache JSON by default (.json is not
+# in its default cached-extension list), so the 3 min negative-cache TTL it
+# applies to 404/410 never reaches these paths. That default is the
+# load-bearing part and it is Cloudflare's, not ours — the repo's "never
+# enable CDN caching for *.json on the index zone" rule (README.md,
+# CLAUDE.md, .claude/rules/product-context.md) says we must not override it,
+# but that rule is a dashboard convention with nothing enforcing it in code;
+# check_config's cache-rule guard is the only automated tripwire, and it
+# watches config.json alone. If a Cache Rule ever does land on *.json, fix the
+# rule — cache-busting here would only hide it behind a URL no client uses.
+# ponytail: fixed sleep, no backoff curve — bump if warm-up proves longer.
 fetch() { # url body_file headers_file [curl-args...]
   local url="$1" body="$2" headers="$3"
   shift 3
-  local attempt status
-  for ((attempt = 1; attempt <= MAX_ATTEMPTS; attempt++)); do
+  local attempt=0 status
+  while :; do
+    attempt=$((attempt + 1))
     status=$(curl "${CURL_BASE_OPTS[@]}" -o "$body" -D "$headers" -w '%{http_code}' "$@" "$url") || status=""
     status=${status:-000}
-    if [[ "$status" != "000" && "$status" != 5* ]]; then
+    if [[ "$status" != "000" && "$status" != 5* && "$status" != "404" ]]; then
       printf '%s' "$status"
       return 0
     fi
-    log "attempt ${attempt}/${MAX_ATTEMPTS} for ${url} returned status=${status}"
-    if (( attempt < MAX_ATTEMPTS )); then
-      sleep "$RETRY_SLEEP"
+    log "attempt ${attempt} for ${url} returned status=${status} (${SECONDS}s into the run)"
+    if [[ "$status" == "404" ]]; then
+      ((SECONDS < NOT_FOUND_DEADLINE)) || break
+    else
+      ((attempt < MAX_ATTEMPTS)) || break
     fi
+    sleep "$RETRY_SLEEP"
   done
   printf '%s' "$status"
 }
@@ -159,7 +193,7 @@ check_config() {
   cache_control=$(header_value "$headers" "cache-control")
   if [[ "$cache_control" =~ max-age=([0-9]+) ]]; then
     max_age="${BASH_REMATCH[1]}"
-    if (( max_age > MAX_CACHE_SECONDS )); then
+    if ((max_age > MAX_CACHE_SECONDS)); then
       fail "config.json cache-rule" "Cache-Control max-age=${max_age} exceeds ${MAX_CACHE_SECONDS}s guard" "$EXIT_CACHE"
     else
       pass "config.json cache-rule" "max-age=${max_age} (<= ${MAX_CACHE_SECONDS}s)"
