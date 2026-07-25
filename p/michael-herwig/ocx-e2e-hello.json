@@ -1,0 +1,15 @@
+{
+  "name": "ocx.sh/michael-herwig/ocx-e2e-hello",
+  "repository": "oci://ghcr.io/michael-herwig/ocx-e2e-hello",
+  "owners": [
+    {
+      "github": "michael-herwig",
+      "github_id": 3511590
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-07-25",
+  "desc": null,
+  "tags": {}
+}
