@@ -15,9 +15,12 @@ config-invalid-missing-required.json|$: 'format_version' is a required property
 config-invalid-unknown-property.json|$: Additional properties are not allowed ('packages' was unexpected)
 config-invalid-wrong-type-format-version.json|$.format_version: '1' is not of type 'integer'
 
-# An OCI image manifest is not an image index and is never stored in o/ (ADR D2).
+# An OCI image manifest is not an image index and is never stored in o/.
 image-index-invalid-image-manifest.json|$: 'manifests' is a required property
 image-index-invalid-schema-version.json|$.schemaVersion: 2 was expected
+# Pins manifests' `type: array`. Without it `items` is inert (2020-12 applies it
+# to arrays only) and every descriptor constraint below silently stops running.
+image-index-invalid-manifests-wrong-type.json|$.manifests: {'0': {'mediaType': 'application/vnd.oci.image.manifest.v1+json'}} is not of type 'array'
 image-index-invalid-descriptor-missing-size.json|$.manifests[0]: 'size' is a required property
 image-index-invalid-descriptor-bad-digest.json|$.manifests[0].digest: 'c669343d28ef287d354208c5f0d628d8ed4734c82909cdef1365acf1725f3fdf' does not match
 image-index-invalid-platform-missing-os.json|$.manifests[0].platform: 'os' is a required property

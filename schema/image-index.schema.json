@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://index.ocx.sh/schema/image-index.schema.json",
   "title": "OCI Image Index",
-  "description": "Immutable, package-local CAS object at /p/<namespace>/<package>/o/sha256/<hex>.json: the bytes a registry served for an OCI image index, stored verbatim, where <hex> is sha256 of those bytes and is therefore the registry's own manifest digest (ADR: adr_oci_index_only_dispatch.md D1/D3). Deliberately open at every level — this index does not author these bytes, so subject, artifactType, annotations, urls, data and future image-spec fields must all validate. It constrains only the grammar the resolver depends on: schemaVersion, manifests[], and each descriptor's mediaType/digest/size.",
+  "description": "Immutable, package-local CAS object at /p/<namespace>/<package>/o/sha256/<hex>.json: the bytes a registry served for an OCI image index, stored verbatim, where <hex> is sha256 of those bytes and is therefore the registry's own manifest digest. Deliberately open at every level — this index does not author these bytes, so subject, artifactType, annotations, urls, data and future image-spec fields must all validate. It constrains only the grammar the resolver depends on: schemaVersion, manifests[], each descriptor's mediaType/digest/size, and — on a descriptor that carries a platform object at all — that object's architecture and os, both of which the image-spec marks REQUIRED and the platform projection reads unconditionally. A descriptor may omit platform entirely; it may not carry a half-populated one.",
   "type": "object",
   "properties": {
     "schemaVersion": {
@@ -16,7 +16,7 @@
     },
     "manifests": {
       "type": "array",
-      "description": "The descriptors the resolver selects a platform from. Presence of this property is the discriminator that makes these bytes an image index rather than an image manifest (ADR D2) — an image manifest carries config/layers instead and is refused, never stored.",
+      "description": "The descriptors the resolver selects a platform from. Presence of this property is the discriminator that makes these bytes an image index rather than an image manifest — an image manifest carries config/layers instead and is refused, never stored. The array type is load-bearing, not decoration: `items` applies only to arrays in 2020-12, so an object-valued manifests would bypass every descriptor constraint below.",
       "items": { "$ref": "#/$defs/descriptor" }
     }
   },
@@ -40,7 +40,7 @@
     },
     "platform": {
       "type": "object",
-      "description": "OCI platform object. Absent entirely on attestation and referrer descriptors, and os == \"unknown\" is the attestation convention; both forms are valid here and are filtered downstream by core/render.py's platform projection (ADR R4), never rejected at this layer. Field names with a literal dot (os.version, os.features) match the OCI spec's own property names, not a nested os object.",
+      "description": "OCI platform object. Absent entirely on attestation and referrer descriptors, and os == \"unknown\" is the attestation convention; both forms are valid here and are filtered downstream by core/render.py's platform projection, never rejected at this layer. Field names with a literal dot (os.version, os.features) match the OCI spec's own property names, not a nested os object. Open like every other level: unrecognised keys validate, so a future image-spec platform field needs no schema change here.",
       "properties": {
         "architecture": { "type": "string", "minLength": 1 },
         "os": { "type": "string", "minLength": 1 },

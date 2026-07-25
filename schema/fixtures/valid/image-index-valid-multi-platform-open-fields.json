@@ -21,7 +21,8 @@
         "os.version": "5.15.0",
         "os.features": ["headless"],
         "variant": "v7",
-        "features": ["sse4"]
+        "features": ["sse4"],
+        "vnd.example.platform-extension": "gpu"
       },
       "annotations": { "vnd.acme.build": "42" }
     },

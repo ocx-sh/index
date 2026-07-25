@@ -33,7 +33,10 @@ tasks:
       Asserting only "it failed" is not enough: a fixture written to prove the
       D7 reserved-tag rule but rejected by, say, the tag-length bound would
       pass a failure-only gate while certifying nothing about the rule. Every
-      fixture must have an entry in that file; a missing one is an error.
+      fixture must have an entry in that file; a missing one is an error. The
+      converse too: an entry naming a fixture that no longer exists is an
+      error, so a deleted or renamed fixture cannot leave a rotting row behind
+      and quietly turn the reason file into decoration.
     set: [e, u, pipefail]
     cmds:
       - |
@@ -82,6 +85,14 @@ tasks:
               exit 1
               ;;
           esac
+        done
+
+        echo "== recorded reasons must name an existing fixture =="
+        for base in $(grep -v '^#' "$reasons" | cut -d'|' -f1); do
+          if [ ! -f "schema/fixtures/invalid/$base" ]; then
+            echo "stale entry in $reasons: no fixture named $base" >&2
+            exit 1
+          fi
         done
 
         echo "schema:validate: OK"
