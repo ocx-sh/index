@@ -39,7 +39,7 @@ sync protocol built on top of this shape.
 | Field | Type | Required | Governed by | Notes |
 |---|---|---|---|---|
 | `name` | string | yes | human (PR) | `ocx.sh/<namespace>/<package>`, ≤147 chars |
-| `repository` | string | yes | human (PR) | `oci://<host>/<repo path>`; host allowlisted at CI time |
+| `repository` | string | yes | human (PR) | `oci://<host>/<repo path>`; host checked at CI time against this index's [registry-host policy](./governance-contracts#registry-host-policy-g-03) (`ghcr.io` here) |
 | `owners` | array of [Owner](#owner) | yes, ≥1 item | human (PR) | |
 | `status` | enum | yes | human (PR) | `active` \| `deprecated` \| `yanked` |
 | `deprecated_message` | string \| null | yes | human (PR) | |

@@ -27,6 +27,17 @@ edit, not just when a file happens to auto-load. Design authority: ADR-6
   hosts arriving in root data are allowlist-checked (`check_repository_allowlisted`)
   before any `RegistryPort` request (BD-1 ordering, G-03). Keep the guard first;
   the ordering has a dedicated test.
+- **The allowlist is a committed file, never a variable.** G-03's host set is
+  per-deployment policy (`.github/index-policy.json`, `core/policy.py`), loaded
+  by `cli/_wiring.py` and passed in as a required `allowed_hosts` argument.
+  Never move it to an env var, `vars.` or `secrets.` — "extend only via reviewed
+  PR" is the control, and a settings-page value widens registry trust with no
+  diff and no reviewer. Never give `check_repository_allowlisted` a default
+  either. A host with no `RegistryPort` adapter is refused at wiring time
+  (`_wiring.REGISTRY_ADAPTER_HOSTS`): allowlisting what cannot be fetched
+  produces roots that validate and then fail every download. This repo's own
+  policy stays exactly `{"ghcr.io"}`, pinned by a named test in
+  `tests/security/test_governance_contracts.py`.
 - **Digest `re.fullmatch` before any path join.** A `sha256:[a-f0-9]{64}` value
   is `fullmatch`-validated before it is used to build a CAS path; `LocalFiles`
   rejects `..` and absolute paths before touching the filesystem.

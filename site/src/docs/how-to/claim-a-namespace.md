@@ -48,7 +48,8 @@ Two jobs run against the PR:
 - **`schema-validate`** (unprivileged, runs against your PR's own content):
   JSON Schema conformance via `check-jsonschema`, plus semantic checks —
   `name` matches the path-derived logical name (G-02), `repository` host is
-  allowlisted (G-03), neither namespace nor package segment is on the
+  on this index's [registry-host policy](../reference/governance-contracts#registry-host-policy-g-03)
+  (G-03 — `ghcr.io` here), neither namespace nor package segment is on the
   reserved list, digest fields (if any) are well-formed.
 - **`governance-gate`** (privileged, API-diff only, never checks out your
   PR's code): classifies the PR. A new `p/*.json` file always gets the
