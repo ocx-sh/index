@@ -23,39 +23,39 @@
   },
   "tags": {
     "latest": {
-      "content": "sha256:b4748f5fb14e50efde5cbc4c0c7fd276c28876922cce91ac9f6f6433d31a486a",
+      "content": "sha256:5eac138b0b7afb8f574c1479fdbf48e066704237d559b75f861e67c337f8816f",
       "observed": "2026-07-15T00:00:00Z"
     },
     "1": {
-      "content": "sha256:b4748f5fb14e50efde5cbc4c0c7fd276c28876922cce91ac9f6f6433d31a486a",
+      "content": "sha256:5eac138b0b7afb8f574c1479fdbf48e066704237d559b75f861e67c337f8816f",
       "observed": "2026-07-15T00:00:00Z"
     },
     "1.2": {
-      "content": "sha256:b4748f5fb14e50efde5cbc4c0c7fd276c28876922cce91ac9f6f6433d31a486a",
+      "content": "sha256:5eac138b0b7afb8f574c1479fdbf48e066704237d559b75f861e67c337f8816f",
       "observed": "2026-07-15T00:00:00Z"
     },
     "1.2.0": {
-      "content": "sha256:b4748f5fb14e50efde5cbc4c0c7fd276c28876922cce91ac9f6f6433d31a486a",
+      "content": "sha256:5eac138b0b7afb8f574c1479fdbf48e066704237d559b75f861e67c337f8816f",
       "observed": "2026-07-15T00:00:00Z"
     },
     "1.1.5": {
-      "content": "sha256:46164976aa3be6bfe4fe433d5353d6bed520362a93df017694a7bc4444234f85",
+      "content": "sha256:db25796ee40e84d63b81c502a80decd6e8ea40603437a8d809a2c3c99e37a21f",
       "observed": "2026-05-01T00:00:00Z"
     },
     "alpine": {
-      "content": "sha256:2f25d5cf5a60ce7d928521bcc97b5519b243d7af7c82fd2f650dd64a4b43eb48",
+      "content": "sha256:3feff97103d48eeb07a7731346da89e0198c9100a3a312086d0f6f84266a967d",
       "observed": "2026-07-15T00:00:00Z"
     },
     "alpine-1.2.0": {
-      "content": "sha256:2f25d5cf5a60ce7d928521bcc97b5519b243d7af7c82fd2f650dd64a4b43eb48",
+      "content": "sha256:3feff97103d48eeb07a7731346da89e0198c9100a3a312086d0f6f84266a967d",
       "observed": "2026-07-15T00:00:00Z"
     },
     "alpine-1.2": {
-      "content": "sha256:2f25d5cf5a60ce7d928521bcc97b5519b243d7af7c82fd2f650dd64a4b43eb48",
+      "content": "sha256:3feff97103d48eeb07a7731346da89e0198c9100a3a312086d0f6f84266a967d",
       "observed": "2026-07-15T00:00:00Z"
     },
     "alpine-1": {
-      "content": "sha256:2f25d5cf5a60ce7d928521bcc97b5519b243d7af7c82fd2f650dd64a4b43eb48",
+      "content": "sha256:3feff97103d48eeb07a7731346da89e0198c9100a3a312086d0f6f84266a967d",
       "observed": "2026-07-15T00:00:00Z"
     }
   }
