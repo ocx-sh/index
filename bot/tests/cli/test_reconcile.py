@@ -490,3 +490,29 @@ def test_reconcile_turns_a_refusal_into_a_finding_not_an_abort() -> None:
     assert "verified 2 package(s)" in summary  # the clean package was still swept
     assert "kitware/cmake" not in summary
     assert github.issues[_ISSUE_TITLE][0] == 1
+
+
+def test_yanked_unrecordable_tag_does_not_escalate() -> None:
+    """ADR-6 FP-2/FP-3 grace covers `tag-unrecordable`, not just
+    `tag-missing-upstream`. A yanked tag repointed at a bare image manifest
+    and a yanked tag deleted outright are one owner intent; escalating the
+    first while exempting the second would open a nightly anomaly issue for
+    a tag the index has already disclaimed.
+    """
+    files = InMemoryFiles()
+    registry = FakeRegistry()
+    cas_bytes = json.dumps(_image_index()).encode()
+    claimed = f"sha256:{hashlib.sha256(cas_bytes).hexdigest()}"
+    registry.tags[_CMAKE_REPO] = ["3.28.1"]
+    registry.manifests[(_CMAKE_REPO, "3.28.1")] = _bare_manifest()
+    yanked_entry = TagEntry(
+        content=claimed, observed="2026-07-17T00:00:00Z", yanked=Yank(reason="cve", at="T0")
+    )
+    _put_root(files, "kitware", "cmake", _root(tags={"3.28.1": yanked_entry}))
+    _put_cas(files, "kitware", "cmake", claimed, cas_bytes)
+    github = FakeGitHub()
+
+    result = _run(_args(), files=files, registry=registry, github=github)
+
+    assert result == ExitCode.OK
+    assert github.issues == {}
