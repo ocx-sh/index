@@ -201,12 +201,11 @@ Functions (each raises `ValidationError` on failure, never returns a bool):
   produces the exact bytes committed to `p/<ns>/<pkg>.json` — pretty-printed
   (`json.dumps(..., indent=2, sort_keys=False)` preserving the field order
   `model.PackageRoot` declares them in, matching `schema/root.schema.json`'s
-  `required` order) plus a trailing newline, **not** the canonical
-  minified form from §1 (§1's canonical form is only for content-addressed
-  CAS objects, which must dedup; the human-diffable root is optimized for PR
-  review, not digest stability — the root's own bytes are never digested,
-  only referenced by `TagEntry.content`, which points at an OCI image index,
-  not at the root itself). `upstream: None` -> the
+  `required` order) plus a trailing newline. It is the one JSON document
+  this bot authors, and it is optimized for PR review, not digest stability
+  — the root's own bytes are never digested, only referenced by
+  `TagEntry.content`, which points at an OCI image index, not at the root
+  itself. `upstream: None` -> the
   `"upstream"` key is **omitted** from the dict entirely (schema forbids
   `null` there, ADR-2 ND-9); `superseded_by: None` -> the `"superseded_by"`
   key is likewise **omitted** entirely (same omit-when-absent contract);
@@ -402,7 +401,11 @@ subset of what the registry carries; that is the entire point of owner
 curation — decision-set item 2, "announce is the only add/remove
 authority"). Per tag: `observe_one_tag(root.repository, tag, registry)`
 returning `None` -> `"tag-missing-upstream"`; a different `content_digest`
--> `"digest-mismatch"`; the claimed digest missing from/not hashing to
+-> `"digest-mismatch"`; `observe_one_tag` *raising* `ValidationError` (the
+tag now resolves to a bare image manifest, or to bytes over
+`_MAX_INDEX_BYTES`) -> `"digest-mismatch"` as well, since the claim that
+this tag resolves to the committed index is exactly what stopped being true;
+the claimed digest missing from/not hashing to
 `cas_object_bytes` -> `"cas-object-missing"`/`"cas-object-hash-mismatch"`.
 `root.desc.readme`/`.logo`, when set, get the identical CAS-hash check
 (missing/mismatch -> `"desc-blob-missing"`/`"desc-blob-hash-mismatch"`) —
@@ -653,9 +656,10 @@ Returned file list:
   — one entry per package in `ordered`, keyed on the bare `<namespace>/<package>`
   id (not the `ocx.sh/`-prefixed `name`). The digest is `sha256` of
   `source.root_raw`'s **exact committed bytes** — explicitly **not** a
-  re-serialization through §1's canonical form (root bytes are never digested
-  for wire-contract purposes elsewhere either, same rationale as §5's
-  `serialize_package_root`).
+  re-serialization through `serialize_package_root` (which would be
+  byte-identical today and is still the wrong input: what this digest
+  attests is the file that was committed, not what the dataclass would
+  produce from it).
 - `data/catalog/catalog.json` — the catalog-grid view-model, frozen shape
   (`plan_site_redesign`), referencing logo/readme blobs by their CAS URL
   rather than duplicating blob bytes into `/data/catalog` (ADR-3's explicit
@@ -994,6 +998,11 @@ object):**
   and the **document kind** (`cli/validate.py`, §12: `parse_image_index_digests`
   rejects anything that is not an OCI image index), never a re-serialization.
   This resolves ADR OQ3: the `o/` gate is a kind check, not a round-trip.
+- **Bounded at 4 MiB** (`core/observe.py`'s `_MAX_INDEX_BYTES`). Verbatim
+  storage hands the publisher's registry control of how many bytes each tag
+  commits — an image index's `annotations` are unbounded — so `observe_one_tag`
+  refuses anything larger with `ValidationError`. 4 MiB is the OCI
+  distribution spec's manifest size, not a number this repo invented.
 - Whitespace, key order and `manifests[]` order are the registry's. Two tags
   resolving to byte-identical index responses still dedup to one object
   (ADR-1 D3) — the registry's own digest already guarantees it.

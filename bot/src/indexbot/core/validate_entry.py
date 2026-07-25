@@ -393,10 +393,10 @@ def cas_relpath(namespace: str, package: str, digest: str, ext: str) -> str:
 
 
 def check_digest_self_consistent(digest: str, object_bytes: bytes) -> None:
-    """CAS integrity: `object_bytes` (already serialized canonically, §1)
-    must hash to `digest`. Mismatch is `AnomalyError` — the file's name (or
-    the field claiming this digest) lies about its own content, not a
-    routine validation failure.
+    """CAS integrity: `object_bytes` must hash to `digest` — the bytes as
+    committed, which for a tag object are the registry's own (§1). Mismatch
+    is `AnomalyError` — the file's name (or the field claiming this digest)
+    lies about its own content, not a routine validation failure.
 
     Generalizes the original `TagEntry`-shaped check below to any claimed
     digest string (fork-PR announce revamp: `Desc.readme`/`Desc.logo` blobs
@@ -618,8 +618,12 @@ def parse_image_index_digests(raw: bytes) -> tuple[str, ...]:
             "records image indices only"
         )
     digests: list[str] = []
-    for descriptor in cast("list[Any]", manifests):
-        digest = descriptor.get("digest") if isinstance(descriptor, dict) else None
+    for descriptor in cast("list[object]", manifests):
+        digest = (
+            cast("dict[str, object]", descriptor).get("digest")
+            if isinstance(descriptor, dict)
+            else None
+        )
         if not isinstance(digest, str):
             raise ValidationError("image-index descriptor has no string `digest`")
         digests.append(digest)

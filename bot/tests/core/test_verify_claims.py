@@ -105,6 +105,51 @@ def test_verify_claims_digest_mismatch() -> None:
     )
 
 
+def test_verify_claims_retagged_to_a_bare_manifest_is_a_digest_mismatch() -> None:
+    """The publisher re-tagged `3.28.1` onto a single image manifest.
+    `observe_one_tag` raises `ValidationError` for that, but this module
+    returns findings and never raises: the claim "this tag resolves to the
+    committed index" stopped being true, which is `"digest-mismatch"`.
+
+    Letting the raise through would drop the exact drift the nightly sweep
+    exists to detect, exit on the `ValidationError` arm instead of the
+    anomaly arm, and skip every package queued behind this one."""
+    entry, object_bytes, _registry = _observed_claim("3.28.1")
+    retagged = FakeRegistry(
+        tags={_REPO: ["3.28.1"]},
+        manifests={(_REPO, "3.28.1"): {"config": {"digest": "sha256:" + "9" * 64}}},
+    )
+    findings = verify_claims(
+        _PACKAGE_ID, _root({"3.28.1": entry}), {entry.content: object_bytes}, retagged
+    )
+    assert findings == (
+        ClaimFinding(package_id=_PACKAGE_ID, kind="digest-mismatch", detail="3.28.1"),
+    )
+
+
+def test_verify_claims_keeps_verifying_after_a_rejected_tag() -> None:
+    """One bad tag must not abandon the packages/tags behind it — the
+    concrete cost of an escaping exception."""
+    good_entry, good_bytes, _r = _observed_claim("3.27.0")
+    bad_entry, bad_bytes, _r2 = _observed_claim("3.28.1")
+    registry = FakeRegistry(
+        tags={_REPO: ["3.27.0", "3.28.1"]},
+        manifests={
+            (_REPO, "3.27.0"): _index(),
+            (_REPO, "3.28.1"): {"config": {"digest": "sha256:" + "9" * 64}},
+        },
+    )
+    findings = verify_claims(
+        _PACKAGE_ID,
+        _root({"3.27.0": good_entry, "3.28.1": bad_entry}),
+        {good_entry.content: good_bytes, bad_entry.content: bad_bytes},
+        registry,
+    )
+    assert findings == (
+        ClaimFinding(package_id=_PACKAGE_ID, kind="digest-mismatch", detail="3.28.1"),
+    )
+
+
 def test_verify_claims_cas_object_missing() -> None:
     entry, _object_bytes, registry = _observed_claim("3.28.1")
     root = _root({"3.28.1": entry})

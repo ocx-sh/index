@@ -405,28 +405,36 @@ def test_cas_relpath_varies_extension() -> None:
 
 # --- check_content_digest_self_consistent ------------------------------------
 
+_INDEX_BYTES = (
+    b'{"schemaVersion":2,"mediaType":"application/vnd.oci.image.index.v1+json",'
+    b'"manifests":[{"digest":"sha256:' + b"a" * 64 + b'"}]}'
+)
+"""What a tag's CAS object actually is: the registry's image index bytes.
+
+These checks hash without parsing, so any payload would pass — which is
+precisely why the fixture has to be the real shape. A reader learns the CAS
+object's form from here, and D4(c)'s whole point is that a hash-correct
+object of the wrong kind is still invalid."""
+
 
 def test_check_content_digest_self_consistent_ok() -> None:
-    object_bytes = b'{"platforms":[]}'
-    digest = f"sha256:{hashlib.sha256(object_bytes).hexdigest()}"
+    digest = f"sha256:{hashlib.sha256(_INDEX_BYTES).hexdigest()}"
     tag = TagEntry(content=digest, observed="2026-07-17T00:00:00Z")
-    validate_entry.check_content_digest_self_consistent(tag, object_bytes)  # no raise
+    validate_entry.check_content_digest_self_consistent(tag, _INDEX_BYTES)  # no raise
 
 
 def test_check_content_digest_self_consistent_mismatch_raises_anomaly() -> None:
-    object_bytes = b'{"platforms":[]}'
     tag = TagEntry(content="sha256:" + "0" * 64, observed="2026-07-17T00:00:00Z")
     with pytest.raises(AnomalyError):
-        validate_entry.check_content_digest_self_consistent(tag, object_bytes)
+        validate_entry.check_content_digest_self_consistent(tag, _INDEX_BYTES)
 
 
 # --- check_digest_self_consistent (generalized, fork-PR announce revamp) ----
 
 
 def test_check_digest_self_consistent_ok() -> None:
-    object_bytes = b'{"platforms":[]}'
-    digest = f"sha256:{hashlib.sha256(object_bytes).hexdigest()}"
-    validate_entry.check_digest_self_consistent(digest, object_bytes)  # no raise
+    digest = f"sha256:{hashlib.sha256(_INDEX_BYTES).hexdigest()}"
+    validate_entry.check_digest_self_consistent(digest, _INDEX_BYTES)  # no raise
 
 
 def test_check_digest_self_consistent_mismatch_raises_anomaly() -> None:

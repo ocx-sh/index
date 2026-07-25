@@ -714,10 +714,10 @@ def test_fp5_machine_lane_rejects_out_of_scope_paths(extra_path: str, _github_ou
 def test_fp5_machine_lane_admits_the_announce_write_set(_github_output: Path) -> None:
     """The complementary half of FP-5 — the gate rejects out-of-scope paths
     without breaking the lane it exists to protect: the exact file set
-    `cli/announce.py` writes (the root plus that same package's observation
-    object and readme/logo desc blobs) stays machine-lane (`success`)."""
+    `cli/announce.py` writes (the root plus that same package's image index
+    and readme/logo desc blobs) stays machine-lane (`success`)."""
     own_cas = (
-        f"p/kitware/cmake/o/sha256/{'b' * 64}.json",  # observation object
+        f"p/kitware/cmake/o/sha256/{'b' * 64}.json",  # image index
         f"p/kitware/cmake/o/sha256/{'c' * 64}.md",  # readme desc blob
         f"p/kitware/cmake/o/sha256/{'d' * 64}.svg",  # logo desc blob (svg)
         f"p/kitware/cmake/o/sha256/{'e' * 64}.png",  # logo desc blob (png)

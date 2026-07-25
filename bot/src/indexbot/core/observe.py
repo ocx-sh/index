@@ -22,6 +22,21 @@ if TYPE_CHECKING:
 
 _Manifest = dict[str, object]
 
+_MAX_INDEX_BYTES: Final[int] = 4 * 1024 * 1024
+"""Ceiling on the bytes one tag may commit into this index.
+
+Storing the registry's index verbatim (§1) moves the trust boundary: the
+committed object's size is now whatever the publisher's registry chose to
+serve, and an image index carries unbounded `annotations`. Without a bound,
+one padded push lands permanently in the git repository and is served from
+`p/<ns>/<pkg>/o/sha256/<hex>.json` — `check_digest_self_consistent` and the
+index-shape check both pass, because the bytes are hash-correct and are an
+image index; they are just enormous.
+
+4 MiB is the OCI distribution spec's manifest size registries must accept,
+not an invented number — anything above it is outside what a conforming
+registry is obliged to serve in the first place."""
+
 _SOURCE_ANNOTATION: Final[str] = "org.opencontainers.image.source"
 """Manifest-level annotation carrying the repository whose CI produced the
 build (`ocx package push --annotation`). Read the same way `core/desc.py`
@@ -90,7 +105,10 @@ def observe_one_tag(repository: str, tag: str, registry: RegistryPort) -> Observ
     test the OCX client makes on the wire. Anything else raises
     `ValidationError` (D4(a)): this index records image indices only, so a
     tag pointing at a single image manifest is a publishing fault to surface,
-    not a shape to convert into a stand-in.
+    not a shape to convert into a stand-in. Over `_MAX_INDEX_BYTES` of wire
+    bytes is refused the same way — verbatim storage means the registry
+    decides how much this repository commits, so the bound lives here, at the
+    one point registry bytes enter.
 
     The returned `Observation` carries `ManifestFetch.raw` unmodified and
     `ManifestFetch.digest` as its `content_digest`.
@@ -106,6 +124,11 @@ def observe_one_tag(repository: str, tag: str, registry: RegistryPort) -> Observ
         fetch = registry.get_manifest(repository, tag)
     except KeyError:
         return None
+    if len(fetch.raw) > _MAX_INDEX_BYTES:
+        raise ValidationError(
+            f"tag {tag!r} on {repository!r} serves {len(fetch.raw)} bytes, over the "
+            f"{_MAX_INDEX_BYTES}-byte ceiling this index commits for one tag"
+        )
     if "manifests" not in fetch.parsed:
         raise ValidationError(
             f"tag {tag!r} on {repository!r} resolves to an OCI image manifest, not an "

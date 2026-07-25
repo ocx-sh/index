@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 from dataclasses import dataclass
 
@@ -24,6 +25,35 @@ def _index(*platforms: dict[str, str], digest: str = _DIGEST_1) -> dict[str, obj
             {"platform": platform, "digest": digest} for platform in (platforms or ({},))
         ],
     }
+
+
+@dataclass
+class _FixedFetchRegistry:
+    """Serves one caller-built `ManifestFetch`, the *same object* every call.
+
+    `FakeRegistry` re-encodes on every `get_manifest`, so no test using it can
+    tell "copied the registry's bytes through" from "re-encoded them into an
+    equal-looking value" — and that distinction is the whole contract (§1).
+    This double makes it observable, and lets a test hand over bytes that are
+    *not* in any canonical form, so a re-encoder would be caught by equality
+    too."""
+
+    fetch: ManifestFetch
+
+    def list_tags(self, repository: str) -> list[str]:
+        raise AssertionError("should not be called")
+
+    def get_manifest(self, repository: str, reference: str) -> ManifestFetch:
+        return self.fetch
+
+    def get_desc_tag_digest(self, repository: str) -> str | None:
+        raise AssertionError("should not be called")
+
+    def get_blob(self, repository: str, digest: str) -> bytes:
+        raise AssertionError("should not be called")
+
+    def probe_ownership(self, repository: str, expected_name: str) -> OwnershipProbeResult:
+        raise AssertionError("should not be called")
 
 
 @dataclass
@@ -54,14 +84,27 @@ class _RaisingRegistry:
 def test_observe_one_tag_stores_raw_registry_bytes() -> None:
     """`Observation.raw` is the exact object `RegistryPort` returned — the
     same `bytes` instance, not an equal-looking re-encoding — and
-    `content_digest` is the registry's own digest over those bytes."""
-    registry = FakeRegistry(
-        manifests={(_REPO, "3.28.1"): _index({"architecture": "amd64", "os": "linux"})}
+    `content_digest` is the registry's own digest over those bytes.
+
+    Asserted with `is`, deliberately. `==` would still pass if this module
+    grew back a `json.dumps(json.loads(raw), sort_keys=True, ...)` round-trip
+    — the exact encoder the ADR deleted. The registry's bytes here are
+    pretty-printed with the keys out of sorted order, so the re-encoding this
+    pins against would produce visibly different bytes."""
+    raw = b'{\n  "schemaVersion": 2,\n  "manifests": [\n    {"digest": "%s"}\n  ]\n}' % (
+        _DIGEST_1.encode()
+    )
+    registry = _FixedFetchRegistry(
+        ManifestFetch(
+            raw=raw,
+            digest=f"sha256:{hashlib.sha256(raw).hexdigest()}",
+            parsed=json.loads(raw),
+        )
     )
     fetch = registry.get_manifest(_REPO, "3.28.1")
     observation = observe_one_tag(_REPO, "3.28.1", registry)
     assert observation is not None
-    assert observation.raw == fetch.raw
+    assert observation.raw is fetch.raw
     assert observation.content_digest == fetch.digest
     assert json.loads(observation.raw)["manifests"][0]["digest"] == _DIGEST_1
 
@@ -77,6 +120,43 @@ def test_observe_one_tag_refuses_a_bare_manifest() -> None:
         observe_one_tag(_REPO, "3.28.1", registry)
     assert "3.28.1" in str(excinfo.value)
     assert _REPO in str(excinfo.value)
+
+
+def test_observe_one_tag_refuses_an_oversized_index() -> None:
+    """Verbatim storage means the registry decides how many bytes each tag
+    commits to this git repository, permanently, and an image index's
+    `annotations` are unbounded. A padded index is refused at the one point
+    registry bytes enter."""
+    padding = "x" * (4 * 1024 * 1024)
+    registry = FakeRegistry(
+        manifests={(_REPO, "3.28.1"): {"manifests": [], "annotations": {"pad": padding}}}
+    )
+    with pytest.raises(ValidationError) as excinfo:
+        observe_one_tag(_REPO, "3.28.1", registry)
+    assert "ceiling" in str(excinfo.value)
+    assert "3.28.1" in str(excinfo.value)
+
+
+def test_observe_one_tag_accepts_an_index_at_the_ceiling() -> None:
+    """The bound rejects *over* the ceiling, not at it — a legitimately large
+    index must not be refused by an off-by-one."""
+    prefix = b'{"manifests":[],"annotations":{"pad":"'
+    suffix = b'"}}'
+    padding = b"x" * (4 * 1024 * 1024 - len(prefix) - len(suffix))
+    raw = prefix + padding + suffix
+    assert len(raw) == 4 * 1024 * 1024
+    registry = _FixedFetchRegistry(
+        ManifestFetch(
+            raw=raw,
+            digest=f"sha256:{hashlib.sha256(raw).hexdigest()}",
+            parsed={
+                "manifests": [],
+            },
+        )
+    )
+    observation = observe_one_tag(_REPO, "3.28.1", registry)
+    assert observation is not None
+    assert observation.raw is raw
 
 
 def test_observe_identical_indices_across_tags_share_one_digest() -> None:

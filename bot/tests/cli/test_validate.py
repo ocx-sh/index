@@ -170,7 +170,7 @@ def test_run_no_tags_online_passes_and_still_probes_ownership() -> None:
     assert result == ExitCode.OK
 
 
-def test_run_tag_with_no_platforms_passes() -> None:
+def test_run_tag_with_an_empty_index_passes() -> None:
     registry = FakeRegistry(tags={_REPOSITORY: ["latest"]}, ownership={_REPOSITORY: "confirmed"})
     registry.manifests[(_REPOSITORY, "latest")] = {"manifests": []}
     observation = observe_one_tag(_REPOSITORY, "latest", registry)
@@ -434,6 +434,24 @@ def test_run_claim_digest_mismatch_is_validation_failure() -> None:
     registry.manifests[(_REPOSITORY, "3.28.1")] = _index(architecture="arm64")
     result = _run(_args([_PATH]), files=files, registry=registry)
     assert result == ExitCode.VALIDATION_FAILURE
+
+
+def test_run_claim_retagged_to_a_bare_manifest_reports_a_finding(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """A tag re-pointed at a single image manifest reaches the operator as a
+    `digest-mismatch` *finding* from `verify_claims`, not as an escaped
+    `observe_one_tag` shape error. Both land on exit 1 here, so the exit code
+    alone cannot tell them apart — the message is what proves the claim was
+    verified rather than the sweep aborted."""
+    entry, object_bytes, registry = _observed_tag()
+    files = _build(tags={"3.28.1": entry}, extra_files={_cas_path(entry.content): object_bytes})
+    registry.manifests[(_REPOSITORY, "3.28.1")] = {"config": {"digest": "sha256:" + "9" * 64}}
+    result = _run(_args([_PATH]), files=files, registry=registry)
+    assert result == ExitCode.VALIDATION_FAILURE
+    err = capsys.readouterr().err
+    assert "claim verification failed" in err
+    assert "digest-mismatch: 3.28.1" in err
 
 
 # --- D7: a hand-authored root may not carry a reserved tag ----------------
