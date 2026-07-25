@@ -11,5 +11,22 @@
   "deprecated_message": null,
   "created": "2026-07-25",
   "desc": null,
-  "tags": {}
+  "tags": {
+    "1.0.2": {
+      "content": "sha256:4ee19e66016380ec603fee8f6b8d8fda85768d779944a942f3d42befe451fe91",
+      "observed": "2026-07-25T11:42:13Z"
+    },
+    "1.0": {
+      "content": "sha256:4ee19e66016380ec603fee8f6b8d8fda85768d779944a942f3d42befe451fe91",
+      "observed": "2026-07-25T11:42:13Z"
+    },
+    "1": {
+      "content": "sha256:4ee19e66016380ec603fee8f6b8d8fda85768d779944a942f3d42befe451fe91",
+      "observed": "2026-07-25T11:42:13Z"
+    },
+    "latest": {
+      "content": "sha256:4ee19e66016380ec603fee8f6b8d8fda85768d779944a942f3d42befe451fe91",
+      "observed": "2026-07-25T11:42:13Z"
+    }
+  }
 }
