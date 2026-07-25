@@ -239,7 +239,7 @@ jobs:
     # list: a superseded pending run is cancelled by design.
     concurrency:
       group: arm-auto-merge-${{ github.event.pull_request.number }}
-    # No checkout, ever. This job's entire body is one `gh` call against
+    # No checkout, ever. This job's entire body is `gh` calls against
     # base-authored YAML, so the contents: write it must hold to arm a
     # deferred merge is never in scope for PR-controlled code, `uv`
     # resolution, or the third-party action setup-bot forwards github.token
