@@ -2,9 +2,9 @@ name: validate
 
 # ADR-4 (adr_index_bot_and_workflow_security.md) BD-5 — privileged/unprivileged
 # split for the index bot's PR-review surface, extended by ADR-6
-# (adr_fork_pr_announce.md) for the fork-PR announce lane. Two jobs,
+# (adr_fork_pr_announce.md) for the fork-PR announce lane. Three jobs,
 # deliberately different trust levels, composed with branch protection (no
-# custom merge logic in either job):
+# custom merge logic in any of them):
 #
 #   schema-validate-pr (pull_request, zero secrets, checks out PR head — safe,
 #     GitHub strips secrets for this trigger): schema/fixture check + indexbot
@@ -17,12 +17,17 @@ name: validate
 #   governance-gate (pull_request_target, GITHUB_TOKEN only, NEVER checks out
 #     PR head): classifies the diff via the GitHub API only, labels the PR,
 #     sets the "governance/review-required" commit status (G-19 owners-
-#     membership + G-20 reviewer assignment), and arms auto-merge strictly on
-#     `indexbot governance-check`'s own `disposition` output — never on the
-#     raw classify-pr label, which can't see the G-19 ownership result.
-#     GitHub itself merges once branch protection's required checks
-#     (schema-validate-pr + governance/review-required) are both green — no
-#     polling, no second bot.
+#     membership + G-20 reviewer assignment), and publishes `indexbot
+#     governance-check`'s own `disposition` as a job output. It holds
+#     `contents: read` and nothing more.
+#   arm-auto-merge (pull_request_target, checkout-free): the only job that
+#     holds `contents: write`, because arming or withdrawing auto-merge is a
+#     deferred write to the base branch. It arms strictly on governance-gate's
+#     `disposition` — never on the raw classify-pr label, which can't see the
+#     G-19 ownership result — and withdraws again the moment a re-run says the
+#     PR is no longer machine-lane. GitHub itself merges once branch
+#     protection's required checks (schema-validate-pr +
+#     governance/review-required) are both green — no polling, no second bot.
 #
 # job1 is named "schema-validate-pr", not ADR-4's literal "schema-validate",
 # because ci.yml already owns that name for a different, unrelated check
@@ -169,9 +174,11 @@ jobs:
     # its label-apply and status-set steps.
     concurrency:
       group: governance-gate-${{ github.event.pull_request.number }}
+    outputs:
+      disposition: ${{ steps.governance_check.outputs.disposition }}
     permissions:
       contents: read # checkout base ref only, to run bot/'s source
-      pull-requests: write # classify-pr's add_labels + auto-merge request
+      pull-requests: write # classify-pr's add_labels + G-20 reviewer assignment
       statuses: write # governance-check's set_commit_status (governance/review-required); a separate scope from pull-requests
       issues: write # governance-check's create_comment (G-20) posts via the Issues API even for a PR — pull-requests: write alone 403s it
     env:
@@ -202,23 +209,48 @@ jobs:
           set -euo pipefail
           uv run --project bot -- indexbot governance-check --pr-number "$PR_NUMBER"
 
+  arm-auto-merge:
+    name: arm-auto-merge
+    needs: governance-gate
+    runs-on: ubuntu-latest
+    # No checkout, ever. This job's entire body is one `gh` call against
+    # base-authored YAML, so the contents: write it must hold to arm a
+    # deferred merge is never in scope for PR-controlled code, `uv`
+    # resolution, or the third-party action setup-bot forwards github.token
+    # to. Pinned by bot/tests/security/test_workflow_split.py.
+    permissions:
+      # Enabling or withdrawing auto-merge IS a deferred write to the base
+      # branch — GitHub documents its REST sibling
+      # (PUT /repos/{owner}/{repo}/pulls/{n}/merge) as needing Contents:
+      # write. Granting it here rather than widening governance-gate is the
+      # entire point of the split above.
+      contents: write
+      pull-requests: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      REPO: ${{ github.repository }}
+    steps:
       # G-19: arm auto-merge only on governance-check's own `disposition`
       # output — that's the ownership-checked machine-lane result (refresh
       # classification AND the PR author owns every touched root), not the
-      # raw classify-pr label above, which cannot see the G-19 outcome.
+      # raw classify-pr label, which cannot see the G-19 outcome.
       - name: Enable auto-merge for machine-lane PRs (G-19)
-        if: steps.governance_check.outputs.disposition == 'success'
-        env:
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          REPO: ${{ github.repository }}
+        if: needs.governance-gate.outputs.disposition == 'success'
         run: |
           set -euo pipefail
           gh pr merge "$PR_NUMBER" --repo "$REPO" --auto --squash
 
-      - name: Auto-merge skipped — human lane
-        if: steps.governance_check.outputs.disposition != 'success'
-        env:
-          PR_NUMBER: ${{ github.event.pull_request.number }}
+      # Arming is revocable, and must be: governance-gate re-runs and
+      # re-classifies on every `synchronize`, so a PR that armed as
+      # machine-lane and then pushed an edit outside the author's owned roots
+      # has its arming withdrawn here rather than merging on a stale
+      # evaluation.
+      - name: Withdraw auto-merge — human lane
+        if: needs.governance-gate.outputs.disposition != 'success'
         run: |
           set -euo pipefail
-          echo "::notice title=auto-merge skipped::PR #$PR_NUMBER is not machine-lane (G-19) - human review required, auto-merge not requested."
+          # Absorbed deliberately: --disable-auto errors when auto-merge was
+          # never enabled, which is the ordinary human-lane case.
+          gh pr merge "$PR_NUMBER" --repo "$REPO" --disable-auto ||
+            echo "::notice title=auto-merge::PR #$PR_NUMBER is not machine-lane (G-19) - human review required, no auto-merge armed."

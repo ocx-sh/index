@@ -1,11 +1,13 @@
 """Static-assertion workflow-security suite (spec X7, register §5).
 
 Covers G-14 (`permissions:` default-deny + SHA-pinned `uses:` across every
-workflow) and G-16/FP-7 (the privileged `pull_request_target` governance job
-never checks out PR head). The repo has no runtime YAML dependency and the
-credential process must gain none, so these tests hand-parse the specific
-keys (`permissions:`, `uses:`, `ref:`) with the stdlib only — a line scan,
-never a YAML library import.
+workflow), G-16/FP-7 (the privileged `pull_request_target` governance job
+never checks out PR head), and the `contents: write` split that lets
+`validate.yml` arm auto-merge at all: the write token lives in a job that
+checks nothing out, and never in the job that runs `bot/`'s source. The repo
+has no runtime YAML dependency and the credential process must gain none, so
+these tests hand-parse the specific keys (`permissions:`, `uses:`, `ref:`)
+with the stdlib only — a line scan, never a YAML library import.
 """
 
 from __future__ import annotations
@@ -97,3 +99,37 @@ def test_unprivileged_pr_head_job_holds_no_secrets() -> None:
     assert "github.event_name == 'pull_request'" in unprivileged
     assert "github.event.pull_request.head.sha" in unprivileged
     assert "secrets." not in unprivileged
+
+
+# --- contents: write split -------------------------------------------------
+
+
+def test_governance_gate_never_holds_contents_write() -> None:
+    """`governance-gate` checks out and runs `bot/`'s source and forwards
+    `github.token` to a third-party action via `setup-bot`. It therefore
+    holds `contents: read` and must never be "simplified" into holding the
+    write token that arming auto-merge needs."""
+    text = (_WORKFLOWS_DIR / "validate.yml").read_text(encoding="utf-8")
+    privileged = _job_block(text, "governance-gate")
+    assert "contents: read" in privileged
+    assert "contents: write" not in privileged
+
+
+def test_arm_auto_merge_job_never_checks_out() -> None:
+    """`arm-auto-merge` is the only job holding `contents: write` — arming and
+    withdrawing auto-merge are deferred writes to the base branch. That is
+    only safe while the job runs no repository code: no `uses:` of any kind
+    (so no checkout and no `setup-bot`) and no secret. It arms off
+    `governance-gate`'s ownership-checked `disposition`, and the same output
+    drives a `--disable-auto` branch, because arming a PR whose head later
+    moves outside its author's owned roots must be revocable."""
+    text = (_WORKFLOWS_DIR / "validate.yml").read_text(encoding="utf-8")
+    arm = _job_block(text, "arm-auto-merge")
+    assert "contents: write" in arm
+    assert not _uses_refs(arm)
+    assert "secrets." not in arm
+    assert "needs: governance-gate" in arm
+    assert "needs.governance-gate.outputs.disposition == 'success'" in arm
+    assert "needs.governance-gate.outputs.disposition != 'success'" in arm
+    assert "--auto --squash" in arm
+    assert "--disable-auto" in arm
