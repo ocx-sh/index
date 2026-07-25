@@ -2,7 +2,7 @@
 import { computed, onMounted, watch } from 'vue'
 import { useData } from 'vitepress'
 import { usePackageRoot } from '../../composables/usePackageRoot'
-import { useObservation } from '../../composables/useObservation'
+import { useImageIndex } from '../../composables/useImageIndex'
 import { buildVersionTable } from '../../utils/version'
 import IdentityBlock from './IdentityBlock.vue'
 import DisclaimerBanner from './DisclaimerBanner.vue'
@@ -12,7 +12,7 @@ import ReadmePane from './ReadmePane.vue'
 import MetaRail from './MetaRail.vue'
 
 // Hover-to-preview debounce (plan_site_redesign.md "Site fetch layer":
-// "hover debounce ~150-200ms at caller" — VersionTree/useObservation stay
+// "hover debounce ~150-200ms at caller" — VersionTree/useImageIndex stay
 // pure, this is the one caller that owns the timer).
 const HOVER_DEBOUNCE_MS = 180
 
@@ -27,17 +27,17 @@ const table = computed(() => (root.value ? buildVersionTable(root.value.tags, ro
 const defaultRow = computed(() => table.value?.rows.find(r => r.isDefault) ?? null)
 const tagCount = computed(() => (root.value ? Object.keys(root.value.tags).length : 0))
 
-// Observation object driving MetaRail's Platforms card: eager-loaded for
-// the default row's primary tag on package load, then swapped on
-// version-tag hover (debounced) and reverted on mouseleave (VersionTree
-// itself emits the revert as just another `hover-tag`).
-const { observation: activeObservation, load: loadObservation } = useObservation()
+// OCI image index driving MetaRail's Platforms card: eager-loaded for the
+// default row's primary tag on package load, then swapped on version-tag
+// hover (debounced) and reverted on mouseleave (VersionTree itself emits
+// the revert as just another `hover-tag`).
+const { imageIndex: activeImageIndex, load: loadImageIndex } = useImageIndex()
 let hoverTimer: ReturnType<typeof setTimeout> | null = null
 
 function onTagHover(digest: string) {
   if (hoverTimer) clearTimeout(hoverTimer)
   hoverTimer = setTimeout(() => {
-    loadObservation(ns.value, pkg.value, digest)
+    loadImageIndex(ns.value, pkg.value, digest)
   }, HOVER_DEBOUNCE_MS)
 }
 
@@ -45,7 +45,7 @@ onMounted(() => {
   watch(defaultRow, (row) => {
     if (!row?.primaryTag || !root.value) return
     const digest = root.value.tags[row.primaryTag]?.content
-    if (digest) loadObservation(ns.value, pkg.value, digest)
+    if (digest) loadImageIndex(ns.value, pkg.value, digest)
   }, { immediate: true })
 })
 </script>
@@ -101,7 +101,7 @@ onMounted(() => {
           :qualified-name="root.name"
           :primary-tag="defaultRow?.primaryTag ?? null"
           :latest-version-label="defaultRow?.preciseAliasTag ?? null"
-          :active-observation="activeObservation"
+          :active-image-index="activeImageIndex"
           :tag-count="tagCount"
         />
 
