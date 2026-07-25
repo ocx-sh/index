@@ -10,7 +10,7 @@ contracts, and the `format_version` changelog.
 - [Wire Format](./wire-format) — the four frozen URL shapes, field
   semantics, freshness, `format_version` gating
 - [Entry Schema](./entry-schema) — full field table for the package root
-  and observation object
+  and the OCI image index
 - [Namespace Policy](./namespace-policy) — the `<namespace>/<package>`
   charset, reserved segments, dispute policy
 - [Governance Contracts](./governance-contracts) — the G-01–G-18

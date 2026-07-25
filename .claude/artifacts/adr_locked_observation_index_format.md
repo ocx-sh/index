@@ -14,7 +14,14 @@ non-wire-format slices of the same discussion.
 **Deciders:** Michael Herwig (owner) + Claude design swarm
 **Domain Tags:** infrastructure | data | integration
 **Supersedes:** [D3](./adr_public_index_registry_indirection.md#d3--entry-content-pointer--governance-not-a-metadata-mirror) of `adr_public_index_registry_indirection.md`; §2e of `design_spec_registry_indirection.md`
-**Superseded By:** N/A
+**Superseded By:** [`adr_oci_index_only_dispatch.md`](https://github.com/ocx-sh/ocx/blob/main/.claude/artifacts/adr_oci_index_only_dispatch.md)
+(`ocx-sh/ocx`, 2026-07-25) — clauses **D1** (lock unit), **D2**'s `content`-field
+description, **D4** (Observation objects, entire clause), and **D5** (Verifiability
+chain) are superseded, marked in place below. **D2**'s root+CAS layout shape, **D3**
+(emergent aliasing), **D6** (`desc`), **D7** (`config.json` minimalism), **D8**
+(garbage collection), **D9** (no separate reconcile state file), and **D10** (wire
+deltas as a historical record) all stand unmodified — the superseding ADR changes only
+what `o/` holds, not the root+CAS shape or anything else this ADR decided.
 
 ## Context
 
@@ -167,6 +174,10 @@ to (see D8).
 
 ## Decision Outcome
 
+> superseded (Fork 1A only) — see ocx-sh/ocx `adr_oci_index_only_dispatch.md` D1. The
+> lock unit is now the image-index digest, not the platform-manifest digest. Forks 2A
+> (emergent aliasing), 3A (root+CAS split), and 4A (canonical tags) all stand.
+
 **Chosen:** platform-manifest-digest locking (Fork 1A), emergent aliasing (Fork 2A),
 root+CAS storage split (Fork 3A), default-on canonical tags with opt-out (Fork 4A) —
 elaborated as D1–D10 below.
@@ -179,6 +190,12 @@ observation ledger. Every rejected option would have baked either registry churn
 unenforceable requirement (Fork 4B) directly into the schema.
 
 ## Decisions
+
+> superseded — see ocx-sh/ocx `adr_oci_index_only_dispatch.md` D1. The lock unit is
+> now the **image-index digest**; the reasoning below (churn justifies not locking the
+> index) is superseded by that ADR's Context: churn is the reason *to* snapshot the
+> index, not a reason to avoid it — the index is exactly the thing that becomes
+> GC-eligible once superseded in the ordinary course of publishing.
 
 ### D1 — Lock unit: platform manifest digest, never image index digest
 
@@ -235,6 +252,10 @@ string; the corresponding CAS file is the same digest with `:` replaced by `/`.
   "yanked": { "reason": "string", "at": "2026-07-17T00:00:00Z" }
 }
 ```
+
+> superseded — see ocx-sh/ocx `adr_oci_index_only_dispatch.md` D1. `content` **is**
+> now an image-index digest: the CAS object it addresses (D4, superseded below) is the
+> registry's own OCI image index, verbatim.
 
 `content` addresses **this index's own package-local CAS** (an observation object,
 D4) — it is not an OCI manifest or image-index digest. `yanked` is optional; its
@@ -298,6 +319,11 @@ wire format is a generic passive ledger of what was observed, not an editorializ
 layer describing why. A future non-cascading publisher has nothing spurious to
 populate.
 
+> superseded — see ocx-sh/ocx `adr_oci_index_only_dispatch.md` D1/D2. The invented
+> `{"platforms":[{"platform","digest"}]}` object described below is deleted from the
+> format. `o/<algo>/<hex>.json` holds the registry's own OCI image index, verbatim
+> bytes — an index that defines no shape of its own does not invent one here either.
+
 ### D4 — Observation objects
 
 `/p/<ns>/<pkg>/o/sha256/<hex>.json` — immutable, package-local CAS:
@@ -335,6 +361,11 @@ observed platform-set change is never an edit to an existing object — it is a 
 object at a new digest, and the affected root's `tags[tag].content` is repointed to it.
 The `observed` timestamp lives at the mutable root layer (D2) precisely so this object
 layer can stay timestamp-free and fully dedupable.
+
+> superseded — see ocx-sh/ocx `adr_oci_index_only_dispatch.md` D1. The chain's shape
+> changed: `→ object.platforms[].digest` is now `→ OCI image index (verbatim) →
+> manifests[].digest`. Hop count is unchanged; what the second hop reads changed with
+> D4 above.
 
 ### D5 — Verifiability chain
 
@@ -500,3 +531,4 @@ duplicated here.
 | 2026-07-17 | Michael Herwig + Claude design swarm | Amendment: Fork 4/D8 canonical-tag stance revised — ocx-side `--canonical-tag` push flag flips from opt-in to default-on with `--no-canonical-tag` opt-out (ocx#215 follow-up); no change to this index's own posture, which ignores canonical tags either way |
 | 2026-07-17 | Michael Herwig + Claude design swarm | Amendment: D4 gains a sentence noting `schema/observation-object.schema.json`'s `platform` definition's `additionalProperties: false` tracks the OCI image-spec `Platform` field set in lockstep |
 | 2026-07-18 | Michael Herwig + Claude design swarm | Amendment: D2's `tags` provenance flips "every observed tag" → "every announced tag" (owner-curated), per `adr_fork_pr_announce.md` (ADR-6) FP-2 — wire shape, row shape, D4 observation objects, and the D5 chain all unchanged; provenance/transport change only, not a `format_version` break |
+| 2026-07-25 | architect (opus), ocx-sh/ocx | **Superseded by** [`adr_oci_index_only_dispatch.md`](https://github.com/ocx-sh/ocx/blob/main/.claude/artifacts/adr_oci_index_only_dispatch.md): D1 (lock unit is now the image-index digest, not the platform-manifest digest), D2's `content`-field description, D4 (the invented `{"platforms":[...]}` object is deleted — `o/` holds a verbatim OCI image index), and D5 (verifiability chain's second hop). D2's root+CAS layout shape and every other decision in this ADR stand unmodified. Blockquotes marking each superseded clause added in place; body prose otherwise unchanged, per this project's ADR-supersession doctrine |

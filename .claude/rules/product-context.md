@@ -12,7 +12,7 @@ Model: crates.io sparse index (RFC 2789 lineage). Static JSON over HTTPS — no 
 no database, no API. Clients resolve logical package names (`ocx.sh/kitware/cmake`)
 through root files here to physical OCI registries (`ghcr.io/ocx-contrib/cmake`);
 each root records every announced tag (owner-curated) as a content digest pointing at
-an immutable observation object (see Wire Contract below).
+an immutable OCI image index (see Wire Contract below).
 
 ## Wire Contract (one-way door)
 
@@ -23,7 +23,11 @@ Design authority: [adr_locked_observation_index_format.md](../artifacts/adr_lock
 (index format), [adr_namespace_policy.md](../artifacts/adr_namespace_policy.md)
 (namespace segment, reserved names), and
 [adr_fork_pr_announce.md](../artifacts/adr_fork_pr_announce.md) (announce transport +
-`tags` provenance: fork PRs, owner-curated tags, verify-only reconcile).
+`tags` provenance: fork PRs, owner-curated tags, verify-only reconcile). Superseding
+authority for the `o/` shape specifically:
+[adr_oci_index_only_dispatch.md](https://github.com/ocx-sh/ocx/blob/main/.claude/artifacts/adr_oci_index_only_dispatch.md)
+(`ocx-sh/ocx`) — `o/` holds verbatim OCI image indices, not a bot-authored
+projection.
 
 Four frozen URL shapes:
 
@@ -33,12 +37,14 @@ Four frozen URL shapes:
   a map from **every announced tag** (owner-curated — the owner announces the tags
   they choose, each CI-verified against registry truth; see
   [adr_fork_pr_announce.md](../artifacts/adr_fork_pr_announce.md)) to its content
-  digest (`sha256` of the observation object it points at)
-- `/p/<namespace>/<package>/o/sha256/<hex>.json` — observation object:
-  content-addressed, immutable, `platforms[{platform, digest}]` where
-  `platform` is an OCI platform object and `digest` is the manifest digest it
-  resolved to. Lock unit is the **platform manifest**, never the image index
-  (revises inherited D3)
+  digest (`sha256` of the OCI image index it points at)
+- `/p/<namespace>/<package>/o/sha256/<hex>.json` — an OCI image index,
+  content-addressed, immutable, stored verbatim as the physical registry
+  served it (`schemaVersion`, `mediaType`, `manifests[{mediaType, digest,
+  size, platform?}]`). `<hex>` is the sha256 of those bytes, which is the
+  registry's own manifest digest for that index. Lock unit is the
+  **image-index digest** — the per-platform manifest digests live inside
+  the locked bytes, in `manifests[]`
 - `/c/index.json` — enumeration index: `{"format_version": 1, "packages":
   {"<ns>/<pkg>": "sha256:<hex>", ...}}`, a sorted map from every published
   package to the exact-bytes digest of its package root, for whole-catalog
@@ -46,8 +52,8 @@ Four frozen URL shapes:
   [adr_enumeration_index.md](../artifacts/adr_enumeration_index.md))
 
 Desc blobs (`/p/<namespace>/<package>/o/sha256/<hex>.{md,svg,png}` — README,
-logo) reuse the same content-addressed CAS convention as the observation
-object path above, and — like all package-local CAS content — their bytes are
+logo) reuse the same content-addressed CAS convention as the image-index
+path above, and — like all package-local CAS content — their bytes are
 CI hash-verified against their path digest on announce (see
 [adr_fork_pr_announce.md](../artifacts/adr_fork_pr_announce.md) FP-4). They are
 not, however, one of the three enumerated frozen shapes:
