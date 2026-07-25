@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import base64
 import functools
+import json
 from pathlib import Path
 
 import pytest
@@ -25,13 +26,14 @@ from indexbot.adapters.github_api import GitHubApi
 from indexbot.cli.main import main
 from indexbot.exit_codes import ExitCode
 from tests.integration.fixtures.canonical import (
+    CANONICAL_INDEX,
     CANONICAL_ROOT_PATH,
     CANONICAL_SPEC,
     CANONICAL_TAG,
     seed_registry,
 )
 from tests.integration.harness.fake_forge import FakeForgeServer
-from tests.integration.harness.fake_ghcr import FakeGhcrServer
+from tests.integration.harness.fake_ghcr import FakeGhcrServer, manifest_wire_bytes
 from tests.integration.harness.git_tree import build_git_tree
 
 _WIRING_GHCR = "indexbot.cli._wiring.GhcrRegistry"
@@ -61,6 +63,26 @@ def test_validate_end_to_end(
     # the fake.
     assert any(path.endswith(f"/manifests/{CANONICAL_TAG}") for _method, path in served)
     assert any("/manifests/sha256:" in path for _method, path in served)
+
+
+def test_fake_ghcr_serves_non_canonical_manifest_bytes() -> None:
+    """Guards the load-bearing property of this whole tier.
+
+    Every flow here seeds its git tree and its registry through
+    `manifest_wire_bytes`, so a bot that re-encoded a parsed manifest instead of
+    copying the registry's bytes only produces a different digest — and only
+    fails — while those bytes differ from the canonical encoding. Restore
+    `json.dumps(..., sort_keys=True, separators=(",", ":"))` in that function
+    and the byte-verbatim property stops being pinned by anything at the
+    integration tier, silently. Mirrors
+    `tests/core/test_serializer_golden.py::test_dispatch_fixture_is_not_canonical_json`
+    for the golden vectors.
+    """
+    raw = manifest_wire_bytes(CANONICAL_INDEX)
+    canonical = json.dumps(
+        json.loads(raw), sort_keys=True, separators=(",", ":"), ensure_ascii=True
+    ).encode("utf-8")
+    assert canonical != raw
 
 
 def test_fake_forge_drives_github_api(fake_forge: FakeForgeServer) -> None:

@@ -176,15 +176,24 @@ def test_validate_non_canonical_root_bytes_is_validation_failure(
 
 
 def test_validate_rejects_a_tag_whose_cas_object_is_not_an_image_index(
-    fake_ghcr: FakeGhcrServer, index_tree: Path, monkeypatch: pytest.MonkeyPatch
+    fake_ghcr: FakeGhcrServer,
+    index_tree: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
 ) -> None:
     """D4(c) end to end: `o/` holds OCI image indices, and nothing else.
 
-    Every *other* invariant is left intact — the committed object's filename is
-    its own sha256, the root's bytes are the canonical serialization, the tag
-    resolves on the registry — so the only thing left for validate to reject is
-    the document's kind. A bare image manifest is exactly what a publisher
-    repointing a tag at a single-platform push would leave behind.
+    A bare image manifest is exactly what a publisher repointing a tag at a
+    single-platform push would leave behind. The committed object's filename is
+    still its own sha256 and the root's bytes are still the canonical
+    serialization, so neither the CAS self-consistency check nor the byte-exact
+    discipline is what fires here.
+
+    The exit code alone would not pin the document-kind gate: a bare manifest in
+    `o/` also breaks claim verification against the index the registry still
+    serves at this tag, which reports the same `VALIDATION_FAILURE`. So the
+    rejection *reason* is asserted on stderr — delete or reorder the D4(c) check
+    and this fails, rather than passing on the second failure path.
     """
     _seed_workspace(index_tree, monkeypatch)
     seed_registry(fake_ghcr)
@@ -205,3 +214,4 @@ def test_validate_rejects_a_tag_whose_cas_object_is_not_an_image_index(
     exit_code = main(["validate", CANONICAL_ROOT_PATH])
 
     assert exit_code == ExitCode.VALIDATION_FAILURE
+    assert "not an OCI image index" in capsys.readouterr().err
