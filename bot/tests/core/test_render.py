@@ -30,6 +30,48 @@ def _owner() -> Owner:
 
 _DEFAULT_PLATFORM = {"architecture": "amd64", "os": "linux"}
 
+_INDEX_MEDIA_TYPE = "application/vnd.oci.image.index.v1+json"
+_MANIFEST_MEDIA_TYPE = "application/vnd.oci.image.manifest.v1+json"
+
+
+def _descriptor(tag_hint: str, platform: dict[str, str] | None) -> dict[str, object]:
+    """One `manifests[]` entry. `platform=None` emits a platform-less
+    descriptor — legal OCI (the field is optional) and one of the two shapes
+    `_catalog_platforms` must skip; the other is `platform.os == "unknown"`
+    (ADR R4). `digest` is a real sha256 over a label rather than a
+    placeholder string, so the fixture reads like the registry bytes it
+    stands in for."""
+    label = (
+        f"{tag_hint}/attached"
+        if platform is None
+        else f"{tag_hint}/{platform['os']}/{platform['architecture']}"
+    )
+    descriptor: dict[str, object] = {
+        "mediaType": _MANIFEST_MEDIA_TYPE,
+        "digest": f"sha256:{hashlib.sha256(label.encode()).hexdigest()}",
+        "size": 512,
+    }
+    if platform is not None:
+        descriptor["platform"] = platform
+    return descriptor
+
+
+def _index_of(*descriptors: dict[str, object]) -> bytes:
+    """One tag's CAS bytes: the registry's OCI image index, as `render.py`
+    receives it. `render.py` copies these verbatim into the dist tree, so
+    every golden CAS object under `expected/dist/p/**/o/sha256/*.json` is
+    exactly this output."""
+    return json.dumps(
+        {"schemaVersion": 2, "mediaType": _INDEX_MEDIA_TYPE, "manifests": list(descriptors)}
+    ).encode()
+
+
+def _index_bytes(
+    tag_hint: str, *, platforms: tuple[dict[str, str], ...] = (_DEFAULT_PLATFORM,)
+) -> bytes:
+    """The common case: one runnable-image descriptor per platform."""
+    return _index_of(*(_descriptor(tag_hint, platform) for platform in platforms))
+
 
 def _obs_bytes(
     tag_hint: str, *, platforms: tuple[dict[str, str], ...] = (_DEFAULT_PLATFORM,)
@@ -307,6 +349,37 @@ def _case_nested_namespace() -> list[SourcePackage]:
     ]
 
 
+def _case_attestation_descriptor() -> list[SourcePackage]:
+    """ADR R4. A real registry serves attestation and referrer descriptors
+    inside the same image index as the runnable ones — cosign/buildkit
+    attestations carry `platform: {"os": "unknown", ...}`, and `platform` is
+    an optional descriptor field so a referrer may carry none at all.
+    Neither names a target anything can run on, so neither may reach the
+    catalog's `platforms` matrix; the golden's `catalog.json` shows both
+    absent. Authored from the ADR before any golden was regenerated.
+    """
+    tags = {"2.0.0": TagEntry(content=_digest("t"), observed="2026-07-17T00:00:00Z")}
+    content_by_digest = {
+        f"{_digest('t')}.json": _index_of(
+            _descriptor("2.0.0", {"architecture": "amd64", "os": "linux"}),
+            _descriptor("2.0.0", {"architecture": "arm64", "os": "linux"}),
+            _descriptor("2.0.0", {"architecture": "unknown", "os": "unknown"}),
+            _descriptor("2.0.0", None),
+        )
+    }
+    return [
+        _package(
+            namespace="sigstore",
+            package="cosign",
+            repository="oci://ghcr.io/ocx-contrib/cosign",
+            created="2026-01-01",
+            tags=tags,
+            desc=None,
+            content_by_digest=content_by_digest,
+        )
+    ]
+
+
 def _assert_tree_matches(root: Path, files: tuple[FileWrite, ...]) -> None:
     produced = {fw.path: fw.content for fw in files}
     expected_paths = {p.relative_to(root).as_posix() for p in root.rglob("*") if p.is_file()}
@@ -348,6 +421,22 @@ def test_render_png_only_logo() -> None:
 
 def test_render_nested_namespace() -> None:
     _assert_matches_golden("nested_namespace", build_render_plan(_case_nested_namespace()))
+
+
+def test_render_attestation_descriptor_skips_platformless_and_unknown() -> None:
+    _assert_matches_golden(
+        "attestation_descriptor", build_render_plan(_case_attestation_descriptor())
+    )
+
+
+def test_catalog_platforms_skips_platformless_and_unknown_descriptors() -> None:
+    # The golden above pins the whole tree; this pins the one claim the
+    # scenario exists for, readably and independently of the byte compare.
+    plan = build_render_plan(_case_attestation_descriptor())
+    catalog_file = next(fw for fw in plan if fw.path == "data/catalog/catalog.json")
+    assert isinstance(catalog_file.content, str)
+    catalog = json.loads(catalog_file.content)
+    assert catalog["packages"][0]["platforms"] == ["linux/amd64", "linux/arm64"]
 
 
 def test_build_render_plan_sorts_packages_by_package_id() -> None:
