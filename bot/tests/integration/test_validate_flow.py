@@ -29,6 +29,7 @@ does raise through `main()`.
 
 from __future__ import annotations
 
+import dataclasses
 import functools
 import json
 from typing import TYPE_CHECKING
@@ -40,11 +41,12 @@ from indexbot.cli.main import main
 from indexbot.core.validate_entry import parse_package_root, serialize_package_root
 from indexbot.exit_codes import ExitCode
 from tests.integration.fixtures.canonical import (
-    CANONICAL_MANIFEST,
-    CANONICAL_REPO_PATH,
     CANONICAL_ROOT_PATH,
     CANONICAL_SPEC,
     CANONICAL_TAG,
+    LEAF_BYTES,
+    LEAF_DIGEST,
+    seed_registry,
 )
 from tests.integration.harness.git_tree import build_git_tree
 
@@ -95,7 +97,7 @@ def test_validate_clean_tree_exits_ok_with_no_credential_leak(
     fake_ghcr: FakeGhcrServer, index_tree: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     _seed_workspace(index_tree, monkeypatch)
-    fake_ghcr.add_manifest(CANONICAL_REPO_PATH, CANONICAL_TAG, CANONICAL_MANIFEST)
+    seed_registry(fake_ghcr)
 
     sent_headers: list[dict[str, str]] = []
     with _capturing_client(sent_headers) as client:
@@ -128,7 +130,7 @@ def test_validate_tampered_cas_object_is_anomaly_without_summary_floor(
     fake_ghcr: FakeGhcrServer, index_tree: Path, monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
     _seed_workspace(index_tree, monkeypatch)
-    fake_ghcr.add_manifest(CANONICAL_REPO_PATH, CANONICAL_TAG, CANONICAL_MANIFEST)
+    seed_registry(fake_ghcr)
     monkeypatch.setattr(_WIRING_GHCR, functools.partial(GhcrRegistry, base_url=fake_ghcr.base_url))
 
     # Corrupt the committed CAS object's bytes in place (its filename digest is
@@ -154,7 +156,7 @@ def test_validate_non_canonical_root_bytes_is_validation_failure(
     fake_ghcr: FakeGhcrServer, index_tree: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     _seed_workspace(index_tree, monkeypatch)
-    fake_ghcr.add_manifest(CANONICAL_REPO_PATH, CANONICAL_TAG, CANONICAL_MANIFEST)
+    seed_registry(fake_ghcr)
     monkeypatch.setattr(_WIRING_GHCR, functools.partial(GhcrRegistry, base_url=fake_ghcr.base_url))
 
     # Re-emit the committed root as compact JSON: it still parses to the exact
@@ -167,6 +169,38 @@ def test_validate_non_canonical_root_bytes_is_validation_failure(
     non_canonical = json.dumps(json.loads(canonical_bytes)).encode("utf-8")
     assert non_canonical != canonical_bytes
     root_path.write_bytes(non_canonical)
+
+    exit_code = main(["validate", CANONICAL_ROOT_PATH])
+
+    assert exit_code == ExitCode.VALIDATION_FAILURE
+
+
+def test_validate_rejects_a_tag_whose_cas_object_is_not_an_image_index(
+    fake_ghcr: FakeGhcrServer, index_tree: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """D4(c) end to end: `o/` holds OCI image indices, and nothing else.
+
+    Every *other* invariant is left intact — the committed object's filename is
+    its own sha256, the root's bytes are the canonical serialization, the tag
+    resolves on the registry — so the only thing left for validate to reject is
+    the document's kind. A bare image manifest is exactly what a publisher
+    repointing a tag at a single-platform push would leave behind.
+    """
+    _seed_workspace(index_tree, monkeypatch)
+    seed_registry(fake_ghcr)
+    monkeypatch.setattr(_WIRING_GHCR, functools.partial(GhcrRegistry, base_url=fake_ghcr.base_url))
+
+    cas_dir = _cas_object_path(index_tree).parent
+    _cas_object_path(index_tree).unlink()
+    (cas_dir / f"{LEAF_DIGEST.removeprefix('sha256:')}.json").write_bytes(LEAF_BYTES)
+
+    root_path = index_tree / CANONICAL_ROOT_PATH
+    root = parse_package_root(root_path.read_bytes())
+    repointed = dataclasses.replace(
+        root,
+        tags={CANONICAL_TAG: dataclasses.replace(root.tags[CANONICAL_TAG], content=LEAF_DIGEST)},
+    )
+    root_path.write_bytes(serialize_package_root(repointed))
 
     exit_code = main(["validate", CANONICAL_ROOT_PATH])
 

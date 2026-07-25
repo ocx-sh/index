@@ -1,7 +1,7 @@
 """Smoke proof: the harness drives the real bot end to end.
 
 `test_validate_end_to_end` is the full loop the whole Track-B safety net is
-built on — seed a canonical git tree, serve its one tag's manifest from the
+built on — seed a canonical git tree, serve its one tag's image index from the
 socket-level `FakeGhcrServer`, run `indexbot validate <root>` through the real
 `main()` (real argparse -> real `_wiring` -> real `GhcrRegistry` adapter -> real
 `LocalFiles` adapter), and assert a clean `ExitCode.OK`. It confirms the real
@@ -25,11 +25,10 @@ from indexbot.adapters.github_api import GitHubApi
 from indexbot.cli.main import main
 from indexbot.exit_codes import ExitCode
 from tests.integration.fixtures.canonical import (
-    CANONICAL_MANIFEST,
-    CANONICAL_REPO_PATH,
     CANONICAL_ROOT_PATH,
     CANONICAL_SPEC,
     CANONICAL_TAG,
+    seed_registry,
 )
 from tests.integration.harness.fake_forge import FakeForgeServer
 from tests.integration.harness.fake_ghcr import FakeGhcrServer
@@ -42,7 +41,7 @@ def test_validate_end_to_end(
     fake_ghcr: FakeGhcrServer, index_tree: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     build_git_tree(index_tree, CANONICAL_SPEC)
-    fake_ghcr.add_manifest(CANONICAL_REPO_PATH, CANONICAL_TAG, CANONICAL_MANIFEST)
+    seed_registry(fake_ghcr)
 
     # Seam 1 (FilePort root): `_wiring._repo_root()` reads GITHUB_WORKSPACE.
     monkeypatch.setenv("GITHUB_WORKSPACE", str(index_tree))
@@ -58,7 +57,8 @@ def test_validate_end_to_end(
     # The real anonymous bearer-token dance ran against the fake (a first
     # unauthenticated /v2/ request 401'd, the adapter fetched a pull token).
     assert ("GET", "/token") in served
-    # The tag manifest and the per-platform digest scope check both hit the fake.
+    # The tag's image index and the per-descriptor digest scope check both hit
+    # the fake.
     assert any(path.endswith(f"/manifests/{CANONICAL_TAG}") for _method, path in served)
     assert any("/manifests/sha256:" in path for _method, path in served)
 
