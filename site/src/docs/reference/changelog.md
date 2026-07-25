@@ -19,7 +19,7 @@ Initial locked wire format.
   (`name`, `repository`, `owners`, `status`, `deprecated_message`,
   `created`, `upstream`) plus bot-regenerated `desc` (nullable) and `tags`
   (map from every observed tag to `{content, observed, yanked?}`).
-- `/p/<namespace>/<package>/o/<algo>/<hex>.json` — the OCI image index the
+- `/p/<namespace>/<package>/o/sha256/<hex>.json` — the OCI image index the
   tag resolved to, stored verbatim as the registry served it; `<hex>` is the
   sha256 of those bytes, which is the registry's own manifest digest.
   Immutable.

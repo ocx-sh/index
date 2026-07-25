@@ -41,4 +41,11 @@ describe('visiblePlatforms', () => {
     ]
     expect(visiblePlatforms(manifests)).toEqual([])
   })
+
+  test('a malformed manifests value (non-array) degrades to empty instead of throwing', () => {
+    // `o/` bytes are publisher-controlled, not bot-validated — see the
+    // guard's own comment. `as unknown as` because the malformed shape is
+    // exactly what the type system says can't happen.
+    expect(visiblePlatforms({ not: 'an array' } as unknown as ManifestDescriptor[])).toEqual([])
+  })
 })
