@@ -38,6 +38,13 @@ Additive, same `format_version`:
   bare `<namespace>/<package>` naming a successor package, human-governed,
   omitted or `null` when unset. Existing consumers already ignore unknown
   fields per the additive-evolution rule, so this costs nothing to add.
+- `/p/<namespace>/<package>.json` gains an optional `source` field: the
+  `https://` repository whose CI produced the builds, bot-read from the
+  latest version's `org.opencontainers.image.source` annotation, omitted
+  when that annotation is absent. Distinct from `upstream.repository_url`
+  (vendor attribution) — see
+  [Entry Schema](./entry-schema#source-versus-upstream). Also
+  additive; every root published before it stays valid.
 
 No prior `format_version` was ever served to a real client, so this entry
 carries no migration notes. Two deltas exist against the placeholder

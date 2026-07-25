@@ -46,6 +46,7 @@ sync protocol built on top of this shape.
 | `superseded_by` | string \| null | no | human (PR) | bare `<namespace>/<package>` naming a successor package, ≤140 chars; omitted or `null` when unset; self-reference invalid, no coupling to `status` |
 | `created` | string, `YYYY-MM-DD` | yes | human (PR), set once | date first claimed |
 | `upstream` | [Upstream](#upstream) object | no | human (PR) | mandatory by governance for third-party vendor namespaces; omitted for OCX first-party entries |
+| `source` | string, `https://…` | no | bot-regenerated | repository whose CI produced the published builds, from the `org.opencontainers.image.source` annotation on the latest version's manifest; omitted (or `null`) when that annotation is absent. Not `upstream.repository_url` — see below |
 | `desc` | [Desc](#desc) object \| `null` | yes (nullable) | bot-regenerated | `null` if `__ocx.desc` never published |
 | `tags` | map: tag name → [TagEntry](#tagentry) | yes | bot-regenerated, except `yanked` | every observed tag, no filtering |
 
@@ -63,6 +64,21 @@ sync protocol built on top of this shape.
 | `org` | string | yes | the real vendor/project name |
 | `repository_url` | string (URI) | no | upstream source repository |
 | `disclaimer` | string \| null | no | e.g. a not-affiliated note |
+
+#### Source versus upstream
+
+Two different questions, deliberately two fields:
+
+- `upstream.repository_url` — **who wrote the software.** Human-governed
+  attribution of the third-party vendor the namespace names, set once in the
+  claim PR.
+- `source` — **who built these artifacts.** Bot-read from the published
+  image's `org.opencontainers.image.source` annotation, so it names the
+  repository whose CI ran the build.
+
+For a mirror they are different repositories on purpose: `kitware/cmake` may
+attribute `https://github.com/Kitware/CMake` upstream while its `source` is
+the mirroring repository that produced the OCI artifacts.
 
 ### Desc
 
@@ -127,4 +143,5 @@ Two disjoint sets, never cross-contaminated (see
   `owners`, `status`, `deprecated_message`, `superseded_by`, `created`,
   `upstream`, and `tags[*].yanked`.
 - **Bot-regenerated** (rewritten from registry truth on every
-  announce/reconcile): `desc` and the rest of every `tags[*]` row.
+  announce/reconcile): `desc`, `source`, and the rest of every `tags[*]`
+  row.

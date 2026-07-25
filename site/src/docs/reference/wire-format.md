@@ -110,12 +110,17 @@ Full field table: [Entry Schema](./entry-schema).
 
 The root is the **hot, mutable** part of an entry. It carries
 governance fields set by a human via PR (`name`, `repository`, `owners`,
-`status`, `deprecated_message`, `created`, `upstream`) alongside two
+`status`, `deprecated_message`, `created`, `upstream`) alongside three
 bot-regenerated fields:
 
 - `desc` — nullable; title, description, keywords, and CAS pointers to a
   readme/logo, copied from the physical registry's `__ocx.desc` tag when its
   digest changes. `null` for a package that has never published one.
+- `source` — optional; the `https://` repository whose CI produced the
+  builds, read from the latest version's `org.opencontainers.image.source`
+  annotation. Omitted when the published image carries no such annotation.
+  Not the same thing as `upstream.repository_url` (see
+  [Entry Schema](./entry-schema#source-versus-upstream)).
 - `tags` — a map from **every** tag ever observed on the physical
   repository (no filtering) to `{content, observed, yanked?}`. `content` is
   a `sha256:<hex>` digest addressing an observation object in this

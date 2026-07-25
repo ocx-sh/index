@@ -43,6 +43,12 @@
       "$ref": "#/$defs/upstream",
       "description": "Attribution of the real upstream vendor/project the namespace names. Mandatory (by governance, not by this schema) on every entry whose namespace names a real third-party vendor; omitted only for OCX's own first-party namespaces (ADR: adr_namespace_policy.md ND-9/ND-10)."
     },
+    "source": {
+      "type": ["string", "null"],
+      "description": "Repository whose CI produced the published builds — bot-derived from the org.opencontainers.image.source annotation on the latest version's observed manifest, never human-set. NOT upstream.repository_url: that one is human-governed and names the third-party vendor the namespace attributes, while this one names the build's own origin — for a mirror the two are different repositories on purpose. Restricted to https:// (deliberately tighter than upstream.repository_url's format: uri, which also admits javascript:/data:) because this value is publisher-controlled and lands as an href on a public page; the site re-checks it with utils/safeHref.ts before rendering. Optional and omitted (or null) when the annotation is absent — never in required, so every root published before this field existed stays valid.",
+      "pattern": "^https://[^\\s]+$",
+      "maxLength": 2048
+    },
     "desc": {
       "description": "Nullable — a package that has never published __ocx.desc on the physical registry has desc: null (ADR: adr_locked_observation_index_format.md D6).",
       "oneOf": [
