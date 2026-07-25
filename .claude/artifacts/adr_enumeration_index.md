@@ -12,7 +12,12 @@
 bullet in [`product-context.md`](../rules/product-context.md) ("Not a search service
 (`all.json` snapshot deferred)")
 **Supersedes:** N/A
-**Superseded By:** N/A
+**Superseded By:** [`adr_oci_index_only_dispatch.md`](https://github.com/ocx-sh/ocx/blob/main/.claude/artifacts/adr_oci_index_only_dispatch.md)
+(`ocx-sh/ocx`, 2026-07-25) — partially: retires the "observation object" vocabulary
+D4 and D8 use to describe the CAS dedup category and the site's render input (deleted,
+replaced by a verbatim OCI image index); no D-decision of this ADR (the enumeration
+snapshot, its digest semantics, the surface-role table's structure) is reversed. See
+the amendment note appended below.
 
 ## Context
 
@@ -234,11 +239,14 @@ anywhere else in the wire format.
 Each `packages[key]` value is `sha256:` followed by lowercase hex, computed over the
 **exact bytes served** at `/p/<namespace>/<package>.json` — the render pipeline's
 already-assembled root bytes, not a re-serialization of the parsed content. This is a
-new digest category, deliberately distinct from the canonical-JSON CAS digests
-`bot/CONTRACTS.md` §1 defines for observation-object and desc-blob dedup
-(`json.dumps(obj, sort_keys=True, separators=(",", ":"), ensure_ascii=True)`): those
-digests exist so that two independently-observed, logically identical contents
-collide onto the same CAS object regardless of how they were produced. This digest
+new digest category, deliberately distinct from the CAS digests a package root's
+`o/` objects carry: desc blobs (readme/logo) are hashed under the canonical-JSON
+form `bot/CONTRACTS.md` §1 defines
+(`json.dumps(obj, sort_keys=True, separators=(",", ":"), ensure_ascii=True)`), so
+two independently-produced, logically identical desc contents collide onto the same
+CAS object; a tag's dispatch object is hashed over the registry's own OCI image-index
+bytes, verbatim — no re-serialization, so dedup there narrows to "same image index",
+not "same platform set" (`adr_oci_index_only_dispatch.md`). This digest
 exists to answer a narrower question — "are the bytes a client already has still
 current?" — and a root file is written exactly once, in the render pipeline's own
 fixed `indent=2` style, so the digest must match precisely what a plain HTTP `GET`
@@ -339,7 +347,7 @@ display:
 | Site pages (`/`, `/<namespace>/<package>`, `/docs/**`) | **UI** — human-facing, consumes the three rows above |
 
 The one enforceable principle this table exists to state: **site detail pages must
-render from wire shapes only** (`/p/<namespace>/<package>.json` + observation objects
+render from wire shapes only** (`/p/<namespace>/<package>.json` + OCI image indices
 + CAS blobs), never a site-private per-package shape — this is what keeps "what a
 client's snapshot contains" and "what fully describes a package on the site" the same
 thing by construction, and makes the site the first real consumer of exactly the
@@ -403,6 +411,31 @@ this surface serves an empty catalog, not an error.
   resolves the pointer eagerly must treat a missing target as an expected outcome,
   not a hard failure.
 
+## Amendment A1 — `o/` Holds a Verbatim OCI Image Index, Not an Invented Object (2026-07-25)
+
+**Status:** Accepted — documentation correction following
+[`adr_oci_index_only_dispatch.md`](https://github.com/ocx-sh/ocx/blob/main/.claude/artifacts/adr_oci_index_only_dispatch.md)
+(`ocx-sh/ocx`, owner-ratified 2026-07-25).
+
+**Problem.** D4's digest-category comparison and D8's surface-role table both
+described the bot-synthesized "observation object" — the `{"platforms":[...]}`
+projection `adr_locked_observation_index_format.md` originally invented for
+`o/sha256/<hex>.json` — as a live artifact shape. That shape is deleted: a tag's `o/`
+object is now the registry's own OCI image index, stored byte-for-byte. Neither of
+this ADR's own decisions (the `/c/index.json` enumeration snapshot, D4's digest
+semantics, D8's surface-role table structure) is reversed — only the terminology used
+to describe the *other* CAS category D4 compares against.
+
+**Resolution.** D4's dedup comparison now distinguishes desc-blob dedup
+(canonical-JSON, `bot/CONTRACTS.md` §1) from tag-dispatch-object dedup (byte-equality
+over verbatim registry bytes, narrower per `adr_oci_index_only_dispatch.md`'s
+"CAS dedup narrows" consequence). D8's render-input parenthetical now reads "OCI
+image indices" in place of "observation objects".
+
+**Consequences:** None to this ADR's own decisions. `adr_locked_observation_index_format.md`
+carries its own `Superseded By` marker for the clauses this affects (WP-B6); this
+amendment only brings this ADR's *own* prose in line with that.
+
 ## Links
 
 - [`research_index_enumeration_prior_art.md`](./research_index_enumeration_prior_art.md) — prior-art research backing this ADR
@@ -425,3 +458,4 @@ this surface serves an empty catalog, not an error.
 | Date | Author | Change |
 |------|--------|--------|
 | 2026-07-17 | Michael Herwig + Claude design swarm | Initial record from the 2026-07-17 design discussion: fourth frozen wire shape (`/c/index.json`), digest-map shape, reserved sharding, `superseded_by` root field, surface-role table |
+| 2026-07-25 | Claude (sonnet, WP-B8) | Added `Superseded By` (partial) and Amendment A1: corrected D4's dedup-category comparison and D8's render-input reference from "observation object(s)" to the verbatim-OCI-image-index shape, per `adr_oci_index_only_dispatch.md`. No D-decision of this ADR reversed. |

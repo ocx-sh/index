@@ -8,6 +8,13 @@
 **Domain Tags:** frontend | infrastructure | devops
 **Supersedes:** N/A — reverses the tooling recommendation of
 [`research_docs_site.md`](./research_docs_site.md) (see Industry Context & Research)
+**Superseded By:** [`adr_oci_index_only_dispatch.md`](https://github.com/ocx-sh/ocx/blob/main/.claude/artifacts/adr_oci_index_only_dispatch.md)
+(`ocx-sh/ocx`, 2026-07-25) — partially: the Technical Details wire-path table's
+`o/sha256/<hex>.json` row named the object it stores "observation objects"; that
+invented shape is deleted, the path now holds a verbatim OCI image index. Amendment
+A1's `useObservation` composable reference is stale for the same reason (renamed to
+`useImageIndex`, Track B). Nothing else in this ADR — the VitePress colocation
+decision, build order, Cache Rule scoping — is affected. See Amendment A2.
 
 ## Context
 
@@ -175,7 +182,7 @@ exact data shape, one repo over. Reuse is the boring choice here, not the novel 
 ```
 /config.json                          {"format_version": 1}          ← generated, frozen contract
 /p/<ns>/<pkg>.json                    package root (hot, mutable)    ← frozen contract
-/p/<ns>/<pkg>/o/sha256/<hex>.json     observation objects (CAS)      ← frozen contract
+/p/<ns>/<pkg>/o/sha256/<hex>.json     OCI image index (CAS)          ← frozen contract
 /p/<ns>/<pkg>/o/sha256/<hex>.{md,svg,png}  desc blobs (CAS)
 /data/catalog/**                      catalog UI data — NOT wire contract, free to evolve
 /, /docs/**                           VitePress catalog + docs — NOT wire contract
@@ -318,7 +325,7 @@ VitePress build time and produces one `{ns, pkg}` route per package root
 found; `site/src/[ns]/[pkg].md` carries only `layout: detail` frontmatter,
 no per-package content. `DetailPage.vue` fetches everything at runtime via
 the same composable fetch layer the catalog already uses (`usePackageRoot`,
-`useObservation`) — see `site/README.md`. `core/render.py`'s
+`useImageIndex`) — see `site/README.md`. `core/render.py`'s
 `build_render_plan` now returns a single flat `tuple[FileWrite, ...]`
 (`config.json`, `/p/**`, `/c/index.json`,
 `/data/catalog/catalog.json`) rather than the two-tree `RenderPlan`
@@ -355,6 +362,31 @@ three-step, two-output-tree design and are **not** rewritten in place — this
 amendment is the current-state correction; see `site/README.md` and
 `bot/CONTRACTS.md` §8/§12 for the landed shapes.
 
+### Amendment A2 (2026-07-25): `o/` Holds a Verbatim OCI Image Index, Not an Invented Object
+
+**Status:** Accepted — documentation correction following
+[`adr_oci_index_only_dispatch.md`](https://github.com/ocx-sh/ocx/blob/main/.claude/artifacts/adr_oci_index_only_dispatch.md)
+(`ocx-sh/ocx`, owner-ratified 2026-07-25).
+
+**Problem.** The Technical Details wire-path table (above) named the object at
+`p/<ns>/<pkg>/o/sha256/<hex>.json` "observation objects (CAS)" — a bot-synthesized
+`{"platforms":[...]}` projection that carried no information the registry's own OCI
+image index did not already have. `adr_oci_index_only_dispatch.md` deletes that
+invented shape: the path holds the registry's image-index bytes, unmodified, hashed
+under its own digest. This is a present-tense contract-table correction, not a
+reinterpretation of anything this ADR decided — the colocation decision, the build
+order, and the Cache Rule scoping (Technical Details, below) are all orthogonal to
+what shape lives inside the CAS object and are untouched.
+
+**Resolution.** The wire-path table row now reads "OCI image index (CAS)". Amendment
+A1's `useObservation` composable reference is corrected to `useImageIndex` (Track B
+rename, `site/.vitepress/theme/composables/useImageIndex.ts`) — the interface itself
+mirrors the OCI image-index spec 1:1 rather than the retired `{platforms:[...]}`
+shape.
+
+**Consequences:** None beyond the two corrections above. `/data/catalog/**` and
+`/, /docs/**` remain outside the wire contract, unaffected.
+
 ## Links
 
 - [`plan_index_v1.md`](../state/plans/plan_index_v1.md) — canonical phase/work-package
@@ -385,3 +417,4 @@ amendment is the current-state correction; see `site/README.md` and
 |------|--------|--------|
 | 2026-07-17 | Michael Herwig + Claude design swarm | Initial record: colocation decision, VitePress reversal of mdBook research recommendation |
 | 2026-07-17 | Claude (docs) | Added Amendment A1 (Accepted): dynamic routes (`site/src/[ns]/[pkg].paths.ts`) replace bot-generated wrapper pages, per `plan_site_redesign` WP-docs (Waves 1-2 landed as PRs #21-#26). |
+| 2026-07-25 | Claude (sonnet, WP-B8) | Added `Superseded By` (partial) and Amendment A2: the wire-path table's "observation objects (CAS)" row corrected to "OCI image index (CAS)" per `adr_oci_index_only_dispatch.md`; Amendment A1's `useObservation` composable reference corrected to `useImageIndex` (Track B rename). No decision in this ADR reversed. |

@@ -22,7 +22,13 @@ BD-4/BD-5/BD-6 and the G-01…G-18 carry-forward table of
 [`adr_locked_observation_index_format.md`](./adr_locked_observation_index_format.md)
 (ADR-1)
 **Supersedes:** N/A (amends the above at row/decision level; see each doc's amendment marker)
-**Superseded By:** N/A
+**Superseded By:** [`adr_oci_index_only_dispatch.md`](https://github.com/ocx-sh/ocx/blob/main/.claude/artifacts/adr_oci_index_only_dispatch.md)
+(`ocx-sh/ocx`, 2026-07-25) — partially: retires the "observation object" vocabulary
+FP-1/FP-3/FP-4/Technical Details use to describe what `verify-claims` re-derives and
+byte-compares (deleted, replaced by the registry's own verbatim OCI image index); no
+FP decision is reversed — the fork-PR transport, owner-curated tags, verify-only
+reconcile, and byte-exact root discipline all stand unchanged. See the amendment
+note appended below.
 
 ## Context
 
@@ -60,8 +66,9 @@ reconcile) plus the wire-discipline and governance rules that make an untrusted
 fork PR safe to auto-merge.
 
 The wire format itself does not change. The four frozen URL shapes
-([`product-context.md`](../rules/product-context.md)) and the observation-object
-layout (ADR-1 D2/D4) are untouched. What changes is **transport** (dispatch → fork
+([`product-context.md`](../rules/product-context.md)) and the dispatch-object layout
+(ADR-1 D2/D4 — now a verbatim OCI image index, per `adr_oci_index_only_dispatch.md`)
+are untouched. What changes is **transport** (dispatch → fork
 PR), **`tags` provenance** ("every observed tag" → "every announced tag"), and
 **reconcile posture** (regenerate-and-write → verify-only). None of these is a
 `format_version` break — a resolving client sees identical bytes and identical
@@ -186,7 +193,7 @@ independent, already-existing mechanisms — the BCR trust model applied to OCX'
   authorization key.
 - **Verification = CI re-derivation from registry truth.** The PR *claims* a root and
   its CAS objects; nothing claimed is trusted. Unprivileged CI walks each claimed tag,
-  re-derives the observation object from the physical registry, and byte-compares
+  re-fetches the OCI image index from the physical registry, and byte-compares it
   against the claimed CAS object (D5's verifiability chain, FP-4). A claim that
   disagrees with the registry fails the check — D4's "the doorbell can't lie", now
   applied to a claimed file tree rather than a package-id payload.
@@ -229,13 +236,15 @@ Mutating an existing row's `yanked` field stays in the G-05 human-review key set
 Nightly reconcile becomes **verify-only**. It never adds, removes, or rewrites a tag,
 never opens a content PR, never commits. For every *committed* claim it checks the
 physical registry: the announced tag still resolves, and the manifest digest still
-matches the committed observation object. Inconsistencies — a vanished non-yanked tag, a
-digest that moved under a pinned tag, a dangling CAS reference — are surfaced to humans
-via the anomaly issue path (ADR-4 BD-2 exit `65`, reused), never auto-healed.
+matches the committed CAS object (the registry's own OCI image index, stored
+verbatim). Inconsistencies — a vanished non-yanked tag, a digest that moved under a
+pinned tag, a dangling CAS reference — are surfaced to humans via the anomaly issue
+path (ADR-4 BD-2 exit `65`, reused), never auto-healed.
 
 This is the direct consequence of FP-2: once the owner curates the tag set, reconcile
-*cannot* be the authority that regenerates it — regenerating from observation would
-silently overwrite the owner's curation with "whatever the registry currently has,"
+*cannot* be the authority that regenerates it — regenerating the tag set from a fresh
+sweep would silently overwrite the owner's curation with "whatever the registry
+currently has,"
 re-conflating the two authorities FP-2 just separated. Reconcile's job narrows from
 "regenerate and reconcile drift" to "verify the committed claims still hold, and shout
 if they don't." Its integrity value (catch tamper, catch registry compromise, catch
@@ -256,9 +265,10 @@ render detail. Two CI checks enforce it on every announce PR, both unprivileged:
   path fails. This check already existed; the fork-PR lane makes it load-bearing for
   untrusted input. It extends to **every** package-local CAS file a fork PR can claim:
   the desc blobs `o/sha256/<hex>.{md,svg,png}` (readme/logo, ADR-1 D2/D6) are hash-
-  verified against their path digest the same way as observation objects — closing the
-  gap that, on the old doorbell path, only tag observation objects were hashed (this
-  gap closure is owner-decided for the fork-PR lane).
+  verified against their path digest the same way as tag dispatch objects (the
+  registry's own OCI image indices) — closing the gap that, on the old doorbell path,
+  only tag dispatch objects were hashed (this gap closure is owner-decided for the
+  fork-PR lane).
 - **The root** must be **canonical**: CI parses the claimed root, re-serializes it with
   the index's canonical serializer, and byte-compares. A root that is not already in
   canonical form fails. This closes the gap that the root — unlike a CAS object — has no
@@ -398,7 +408,7 @@ publisher (fork of ocx-sh/index, own GitHub identity)
 validate.yml
   ├─ job: verify-claims        (pull_request, PR-head checkout, ZERO secrets)
   │    canonical-root byte-compare (FP-4) + CAS hash self-check
-  │    per claimed tag: re-derive observation object from registry, byte-compare (FP-1)
+  │    per claimed tag: re-fetch the OCI image index from registry, byte-compare (FP-1)
   │    anonymous GHCR reads only
   └─ job: governance-gate      (pull_request_target, GITHUB_TOKEN only, NEVER checks out PR head)
        classify: machine lane (owner + refresh/curation) | human lane (new-pkg | G-05 key | non-owner)
@@ -493,6 +503,33 @@ runs → auto-merge) only exists across real repos, not in unit tests:
   root bytes → verify-claims red (FP-4); digest mutation of a pinned tag → reconcile
   anomaly path (FP-3).
 
+## Amendment A2 — `verify-claims` Re-Derives an OCI Image Index, Not an Observation Object (2026-07-25)
+
+**Status:** Accepted — documentation correction following
+[`adr_oci_index_only_dispatch.md`](https://github.com/ocx-sh/ocx/blob/main/.claude/artifacts/adr_oci_index_only_dispatch.md)
+(`ocx-sh/ocx`, owner-ratified 2026-07-25).
+
+**Problem.** FP-1, FP-3, FP-4, and the Technical Details pipeline diagram describe
+`verify-claims`'s re-derivation step as producing and comparing a bot-synthesized
+"observation object" — the `{"platforms":[...]}` projection `adr_locked_observation_index_format.md`
+(ADR-1) originally invented. That shape is deleted: `verify-claims` re-fetches the
+registry's own OCI image index and byte-compares it directly against the claimed CAS
+object. No FP decision changes — the fork-PR transport (FP-1), owner-curated tags
+(FP-2), verify-only reconcile (FP-3), and byte-exact root discipline (FP-4) are all
+unaffected by what shape the compared bytes take; only the wording describing what is
+fetched and compared was stale.
+
+**Resolution.** Corrected in place: FP-1's verification bullet, FP-3's reconcile
+description, FP-4's desc-blob hash-parity bullet, and the Technical Details
+`verify-claims` line all now read "OCI image index" / "dispatch object" in place of
+"observation object". The Context section's "wire format itself does not change"
+claim is unaffected in substance — it is now phrased against the current dispatch-object
+shape.
+
+**Consequences:** None to this ADR's own decisions. `adr_locked_observation_index_format.md`
+(ADR-1) carries its own `Superseded By` marker for the clauses this affects (WP-B6);
+this amendment only brings this ADR's *own* prose in line with that.
+
 ## Links
 
 - [`decision_log_2026-07-18.md`](./decision_log_2026-07-18.md) — narrative of the
@@ -531,3 +568,4 @@ runs → auto-merge) only exists across real repos, not in unit tests:
 |------|--------|--------|
 | 2026-07-18 | Michael Herwig + Claude design swarm | Initial record from the 2026-07-17/18 announce-revamp discussion: fork-PR announce transport (FP-1), owner-curated tags (FP-2), verify-only reconcile (FP-3), byte-exact root discipline (FP-4), two-lane governance + G-19 (FP-5), maintainers-YAML reviewer assignment + G-20 (FP-6), threat-model reframe (FP-7), spam posture (FP-8), reference impl + ocx#216 (FP-9) |
 | 2026-07-24 | Claude (Track-B WP-B7, `announce-b-b7`) | Added superseded-by note to E2E Validation Strategy: the `ocx-index-e2e` sandbox pair was deleted 2026-07-19, replaced by validation against the real index (see `handover_announce_alignment.md`). Original decisions unchanged. |
+| 2026-07-25 | Claude (sonnet, WP-B8) | Added `Superseded By` (partial) and Amendment A2: corrected FP-1/FP-3/FP-4/Technical Details "observation object" wording to describe `verify-claims`'s re-fetch of the registry's verbatim OCI image index, per `adr_oci_index_only_dispatch.md`. No FP decision reversed. |
