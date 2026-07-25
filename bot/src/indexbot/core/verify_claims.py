@@ -95,6 +95,11 @@ def _verify_tag_claim(
     registry: RegistryPort,
     cas_object_bytes: Mapping[str, bytes],
 ) -> ClaimFinding | None:
+    """One tag's claim, re-observed. `Observation.content_digest` is the
+    physical registry's own digest for the image index the tag resolves to
+    *now*, so the equality below compares the committed claim against a
+    registry-computed value — nothing is re-derived on this side that could
+    disagree with the registry while both are "correct"."""
     observation = observe_one_tag(repository, tag, registry)
     if observation is None:
         return ClaimFinding(package_id=package_id, kind="tag-missing-upstream", detail=tag)
@@ -120,8 +125,8 @@ def verify_claims(
     semantics — see module docstring).
 
     Each `root.tags[*]` entry re-derives via `core/observe.py`'s
-    `observe_one_tag` and must (a) still resolve on the registry, (b)
-    re-derive to the exact same `content_digest`, and (c) have matching CAS
+    `observe_one_tag` and must (a) still resolve on the registry, (b) still
+    resolve to the exact same image-index digest, and (c) have matching CAS
     bytes already present in `cas_object_bytes` (keyed by digest string) that
     hash to that same digest. `root.desc.readme`/`.logo`, when set, get the
     same CAS-hash check ((b) does not apply to them — a desc blob's digest

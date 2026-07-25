@@ -3,7 +3,6 @@ from __future__ import annotations
 import hashlib
 
 from indexbot.core.observe import observe_one_tag
-from indexbot.core.validate_entry import serialize_observation_object
 from indexbot.core.verify_claims import ClaimFinding, verify_claims
 from indexbot.model import Desc, Owner, PackageId, PackageRoot, TagEntry
 from tests.fakes import FakeRegistry
@@ -26,24 +25,29 @@ def _root(tags: dict[str, TagEntry] | None = None, *, desc: Desc | None = None) 
     )
 
 
-def _bare_manifest(architecture: str = "amd64") -> dict[str, object]:
-    return {"platform": {"architecture": architecture, "os": "linux"}}
+def _index(architecture: str = "amd64") -> dict[str, object]:
+    return {
+        "schemaVersion": 2,
+        "manifests": [
+            {
+                "platform": {"architecture": architecture, "os": "linux"},
+                "digest": "sha256:" + "1" * 64,
+            }
+        ],
+    }
 
 
 def _observed_claim(
     tag: str, *, architecture: str = "amd64"
 ) -> tuple[TagEntry, bytes, FakeRegistry]:
-    """A `TagEntry` + its CAS object bytes + a `FakeRegistry` that
-    independently re-derives to the exact same content digest — the clean
-    baseline every test starts from and mutates one field of."""
-    registry = FakeRegistry(
-        tags={_REPO: [tag]}, manifests={(_REPO, tag): _bare_manifest(architecture)}
-    )
+    """A `TagEntry` + the registry's own index bytes + a `FakeRegistry` still
+    serving them — the clean baseline every test starts from and mutates one
+    field of."""
+    registry = FakeRegistry(tags={_REPO: [tag]}, manifests={(_REPO, tag): _index(architecture)})
     observation = observe_one_tag(_REPO, tag, registry)
     assert observation is not None
-    object_bytes = serialize_observation_object(observation.object)
     entry = TagEntry(content=observation.content_digest, observed="2026-07-17T00:00:00Z")
-    return entry, object_bytes, registry
+    return entry, observation.raw, registry
 
 
 def test_verify_claims_clean_tag_is_empty() -> None:
@@ -51,6 +55,22 @@ def test_verify_claims_clean_tag_is_empty() -> None:
     root = _root({"3.28.1": entry})
     findings = verify_claims(_PACKAGE_ID, root, {entry.content: object_bytes}, registry)
     assert findings == ()
+
+
+def test_verify_tag_claim_compares_against_the_registry_computed_digest() -> None:
+    """The claimed `content` is compared to `ManifestFetch.digest` — the
+    registry's own digest over the bytes it served — not to anything this bot
+    re-derived. Equal digest, equal bytes, no finding; and the committed CAS
+    bytes are literally the ones the registry returned."""
+    entry, object_bytes, registry = _observed_claim("3.28.1")
+    assert entry.content == registry.get_manifest(_REPO, "3.28.1").digest
+    assert object_bytes == registry.get_manifest(_REPO, "3.28.1").raw
+    assert (
+        verify_claims(
+            _PACKAGE_ID, _root({"3.28.1": entry}), {entry.content: object_bytes}, registry
+        )
+        == ()
+    )
 
 
 def test_verify_claims_no_tags_no_desc_is_empty() -> None:
