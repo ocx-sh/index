@@ -31,6 +31,23 @@ def _uses_refs(text: str) -> list[str]:
     return [match.group(1) for line in text.splitlines() if (match := _USES_RE.match(line))]
 
 
+def _grant(job_text: str, permission: str) -> bool:
+    """A real `permissions:` grant, not prose. Every assertion here scans raw
+    job text, comments included, so a positive `in` check is satisfiable by a
+    comment that merely *names* the grant — mutation-proved: deleting the real
+    `contents: write` line left an earlier revision of this suite green,
+    because the job's own comment explains it. Anchor on the six-space
+    mapping key instead."""
+    return re.search(rf"(?m)^\s{{6}}{re.escape(permission)}\s*(?:#.*)?$", job_text) is not None
+
+
+def _runs(job_text: str, pattern: str) -> bool:
+    """A `gh` command a `run:` block actually executes, not prose that quotes
+    it — same mutation hazard as `_grant`. The lookahead excludes comment
+    lines; the command may be bare or inside a `$(...)` capture."""
+    return re.search(rf"(?m)^(?!\s*#).*\bgh {pattern}", job_text) is not None
+
+
 def _job_block(text: str, job: str) -> str:
     """One job's YAML text — from its `  <job>:` header (exactly two-space
     indent) to the next two-space job header or EOF."""
@@ -111,8 +128,8 @@ def test_governance_gate_never_holds_contents_write() -> None:
     write token that arming auto-merge needs."""
     text = (_WORKFLOWS_DIR / "validate.yml").read_text(encoding="utf-8")
     privileged = _job_block(text, "governance-gate")
-    assert "contents: read" in privileged
-    assert "contents: write" not in privileged
+    assert _grant(privileged, "contents: read")
+    assert not _grant(privileged, "contents: write")
 
 
 def test_arm_auto_merge_job_never_checks_out() -> None:
@@ -125,11 +142,30 @@ def test_arm_auto_merge_job_never_checks_out() -> None:
     moves outside its author's owned roots must be revocable."""
     text = (_WORKFLOWS_DIR / "validate.yml").read_text(encoding="utf-8")
     arm = _job_block(text, "arm-auto-merge")
-    assert "contents: write" in arm
+    assert _grant(arm, "contents: write")
     assert not _uses_refs(arm)
     assert "secrets." not in arm
     assert "needs: governance-gate" in arm
-    assert "needs.governance-gate.outputs.disposition == 'success'" in arm
-    assert "needs.governance-gate.outputs.disposition != 'success'" in arm
-    assert "--auto --squash" in arm
-    assert "--disable-auto" in arm
+    assert re.search(r"(?m)^\s+if:.*disposition == 'success'", arm)
+    assert re.search(r"(?m)^\s+if:.*disposition != 'success'", arm)
+    assert _runs(arm, r"pr merge .*--auto --squash")
+    assert _runs(arm, r"pr merge .*--disable-auto")
+
+
+def test_arm_auto_merge_withdrawal_is_fail_closed() -> None:
+    """The withdrawal must fail loudly. Reading `autoMergeRequest` first is
+    what separates "was never armed" (the ordinary human lane) from "the
+    disable call was denied or errored" — guarding `--disable-auto` with `||`
+    instead conflates them, leaving an armed PR armed behind a green check and
+    a notice that asserts the opposite. The job also must not inherit the
+    default `success()` of its `needs:`, or a governance-gate that errors
+    skips the withdrawal entirely."""
+    text = (_WORKFLOWS_DIR / "validate.yml").read_text(encoding="utf-8")
+    arm = _job_block(text, "arm-auto-merge")
+    assert _runs(arm, r"pr view .*--json autoMergeRequest")
+    assert not re.search(r"(?m)^(?!\s*#).*\bgh pr merge[^\n]*--disable-auto[^\n]*\|\|", arm)
+    assert re.search(r"(?m)^\s+if:.*!cancelled\(\)", arm)
+    assert re.search(r"(?m)^\s+if:.*github\.event_name == 'pull_request_target'", arm)
+    # Serialized per PR: an arm job from an older head must never execute
+    # after the withdrawal triggered by a newer one.
+    assert re.search(r"(?m)^\s+group: arm-auto-merge-", arm)

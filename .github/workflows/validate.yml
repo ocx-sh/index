@@ -26,8 +26,13 @@ name: validate
 #     `disposition` — never on the raw classify-pr label, which can't see the
 #     G-19 ownership result — and withdraws again the moment a re-run says the
 #     PR is no longer machine-lane. GitHub itself merges once branch
-#     protection's required checks (schema-validate-pr +
-#     governance/review-required) are both green — no polling, no second bot.
+#     protection's required checks are green — no polling, no second bot. The
+#     required check that reads this PR's own `p/**` diff is
+#     "schema-validate-pr" (owner gate G-8 puts it on main's required list).
+#     "governance/review-required" is deliberately NOT a required check and
+#     must not become one: governance-check reports it `pending` for every
+#     human-lane PR and nothing re-runs it green after approval, so requiring
+#     it would deadlock the human lane permanently.
 #
 # job1 is named "schema-validate-pr", not ADR-4's literal "schema-validate",
 # because ci.yml already owns that name for a different, unrelated check
@@ -212,7 +217,28 @@ jobs:
   arm-auto-merge:
     name: arm-auto-merge
     needs: governance-gate
+    # Withdrawal is fail-closed, so this job must not inherit the default
+    # `success()` a `needs:` implies: a governance-gate that *errors* (API 5xx,
+    # a malformed base-ref root, a `uv` resolution failure) would skip this job
+    # and leave an already-armed PR armed on a stale evaluation. `!cancelled()`
+    # keeps it reachable; a failed gate publishes an empty `disposition`, which
+    # takes the withdraw branch below and can never take the arm branch. The
+    # event_name half is load-bearing — `!cancelled()` alone would also un-skip
+    # this job on the `pull_request` trigger, where governance-gate is skipped
+    # by design.
+    if: ${{ !cancelled() && github.event_name == 'pull_request_target' }}
     runs-on: ubuntu-latest
+    # Serialize per PR, so a stale arm can never land after a fresh withdraw:
+    # arm jobs become eligible in gate-completion order, and a queue without
+    # cancel-in-progress preserves that order. Deliberately its OWN group and
+    # not governance-gate's: GitHub cancels "any previously pending job or
+    # workflow in the concurrency group" when a new one queues, so sharing the
+    # gate's group would let a newly eligible arm job cancel a still-pending
+    # gate for a newer head — reintroducing the very stale arm this
+    # serialization exists to prevent. Never add this job to the required-check
+    # list: a superseded pending run is cancelled by design.
+    concurrency:
+      group: arm-auto-merge-${{ github.event.pull_request.number }}
     # No checkout, ever. This job's entire body is one `gh` call against
     # base-authored YAML, so the contents: write it must hold to arm a
     # deferred merge is never in scope for PR-controlled code, `uv`
@@ -250,7 +276,15 @@ jobs:
         if: needs.governance-gate.outputs.disposition != 'success'
         run: |
           set -euo pipefail
-          # Absorbed deliberately: --disable-auto errors when auto-merge was
-          # never enabled, which is the ordinary human-lane case.
-          gh pr merge "$PR_NUMBER" --repo "$REPO" --disable-auto ||
-            echo "::notice title=auto-merge::PR #$PR_NUMBER is not machine-lane (G-19) - human review required, no auto-merge armed."
+          # Read the state first, then let failure be failure. The ordinary
+          # human-lane PR was never armed, and --disable-auto errors on that —
+          # but so does a denied or transient call on a PR that IS armed, and
+          # absorbing both would leave the PR armed behind a green check. The
+          # `gh pr view` distinguishes them; neither call is guarded.
+          armed="$(gh pr view "$PR_NUMBER" --repo "$REPO" --json autoMergeRequest -q .autoMergeRequest)"
+          if [ "$armed" = "null" ]; then
+            echo "::notice title=auto-merge::PR #$PR_NUMBER is not machine-lane (G-19) - human review required, no auto-merge was armed."
+            exit 0
+          fi
+          gh pr merge "$PR_NUMBER" --repo "$REPO" --disable-auto
+          echo "::notice title=auto-merge::PR #$PR_NUMBER is no longer machine-lane (G-19) - auto-merge withdrawn, human review required."
