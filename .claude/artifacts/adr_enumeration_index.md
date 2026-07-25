@@ -240,15 +240,18 @@ Each `packages[key]` value is `sha256:` followed by lowercase hex, computed over
 **exact bytes served** at `/p/<namespace>/<package>.json` — the render pipeline's
 already-assembled root bytes, not a re-serialization of the parsed content. This is a
 new digest category, deliberately distinct from the CAS digests a package root's
-`o/` objects carry: desc blobs (readme/logo) are hashed under the canonical-JSON
-form `bot/CONTRACTS.md` §1 defines
-(`json.dumps(obj, sort_keys=True, separators=(",", ":"), ensure_ascii=True)`), so
-two independently-produced, logically identical desc contents collide onto the same
-CAS object; a tag's dispatch object is hashed over the registry's own OCI image-index
-bytes, verbatim — no re-serialization, so dedup there narrows to "same image index",
-not "same platform set" (`adr_oci_index_only_dispatch.md`). This digest
-exists to answer a narrower question — "are the bytes a client already has still
-current?" — and a root file is written exactly once, in the render pipeline's own
+`o/` objects carry: post-D1, every `o/` object — a tag's dispatch object (the
+registry's own OCI image index, stored verbatim) and a desc blob (readme/logo,
+copied verbatim from the registry's `__ocx.desc` artifact layers) alike — is
+digested over its exact bytes as served, no re-serialization
+(`bot/CONTRACTS.md` §6 `check_desc_change`, §5.6 desc-blob rule); the
+canonical-JSON re-serialization dedup category (`bot/CONTRACTS.md` §1) applied
+only to the bot-synthesized observation object and died with it
+(`adr_oci_index_only_dispatch.md`) — CAS dedup across `o/` now narrows uniformly to
+"same bytes." This enumeration digest is a distinct category not because CAS
+re-serializes and this doesn't, but because a package root is not a CAS object at
+all: it exists to answer a narrower question — "are the bytes a client already has
+still current?" — and a root file is written exactly once, in the render pipeline's own
 fixed `indent=2` style, so the digest must match precisely what a plain HTTP `GET`
 returns, or the entire verification chain built on top of it is worthless.
 
@@ -426,10 +429,12 @@ this ADR's own decisions (the `/c/index.json` enumeration snapshot, D4's digest
 semantics, D8's surface-role table structure) is reversed — only the terminology used
 to describe the *other* CAS category D4 compares against.
 
-**Resolution.** D4's dedup comparison now distinguishes desc-blob dedup
-(canonical-JSON, `bot/CONTRACTS.md` §1) from tag-dispatch-object dedup (byte-equality
-over verbatim registry bytes, narrower per `adr_oci_index_only_dispatch.md`'s
-"CAS dedup narrows" consequence). D8's render-input parenthetical now reads "OCI
+**Resolution.** D4's dedup comparison now states the uniform post-D1 rule: every
+`o/` object — desc blob and tag dispatch object alike — is byte-equality dedup
+over exact served/registry bytes, no re-serialization; the canonical-JSON dedup
+category (`bot/CONTRACTS.md` §1) applied only to the deleted observation object
+and narrowed away with it, per `adr_oci_index_only_dispatch.md`'s "CAS dedup
+narrows" consequence. D8's render-input parenthetical now reads "OCI
 image indices" in place of "observation objects".
 
 **Consequences:** None to this ADR's own decisions. `adr_locked_observation_index_format.md`
@@ -459,3 +464,4 @@ amendment only brings this ADR's *own* prose in line with that.
 |------|--------|--------|
 | 2026-07-17 | Michael Herwig + Claude design swarm | Initial record from the 2026-07-17 design discussion: fourth frozen wire shape (`/c/index.json`), digest-map shape, reserved sharding, `superseded_by` root field, surface-role table |
 | 2026-07-25 | Claude (sonnet, WP-B8) | Added `Superseded By` (partial) and Amendment A1: corrected D4's dedup-category comparison and D8's render-input reference from "observation object(s)" to the verbatim-OCI-image-index shape, per `adr_oci_index_only_dispatch.md`. No D-decision of this ADR reversed. |
+| 2026-07-25 | Claude (sonnet, WP-B8 review-fix) | Review caught Amendment A1's own rewrite of D4: it had desc blobs hashed under `bot/CONTRACTS.md` §1's canonical-JSON form, but `bot/CONTRACTS.md` §6 (`check_desc_change`) and §5.6 state desc blobs are copied verbatim and hashed over their exact bytes, never re-serialized. Corrected D4 and A1's Resolution: post-D1 every `o/` object (dispatch object and desc blob alike) dedups on byte-equality; the canonical-JSON dedup category died with the observation object. |
