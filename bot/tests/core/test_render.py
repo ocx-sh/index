@@ -36,15 +36,16 @@ _MANIFEST_MEDIA_TYPE = "application/vnd.oci.image.manifest.v1+json"
 
 def _descriptor(tag_hint: str, platform: dict[str, str] | None) -> dict[str, object]:
     """One `manifests[]` entry. `platform=None` emits a platform-less
-    descriptor — legal OCI (the field is optional) and one of the two shapes
-    `_catalog_platforms` must skip; the other is `platform.os == "unknown"`
-    (ADR R4). `digest` is a real sha256 over a label rather than a
-    placeholder string, so the fixture reads like the registry bytes it
-    stands in for."""
+    descriptor — legal OCI (the field is optional) and one of the shapes
+    `_catalog_platforms` must skip; the others are `platform.os == "unknown"`
+    and a `platform` object missing `os` or `architecture` (ADR R4), which is
+    why the label reads both fields with `.get`. `digest` is a real sha256
+    over a label rather than a placeholder string, so the fixture reads like
+    the registry bytes it stands in for."""
     label = (
         f"{tag_hint}/attached"
         if platform is None
-        else f"{tag_hint}/{platform['os']}/{platform['architecture']}"
+        else f"{tag_hint}/{platform.get('os', '?')}/{platform.get('architecture', '?')}"
     )
     descriptor: dict[str, object] = {
         "mediaType": _MANIFEST_MEDIA_TYPE,
@@ -344,10 +345,15 @@ def _case_attestation_descriptor() -> list[SourcePackage]:
     """ADR R4. A real registry serves attestation and referrer descriptors
     inside the same image index as the runnable ones — cosign/buildkit
     attestations carry `platform: {"os": "unknown", ...}`, and `platform` is
-    an optional descriptor field so a referrer may carry none at all.
-    Neither names a target anything can run on, so neither may reach the
-    catalog's `platforms` matrix; the golden's `catalog.json` shows both
-    absent. Authored from the ADR before any golden was regenerated.
+    an optional descriptor field so a referrer may carry none at all. The
+    fourth shape is a `platform` object that names only one of the two
+    fields: nothing upstream of render validates `platform` at all (the
+    image-index gate stops at each descriptor's `digest`), so these are raw
+    publisher bytes and a partial object must be skipped, not crash the
+    whole-index render. None of the three names a target anything can run
+    on, so none may reach the catalog's `platforms` matrix; the golden's
+    `catalog.json` shows them absent. Authored from the ADR before any
+    golden was regenerated.
     """
     tags = {"2.0.0": TagEntry(content=_digest("t"), observed="2026-07-17T00:00:00Z")}
     content_by_digest = {
@@ -356,6 +362,7 @@ def _case_attestation_descriptor() -> list[SourcePackage]:
             _descriptor("2.0.0", {"architecture": "arm64", "os": "linux"}),
             _descriptor("2.0.0", {"architecture": "unknown", "os": "unknown"}),
             _descriptor("2.0.0", None),
+            _descriptor("2.0.0", {"os": "linux"}),
         )
     }
     return [
@@ -420,7 +427,7 @@ def test_render_attestation_descriptor_skips_platformless_and_unknown() -> None:
     )
 
 
-def test_catalog_platforms_skips_platformless_and_unknown_descriptors() -> None:
+def test_catalog_platforms_skips_platformless_unknown_and_partial_descriptors() -> None:
     # The golden above pins the whole tree; this pins the one claim the
     # scenario exists for, readably and independently of the byte compare.
     plan = build_render_plan(_case_attestation_descriptor())

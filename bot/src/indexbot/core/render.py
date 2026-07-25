@@ -142,20 +142,27 @@ def _catalog_platforms(source: SourcePackage) -> list[str]:
     `platforms` field).
 
     Each live tag's CAS bytes are the registry's OCI image index verbatim,
-    so this reads `manifests[]` directly. **Two descriptor classes are
-    skipped** (ADR R4): one carrying no `platform` at all, and one whose
-    `platform.os` is `"unknown"` — both are the attestation/referrer shapes
-    a real registry serves alongside the runnable images, and neither names
-    a platform anything can run on. A platform matrix that listed them would
-    advertise `unknown/unknown` as an installable target.
+    so this reads `manifests[]` directly. A descriptor contributes a platform
+    only when it names one: `platform.os` and `platform.architecture` both
+    present as strings, `os` not `"unknown"` (ADR R4). Everything else is
+    skipped — no `platform` key at all, a `platform` that is not an object,
+    one missing or mistyping either field, and the `"os": "unknown"`
+    attestation shape. These are the referrer/attestation descriptors a real
+    registry serves alongside the runnable images; a platform matrix that
+    listed them would advertise `unknown/unknown` as an installable target.
 
-    Malformed CAS bytes, an index with no `manifests` key, or a live-tag
-    digest missing from `content_by_digest` propagate as
-    `JSONDecodeError`/`KeyError` rather than being silently skipped,
-    matching `_cas_url`'s documented trust posture: render trusts a
-    `SourcePackage` whose invariants were already checked upstream
-    (`check_no_dangling_references`, `cli/validate.py`'s image-index shape
-    gate), and adds no new defensive branches of its own.
+    This is the one read in this module that does *not* trust its input. The
+    upstream gates (`cli/validate.py`'s image-index shape gate,
+    `parse_image_index_digests`) check `manifests[]` down to each
+    descriptor's `digest`, and stop there — `platform` is unvalidated
+    publisher bytes all the way to here, so a missing `architecture` key
+    would otherwise `KeyError` out of `build_render_plan`, which `cli/
+    render.py` calls with every package in one list: one publisher, whole
+    site render dead, and outside `IndexBotError` so without an exit code or
+    a step summary. Structural faults those gates *do* cover — malformed CAS
+    bytes, an index with no `manifests` key, a live-tag digest missing from
+    `content_by_digest` — still propagate as `JSONDecodeError`/`KeyError`,
+    matching `_cas_url`'s trust posture.
     """
     platforms: set[str] = set()
     for digest in _live_tag_content_digests(source.root):
@@ -164,10 +171,12 @@ def _catalog_platforms(source: SourcePackage) -> list[str]:
             platform = descriptor.get("platform")
             if not isinstance(platform, dict):
                 continue
-            named = cast("dict[str, str]", platform)
-            if named["os"] == "unknown":
+            # Honest value type: JSON keys are strings, values are anything.
+            fields = cast("dict[str, object]", platform)
+            os_name, arch = fields.get("os"), fields.get("architecture")
+            if not isinstance(os_name, str) or not isinstance(arch, str) or os_name == "unknown":
                 continue
-            platforms.add(f"{named['os']}/{named['architecture']}")
+            platforms.add(f"{os_name}/{arch}")
     return sorted(platforms)
 
 
