@@ -93,7 +93,15 @@ jobs:
           set -euo pipefail
           # Exactly two path segments under p/ — a package root, never a CAS
           # object (p/<ns>/<pkg>/o/sha256/<hex>.json) or anything else.
-          changed="$(git diff --name-only --diff-filter=ACMR "$BASE_SHA" HEAD -- 'p/*/*.json')"
+          # `:(glob)` is load-bearing — do NOT "simplify" it back to a plain
+          # pathspec. A git pathspec is not a shell glob: its `*` matches `/`
+          # too, so bare 'p/*/*.json' also selects every CAS object a PR adds
+          # and hands it to `indexbot validate`, which rejects it as a
+          # malformed root. Since every announce PR adds a CAS object, that
+          # failed this required check on every announce PR. The magic
+          # switches on FNM_PATHNAME, where `*` stops at `/`.
+          # Pinned by bot/tests/security/test_workflow_pathspec.py.
+          changed="$(git diff --name-only --diff-filter=ACMR "$BASE_SHA" HEAD -- ':(glob)p/*/*.json')"
           if [ -z "$changed" ]; then
             echo "::notice title=indexbot validate::No p/<namespace>/<package>.json changes in this PR (p/ may not be seeded yet) - skipping indexbot validate."
             echo "has_changes=false" >> "$GITHUB_OUTPUT"
