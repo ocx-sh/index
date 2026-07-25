@@ -73,15 +73,6 @@ def _index_bytes(
     return _index_of(*(_descriptor(tag_hint, platform) for platform in platforms))
 
 
-def _obs_bytes(
-    tag_hint: str, *, platforms: tuple[dict[str, str], ...] = (_DEFAULT_PLATFORM,)
-) -> bytes:
-    entries = [
-        {"platform": platform, "digest": f"sha256:manifest-{tag_hint}"} for platform in platforms
-    ]
-    return json.dumps({"platforms": entries}).encode()
-
-
 def _root_raw(root: PackageRoot) -> bytes:
     """Test-local, minimal root -> JSON serialization — intentionally
     decoupled from `core.validate_entry.serialize_package_root` (a
@@ -169,10 +160,10 @@ def _case_normal() -> list[SourcePackage]:
         # Different platform sets across the two live tags -- exercises
         # `_catalog_platforms`' union + dedup (linux/amd64 shared by both) +
         # sort (darwin/arm64 sorts before linux/amd64).
-        f"{_digest('1')}.json": _obs_bytes(
+        f"{_digest('1')}.json": _index_bytes(
             "1.0.0", platforms=({"architecture": "amd64", "os": "linux"},)
         ),
-        f"{_digest('2')}.json": _obs_bytes(
+        f"{_digest('2')}.json": _index_bytes(
             "0.9.0",
             platforms=(
                 {"architecture": "amd64", "os": "linux"},
@@ -203,9 +194,9 @@ def _case_normal() -> list[SourcePackage]:
 def _case_orphan_pruned() -> list[SourcePackage]:
     tags = {"1.2.0": TagEntry(content=_digest("a"), observed="2026-07-17T00:00:00Z")}
     content_by_digest = {
-        f"{_digest('a')}.json": _obs_bytes("1.2.0"),
+        f"{_digest('a')}.json": _index_bytes("1.2.0"),
         # referenced by no tag and no desc -> pruned from dist, never emitted.
-        f"{_digest('b')}.json": _obs_bytes("orphaned"),
+        f"{_digest('b')}.json": _index_bytes("orphaned"),
     }
     return [
         _package(
@@ -225,7 +216,7 @@ def _case_yanked_excluded() -> list[SourcePackage]:
     # `observed` (2026-07-17) -- proves `_generated_timestamp` actually folds
     # in `yanked.at`, not just `observed` (finding #4: deleting that branch
     # used to fail nothing here, since 07-17 already dominated 07-02). The
-    # yanked tag's observation object also carries a platform
+    # yanked tag's image index also carries a platform
     # (windows/amd64) distinct from the live tag's (linux/amd64), so the
     # golden `platforms` array proves exclusion by absence, not coincidence
     # (finding #5: the two used to share a platform, making exclusion
@@ -239,9 +230,9 @@ def _case_yanked_excluded() -> list[SourcePackage]:
         ),
     }
     content_by_digest = {
-        f"{_digest('x')}.json": _obs_bytes("1.0.0"),
+        f"{_digest('x')}.json": _index_bytes("1.0.0"),
         # only referenced by the yanked tag, no live tag shares it -> pruned.
-        f"{_digest('y')}.json": _obs_bytes(
+        f"{_digest('y')}.json": _index_bytes(
             "0.9.0-yanked", platforms=({"architecture": "amd64", "os": "windows"},)
         ),
     }
@@ -264,7 +255,7 @@ def _case_shared_digest_dedup() -> list[SourcePackage]:
         "0.13.0": TagEntry(content=shared, observed="2026-07-17T00:00:00Z"),
         "latest": TagEntry(content=shared, observed="2026-07-17T00:00:00Z"),
     }
-    content_by_digest = {f"{shared}.json": _obs_bytes("0.13.0")}
+    content_by_digest = {f"{shared}.json": _index_bytes("0.13.0")}
     return [
         _package(
             namespace="ziglang",
@@ -280,7 +271,7 @@ def _case_shared_digest_dedup() -> list[SourcePackage]:
 
 def _case_no_desc() -> list[SourcePackage]:
     tags = {"3.7.0": TagEntry(content=_digest("s"), observed="2026-07-17T00:00:00Z")}
-    content_by_digest = {f"{_digest('s')}.json": _obs_bytes("3.7.0")}
+    content_by_digest = {f"{_digest('s')}.json": _index_bytes("3.7.0")}
     return [
         _package(
             namespace="mvdan",
@@ -305,7 +296,7 @@ def _case_png_only_logo() -> list[SourcePackage]:
         logo=_digest("p"),
     )
     content_by_digest = {
-        f"{_digest('g')}.json": _obs_bytes("1.42.0"),
+        f"{_digest('g')}.json": _index_bytes("1.42.0"),
         f"{_digest('p')}.png": b"\x89PNG\r\n\x1a\nfake-glab-logo",
     }
     return [
@@ -332,7 +323,7 @@ def _case_nested_namespace() -> list[SourcePackage]:
         logo=_digest("w"),
     )
     content_by_digest = {
-        f"{_digest('n')}.json": _obs_bytes("0.7.0"),
+        f"{_digest('n')}.json": _index_bytes("0.7.0"),
         f"{_digest('q')}.md": b"# regsync\n\nUtility to sync images between registries.\n",
         f"{_digest('w')}.svg": b"<svg>regsync-logo</svg>",
     }
@@ -497,7 +488,7 @@ def test_build_render_plan_reachability_readme_without_logo() -> None:
         logo=None,
     )
     content_by_digest = {
-        f"{_digest('k')}.json": _obs_bytes("1.0.0"),
+        f"{_digest('k')}.json": _index_bytes("1.0.0"),
         f"{_digest('h')}.md": b"# shfmt\n",
     }
     package = _package(

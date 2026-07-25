@@ -32,9 +32,9 @@ from __future__ import annotations
 import hashlib
 import json
 from dataclasses import dataclass
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
-from indexbot.core.validate_entry import cas_relpath, parse_observation_object
+from indexbot.core.validate_entry import cas_relpath
 from indexbot.core.version_order import find_latest_version
 
 if TYPE_CHECKING:
@@ -71,7 +71,7 @@ class FileWrite:
 def _live_tag_content_digests(root: PackageRoot) -> frozenset[str]:
     """Content digests of every *live* (non-yanked) tag (ADR-1 D8) — shared
     by `_reachable_digests` (CAS pruning) and `_catalog_platforms` (platform
-    union across observation objects), this module's only two genuinely
+    union across the tags' image indices), this module's only two genuinely
     different consumers of the same live-tag digest iteration
     (quality-core.md DRY: extraction justified by 2+ real callers)."""
     return frozenset(entry.content for entry in root.tags.values() if entry.yanked is None)
@@ -137,24 +137,37 @@ def _cas_url(
 
 
 def _catalog_platforms(source: SourcePackage) -> list[str]:
-    """`f"{os}/{architecture}"` union across every live tag's observation
-    object, deduped + sorted (frozen `/data/catalog/catalog.json` contract's
+    """`f"{os}/{architecture}"` union across every live tag's image index,
+    deduped + sorted (frozen `/data/catalog/catalog.json` contract's
     `platforms` field).
 
-    Parses each live tag's CAS bytes via `parse_observation_object` (the
-    file's existing codec, `core/validate_entry.py`) — malformed CAS bytes
-    or a live-tag digest missing from `content_by_digest` propagate as
-    `ValidationError`/`KeyError` rather than being silently skipped, matching
-    `_cas_url`'s documented trust posture: render trusts a `SourcePackage`
-    whose reachability invariants were already checked upstream
-    (`check_no_dangling_references`, `check_content_digest_self_consistent`),
-    and adds no new defensive branches of its own.
+    Each live tag's CAS bytes are the registry's OCI image index verbatim,
+    so this reads `manifests[]` directly. **Two descriptor classes are
+    skipped** (ADR R4): one carrying no `platform` at all, and one whose
+    `platform.os` is `"unknown"` — both are the attestation/referrer shapes
+    a real registry serves alongside the runnable images, and neither names
+    a platform anything can run on. A platform matrix that listed them would
+    advertise `unknown/unknown` as an installable target.
+
+    Malformed CAS bytes, an index with no `manifests` key, or a live-tag
+    digest missing from `content_by_digest` propagate as
+    `JSONDecodeError`/`KeyError` rather than being silently skipped,
+    matching `_cas_url`'s documented trust posture: render trusts a
+    `SourcePackage` whose invariants were already checked upstream
+    (`check_no_dangling_references`, `cli/validate.py`'s image-index shape
+    gate), and adds no new defensive branches of its own.
     """
     platforms: set[str] = set()
     for digest in _live_tag_content_digests(source.root):
-        observation = parse_observation_object(source.content_by_digest[f"{digest}.json"])
-        for entry in observation.platforms:
-            platforms.add(f"{entry.platform.os}/{entry.platform.architecture}")
+        index = cast("dict[str, object]", json.loads(source.content_by_digest[f"{digest}.json"]))
+        for descriptor in cast("list[dict[str, object]]", index["manifests"]):
+            platform = descriptor.get("platform")
+            if not isinstance(platform, dict):
+                continue
+            named = cast("dict[str, str]", platform)
+            if named["os"] == "unknown":
+                continue
+            platforms.add(f"{named['os']}/{named['architecture']}")
     return sorted(platforms)
 
 
