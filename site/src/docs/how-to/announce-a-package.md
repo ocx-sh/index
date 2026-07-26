@@ -4,20 +4,26 @@ title: Announce a Package
 
 # Announce a Package
 
-Announcing replaces the old dispatch-a-webhook flow: a publisher assembles a
-canonical package root and opens (or updates) a pull request against
-`ocx-sh/index` from their own fork, authored under their own GitHub identity.
-There is no publisher-held index credential and no bespoke trigger payload —
-the PR *is* the announcement, and CI re-derives every claim in it from the
-physical registry before anything can merge (see
-[Governance Contracts][governance-contracts]).
+Announcing is how a publisher records newly pushed tags in this index: you
+assemble a canonical package root and open (or update) a pull request against
+`ocx-sh/index` from your own fork, authored under your own GitHub identity.
+There is no publisher-held index credential — the PR *is* the announcement,
+and CI re-derives every claim in it from the physical registry before anything
+can merge (see [Governance Contracts][governance-contracts]).
+
+For an owner refreshing a package they already own, the whole flow is
+machine-to-machine: no human clicks anything between your release workflow
+pushing a tag and the index PR merging.
 
 ## Prerequisite {#prerequisite}
 
 Three things need to be true before your first announce:
 
-- The namespace is already [claimed][claim-a-namespace] in this index —
-  announce refreshes an existing package root, it does not create one (see
+- The namespace is already [claimed][claim-a-namespace] in this index.
+  Announce refreshes an existing package root; it cannot create one. Against
+  an unclaimed package it refuses outright — `unclaimed namespace: no
+  committed root at p/<ns>/<pkg>.json on main` — because a new package is a
+  human-lane act (see
   [PR and Auto-Merge Semantics][pr-and-auto-merge-semantics]).
 - `OCX_ANNOUNCE_TOKEN` is set to a token capable of opening pull requests
   against a public repository. A classic PAT works out of the box — see
@@ -42,11 +48,11 @@ turns the scratch file into the actual PR. It reads the committed root —
 from `main` on a first run, or from the head of your own still-open announce
 branch if one already exists from an earlier run in the same cycle, so two
 announces in a row accumulate into one PR instead of racing each other's
-diff (C4) — and **unions** the tags file's contents into it. That's a
-deliberate departure from the reference tool, which treats a curated
-`--tags` list as a full replace: `--tags-file` only adds, it never deletes,
-and removing a tag stays an explicit action outside this command (C3). The
-command then builds the canonical root plus any new CAS objects — each
+diff (C4) — and **unions** the tags file's contents into it. `--tags-file`
+only adds, it never deletes; dropping a tag is the separate, explicit
+`--tags <a,b,c>`, which replaces the curated set outright and drops every
+committed tag it does not name (C3). The command then builds the canonical
+root plus any new CAS objects — each
 observed tag's OCI image index, stored verbatim under the digest the registry
 served it as — and opens or updates exactly one pull request against
 `ocx-sh/index`, on a branch named `indexbot-announce-<ns>-<pkg>` — the fork's
@@ -56,17 +62,19 @@ convention matches the Python [reference tool][reference-tool], so the two
 implementations dedupe against each other's open PRs instead of opening
 duplicates (C9).
 
-Two more flags round out the surface:
+Two more things round out the surface:
 
-- `--refresh` re-observes every tag already in the committed root, in
-  addition to whatever the tags file adds — useful for picking up a moved
-  digest under a rolling tag (`latest`, a cascade target) without turning
-  announce into a full registry scan. The tag set stays owner-curated either
-  way (C5).
+- `--refresh` re-observes every tag already in the committed root — useful
+  for picking up a moved digest under a rolling tag (`latest`, a cascade
+  target) without turning announce into a full registry scan. It is the third
+  way to name the curated set, so it is mutually exclusive with both
+  `--tags` and `--tags-file`; the set stays owner-curated either way (C5).
 - Re-announcing an already-current state is a no-op: if the serialized root
   would come out byte-identical to what's already committed, and there are no
   new CAS objects to add, the command exits `0` reporting `status:
-  "unchanged"` — no commit, no PR, no warning (C6).
+  "unchanged"` — nothing is committed, and no warning is printed (C6). It
+  still reports the pull request when your announce branch is already ahead
+  of the index's `main` from an earlier run in the same cycle.
 
 Yanking and un-yanking are their own, deliberately separate actions:
 `--yank <tag> --yank-reason <text>` and `--unyank <tag>` mark or clear the
@@ -127,27 +135,27 @@ steps:
 Two details in that block are load-bearing rather than stylistic, and both
 are easy to "simplify" back into bugs.
 
-**No `${{ }}` inside any `run:` script.** Everything a script needs arrives as
-an environment variable — `REF_NAME` and the token from the job's `env:` block,
-`TAGS_FILE` via `$GITHUB_ENV`, and `$RUNNER_TEMP` / `$GITHUB_RUN_ID` /
-`$GITHUB_RUN_ATTEMPT` from the runner's own defaults. `${{ }}` is textual
-substitution performed *before* the shell sees the script, so a value
+**No <span v-pre>`${{ }}`</span> inside any `run:` script.** Everything a
+script needs arrives as an environment variable — `REF_NAME` and the token
+from the job's `env:` block, `TAGS_FILE` via `$GITHUB_ENV`, and
+`$RUNNER_TEMP` / `$GITHUB_RUN_ID` / `$GITHUB_RUN_ATTEMPT` from the runner's
+own defaults. <span v-pre>`${{ }}`</span> is textual substitution performed
+*before* the shell sees the script, so a value
 containing `$(...)` or a backtick inside `run:` executes as code. A git tag is
 a perfectly legal place to hide such a payload, and `github.ref_name` on a
 tag-triggered release workflow is exactly that tag. Quoting the expansion does
 not help; only keeping it out of the script text does.
 
 **The token gate reads `env`, not `secrets`.** `secrets` is not one of the
-contexts available to a step-level `if:` — `if: ${{ secrets.X != '' }}` is not
-a subtly weaker check, it is a workflow that fails to parse. Mapping the secret
+contexts available to a step-level `if:` —
+<span v-pre>`if: ${{ secrets.X != '' }}`</span> is not a subtly weaker check,
+it is a workflow that fails to parse. Mapping the secret
 into the job's `env:` once and testing `env.OCX_ANNOUNCE_TOKEN` is both valid
 and the reason the `env:` block sits at job level.
 
-The exact `setup-ocx` version pin and the flag names above should be checked
-against the shipped [`ocx-sh/setup-ocx`][setup-ocx] README and `ocx package
-announce --help` before you treat this snippet as final in your own
-workflow — both were still settling as this page was written, and that diff
-happens in a later hardening pass, not here.
+Every flag in that block matches the shipped binary (`ocx package push
+--help`, `ocx package announce --help`). Pin `setup-ocx` to a commit SHA from
+the [`ocx-sh/setup-ocx`][setup-ocx] README.
 
 ## Classic PAT Setup {#classic-pat-setup}
 
@@ -176,8 +184,8 @@ The push-and-announce step in the snippet above is gated on the
 snippet above) — deliberately, so a fork of your own repository, which
 GitHub never hands the secret to, doesn't hard-fail its CI just by existing.
 When the token genuinely is required for a run and it's absent, `ocx
-package announce` exits `78` (`ConfigError`) with a message describing
-what's missing, not a stack trace (C13). If you have no PR-capable token at
+package announce --fork` exits `80` (`AuthError`) with a message naming the
+missing variable, not a stack trace (C13). If you have no PR-capable token at
 all, see [No-Token Manual Fallback][no-token-fallback] — that's a different
 situation from this one.
 
@@ -225,8 +233,10 @@ An announce PR is classified into one of two lanes (see
   tag content refresh and/or an owner-authored tag add/remove, the PR
   author's `github_id` is in the target root's committed `owners[]` on every
   root the PR touches, no human-review-required key (G-05) is touched, and
-  it isn't a new package. Once required checks are green, it auto-merges on
-  its own (FP-5).
+  it isn't a new package. Once required checks are green, GitHub merges it —
+  no human clicks anything, and the merge commit is authored by
+  `github-actions[bot]` (FP-5). End to end, a release workflow pushing a tag
+  to an already-claimed package lands in the index in about three minutes.
 - **Human lane**, everything else: a new package (G-04), a change to a
   human-review-required key, or a PR authored by someone who isn't a listed
   owner. These route to a reviewer assigned from
