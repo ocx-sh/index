@@ -127,6 +127,33 @@ jobs:
             echo "$delim"
           } >> "$GITHUB_OUTPUT"
 
+      - name: Materialize each changed root's base-ref bytes
+        id: base
+        if: steps.changed.outputs.has_changes == 'true'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          CHANGED_FILES: ${{ steps.changed.outputs.files }}
+        run: |
+          set -euo pipefail
+          # ADR-2 ND-4 gates CLAIMING a reserved segment, not UPDATING a root
+          # already committed under one — `indexbot validate` needs the
+          # BASE-ref bytes of each changed root to tell those apart, and to
+          # bound the exemption to an announce-shaped change (its
+          # `--base-dir`). Written OUTSIDE the workspace: the PR-head tree is
+          # what `validate` byte-compares against its own canonical
+          # serialization, and must stay exactly as checked out. A root that
+          # does not exist at the base ref is simply not written, so `validate`
+          # sees no base bytes and treats it as a new claim (fail-closed).
+          base_dir="$RUNNER_TEMP/indexbot-base"
+          rm -rf "$base_dir"
+          while IFS= read -r file; do
+            [ -n "$file" ] || continue
+            git cat-file -e "$BASE_SHA:$file" 2>/dev/null || continue
+            mkdir -p "$base_dir/$(dirname "$file")"
+            git show "$BASE_SHA:$file" > "$base_dir/$file"
+          done <<< "$CHANGED_FILES"
+          echo "dir=$base_dir" >> "$GITHUB_OUTPUT"
+
       - name: indexbot validate
         if: steps.changed.outputs.has_changes == 'true'
         env:
@@ -144,9 +171,17 @@ jobs:
           # — fail closed. Branch-internal PRs still land in the human lane:
           # a brand-new root classifies `new-package` (G-04) and carries the
           # `governance/review-required` status nothing auto-resolves, so a
-          # person merges it. Pinned by
+          # person merges it.
+          #
+          # The flag governs CLAIMING only. A fork PR that merely UPDATES a
+          # root already committed under a reserved segment — the
+          # `ocx package announce --fork` re-announce lane, which can open
+          # nothing but fork PRs — is admitted by `--base-dir` below without
+          # the flag, and only while the change stays announce-shaped
+          # (`core/diff.classify_change` == "refresh"). Pinned by
           # bot/tests/security/test_workflow_split.py.
           SAME_REPO_PR: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+          BASE_DIR: ${{ steps.base.outputs.dir }}
         run: |
           set -euo pipefail
           mapfile -t files <<< "$CHANGED_FILES"
@@ -160,7 +195,7 @@ jobs:
           # ::error annotation the checks UI surfaces AND captures the reason
           # even when the CLI dies on a non-IndexBotError traceback (which
           # main() deliberately does not swallow, so it writes no summary).
-          if uv run --project bot -- indexbot validate "${reserved[@]}" "${files[@]}" 2>&1 | tee indexbot-validate.log; then
+          if uv run --project bot -- indexbot validate --base-dir "$BASE_DIR" "${reserved[@]}" "${files[@]}" 2>&1 | tee indexbot-validate.log; then
             ec=0
           else
             ec=$?

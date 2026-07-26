@@ -52,6 +52,17 @@ edit, not just when a file happens to auto-load. Design authority: ADR-6
   `adapters/registry_v2.py` — pinned by a named test in
   `tests/security/test_governance_contracts.py`. Widening it further needs a
   client wired in `_wiring._registry()` first, in the same PR.
+- **ND-4 gates claiming, not updating — and the exemption is doubly scoped.**
+  A reserved segment exists so a stranger cannot *claim* `p/ocx/**`. An
+  announce that only moves `tags` on a root already committed on the base ref
+  is not a claim, so `cli/validate.py` retracts the rejection — but only when
+  `core/diff.classify_change(base, head) == "refresh"` (never a hand-rolled
+  second field list) AND only for `RESERVED_BRAND_SEGMENTS`. Both halves are
+  load-bearing: without the first, a fork could repoint an existing
+  first-party root's `repository` behind a green REQUIRED check; without the
+  second, base-ref state would unlock control-path segments (`p`, `o`) whose
+  collision is with the URL layout itself. No `--base-dir`, or no such root at
+  the base ref, is always "fresh claim".
 - **Digest `re.fullmatch` before any path join.** A `sha256:[a-f0-9]{64}` value
   is `fullmatch`-validated before it is used to build a CAS path; `LocalFiles`
   rejects `..` and absolute paths before touching the filesystem.

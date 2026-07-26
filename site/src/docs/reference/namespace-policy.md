@@ -56,7 +56,14 @@ justify the homograph-attack surface Unicode namespaces would open.
 ## Reserved Segments
 
 The following values are rejected at claim time, checked against **both**
-the namespace and the package position:
+the namespace and the package position. *Claim* time is literal: the check
+fires when a PR adds a `p/<namespace>/<package>.json` that does not exist on
+`main`. A later PR that only refreshes an already-committed entry's `tags` is
+not a claim and is not re-gated — ownership of an existing entry is enforced
+by its `owners[]`, which is the control that belongs there. Changing an
+existing entry's `repository`, `owners`, `status`, `deprecated_message`, or a
+yank marker is neither a claim nor a refresh: those stay blocked for anyone
+without write access to this repository.
 
 | Category | Segments | Why reserved |
 |---|---|---|
