@@ -15,5 +15,158 @@
   "deprecated_message": null,
   "created": "2026-07-26",
   "desc": null,
-  "tags": {}
+  "tags": {
+    "0": {
+      "content": "sha256:91701d97b74233d38775d14aebfc6b141f6c8023134ae813a32c4aa78b3d313b",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3": {
+      "content": "sha256:b15e79aea60ce5d1cee9c84f00bd166805c8e6d710311fbdf8685265ead9bbfc",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3.0": {
+      "content": "sha256:2ae3151777fa03c55c682ba0002d3721bd4bce22f754fce58894b9bc8b05095f",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3.0_20260526173058": {
+      "content": "sha256:2ae3151777fa03c55c682ba0002d3721bd4bce22f754fce58894b9bc8b05095f",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3.1": {
+      "content": "sha256:87edca735b7b6dbb202e11b7588757a7352dc76766cb2a3c4b56cc80129ba68a",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3.10": {
+      "content": "sha256:cb14a8508f250f6ccb07c940e8341d88864f34a90a842be773a62993a2bab19c",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3.10_20260630134349": {
+      "content": "sha256:cb14a8508f250f6ccb07c940e8341d88864f34a90a842be773a62993a2bab19c",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3.11": {
+      "content": "sha256:2a8e4ccd108744106638b5b572df3111154f1cec2390905f3d010ba48f9aac01",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3.11_20260702002337": {
+      "content": "sha256:2a8e4ccd108744106638b5b572df3111154f1cec2390905f3d010ba48f9aac01",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3.12": {
+      "content": "sha256:b15e79aea60ce5d1cee9c84f00bd166805c8e6d710311fbdf8685265ead9bbfc",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3.12_20260703001228": {
+      "content": "sha256:b15e79aea60ce5d1cee9c84f00bd166805c8e6d710311fbdf8685265ead9bbfc",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3.1_20260527213416": {
+      "content": "sha256:87edca735b7b6dbb202e11b7588757a7352dc76766cb2a3c4b56cc80129ba68a",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3.2": {
+      "content": "sha256:1a6a64326d8fd10ae20fc57842bdd0655d1c86979c9e8b825428300b0d88d27e",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3.2_20260528193509": {
+      "content": "sha256:1a6a64326d8fd10ae20fc57842bdd0655d1c86979c9e8b825428300b0d88d27e",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3.3": {
+      "content": "sha256:d94c7aafff457e597e65a86fb487c1297a2d5c8e5ab18c4ae8412d636f60b508",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3.3_20260531110723": {
+      "content": "sha256:d94c7aafff457e597e65a86fb487c1297a2d5c8e5ab18c4ae8412d636f60b508",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3.4": {
+      "content": "sha256:f10619cc556a407911405bcf0ebb62a6fbd90a9cbb316477f81d6000200a4734",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3.4_20260531190858": {
+      "content": "sha256:f10619cc556a407911405bcf0ebb62a6fbd90a9cbb316477f81d6000200a4734",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3.5": {
+      "content": "sha256:2882b7d79720a862dfedfd7cb9f6c997521742a6059ab1ce55c59b316595eb8e",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3.5_20260602185537": {
+      "content": "sha256:2882b7d79720a862dfedfd7cb9f6c997521742a6059ab1ce55c59b316595eb8e",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3.6": {
+      "content": "sha256:a98fa1cf0d072aeb017cbcac0fd69bc52f1b4aecf620555e22c5e8b053525e29",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3.6_20260607085549": {
+      "content": "sha256:a98fa1cf0d072aeb017cbcac0fd69bc52f1b4aecf620555e22c5e8b053525e29",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3.7": {
+      "content": "sha256:659dcf203a7ca92f95c2b56cfd31d5e51fb19c69dc67f80768cf9fef7843a1f6",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3.7_20260607220154": {
+      "content": "sha256:659dcf203a7ca92f95c2b56cfd31d5e51fb19c69dc67f80768cf9fef7843a1f6",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3.8": {
+      "content": "sha256:98db5435243f7bf9798edf8871d423351e81e4812dbb6a9d00177d9990ec7371",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3.8_20260615001938": {
+      "content": "sha256:98db5435243f7bf9798edf8871d423351e81e4812dbb6a9d00177d9990ec7371",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3.9": {
+      "content": "sha256:6792ad0b1fe7dd902bbc36b959a153b0f5a4d6bacb6a4e38b901b4b9243eaa1c",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.3.9_20260621113703": {
+      "content": "sha256:6792ad0b1fe7dd902bbc36b959a153b0f5a4d6bacb6a4e38b901b4b9243eaa1c",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.4": {
+      "content": "sha256:91701d97b74233d38775d14aebfc6b141f6c8023134ae813a32c4aa78b3d313b",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.4.0": {
+      "content": "sha256:af58a10a9cc86653d596a5226f34bd245e2d149cd88039f63b96231ccd3aec32",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.4.0_20260703105522": {
+      "content": "sha256:af58a10a9cc86653d596a5226f34bd245e2d149cd88039f63b96231ccd3aec32",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.4.1": {
+      "content": "sha256:272e1b893bba148b2a30452d97dcfc2a58aa4cf1cc05df3e04ac34c6fb00cb1f",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.4.1_20260703202929": {
+      "content": "sha256:272e1b893bba148b2a30452d97dcfc2a58aa4cf1cc05df3e04ac34c6fb00cb1f",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.4.2": {
+      "content": "sha256:e0cbb094f696d055ed378b8a2feaacdb8b69ffc5426f355532bb1310a14dd17a",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.4.2_20260705225333": {
+      "content": "sha256:e0cbb094f696d055ed378b8a2feaacdb8b69ffc5426f355532bb1310a14dd17a",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.4.3": {
+      "content": "sha256:91701d97b74233d38775d14aebfc6b141f6c8023134ae813a32c4aa78b3d313b",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "0.4.3_20260710225918": {
+      "content": "sha256:91701d97b74233d38775d14aebfc6b141f6c8023134ae813a32c4aa78b3d313b",
+      "observed": "2026-07-26T19:08:06Z"
+    },
+    "latest": {
+      "content": "sha256:91701d97b74233d38775d14aebfc6b141f6c8023134ae813a32c4aa78b3d313b",
+      "observed": "2026-07-26T19:08:06Z"
+    }
+  }
 }
