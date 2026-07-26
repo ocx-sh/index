@@ -14,6 +14,7 @@ c-index-invalid-unknown-property.json|$: Additional properties are not allowed (
 config-invalid-missing-required.json|$: 'format_version' is a required property
 config-invalid-unknown-property.json|$: Additional properties are not allowed ('packages' was unexpected)
 config-invalid-wrong-type-format-version.json|$.format_version: '1' is not of type 'integer'
+config-invalid-name-segments-zero.json|$.name_segments: 0 is less than the minimum of 1
 
 # An OCI image manifest is not an image index and is never stored in o/.
 image-index-invalid-image-manifest.json|$: 'manifests' is a required property

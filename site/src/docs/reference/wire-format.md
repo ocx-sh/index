@@ -46,7 +46,7 @@ the same digest with `:` replaced by `/`.
 ### `/config.json`
 
 ```json
-{ "format_version": 1 }
+{ "format_version": 1, "name_segments": 2 }
 ```
 
 Schema: [`https://index.ocx.sh/schema/config.schema.json`](https://index.ocx.sh/schema/config.schema.json).
@@ -55,6 +55,20 @@ A fixed path convention, not a runtime-discoverable one: a client that
 understands `format_version: 1` already knows the full `/p/` path grammar
 without a URL template. There is no `packages` path prefix and no free-text
 `note` field. See [Changelog](./changelog) for `format_version` history.
+
+`name_segments` is the slash-separated segment count a package name has under
+this index, counted on the part after `ocx.sh/`. This deployment serves `2`,
+restating the root schema's `^ocx\.sh/<ns>/<pkg>$` as something a client can
+consume: knowing it, a client resolves a flat name like `ocx.sh/go-task` as an
+ordinary OCI registry reference rather than reading the unavoidable 404 as an
+authoritative refusal — the index has stated it can never hold a root for that
+shape of name, so it is never asked for one.
+
+The member is OPTIONAL and additive. An index that omits it declares no
+constraint and can express every name, which is also exactly how a client
+predating the member behaves. It is therefore NOT a security control: it only
+ever narrows what a client asks for, and nothing about yank markers or CAS
+digest verification is delegated to it.
 
 Clients MUST treat an unrecognised (higher) `format_version` as a hard
 error requiring a client upgrade. Clients MUST ignore unknown JSON object

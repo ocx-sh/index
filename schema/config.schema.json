@@ -9,6 +9,11 @@
       "type": "integer",
       "minimum": 1,
       "description": "Monotonically increasing wire-format generation counter. Named format_version, not version, to stay lexically distinct from package-level version concepts."
+    },
+    "name_segments": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Slash-separated segment count a package name must have under this index, counted on the name WITHIN the namespace (the part after ocx.sh/). This deployment serves 2, restating root.schema.json's ^ocx\\.sh/<ns>/<pkg>$ as a client-consumable declaration: a client can then know, without asking, that a flat name like ocx.sh/go-task has no root here and resolve it as plain OCI instead of reading the unavoidable 404 as an authoritative refusal. Optional and purely additive — absence means the index declares no constraint and can express every name, which is exactly how a client that predates the field behaves. It is therefore NOT a security control: it only ever narrows what a client asks for, and nothing about yank markers or object-digest verification is delegated to it."
     }
   },
   "required": ["format_version"],

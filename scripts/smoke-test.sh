@@ -202,10 +202,10 @@ check_config() {
     pass "config.json cache-rule" "no max-age directive (Cache-Control: ${cache_control:-<absent>})"
   fi
 
-  if jq -e '.format_version == 1' "$body" >/dev/null 2>&1; then
-    pass "config.json format_version" "== 1"
+  if jq -e '.format_version == 1 and .name_segments == 2' "$body" >/dev/null 2>&1; then
+    pass "config.json format_version" "format_version == 1, name_segments == 2"
   else
-    fail "config.json format_version" "missing or != 1" "$EXIT_SCHEMA"
+    fail "config.json format_version" "expected format_version == 1 and name_segments == 2" "$EXIT_SCHEMA"
   fi
 }
 
