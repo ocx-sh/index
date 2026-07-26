@@ -57,9 +57,10 @@ directly.
 1. **Validate the payload** — package-id shape only; no trust placed in
    any other part of the payload (there is no other part).
 2. **Observe registry truth** — list every tag on the physical repository,
-   fetch manifests, hash platform sets into content-addressed observation
-   objects.
-3. **Regenerate** the target root state from that observation.
+   fetch each one's manifest, and store the ones that are OCI image indices
+   verbatim in this package's content-addressed CAS, keyed by the registry's
+   own digest.
+3. **Regenerate** the target root state from what was observed.
 4. **Diff** against the currently committed root.
 5. **No-op or commit** — an empty diff exits `0` with no PR; a non-empty
    diff opens (or updates) a PR with exactly the regenerated `desc` and

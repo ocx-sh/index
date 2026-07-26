@@ -31,8 +31,8 @@ export type ParsedTag =
 /** A single materialized tag, carrying its CAS digest + optional yank record
  * straight through from the wire (`root.schema.json`'s `tagEntry`/`yanked`
  * defs) — every rendered tag in the table carries these so `TagBadge` can
- * strike yanked rows and `VersionTree` can fire an observation-object fetch
- * on hover without a second lookup back into the raw tags map. */
+ * strike yanked rows and `VersionTree` can fire an image-index fetch on
+ * hover without a second lookup back into the raw tags map. */
 export interface RenderedTag {
   tag: string
   digest: string
@@ -77,7 +77,7 @@ export interface VariantRow {
   label: string               // display label
   isDefault: boolean          // true when variant is null (the default variant)
   /** The row's identity tag for the default segmented control's click-to-copy
-   * and for eager observation prefetch: `latest` when live and status isn't
+   * and for eager image-index prefetch: `latest` when live and status isn't
    * `deprecated`, else the row's own rolling tag (bare variant name) when
    * live, else the highest-precision live version tag. `null` when the row
    * has no live (non-yanked) tag at all. */

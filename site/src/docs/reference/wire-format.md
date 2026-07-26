@@ -32,16 +32,16 @@ bump: `/data/catalog/**` (catalog UI data) and `/`, `/docs/**` (this site).
 /config.json                                  format-version discovery document
 /c/index.json                                 enumeration index (hot, mutable)
 /p/<namespace>/<package>.json                 package root (hot, mutable)
-/p/<namespace>/<package>/o/sha256/<hex>.json  observation objects (immutable, CAS)
+/p/<namespace>/<package>/o/sha256/<hex>.json  OCI image indices (immutable, CAS)
 /p/<namespace>/<package>/o/sha256/<hex>.{md,svg,png}  desc blobs (immutable, CAS)
 ```
 
 CAS paths encode a `sha256:<hex>` digest by substituting `:` for `/` — the
 same convention OCI registries use for their own blob storage
-(`sha256:<hex>` ↔ `sha256/<hex>`). Every `content` reference in a root and
-every `digest` reference inside an observation object is an OCI-style
-`sha256:<hex>` string; the corresponding CAS file path is the same digest
-with `:` replaced by `/`.
+(`sha256:<hex>` ↔ `sha256/<hex>`). Every `content` reference in a root is an
+OCI-style `sha256:<hex>` string — the digest of an OCI image index, exactly
+as the physical registry serves it — and the corresponding CAS file path is
+the same digest with `:` replaced by `/`.
 
 ### `/config.json`
 
@@ -80,9 +80,9 @@ Schema: [`https://index.ocx.sh/schema/c-index.schema.json`](https://index.ocx.sh
 its own; a client derives the package root path by concatenation,
 `/p/<key>.json`. The value is `sha256:` followed by the lowercase hex digest
 of the **exact bytes** served at that root — a distinct digest namespace
-from the `content` digests inside `tags` (D2/D4), which hash a canonical
-observation object, never the served root bytes. An empty `packages` map is
-a valid, live index state.
+from the `content` digests inside `tags` (D2/D4), which name the registry's
+own image-index digest, never a digest this index computes itself. An empty
+`packages` map is a valid, live index state.
 
 This surface carries names and digests only — never `desc`, `status`, or any
 other root field. A client MUST NOT treat presence in `packages` as a
@@ -94,7 +94,7 @@ Not Modified` means the package set and every root's exact bytes are
 unchanged since the last fetch. On a `200` response, a client diffs the
 previous `packages` map against the new one by key and by digest to derive
 added, updated, and deleted packages, then fetches only the roots whose
-digest changed. Observation objects referenced by an unchanged root are
+digest changed. Image indices referenced by an unchanged root are
 themselves immutable and MUST NOT be re-fetched.
 
 `c` is a reserved top-level path segment (see [Namespace
@@ -123,53 +123,80 @@ bot-regenerated fields:
   [Entry Schema](./entry-schema#source-versus-upstream)).
 - `tags` — a map from **every** tag ever observed on the physical
   repository (no filtering) to `{content, observed, yanked?}`. `content` is
-  a `sha256:<hex>` digest addressing an observation object in this
-  package's own CAS — not an OCI manifest or image-index digest.
+  a `sha256:<hex>` digest — the digest of the OCI image index that tag
+  resolved to. Those exact bytes, as the physical registry served them, are
+  stored at `o/sha256/<hex>.json` in this package's own CAS.
 
 There is no declared `aliases` field. Two tags are aliases of each other
 exactly when their `content` digests are equal — a read-time computation
 over the `tags` map, never hand-maintained data.
 
-### `/p/<namespace>/<package>/o/sha256/<hex>.json` — observation object
+### `/p/<namespace>/<package>/o/sha256/<hex>.json` — OCI image index
 
-Schema: [`https://index.ocx.sh/schema/observation-object.schema.json`](https://index.ocx.sh/schema/observation-object.schema.json).
+Schema: [`https://index.ocx.sh/schema/image-index.schema.json`](https://index.ocx.sh/schema/image-index.schema.json).
 
-Immutable, package-local CAS. Records the set of `platform → OCI manifest
-digest` pairs observed at one point in time:
+Immutable, package-local CAS. Holds the exact bytes a registry served for an
+[OCI image index](https://github.com/opencontainers/image-spec/blob/v1.1.1/image-index.md)
+— unmodified, byte-for-byte, at the moment a tag was observed to resolve to
+it. `<hex>` is the sha256 of those bytes, which is also the registry's own
+manifest digest for that index:
 
 ```json
 {
-  "platforms": [
-    { "platform": { "architecture": "amd64", "os": "linux" }, "digest": "sha256:1111..." },
-    { "platform": { "architecture": "arm64", "os": "linux" }, "digest": "sha256:2222..." }
+  "schemaVersion": 2,
+  "mediaType": "application/vnd.oci.image.index.v1+json",
+  "manifests": [
+    { "mediaType": "application/vnd.oci.image.manifest.v1+json", "digest": "sha256:1111...", "size": 1234, "platform": { "architecture": "amd64", "os": "linux" } },
+    { "mediaType": "application/vnd.oci.image.manifest.v1+json", "digest": "sha256:2222...", "size": 1234, "platform": { "architecture": "arm64", "os": "linux" } }
   ]
 }
 ```
 
-Each `platform` object is an inline subset of the
-[OCI image-spec `Platform` object](https://github.com/opencontainers/image-spec/blob/main/image-index.md).
-Observation objects carry **no timestamps** — deliberately, for maximum
-dedup: two observations that see an identical platform set produce
-byte-identical JSON, hence the same digest, hence automatic storage as one
-object regardless of how many tags or packages observed it. Objects are
-never edited in place; an observed change is a new object at a new digest,
-with the affected root's `tags[tag].content` repointed to it.
+An index is a catalog of OCI artifacts. Tags are floating pointers by
+definition — a tag is a name a registry may repoint at any time — and the
+index's whole job is to **lock one**: to record exactly what a tag resolved
+to at the moment it was observed, so a version choice made later resolves
+to the same artifact, byte-for-byte, even after the registry has moved on.
+The index therefore defines no object shape of its own here. Shape
+definition is the OCI image spec's job; adherence to it is a
+separation-of-concerns property, not a convenience.
 
-The lock unit is the **platform manifest digest**, never the image-index
-digest — image indexes float by nature (platforms added, rolling tags
-advance), so locking their digest would bake registry-side churn into every
-consumer. See
-[Explanation: Architecture](../explanation/architecture) for why.
+The lock unit is the **image-index digest**, not any one platform's
+manifest digest inside it — the per-platform manifest digests live inside
+the locked bytes, in `manifests[]`, reachable without a second round trip.
+Every field validation accepts is exactly what
+[schema `additionalProperties`](https://index.ocx.sh/schema/image-index.schema.json)
+allows: this index does not author these bytes, so an index carrying
+`subject`, `artifactType`, `annotations`, or a spec field this page doesn't
+enumerate validates fine — only structural shape (a real OCI image index)
+is enforced.
+
+**Two independent verification anchors**, not one: the object's own CAS
+filename (`sha256(bytes) == <hex>`), and the physical registry, which SHOULD
+serve byte-identical content for the same digest under
+`GET /v2/<repository>/manifests/sha256:<hex>`. See
+[Verifiability Chain](#verifiability-chain) below and
+[Explanation: Architecture](../explanation/architecture) for why an index —
+and not a platform manifest — is the thing this index snapshots.
+
+`manifests[]` entries are not guaranteed to carry a `platform` object: an
+attestation, SBOM, or signature descriptor riding in the same index has
+`platform` **absent**, or set to the sentinel
+`{"os":"unknown","architecture":"unknown"}`. Neither can satisfy a platform
+selection, and both MUST be excluded from anything that *enumerates*
+platforms for display (`ocx index list --platforms`, this site's platform
+matrix) — they are not errors, they are ordinary OCI artifacts riding
+alongside the platform builds in the same index.
 
 ## Verifiability Chain
 
 ```
-root: tags[tag].content (sha256:<hex>, this index's CAS)
+root: tags[tag].content (sha256:<hex>, an image-index digest)
   → GET /p/<namespace>/<package>/o/sha256/<hex>.json
-  → verify received bytes hash to <hex>              (index-CAS integrity)
-  → object.platforms[].digest (sha256:<hex>, OCI manifest, physical registry)
+  → verify received bytes hash to <hex>               (index-CAS integrity)
+  → OCI image index (verbatim) → manifests[].digest (sha256:<hex>, physical registry)
   → GET manifest from the physical repository at that digest
-  → verify OCI CAS                                    (registry-CAS integrity)
+  → verify OCI CAS                                     (registry-CAS integrity)
 ```
 
 A client resolving a package SHOULD verify both links in this chain rather
@@ -192,15 +219,14 @@ asset caching.
 
 ## Yank Semantics
 
-`tags[tag].yanked` presence marks that row yanked — the observation object
-it points at is never deleted or mutated (objects are immutable, see
-above). See [How-To: Yank a Version](../how-to/yank-a-version) for the
+`tags[tag].yanked` presence marks that row yanked — the OCI image index it
+points at is never deleted or mutated (objects are immutable, see above). See [How-To: Yank a Version](../how-to/yank-a-version) for the
 publisher-facing procedure.
 
 ## See Also
 
-- [Entry Schema](./entry-schema) — full field table for the root and
-  observation object
+- [Entry Schema](./entry-schema) — full field table for the root and the
+  OCI image index shape
 - [Namespace Policy](./namespace-policy) — the `<namespace>/<package>`
   grammar and reserved segments
 - [Changelog](./changelog) — `format_version`-keyed history

@@ -6,7 +6,7 @@ import PlatformMatrix from './PlatformMatrix.vue'
 import CopyIcon from '../shared/CopyIcon.vue'
 import CopyContextMenu, { buildTagCopyActions, type CopyAction } from '../shared/CopyContextMenu.vue'
 import type { PackageRoot } from '../../composables/usePackageRoot'
-import type { ObservationObject } from '../../composables/useObservation'
+import type { ImageIndex } from '../../composables/useImageIndex'
 
 const props = defineProps<{
   root: PackageRoot
@@ -17,7 +17,7 @@ const props = defineProps<{
    * output) — `null` when the package has no live tag at all. */
   primaryTag: string | null
   latestVersionLabel: string | null
-  activeObservation: ObservationObject | null
+  activeImageIndex: ImageIndex | null
   tagCount: number
 }>()
 
@@ -142,7 +142,7 @@ const safeSourceUrl = computed(() => safeHref(props.root.source))
         <span class="rail-heading">PLATFORMS</span>
       </div>
       <div class="rail-card">
-        <PlatformMatrix :platforms="activeObservation?.platforms ?? []" />
+        <PlatformMatrix :platforms="activeImageIndex?.manifests ?? []" />
       </div>
     </div>
 

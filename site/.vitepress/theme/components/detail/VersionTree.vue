@@ -34,8 +34,8 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  /** Fired on hover/focus of any rendered tag, carrying its observation
-   * digest — `DetailPage` debounces this into a `useObservation().load()`
+  /** Fired on hover/focus of any rendered tag, carrying its image-index
+   * digest — `DetailPage` debounces this into a `useImageIndex().load()`
    * call to drive `MetaRail`'s Platforms card (mock 1c: "per-version matrix
    * on tag hover"). */
   'hover-tag': [digest: string]
@@ -43,7 +43,7 @@ const emit = defineEmits<{
 
 /** Digest to revert to on mouseleave — the default row's own primary tag,
  * so hovering away from the tree falls back to the package's eager-loaded
- * observation rather than leaving the last-hovered tag's platforms shown. */
+ * image index rather than leaving the last-hovered tag's platforms shown. */
 const defaultPrimaryDigest = computed(() => {
   const row = props.table.rows.find(r => r.isDefault)
   if (!row?.primaryTag) return null

@@ -1,9 +1,9 @@
 import { afterEach, describe, expect, mock, test } from 'bun:test'
-import { useObservation } from './useObservation'
+import { useImageIndex } from './useImageIndex'
 
-// `useObservation` is a plain composable (no `onMounted`/lifecycle hooks),
-// so it's callable directly outside a component here — `ref()` alone
-// doesn't need one.
+// `useImageIndex` is a plain composable (no `onMounted`/lifecycle hooks), so
+// it's callable directly outside a component here — `ref()` alone doesn't
+// need one.
 
 const originalFetch = globalThis.fetch
 
@@ -12,10 +12,17 @@ afterEach(() => {
 })
 
 function mockJsonResponse(digest: string) {
-  return { ok: true, json: async () => ({ platforms: [{ platform: { architecture: 'amd64', os: 'linux' }, digest }] }) }
+  return {
+    ok: true,
+    json: async () => ({
+      schemaVersion: 2,
+      mediaType: 'application/vnd.oci.image.index.v1+json',
+      manifests: [{ mediaType: 'application/vnd.oci.image.manifest.v1+json', digest, size: 512, platform: { architecture: 'amd64', os: 'linux' } }],
+    }),
+  }
 }
 
-describe('useObservation', () => {
+describe('useImageIndex', () => {
   test('discards a stale response that resolves after a newer load() call (out-of-order resolution)', async () => {
     const digestA = `sha256:${'a'.repeat(64)}`
     const digestB = `sha256:${'b'.repeat(64)}`
@@ -27,7 +34,7 @@ describe('useObservation', () => {
       resolvers.set(url, () => resolve(mockJsonResponse(url === urlA ? digestA : digestB)))
     })) as unknown as typeof fetch
 
-    const { observation, load } = useObservation()
+    const { imageIndex, load } = useImageIndex()
 
     const p1 = load('ns', 'pkg', digestA)
     const p2 = load('ns', 'pkg', digestB)
@@ -39,7 +46,7 @@ describe('useObservation', () => {
     resolvers.get(urlA)!()
     await p1
 
-    expect(observation.value?.platforms[0]?.digest).toBe(digestB)
+    expect(imageIndex.value?.manifests[0]?.digest).toBe(digestB)
   })
 
   test('in-flight dedup: two concurrent loads for the same digest share one fetch', async () => {
@@ -51,8 +58,8 @@ describe('useObservation', () => {
       return new Promise((resolve) => { resolveFetch = resolve })
     }) as unknown as typeof fetch
 
-    const a = useObservation()
-    const b = useObservation()
+    const a = useImageIndex()
+    const b = useImageIndex()
 
     const p1 = a.load('ns', 'pkg2', digest)
     const p2 = b.load('ns', 'pkg2', digest)
@@ -61,7 +68,7 @@ describe('useObservation', () => {
     await Promise.all([p1, p2])
 
     expect(fetchCalls).toBe(1)
-    expect(a.observation.value?.platforms[0]?.digest).toBe(digest)
-    expect(b.observation.value?.platforms[0]?.digest).toBe(digest)
+    expect(a.imageIndex.value?.manifests[0]?.digest).toBe(digest)
+    expect(b.imageIndex.value?.manifests[0]?.digest).toBe(digest)
   })
 })

@@ -1,14 +1,19 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { OS_GLYPHS, osRank } from '../../utils/osGlyphs'
-import type { PlatformEntry } from '../../composables/useObservation'
+import { visiblePlatforms } from '../../utils/platforms'
+import type { ManifestDescriptor } from '../../composables/useImageIndex'
 
-// Presentational only — glyph + label + arch chips from one observation
-// object's `platforms[]`. DetailPage/MetaRail own the hover-driven fetch
-// (`useObservation`); this component just renders whatever it's handed.
+// Presentational only — glyph + label + arch chips from one OCI image
+// index's `manifests[]`. DetailPage/MetaRail own the hover-driven fetch
+// (`useImageIndex`); this component just renders whatever it's handed,
+// after `visiblePlatforms` drops descriptors that aren't a real platform
+// (no `platform` key, or an `unknown/unknown` attestation descriptor).
 const props = defineProps<{
-  platforms: PlatformEntry[]
+  platforms: ManifestDescriptor[]
 }>()
+
+const shown = computed(() => visiblePlatforms(props.platforms))
 
 interface PlatformGroup {
   os: string
@@ -20,7 +25,7 @@ interface PlatformGroup {
 // "same position regardless of whether one is missing") — amd64 and arm64
 // always lead, any other observed architecture follows alphabetically.
 // `columns` below is computed once across every OS row in the *whole*
-// observation (not per-row), so a row missing an arch renders an empty
+// image index (not per-row), so a row missing an arch renders an empty
 // cell in that arch's column instead of its neighbors packing left to fill
 // the gap — the bug: a flex row with only "arm64" present used to render
 // that badge in the "amd64" slot, visually indistinguishable from an actual
@@ -33,13 +38,13 @@ function archRank(arch: string): number {
 }
 
 const columns = computed<string[]>(() => {
-  const arches = new Set(props.platforms.map(p => p.platform.architecture))
+  const arches = new Set(shown.value.map(p => p.platform.architecture))
   return [...arches].sort((a, b) => archRank(a) - archRank(b) || a.localeCompare(b))
 })
 
 const groups = computed<PlatformGroup[]>(() => {
   const byOs = new Map<string, Set<string>>()
-  for (const entry of props.platforms) {
+  for (const entry of shown.value) {
     const os = entry.platform.os
     if (!byOs.has(os)) byOs.set(os, new Set())
     byOs.get(os)!.add(entry.platform.architecture)

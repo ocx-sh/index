@@ -22,7 +22,7 @@ Parallelize Sonnet workers aggressively instead of escalating model tier.
 Source of truth for the **OCX public package index** at `https://index.ocx.sh` —
 static sparse HTTP index (crates.io model) rendered to Cloudflare Pages. Root
 files map logical names (`ocx.sh/kitware/cmake`) to physical OCI registries
-(`ghcr.io/ocx-contrib/cmake`) via content-digest observation objects. No
+(`ghcr.io/ocx-contrib/cmake`) via content-addressed OCI image indices. No
 server, no database.
 
 Identity + wire contract: [product-context.md](./.claude/rules/product-context.md).
@@ -30,14 +30,18 @@ Inherited design + history: [handover_from_ocx.md](./.claude/artifacts/handover_
 
 ## Current State
 
-Design settled: the 2026-07-16 discussion locked the observation-index format
-(root + content-addressed observation objects, revising inherited D3). Design
+Design settled: the 2026-07-16 discussion locked the index format (root +
+content-addressed OCI image indices, revising inherited D3). Design
 authority alongside the [handover](./.claude/artifacts/handover_from_ocx.md):
 [decision log](./.claude/artifacts/decision_log_2026-07-16.md) and the Phase-0
 ADRs — [adr_locked_observation_index_format.md](./.claude/artifacts/adr_locked_observation_index_format.md),
 [adr_namespace_policy.md](./.claude/artifacts/adr_namespace_policy.md),
 [adr_catalog_docs_colocation.md](./.claude/artifacts/adr_catalog_docs_colocation.md),
 [adr_index_bot_and_workflow_security.md](./.claude/artifacts/adr_index_bot_and_workflow_security.md).
+Superseding authority for the `o/` shape specifically:
+[adr_oci_index_only_dispatch.md](https://github.com/ocx-sh/ocx/blob/main/.claude/artifacts/adr_oci_index_only_dispatch.md)
+(`ocx-sh/ocx`) — `o/` holds verbatim OCI image indices, not a bot-authored
+projection.
 
 Execution of `plan_index_v1` is underway. Phase 3 (WP3-A) has landed: the
 render pipeline is live. `.github/workflows/render-deploy.yml` runs
@@ -71,10 +75,10 @@ the deployed tree currently renders `config.json` and an empty catalog.
 
 | Path | Purpose |
 |---|---|
-| `schema/` | JSON Schemas for the wire contract (`config`, `root`, `observation-object`) |
+| `schema/` | JSON Schemas for the wire contract (`config`, `root`, `image-index`) |
 | `bot/` | `indexbot` — `announce \| reconcile \| validate \| render \| seed-import` |
 | `site/` | VitePress 2 catalog + docs, served at `index.ocx.sh` |
-| `p/` | Package roots (`p/<ns>/<pkg>.json`) + package-local CAS observation objects (`p/<ns>/<pkg>/o/sha256/<hex>.json`) — empty until Phase 4 seed data lands |
+| `p/` | Package roots (`p/<ns>/<pkg>.json`) + package-local CAS OCI image indices (`p/<ns>/<pkg>/o/sha256/<hex>.json`) — empty until Phase 4 seed data lands |
 | `.github/workflows/render-deploy.yml` | Renders `p/` via `task render:build`, deploys `site/.vitepress/dist` to Pages + domain/DNS self-activation (replaces retired `deploy.yml`) |
 | `.claude/artifacts/` | Handover, ADR, design spec, research (ported from ocx + Phase-0 additions) |
 | `.claude/state/plans/` | Plans (gitignored) — Plan Status Protocol applies |
