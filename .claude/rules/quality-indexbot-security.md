@@ -10,8 +10,19 @@ edit, not just when a file happens to auto-load. Design authority: ADR-6
 
 ## Security bar (Block-tier — never negotiate)
 
+- **One trigger per workflow file.** `pull_request` and `pull_request_target`
+  fire on the same PR head commit, so a workflow declaring both must pick a
+  half with a job-level `if: github.event_name == ...` — and a job skipped by
+  such an `if:` STILL emits a check run, conclusion `skipped`, under its own
+  name. GitHub counts `skipped` as satisfying a required status check and
+  resolves duplicate-named contexts to the most recent, so the privileged run
+  publishes a green-equivalent impostor of the unprivileged half's required
+  context. That is why `schema-validate-pr` (`validate.yml`, `pull_request`)
+  and `governance-gate`/`arm-auto-merge` (`governance.yml`,
+  `pull_request_target`) live in separate files. Never merge them back, and
+  never re-add a `github.event_name` guard to either.
 - **Untrusted-PR-data-only contract.** The privileged governance job
-  (`pull_request_target`, `governance-gate` in `validate.yml`) NEVER checks out
+  (`pull_request_target`, `governance-gate` in `governance.yml`) NEVER checks out
   or executes PR-head content. It acts through the GitHub API and base-branch
   data only. PR-head code runs solely in the zero-secret `pull_request` job
   (verify-claims). Any workflow edit that adds a PR-head checkout (`ref:` at

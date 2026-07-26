@@ -18,7 +18,8 @@ this ADR's BD-1 module map and the G-01 schema-file reference use to describe th
 object `o/` stores (deleted, replaced by a verbatim OCI image index); no BD decision
 or G-table disposition is reversed. See Amendment A2. Separately corrected in
 Amendment A3: BD-5's `validate.yml` job count (implementation drift, unrelated to the
-dispatch ADR).
+dispatch ADR). Amendment A4: BD-5's two halves split into two trigger-disjoint
+workflow files.
 
 ## Context
 
@@ -321,6 +322,18 @@ separate:
 > moved out of `governance-gate` into the dedicated, checkout-free `arm-auto-merge`
 > job, the only job holding `contents: write`, with a `--disable-auto` disarm branch
 > for a PR that re-classifies out of the machine lane after arming. See Amendment A3.
+
+> **Corrected by Amendment A4 (2026-07-26):** the split is now one workflow FILE per
+> trigger — `validate.yml` (`pull_request`, `schema-validate-pr`) and `governance.yml`
+> (`pull_request_target`, `governance-gate` + `arm-auto-merge`) — not one file with a
+> job-level `if: github.event_name == ...`. A job skipped by such an `if:` still emits
+> a `skipped` check run under its own name; GitHub counts `skipped` as satisfying a
+> required status check and resolves duplicate-named contexts to the most recent, so
+> every `pull_request_target` run was publishing a green-equivalent `schema-validate-pr`
+> impostor of the required context (live-observed on PR #70's head `1d7a9b4e`). With
+> ADR-6's `--allow-reserved-namespace` withheld from fork PRs, that context is the sole
+> control stopping a fork claiming `p/ocx/**`. Job names — and therefore the required
+> contexts — are unchanged; branch protection needed no edit.
 
 `validate.yml` is two jobs with deliberately different trust levels:
 
