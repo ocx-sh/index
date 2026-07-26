@@ -15,5 +15,26 @@
   "deprecated_message": null,
   "created": "2026-07-26",
   "desc": null,
-  "tags": {}
+  "tags": {
+    "0": {
+      "content": "sha256:13375c8ab8bc05351d5a2b63c19c2270b366222457865dcd375a22a860af14ef",
+      "observed": "2026-07-26T19:10:55Z"
+    },
+    "0.4": {
+      "content": "sha256:13375c8ab8bc05351d5a2b63c19c2270b366222457865dcd375a22a860af14ef",
+      "observed": "2026-07-26T19:10:55Z"
+    },
+    "0.4.0": {
+      "content": "sha256:13375c8ab8bc05351d5a2b63c19c2270b366222457865dcd375a22a860af14ef",
+      "observed": "2026-07-26T19:10:55Z"
+    },
+    "0.4.0_20260612055320": {
+      "content": "sha256:13375c8ab8bc05351d5a2b63c19c2270b366222457865dcd375a22a860af14ef",
+      "observed": "2026-07-26T19:10:55Z"
+    },
+    "latest": {
+      "content": "sha256:13375c8ab8bc05351d5a2b63c19c2270b366222457865dcd375a22a860af14ef",
+      "observed": "2026-07-26T19:10:55Z"
+    }
+  }
 }
