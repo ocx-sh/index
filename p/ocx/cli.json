@@ -28,6 +28,10 @@
       "content": "sha256:2ae3151777fa03c55c682ba0002d3721bd4bce22f754fce58894b9bc8b05095f",
       "observed": "2026-07-26T19:08:06Z"
     },
+    "0.3.0_20260526173058": {
+      "content": "sha256:2ae3151777fa03c55c682ba0002d3721bd4bce22f754fce58894b9bc8b05095f",
+      "observed": "2026-07-26T19:08:06Z"
+    },
     "0.3.1": {
       "content": "sha256:87edca735b7b6dbb202e11b7588757a7352dc76766cb2a3c4b56cc80129ba68a",
       "observed": "2026-07-26T19:08:06Z"
