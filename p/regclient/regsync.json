@@ -20,5 +20,66 @@
     "repository_url": "https://github.com/regclient/regclient",
     "disclaimer": "Unaffiliated mirror. regsync is a project of the regclient authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0": {
+      "content": "sha256:c16922c503cfa049e239e0712e7a3fdf73c5578e541ab8b3f12deb07ad12204b",
+      "observed": "2026-07-26T19:12:18Z"
+    },
+    "0.10": {
+      "content": "sha256:bb3874c81239853f9ea4f8675eebadc0d1c45bb607b6f34d9d21f2b667e7ca06",
+      "observed": "2026-07-26T19:12:18Z"
+    },
+    "0.10.0": {
+      "content": "sha256:bb3874c81239853f9ea4f8675eebadc0d1c45bb607b6f34d9d21f2b667e7ca06",
+      "observed": "2026-07-26T19:12:18Z"
+    },
+    "0.11": {
+      "content": "sha256:c16922c503cfa049e239e0712e7a3fdf73c5578e541ab8b3f12deb07ad12204b",
+      "observed": "2026-07-26T19:12:18Z"
+    },
+    "0.11.0": {
+      "content": "sha256:c95a9c8dcdeeef75ba1f72be714f9fc8ce3094619228e58c90adaa416c1a1ac3",
+      "observed": "2026-07-26T19:12:18Z"
+    },
+    "0.11.1": {
+      "content": "sha256:673e198d186b8a2dc669d0fb8a919528784de15dff37113f83aa1eac22176750",
+      "observed": "2026-07-26T19:12:18Z"
+    },
+    "0.11.2": {
+      "content": "sha256:a24bb3e2bbe888e3dfe3e007ec12a9affd28de4b7c61bf79320952fce359963b",
+      "observed": "2026-07-26T19:12:18Z"
+    },
+    "0.11.3": {
+      "content": "sha256:9d055a2af313ad3d1415afb16764e9c436923fecdb1225342782ea9a59d30d96",
+      "observed": "2026-07-26T19:12:18Z"
+    },
+    "0.11.4": {
+      "content": "sha256:e2cce3ce9b59e8b019a9dc3f78359c58d6e2a354b52de5dff2bbd9d3d8b855ef",
+      "observed": "2026-07-26T19:12:18Z"
+    },
+    "0.11.5": {
+      "content": "sha256:c16922c503cfa049e239e0712e7a3fdf73c5578e541ab8b3f12deb07ad12204b",
+      "observed": "2026-07-26T19:12:18Z"
+    },
+    "0.9": {
+      "content": "sha256:149f99780dd97609b1c4110805a579cdbc3c9b742f9087a90e547f7043131cb0",
+      "observed": "2026-07-26T19:12:18Z"
+    },
+    "0.9.0": {
+      "content": "sha256:94776d1449098697d2862ea86fac1dbba21680c71ee5d5495a91311c78b26c0a",
+      "observed": "2026-07-26T19:12:18Z"
+    },
+    "0.9.1": {
+      "content": "sha256:a3738b0ba7a4bf6be4000551cf8f4305da701588b4457bb2026c60497d5d8813",
+      "observed": "2026-07-26T19:12:18Z"
+    },
+    "0.9.2": {
+      "content": "sha256:149f99780dd97609b1c4110805a579cdbc3c9b742f9087a90e547f7043131cb0",
+      "observed": "2026-07-26T19:12:18Z"
+    },
+    "latest": {
+      "content": "sha256:c16922c503cfa049e239e0712e7a3fdf73c5578e541ab8b3f12deb07ad12204b",
+      "observed": "2026-07-26T19:12:18Z"
+    }
+  }
 }
