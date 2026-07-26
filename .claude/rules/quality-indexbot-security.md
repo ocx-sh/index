@@ -36,8 +36,11 @@ edit, not just when a file happens to auto-load. Design authority: ADR-6
   either. A host with no `RegistryPort` adapter is refused at wiring time
   (`_wiring.REGISTRY_ADAPTER_HOSTS`): allowlisting what cannot be fetched
   produces roots that validate and then fail every download. This repo's own
-  policy stays exactly `{"ghcr.io"}`, pinned by a named test in
-  `tests/security/test_governance_contracts.py`.
+  policy stays exactly `{"ghcr.io", "ocx.sh"}` — third-party mirrors and the
+  operator's own first-party repositories, both served by
+  `adapters/registry_v2.py` — pinned by a named test in
+  `tests/security/test_governance_contracts.py`. Widening it further needs a
+  client wired in `_wiring._registry()` first, in the same PR.
 - **Digest `re.fullmatch` before any path join.** A `sha256:[a-f0-9]{64}` value
   is `fullmatch`-validated before it is used to build a CAS path; `LocalFiles`
   rejects `..` and absolute paths before touching the filesystem.

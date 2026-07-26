@@ -140,16 +140,36 @@ jobs:
         if: steps.changed.outputs.has_changes == 'true'
         env:
           CHANGED_FILES: ${{ steps.changed.outputs.files }}
+          # ND-4's reserved-brand carve-out (`--allow-reserved-namespace`),
+          # gated on PR provenance. `ocx` is a RESERVED_BRAND_SEGMENT, so the
+          # operator's own first-party roots (p/ocx/cli.json, p/ocx/mirror.json)
+          # cannot be validated without it — but passing it unconditionally
+          # would hand every fork PR the right to claim p/ocx/**, i.e. to
+          # publish under the index's own brand and be believed by any client
+          # that resolves `ocx.sh/ocx/*` through this index. A fork PR's head
+          # repository is never this repository, so the flag is withheld there
+          # and `check_namespace_not_reserved` rejects the claim exactly as it
+          # does today. A null `head.repo` (deleted fork) compares unequal too
+          # — fail closed. Branch-internal PRs still land in the human lane:
+          # a brand-new root classifies `new-package` (G-04) and carries the
+          # `governance/review-required` status nothing auto-resolves, so a
+          # person merges it. Pinned by
+          # bot/tests/security/test_workflow_split.py.
+          SAME_REPO_PR: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
         run: |
           set -euo pipefail
           mapfile -t files <<< "$CHANGED_FILES"
+          reserved=()
+          if [ "$SAME_REPO_PR" = "true" ]; then
+            reserved+=(--allow-reserved-namespace)
+          fi
           # `indexbot`'s own main() already lands a structured reason on the
           # job summary for any IndexBotError it maps (register §5 chokepoint).
           # This workflow wrapper is the belt to that suspenders: it emits the
           # ::error annotation the checks UI surfaces AND captures the reason
           # even when the CLI dies on a non-IndexBotError traceback (which
           # main() deliberately does not swallow, so it writes no summary).
-          if uv run --project bot -- indexbot validate "${files[@]}" 2>&1 | tee indexbot-validate.log; then
+          if uv run --project bot -- indexbot validate "${reserved[@]}" "${files[@]}" 2>&1 | tee indexbot-validate.log; then
             ec=0
           else
             ec=$?
