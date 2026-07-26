@@ -3,6 +3,16 @@ name: render-deploy
 on:
   push:
     branches: [main]
+  # An announce merged by auto-merge is pushed with GITHUB_TOKEN, and a push
+  # made with GITHUB_TOKEN triggers no workflow -- so `push` above never fires
+  # for the machine lane. Before the lane existed a human merged every announce
+  # and this deployed as a side effect; afterwards #64 and #66 both merged and
+  # published nothing, and index.ocx.sh served a stale tree with no failing
+  # check anywhere (issue #67). The schedule is the trigger a bot merge does
+  # reach. `guard` below keeps the cost to one cheap job per tick when main has
+  # not moved.
+  schedule:
+    - cron: '*/15 * * * *'
   workflow_dispatch:
 
 permissions: {}
@@ -13,8 +23,48 @@ permissions: {}
 # from deploy.yml (battle-tested across PRs #2-#5) -- do not redesign it
 # here, only the build+deploy source changed.
 jobs:
+  # Answers one question: is main already deployed? A push or a manual dispatch
+  # is always a deliberate "deploy this", so both short-circuit to true; only
+  # the 15-minute tick has to look. The comparison is against the head sha of
+  # the last SUCCESSFUL run of this workflow -- a failed deploy therefore
+  # retries on the next tick instead of being recorded as done.
+  guard:
+    name: guard
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+    outputs:
+      should_deploy: ${{ steps.decide.outputs.should_deploy }}
+    steps:
+      - name: Decide whether main is already deployed
+        id: decide
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          EVENT: ${{ github.event_name }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          if [ "$EVENT" != "schedule" ]; then
+            echo "$EVENT is an explicit deploy request -- not consulting run history."
+            echo "should_deploy=true" >>"$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # --status success excludes this very run, which is in_progress.
+          last="$(gh run list --repo "$REPO" --workflow render-deploy.yml \
+            --status success --limit 1 --json headSha --jq '.[0].headSha // empty')"
+          if [ "$last" = "$HEAD_SHA" ]; then
+            echo "main ($HEAD_SHA) already deployed by the last successful run -- skipping."
+            echo "should_deploy=false" >>"$GITHUB_OUTPUT"
+          else
+            echo "main ($HEAD_SHA) differs from last successful deploy (${last:-none}) -- deploying."
+            echo "should_deploy=true" >>"$GITHUB_OUTPUT"
+          fi
+
   deploy:
     name: deploy
+    needs: guard
+    if: needs.guard.outputs.should_deploy == 'true'
     runs-on: ubuntu-latest
     concurrency: deploy-pages
     permissions:
