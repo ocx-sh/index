@@ -25,7 +25,7 @@
   "superseded_by": "hashicorp/packer",
   "tags": {
     "1.7.0": {
-      "content": "sha256:86240b6568f8b927cec836cccd9c5bfa25b2b60a0ee5b6b0292d8c4abcf166aa",
+      "content": "sha256:099e248264d3be9b86f48c9a8187dea8ba21a08c719265d48617091163c8cf75",
       "observed": "2025-06-01T00:00:00Z"
     }
   }

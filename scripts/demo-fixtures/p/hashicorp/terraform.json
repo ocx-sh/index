@@ -22,15 +22,15 @@
   },
   "tags": {
     "latest": {
-      "content": "sha256:b8b9e550a51324348e78cd7f895cf68b9b052a2e4d6dc0c2266dcb8af89122a4",
+      "content": "sha256:f28ea9c95fa62c852866e653121ca6e51cf8f18e7adf8b9d5b94e4902b6297bf",
       "observed": "2026-07-10T00:00:00Z"
     },
     "1.9.0": {
-      "content": "sha256:b8b9e550a51324348e78cd7f895cf68b9b052a2e4d6dc0c2266dcb8af89122a4",
+      "content": "sha256:f28ea9c95fa62c852866e653121ca6e51cf8f18e7adf8b9d5b94e4902b6297bf",
       "observed": "2026-07-10T00:00:00Z"
     },
     "1.8.0": {
-      "content": "sha256:8acdd153579f93c377979d3f4825d78b862356de118c8423694d60351f5350ac",
+      "content": "sha256:f17ea26b3dec978e8feedffaac2f5eb3cc558d57d9c56d9cd122572c16694e0c",
       "observed": "2026-06-01T00:00:00Z"
     }
   }
