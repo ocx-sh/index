@@ -1,0 +1,49 @@
+# Why each invalid fixture must fail. `task schema:validate` requires the
+# substring after the first `|` to appear in check-jsonschema's output for that
+# fixture -- a fixture that fails for a different reason than the one it was
+# written to prove certifies nothing. Every file in this directory needs a line
+# here; a missing entry fails the task.
+#
+# <fixture basename>|<substring that must appear in the validator output>
+
+c-index-invalid-bad-digest.json|$.packages['kitware/cmake']: 'd11fc63c8c76e19b1b8b507384a61c604fce20dd2db6a1b70738c1a5da3e00ad' does not match
+c-index-invalid-bad-key.json|$.packages: '/kitware/cmake' does not match
+c-index-invalid-missing-format-version.json|$: 'format_version' is a required property
+c-index-invalid-unknown-property.json|$: Additional properties are not allowed ('generated_at' was unexpected)
+
+config-invalid-missing-required.json|$: 'format_version' is a required property
+config-invalid-unknown-property.json|$: Additional properties are not allowed ('packages' was unexpected)
+config-invalid-wrong-type-format-version.json|$.format_version: '1' is not of type 'integer'
+
+# An OCI image manifest is not an image index and is never stored in o/.
+image-index-invalid-image-manifest.json|$: 'manifests' is a required property
+image-index-invalid-schema-version.json|$.schemaVersion: 2 was expected
+# Pins manifests' `type: array`. Without it `items` is inert (2020-12 applies it
+# to arrays only) and every descriptor constraint below silently stops running.
+image-index-invalid-manifests-wrong-type.json|$.manifests: {'0': {'mediaType': 'application/vnd.oci.image.manifest.v1+json'}} is not of type 'array'
+image-index-invalid-descriptor-missing-size.json|$.manifests[0]: 'size' is a required property
+image-index-invalid-descriptor-bad-digest.json|$.manifests[0].digest: 'c669343d28ef287d354208c5f0d628d8ed4734c82909cdef1365acf1725f3fdf' does not match
+image-index-invalid-platform-missing-os.json|$.manifests[0].platform: 'os' is a required property
+
+root-invalid-bad-digest.json|$.desc.digest: 'sha256:not-a-valid-hex-digest' does not match
+root-invalid-bad-tag-name.json|$.tags: '.28.1' does not match '^[a-zA-Z0-9_][a-zA-Z0-9._-]{0,127}$'
+root-invalid-github-login-too-long.json|$.owners[0].github: 'a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a' does not match
+root-invalid-missing-required.json|$: 'status' is a required property
+root-invalid-namespace-too-long.json|$.name: 'ocx.sh/a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a/x' does not match
+root-invalid-source-not-https.json|$.source: 'javascript:alert(document.domain)' does not match
+root-invalid-unknown-property.json|$: Additional properties are not allowed ('aliases' was unexpected)
+root-invalid-wrong-type.json|$.owners: {'github': 'alice', 'github_id': 123456} is not of type 'array'
+
+# D7 reserved tags. Each must be rejected by tags.propertyNames' `not`, not by
+# the base OCI tag-grammar pattern -- so the required substring names the
+# reservation clause specifically. Seven forms, one fixture each.
+root-invalid-reserved-tag-ocx-desc.json|'__ocx.desc' should not be valid under {'anyOf'
+root-invalid-reserved-tag-ocx-bare.json|'__ocx' should not be valid under {'anyOf'
+root-invalid-reserved-tag-ocx-suffixed.json|'__ocxfoo' should not be valid under {'anyOf'
+root-invalid-reserved-tag-ocx-uppercase.json|'__OCX.desc' should not be valid under {'anyOf'
+root-invalid-reserved-tag-canonical-sha256.json|'sha256.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' should not be valid under {'anyOf'
+root-invalid-reserved-tag-canonical-sha384.json|'sha384.bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb' should not be valid under {'anyOf'
+# sha512.<128 hex> is 135 characters, so it also overruns the 128-character OCI
+# tag-grammar bound and reports two errors. The required substring is still the
+# reservation clause: the reservation is what this fixture exists to prove.
+root-invalid-reserved-tag-canonical-sha512.json|'sha512.cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc' should not be valid under {'anyOf'

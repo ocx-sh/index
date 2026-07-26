@@ -28,10 +28,20 @@ tasks:
       check-jsonschema metaschema check on schema/*.schema.json; every
       fixture in schema/fixtures/valid/ must pass, every fixture in
       schema/fixtures/invalid/ must FAIL validation (fixture name prefix up
-      to -valid-/-invalid- selects the schema file).
+      to -valid-/-invalid- selects the schema file) AND must fail for the
+      reason recorded against it in schema/fixtures/invalid/expected-reasons.txt.
+      Asserting only "it failed" is not enough: a fixture written to prove the
+      D7 reserved-tag rule but rejected by, say, the tag-length bound would
+      pass a failure-only gate while certifying nothing about the rule. Every
+      fixture must have an entry in that file; a missing one is an error. The
+      converse too: an entry naming a fixture that no longer exists is an
+      error, so a deleted or renamed fixture cannot leave a rotting row behind
+      and quietly turn the reason file into decoration.
     set: [e, u, pipefail]
     cmds:
       - |
+        reasons=schema/fixtures/invalid/expected-reasons.txt
+
         echo "== metaschema: schema/*.schema.json =="
         uvx check-jsonschema --check-metaschema schema/*.schema.json
 
@@ -47,7 +57,7 @@ tasks:
           uvx check-jsonschema --schemafile "$schema" "$f"
         done
 
-        echo "== invalid fixtures (must FAIL validation) =="
+        echo "== invalid fixtures (must FAIL validation, for the recorded reason) =="
         for f in schema/fixtures/invalid/*.json; do
           base=$(basename "$f")
           schema="schema/${base%%-invalid-*}.schema.json"
@@ -55,9 +65,32 @@ tasks:
             echo "no schema found for fixture $f (derived: $schema)" >&2
             exit 1
           fi
-          echo "-- $f vs $schema (expect failure)"
-          if uvx check-jsonschema --schemafile "$schema" "$f"; then
+          want=$(grep -F "$base|" "$reasons" | head -1 | cut -d'|' -f2- || true)
+          if [ -z "$want" ]; then
+            echo "no expected reason recorded for $f in $reasons" >&2
+            exit 1
+          fi
+          echo "-- $f vs $schema (expect failure: $want)"
+          if out=$(uvx check-jsonschema --schemafile "$schema" "$f" 2>&1); then
             echo "FIXTURE SHOULD HAVE FAILED VALIDATION BUT PASSED: $f" >&2
+            exit 1
+          fi
+          case "$out" in
+            *"$want"*) ;;
+            *)
+              echo "FIXTURE FAILED FOR THE WRONG REASON: $f" >&2
+              echo "  expected substring: $want" >&2
+              echo "  actual output:" >&2
+              echo "$out" >&2
+              exit 1
+              ;;
+          esac
+        done
+
+        echo "== recorded reasons must name an existing fixture =="
+        for base in $(grep -v '^#' "$reasons" | cut -d'|' -f1); do
+          if [ ! -f "schema/fixtures/invalid/$base" ]; then
+            echo "stale entry in $reasons: no fixture named $base" >&2
             exit 1
           fi
         done
@@ -139,7 +172,7 @@ tasks:
       config.json); every rendered p/<ns>/<pkg>.json root against
       schema/root.schema.json; every rendered
       p/<ns>/<pkg>/o/sha256/<hex>.json CAS object against
-      schema/observation-object.schema.json. Pre-seed (no p/ roots rendered
+      schema/image-index.schema.json. Pre-seed (no p/ roots rendered
       yet) the latter two `find -exec` calls simply match (and invoke) zero
       files — config.json and c/index.json are still validated. `-exec … +` (not a `read -d
       ''` loop) because Task's own script interpreter isn't bash and
@@ -148,7 +181,7 @@ tasks:
       roots glob carries `-mindepth 3 -maxdepth 3` (WP3-C E2E fix): GNU
       `find -path` has no FNM_PATHNAME semantics, so a bare `*` in `-path`
       matches `/` too — `$out/p/*/*.json` alone also matches
-      `$out/p/<ns>/<pkg>/o/sha256/<hex>.json` (a CAS observation object,
+      `$out/p/<ns>/<pkg>/o/sha256/<hex>.json` (a CAS image index,
       six path components below `$out`, vs. a root's three) and fed CAS
       objects into the root-schema check, failing every package with any
       CAS object. The depth bound anchors it to exactly `p/<ns>/<pkg>.json`;
@@ -168,8 +201,8 @@ tasks:
         echo "== rendered package roots vs schema/root.schema.json =="
         find "$out" -mindepth 3 -maxdepth 3 -path "$out/p/*/*.json" -exec uvx check-jsonschema --schemafile schema/root.schema.json {} +
 
-        echo "== rendered observation objects vs schema/observation-object.schema.json =="
-        find "$out" -path "$out/p/*/*/o/sha256/*.json" -exec uvx check-jsonschema --schemafile schema/observation-object.schema.json {} +
+        echo "== rendered CAS image indices vs schema/image-index.schema.json =="
+        find "$out" -path "$out/p/*/*/o/sha256/*.json" -exec uvx check-jsonschema --schemafile schema/image-index.schema.json {} +
 
         echo "schema:validate:rendered: OK"
 

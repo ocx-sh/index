@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 2,
+  "mediaType": "application/vnd.oci.image.index.v1+json",
+  "artifactType": "application/vnd.sh.ocx.package.v1",
+  "subject": {
+    "mediaType": "application/vnd.oci.image.manifest.v1+json",
+    "digest": "sha256:0e9e39a1d0f0a4b4bb2b3b5c9b7b34a1c7b8c9d0e1f2a3b4c5d6e7f8091a2b3c",
+    "size": 481
+  },
+  "annotations": {
+    "org.opencontainers.image.source": "https://github.com/acme/widget"
+  },
+  "manifests": [
+    {
+      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "digest": "sha256:c669343d28ef287d354208c5f0d628d8ed4734c82909cdef1365acf1725f3fdf",
+      "size": 1024,
+      "platform": {
+        "architecture": "arm",
+        "os": "linux",
+        "os.version": "5.15.0",
+        "os.features": ["headless"],
+        "variant": "v7",
+        "features": ["sse4"],
+        "vnd.example.platform-extension": "gpu"
+      },
+      "annotations": { "vnd.acme.build": "42" }
+    },
+    {
+      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "digest": "sha256:3e02992408ff4f94ebe72d9e5a1cdb096332f94a143c6472606101066fdd13a5",
+      "size": 1121,
+      "platform": { "architecture": "amd64", "os": "windows", "os.version": "10.0.20348.2402" }
+    },
+    {
+      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "digest": "sha256:242bc053fe03e3d49eddea08a34a95c5ed596e6faf2a426b0d78485dc91a5294",
+      "size": 840,
+      "platform": { "architecture": "unknown", "os": "unknown" },
+      "annotations": { "vnd.docker.reference.type": "attestation-manifest" }
+    },
+    {
+      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "digest": "sha384:2f1b9ea1cb8de4e0b53a8f2df3f1a1b06fc7e5c9d1e0a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c",
+      "size": 620,
+      "artifactType": "application/vnd.example.sbom.v1+json"
+    }
+  ]
+}

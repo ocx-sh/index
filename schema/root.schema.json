@@ -58,9 +58,18 @@
     },
     "tags": {
       "type": "object",
-      "description": "Every tag ever observed on the physical repository, no filtering. Two tags are aliases of each other exactly when their content digests are equal (emergent aliasing, no declared aliases field).",
+      "description": "Every version tag observed on the physical repository. Two tags are aliases of each other exactly when their content digests are equal (emergent aliasing, no declared aliases field). Reserved tags are not versions and never appear here: the OCX-internal __ocx* namespace, and canonical <algorithm>.<hex> digest-alias tags, which are digest-addressed rather than version pointers.",
       "propertyNames": {
-        "pattern": "^[a-zA-Z0-9_][a-zA-Z0-9._-]{0,127}$"
+        "$comment": "The first pattern is the OCI distribution tag grammar. The `not` is the D7 reservation, and this schema is the PR-time admission gate for hand-authored content — but it documents intent rather than expressing the whole rule: JSON Schema regexes are ECMA-262, which has no inline case-insensitivity flag (hence the spelled-out [oO][cC][xX] case-fold) and cannot express the semantic parts. The real gate is check_no_reserved_tags in bot/src/indexbot/core/validate_entry.py, which every PR passes through.",
+        "pattern": "^[a-zA-Z0-9_][a-zA-Z0-9._-]{0,127}$",
+        "not": {
+          "anyOf": [
+            { "pattern": "^__[oO][cC][xX]" },
+            { "pattern": "^sha256\\.[0-9a-fA-F]{64}$" },
+            { "pattern": "^sha384\\.[0-9a-fA-F]{96}$" },
+            { "pattern": "^sha512\\.[0-9a-fA-F]{128}$" }
+          ]
+        }
       },
       "additionalProperties": { "$ref": "#/$defs/tagEntry" }
     }
@@ -146,7 +155,7 @@
       "properties": {
         "content": {
           "$ref": "#/$defs/sha256Digest",
-          "description": "Digest of the observation object in this index's own package-local CAS — not an OCI manifest or image-index digest."
+          "description": "Digest of the OCI image index this tag resolved to, as served by the physical registry; those bytes are stored verbatim at o/<algo>/<hex>.json. Never absent: every tag entry names an index that is present in the CAS."
         },
         "observed": { "$ref": "#/$defs/zAnchoredTimestamp" },
         "yanked": {
