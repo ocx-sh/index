@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://index.ocx.sh/schema/image-index.schema.json",
+  "title": "OCI Image Index",
+  "description": "Immutable, package-local CAS object at /p/<namespace>/<package>/o/sha256/<hex>.json: the bytes a registry served for an OCI image index, stored verbatim, where <hex> is sha256 of those bytes and is therefore the registry's own manifest digest. Deliberately open at every level — this index does not author these bytes, so subject, artifactType, annotations, urls, data and future image-spec fields must all validate. It constrains only the grammar the resolver depends on: schemaVersion, manifests[], each descriptor's mediaType/digest/size, and — on a descriptor that carries a platform object at all — that object's architecture and os, both of which the image-spec marks REQUIRED and the platform projection reads unconditionally. A descriptor may omit platform entirely; it may not carry a half-populated one.",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "const": 2,
+      "description": "OCI image-spec image-index.md: REQUIRED, and for this version of the specification MUST be 2."
+    },
+    "mediaType": {
+      "type": "string",
+      "minLength": 1,
+      "description": "application/vnd.oci.image.index.v1+json for an OCI index; registries also serve Docker manifest lists (application/vnd.docker.distribution.manifest.list.v2+json) in the same shape. Deliberately not constrained to a value: both implementations discriminate an index from a manifest on the presence of manifests[] alone, and a schema stricter than the code it gates would reject bytes the bot accepts."
+    },
+    "manifests": {
+      "type": "array",
+      "description": "The descriptors the resolver selects a platform from. Presence of this property is the discriminator that makes these bytes an image index rather than an image manifest — an image manifest carries config/layers instead and is refused, never stored. The array type is load-bearing, not decoration: `items` applies only to arrays in 2020-12, so an object-valued manifests would bypass every descriptor constraint below.",
+      "items": { "$ref": "#/$defs/descriptor" }
+    }
+  },
+  "required": ["schemaVersion", "manifests"],
+  "$defs": {
+    "descriptor": {
+      "type": "object",
+      "description": "OCI content descriptor (image-spec descriptor.md). mediaType, digest and size are REQUIRED there and are the three fields every registry emits. Open on everything else: annotations, urls, data and artifactType all occur in registry-served indices.",
+      "properties": {
+        "mediaType": { "type": "string", "minLength": 1 },
+        "digest": { "$ref": "#/$defs/digest" },
+        "size": { "type": "integer", "minimum": 0 },
+        "platform": { "$ref": "#/$defs/platform" }
+      },
+      "required": ["mediaType", "digest", "size"]
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:[.+_-][a-z0-9]+)*:[a-zA-Z0-9=_-]+$",
+      "description": "The OCI digest grammar (image-spec descriptor.md), verbatim and algorithm-agnostic. Deliberately not narrowed to sha256: these are the registry's own digests for leaf manifests, not digests this index mints."
+    },
+    "platform": {
+      "type": "object",
+      "description": "OCI platform object. Absent entirely on attestation and referrer descriptors, and os == \"unknown\" is the attestation convention; both forms are valid here and are filtered downstream by core/render.py's platform projection, never rejected at this layer. Field names with a literal dot (os.version, os.features) match the OCI spec's own property names, not a nested os object. Open like every other level: unrecognised keys validate, so a future image-spec platform field needs no schema change here.",
+      "properties": {
+        "architecture": { "type": "string", "minLength": 1 },
+        "os": { "type": "string", "minLength": 1 },
+        "os.version": { "type": "string", "minLength": 1 },
+        "os.features": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "variant": { "type": "string", "minLength": 1 },
+        "features": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      },
+      "required": ["architecture", "os"]
+    }
+  }
+}

@@ -6,7 +6,7 @@ import PlatformMatrix from './PlatformMatrix.vue'
 import CopyIcon from '../shared/CopyIcon.vue'
 import CopyContextMenu, { buildTagCopyActions, type CopyAction } from '../shared/CopyContextMenu.vue'
 import type { PackageRoot } from '../../composables/usePackageRoot'
-import type { ObservationObject } from '../../composables/useObservation'
+import type { ImageIndex } from '../../composables/useImageIndex'
 
 const props = defineProps<{
   root: PackageRoot
@@ -17,7 +17,7 @@ const props = defineProps<{
    * output) — `null` when the package has no live tag at all. */
   primaryTag: string | null
   latestVersionLabel: string | null
-  activeObservation: ObservationObject | null
+  activeImageIndex: ImageIndex | null
   tagCount: number
 }>()
 
@@ -87,6 +87,14 @@ const owners = computed(() => props.root.owners)
 // authored here) — allowlist the scheme before it ever reaches an `:href`
 // (CWE-79 guard, see `utils/safeHref.ts`). `null` degrades to plain text.
 const safeUpstreamUrl = computed(() => safeHref(props.root.upstream?.repository_url))
+
+// `source` = the repo whose CI built the artifacts (bot-derived from the
+// registry annotation), a different thing from `upstream` above (the vendor
+// a mirror attributes) — hence its own row, its own label, its own tooltip.
+// Registry-sourced URL text, so the same CWE-79 guard applies; unlike
+// `upstream` there is no org name to degrade to, so an unsafe value drops
+// the whole row rather than printing the raw string.
+const safeSourceUrl = computed(() => safeHref(props.root.source))
 </script>
 
 <template>
@@ -134,7 +142,7 @@ const safeUpstreamUrl = computed(() => safeHref(props.root.upstream?.repository_
         <span class="rail-heading">PLATFORMS</span>
       </div>
       <div class="rail-card">
-        <PlatformMatrix :platforms="activeObservation?.platforms ?? []" />
+        <PlatformMatrix :platforms="activeImageIndex?.manifests ?? []" />
       </div>
     </div>
 
@@ -147,6 +155,10 @@ const safeUpstreamUrl = computed(() => safeHref(props.root.upstream?.repository_
           <div class="metadata-row">
             <span class="metadata-key">registry</span>
             <span class="metadata-value truncate">{{ root.repository }}</span>
+          </div>
+          <div v-if="safeSourceUrl" class="metadata-row">
+            <span class="metadata-key" title="Repository whose CI built these artifacts">source</span>
+            <a class="metadata-value truncate link" :href="safeSourceUrl" target="_blank" rel="noopener noreferrer">{{ safeSourceUrl }} ↗</a>
           </div>
           <div class="metadata-row">
             <span class="metadata-key">owners</span>
@@ -374,5 +386,11 @@ const safeUpstreamUrl = computed(() => safeHref(props.root.upstream?.repository_
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* Truncated *and* clickable (the source row) — keep the link color the
+   `registry` row's plain treatment would otherwise override. */
+.metadata-value.truncate.link {
+  color: var(--c-accent);
 }
 </style>

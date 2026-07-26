@@ -10,6 +10,7 @@
     "repository_url": "https://github.com/Kitware/CMake",
     "disclaimer": null
   },
+  "source": "https://github.com/ocx-sh/mirror-cmake",
   "desc": {
     "digest": "sha256:b71dbe0270d9f6b35d9b5711680ff0f98f2b6fcdd940391f329df135486ee4ec",
     "title": "CMake",

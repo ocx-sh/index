@@ -18,7 +18,7 @@ Look something up. Precise, exhaustive, no narrative.
 - [Wire Format](/docs/reference/wire-format) — the four frozen URL shapes,
   field semantics, freshness, `format_version` gating
 - [Entry Schema](/docs/reference/entry-schema) — full field table for the
-  package root and observation object
+  package root and the OCI image index
 - [Namespace Policy](/docs/reference/namespace-policy) — the
   `<namespace>/<package>` charset, reserved segments, dispute policy
 - [Governance Contracts](/docs/reference/governance-contracts) — the
@@ -45,5 +45,5 @@ Run the index itself.
 
 Understand why it works this way.
 
-- [Architecture](/docs/explanation/architecture) — the locked-observation
-  model, the verifiability chain, why manifests not indexes
+- [Architecture](/docs/explanation/architecture) — the locked-index model,
+  the verifiability chain, why the index is copied, not the manifest

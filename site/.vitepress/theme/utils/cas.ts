@@ -11,7 +11,7 @@
 // safety at a URL-building boundary — reject anything that could escape the
 // `/o/sha256/<seg>.<ext>` path segment (`/`, `..`, whitespace, etc.), not
 // re-enforce hex-ness the schema already owns. `[a-z0-9]` (not `[a-f0-9]`)
-// matches what `useObservation.ts`'s sibling CAS-URL path already accepts
+// matches what `useImageIndex.ts`'s sibling CAS-URL path already accepts
 // unchecked for the exact same tags[*].content digest field. Previously
 // `[a-f0-9]` here silently dropped the fetch (`if (!url) failed = true`, no
 // error, no request) for any digest using a non-hex letter — the bug: every

@@ -12,6 +12,13 @@ D4 (announce protocol) and D5 (bot merge policy); carries forward and reinterpre
 governance contracts G-01–G-18 under the locked-observation model — see
 [adr_locked_observation_index_format.md](./adr_locked_observation_index_format.md)
 **Supersedes:** N/A
+**Superseded By:** [`adr_oci_index_only_dispatch.md`](https://github.com/ocx-sh/ocx/blob/main/.claude/artifacts/adr_oci_index_only_dispatch.md)
+(`ocx-sh/ocx`, 2026-07-25) — partially: retires the "observation object" vocabulary
+this ADR's BD-1 module map and the G-01 schema-file reference use to describe the CAS
+object `o/` stores (deleted, replaced by a verbatim OCI image index); no BD decision
+or G-table disposition is reversed. See Amendment A2. Separately corrected in
+Amendment A3: BD-5's `validate.yml` job count (implementation drift, unrelated to the
+dispatch ADR).
 
 ## Context
 
@@ -29,11 +36,12 @@ The locked-observation format (`adr_locked_observation_index_format.md`) also ch
 what the bot computes. Under the original pointer-only design (§2f of
 `design_spec_registry_indirection.md`), "regenerate from registry truth" meant one
 mutable pointer. Under locked-observation, it means observing every tag on a physical
-repository, hashing platform-manifest sets into content-addressed observation objects,
-and writing a `tags` map where every row is registry-derived. The bot's core logic gets
-larger and more security-relevant at the same time — which is why the coverage,
-input-validation, and privilege-split decisions below are made explicit now rather than
-left implicit in workflow YAML.
+repository, copying the registry's own OCI image index bytes verbatim into
+content-addressed CAS objects (`adr_oci_index_only_dispatch.md` — no re-serialization,
+no bot-authored platform-set projection), and writing a `tags` map where every row is
+registry-derived. The bot's core logic gets larger and more security-relevant at the
+same time — which is why the coverage, input-validation, and privilege-split decisions
+below are made explicit now rather than left implicit in workflow YAML.
 
 Four research artifacts ground this ADR:
 [`research_python_bot_stack.md`](./research_python_bot_stack.md),
@@ -121,9 +129,10 @@ indexbot governance-check  # internal: set the governance/review-required status
 ```
 
 `indexbot validate` is **not** the JSON Schema layer. Schema shape validation
-(`schema/root.schema.json`, `schema/observation-object.schema.json`, `schema/
-config.schema.json`) runs via the `check-jsonschema` CLI in the unprivileged
-`schema-validate` job (BD-5), never imported into `indexbot`. `indexbot validate` runs
+(`schema/root.schema.json`, `schema/image-index.schema.json`, `schema/
+config.schema.json`, `schema/c-index.schema.json`) runs via the `check-jsonschema`
+CLI in the unprivileged `schema-validate` job (BD-5), never imported into `indexbot`.
+`indexbot validate` runs
 the checks a schema cannot express: path↔name derivation, repository host allowlist
 (checked *before* any network call — SSRF ordering), reserved-namespace rejection
 (charset/reserved-list contract owned by
@@ -141,10 +150,10 @@ bot/
   src/indexbot/
     exit_codes.py            # BD-2
     errors.py
-    model.py                 # frozen dataclasses — RootEntry, TagRow, ObservationObject, …
+    model.py                 # frozen dataclasses — RootEntry, TagRow, …
     ports.py                 # RegistryPort, GitHubPort, FilePort, ClockPort (Protocol)
     core/                    # PURE — no I/O, exhaustively unit-tested with plain values
-      observe.py              # registry truth → tags map + observation objects
+      observe.py              # registry truth → tags map + OCI image indices (verbatim)
       regenerate.py           # target-state computation from observations
       diff.py                 # current vs target → Patch | None
       anomaly.py               # G-13-class integrity check (BD-carry-forward)
@@ -307,6 +316,12 @@ separate:
 > enforces owners-membership (G-19) and assigns reviewers from `maintainers.yml` (G-20),
 > still never checking out PR head. See Amendment A1.
 
+> **Corrected by Amendment A3 (2026-07-25):** `validate.yml` is now **three** jobs, not
+> two — `schema-validate-pr` / `governance-gate` / `arm-auto-merge`. Auto-merge arming
+> moved out of `governance-gate` into the dedicated, checkout-free `arm-auto-merge`
+> job, the only job holding `contents: write`, with a `--disable-auto` disarm branch
+> for a PR that re-classifies out of the machine lane after arming. See Amendment A3.
+
 `validate.yml` is two jobs with deliberately different trust levels:
 
 | Job | Trigger | Secrets | Checks out | Network | Required status check |
@@ -417,13 +432,13 @@ apply to that workflow exactly as they do to `validate.yml`/`announce.yml`/
 
 `design_spec_registry_indirection.md` §2f/§10/§11 defined G-01–G-18 against the
 pointer-only index (one mutable pointer per package, no observation history). The
-locked-observation model (root + tags map + CAS observation objects,
+locked-observation model (root + tags map + CAS-stored OCI image indices,
 `adr_locked_observation_index_format.md`) changes what several of these contracts
 regenerate. One row per contract, disposition under the current model:
 
 | ID | Original contract | Disposition | Notes |
 |---|---|---|---|
-| G-01 | Schema-shape validation against `entry.schema.json` | **Kept, reinterpreted** | Now validates against `schema/root.schema.json` + `schema/observation-object.schema.json` (three schema files, not one). Executed by `check-jsonschema` in `schema-validate` (BD-5), never imported into `indexbot`. |
+| G-01 | Schema-shape validation against `entry.schema.json` | **Kept, reinterpreted** | Now validates against `schema/root.schema.json`, `schema/image-index.schema.json`, `schema/config.schema.json`, and `schema/c-index.schema.json` (four schema files, not one). Executed by `check-jsonschema` in `schema-validate` (BD-5), never imported into `indexbot`. |
 | G-02 | `name` equals the path-derived logical name | **Kept** | `p/<ns>/<pkg>.json` → `name` must equal `<ns>/<pkg>`. Executed by `indexbot validate` (`core/validate_entry.py`), hand-rolled, not schema-expressible. |
 | G-03 | `repository` host allowlist | **Kept** | Anti-squat/anti-exfil guard, checked before any network call (SSRF ordering, BD-1). |
 | G-04 | New entry file → `new-package` label + mandatory human review, never auto-merge | **Kept** | Executed by `classify-pr`/`governance-check` (BD-5). Namespace-fit judgment is ADR-2 ND-5's contract; this ADR only owns the mechanical gate. |
@@ -431,11 +446,11 @@ regenerate. One row per contract, disposition under the current model:
 | G-06 | Render: `p/*.json` → `public/p/*.json` identity copy + `config.json` | **Reinterpreted** | No longer an identity copy. `indexbot render` (`core/render.py`) does reachability-filtered CAS copy, new-shape `config.json` emission, `/data/catalog/**` emission, and per-package wrapper-page emission — see `adr_catalog_docs_colocation.md`. Owned by the `indexbot render` subcommand, not a standalone script. |
 | G-07 | Deploy idempotent; no-op on an unchanged tree | **Kept** | |
 | G-08 | `repository_dispatch` + `client_payload.package`, env-var indirection, regex-validated before use | **Kept, regex reinterpreted** | Package-id regex is now the exact 2-segment form (ADR-2 ND-3), replacing the earlier N-segment-permissive draft in `design_spec_registry_indirection.md` §10 amendment 5. Mechanics: BD-4. **— Retired 2026-07-18 → [ADR-6](./adr_fork_pr_announce.md) Amendment A1:** no `repository_dispatch`/`client_payload` exists under the fork-PR lane; the input hygiene migrates to fork-PR claim verification. |
-| G-09 | Field provenance partition: registry-derived vs human-governed fields never cross-contaminate | **Kept, field set updated** | Registry-derived (regenerated every announce/reconcile): the entire `tags` map + observation objects. Human-governed (never regenerated, only human-PR-changed): `name`, `repository`, `owners`, `status`, `deprecated_message`, `created`, `upstream`. `desc` is registry-derived (sourced from the `__ocx.desc` artifact / `sh.ocx.keywords` annotation) but only refreshed at announce/reconcile time from the currently-tagged content, per `adr_locked_observation_index_format.md`. **— Reinterpreted 2026-07-18 → [ADR-6](./adr_fork_pr_announce.md) Amendment A1:** the `tags` map is owner-curated (announced), not regenerated from every observed tag; each row's *content* is still derived/verified from registry truth, but the set's scope is the owner's curated selection (ADR-6 FP-2). |
+| G-09 | Field provenance partition: registry-derived vs human-governed fields never cross-contaminate | **Kept, field set updated** | Registry-derived (regenerated every announce/reconcile): the entire `tags` map + OCI image indices. Human-governed (never regenerated, only human-PR-changed): `name`, `repository`, `owners`, `status`, `deprecated_message`, `created`, `upstream`. `desc` is registry-derived (sourced from the `__ocx.desc` artifact / `sh.ocx.keywords` annotation) but only refreshed at announce/reconcile time from the currently-tagged content, per `adr_locked_observation_index_format.md`. **— Reinterpreted 2026-07-18 → [ADR-6](./adr_fork_pr_announce.md) Amendment A1:** the `tags` map is owner-curated (announced), not regenerated from every observed tag; each row's *content* is still derived/verified from registry truth, but the set's scope is the owner's curated selection (ADR-6 FP-2). **— vocabulary corrected 2026-07-25 → Amendment A2.** |
 | G-10 | Bounded backoff retry on manifest fetch before giving up | **Kept** | `core/backoff.py`; exhaustion maps to exit `75` (BD-2). |
 | G-11 | Idempotent + cascade-safe convergence; diff routes to G-04/G-05 merge policy | **Kept** | Idempotency is now an explicit required test ("run twice, second diff empty", BD-3), not an implicit property. **— Partially superseded 2026-07-18 → [ADR-6](./adr_fork_pr_announce.md) Amendment A1:** the "publisher never enumerates" property no longer holds — under owner-curated tags the owner chooses the tag set (ADR-6 FP-2). Idempotency/cascade-safety within the curated scope is kept. |
 | G-12 | Nightly reconcile regenerates every entry, diffs, opens one PR with all drift | **Kept** | **— Reframed verify-only 2026-07-18 → [ADR-6](./adr_fork_pr_announce.md) Amendment A1:** reconcile no longer regenerates, rewrites, or opens a content PR; it verifies every committed claim against the registry and flags anomalies via issue (ADR-6 FP-3). |
-| G-13 | Reconcile-maintained `state/observed-digests.json`; digest change on an already-observed tag = hard-stop anomaly, first sight recorded not flagged | **Eliminated as a separate file** | The committed root **is** the observation ledger under the locked-observation model — every observed tag and its content digest already lives in the `tags` map. The anomaly check reads the committed root directly instead of an auxiliary state file. The exact mutability predicate (which tag classes may legitimately move vs. which digest changes are integrity violations) is `adr_locked_observation_index_format.md`'s contract; this ADR fixes that violations exit `65` and are never auto-healed (BD-2). |
+| G-13 | Reconcile-maintained `state/observed-digests.json`; digest change on an already-observed tag = hard-stop anomaly, first sight recorded not flagged | **Eliminated as a separate file** | The committed root **is** the ledger of every observed tag under the current model — every observed tag and its content digest already lives in the `tags` map. The anomaly check reads the committed root directly instead of an auxiliary state file. The exact mutability predicate (which tag classes may legitimately move vs. which digest changes are integrity violations) is `adr_locked_observation_index_format.md`'s contract; this ADR fixes that violations exit `65` and are never auto-healed (BD-2). **— vocabulary corrected 2026-07-25 → Amendment A2:** "committed root" here names the `tags` map's record of observed digests, not the deleted per-tag `o/` object shape; unaffected by A2 otherwise. |
 | G-14 | Sibling-repo CI hardening explicit: `permissions:` default-deny + SHA-pinned actions on all workflows | **Kept** | BD-7. |
 | G-15 | D6 ownership proof executed: fetch the physical manifest, verify the embedded canonical identifier equals the entry's logical `name` | **Reinterpreted as a pluggable loud-skip seam** | The identifier-embedding convention this depends on is unconfirmed against `ocx-mirror`'s actual publishing behavior. Implemented as a `RegistryPort` probe returning one of three outcomes — `confirmed`, `mismatch` (block-tier), `unconfirmed` (WARN + surfaced on the PR, **never a silent pass**). Resolving the convention is tracked against `ocx-mirror` publishing verification, not this ADR. |
 | G-16 | Privileged/unprivileged workflow split | **Kept** | BD-5, in full. |
@@ -526,7 +541,8 @@ reconcile.yml (nightly cron + workflow_dispatch)
 - [`adr_public_index_registry_indirection.md`](./adr_public_index_registry_indirection.md) —
   D4 (announce protocol), D5 (bot merge policy), amended above
 - [`adr_locked_observation_index_format.md`](./adr_locked_observation_index_format.md) —
-  the wire/observation format `indexbot`'s core computes against
+  the wire format `indexbot`'s core computes against (now: verbatim OCI image
+  indices, per `adr_oci_index_only_dispatch.md`)
 - [`adr_namespace_policy.md`](./adr_namespace_policy.md) — ND-3 (the two regexes this
   ADR places in code), ND-4 (reserved segments), G-04/G-05/G-15 cross-references
 - [`adr_catalog_docs_colocation.md`](./adr_catalog_docs_colocation.md) — `render-deploy.yml`
@@ -619,6 +635,91 @@ enumerates the human-review key set as `repository`, `owners`, `status`,
 records the omission additively; the decided G-05 row is left verbatim per immutable-ADR
 discipline. ADR-6 FP-5 uses the corrected set.
 
+## Amendment A2 — `o/` Holds a Verbatim OCI Image Index, Not an Invented Object (2026-07-25)
+
+**Status:** Accepted — documentation correction following
+[`adr_oci_index_only_dispatch.md`](https://github.com/ocx-sh/ocx/blob/main/.claude/artifacts/adr_oci_index_only_dispatch.md)
+(`ocx-sh/ocx`, owner-ratified 2026-07-25).
+
+**Problem.** Several passages above describe what the bot computes and stores using
+the vocabulary of a bot-synthesized "observation object" — a `{"platforms":[...]}`
+projection of an OCI image index's `manifests[]` array, invented because the index
+had no shape of its own for what a tag resolved to. `adr_oci_index_only_dispatch.md`
+deletes that invention: the bot copies the registry's own image-index bytes verbatim
+into `o/`, hashed under the registry's own digest. This is a correction to
+present-tense mechanism claims (what the bot's module layout names, what the
+schema-validate gate checks), not a reopening of any BD decision or G-table
+disposition — BD-1's functional-core/imperative-shell architecture, BD-2's exit
+codes, BD-3's coverage gate, and every G-table row's disposition are unaffected by
+what shape lives inside the CAS object.
+
+**Resolution.** Corrected in place: the Context paragraph's "hashing platform-manifest
+sets into content-addressed observation objects" now describes verbatim copying;
+BD-1's module map drops the deleted `ObservationObject` type and retargets
+`observe.py`'s comment at "OCI image indices"; BD-1's schema enumeration and G-01's
+row now name `schema/root.schema.json`, `schema/image-index.schema.json`,
+`schema/config.schema.json`, and `schema/c-index.schema.json` (four files, replacing
+the deleted `schema/observation-object.schema.json`); G-09's field-provenance row
+and G-13's disposition cell drop "observation object(s)"/"observation ledger" as an
+artifact noun, each carrying its own "vocabulary corrected → Amendment A2" marker
+alongside its existing Amendment A1 marker where one already existed; the Governance
+Contract Carry-Forward section's model description reads "CAS-stored OCI image
+indices"; the Links section's pointer to `adr_locked_observation_index_format.md`
+notes the current shape. The verb "observe" and the bot's in-memory `Observation`
+event record are unaffected — the vocabulary ruling retires the noun for the
+*artifact*, not the act of fetching a tag and recording what it resolved to.
+
+**Consequences:** One beyond the vocabulary corrections above, and it belongs in a
+security record: `o/` now carries publisher-controlled bytes the index did not author
+(`adr_oci_index_only_dispatch.md` R4), not bot-synthesized, schema-locked content —
+`schema/observation-object.schema.json`'s `additionalProperties: false` on `platform`
+is gone with the object it locked; `align/b0c`'s `schema/image-index.schema.json` is
+deliberately open (`subject`, `artifactType`, `annotations`, `urls`, `data`, and
+future image-spec fields must all validate). This is a trust-boundary move, not a
+schema nicety: `o/sha256/<hex>.json` payloads reaching the render path (e.g.
+`useImageIndex.ts`, WP-B6) are now untrusted-registry input in the same sense
+`observe.py`'s existing `org.opencontainers.image.source` scheme-allowlist already
+treats one such field, and must be handled that way — sanitized or left unrendered —
+not treated as bot-authored, shape-locked data the way this ADR's threat model
+previously assumed. `adr_locked_observation_index_format.md` (ADR-1) carries its own
+`Superseded By` marker for the clauses this affects (WP-B6); this amendment brings
+ADR-4's *own* prose in line with that and records the one substantive consequence
+that follows.
+
+## Amendment A3 — `validate.yml` Is Three Jobs, Not Two (2026-07-25)
+
+**Status:** Accepted — documentation correction, unrelated to
+`adr_oci_index_only_dispatch.md`. BD-5's original two-job description drifted from the
+implementation as `validate.yml` evolved (Track B/WP-B7); this amendment brings the
+ADR back in sync with the committed workflow.
+
+**Problem.** BD-5 (and the Technical Details flow diagram) describe `validate.yml` as
+two jobs — `schema-validate` and `governance-gate` — with auto-merge armed directly
+inside `governance-gate` via `gh pr merge --auto`. The committed workflow is now
+**three** jobs: `schema-validate-pr`, `governance-gate`, and `arm-auto-merge`.
+
+**Resolution.** `governance-gate` (`pull_request_target`; `contents: read` — no
+write to the repo tree, plus `pull-requests: write`/`statuses: write`/`issues: write`
+for labels, the `governance/review-required` status, and G-20's reviewer-assignment
+comment) now does classification and status-setting alone — `indexbot classify-pr` +
+`indexbot governance-check` — and publishes `governance-check`'s `disposition` as a
+job output. A new `arm-auto-merge` job (`pull_request_target`, checkout-free,
+`needs: governance-gate`) is the **only** job holding `contents: write`: it arms
+auto-merge (`gh pr merge --auto --squash`) when `disposition == 'success'`, and
+**withdraws** it (`gh pr merge --disable-auto`) on any other disposition — a fail-closed
+disarm branch that fires whenever a re-classification (e.g. a `synchronize` push that
+moves the PR out of the machine lane) would otherwise leave a stale arm in place.
+Splitting arming into its own checkout-free job keeps `contents: write` out of the job
+that runs `indexbot classify-pr`/`governance-check` against PR-influenced state, the
+same privilege-narrowing rationale BD-5 already argues for the
+`schema-validate`/`governance-gate` split itself.
+
+**Consequences:** None to BD-5's threat model — the privileged/unprivileged split is
+unchanged in kind, only refined into three jobs instead of two. The "Recorded risk"
+paragraph's re-trigger-timing concern extends to `arm-auto-merge`'s withdraw path,
+which is new attack/race surface `WP2-S`'s dedicated test plan (BD-5) should cover
+alongside the original label-race concern.
+
 ## Changelog
 
 | Date | Author | Change |
@@ -626,3 +727,6 @@ discipline. ADR-6 FP-5 uses the corrected set.
 | 2026-07-17 | Michael + Claude design swarm | Initial record from the 2026-07-16 design discussion |
 | 2026-07-17 | Phase 1 review-fix | BD-1/BD-3 corrected: sys.monitoring branch-coverage support needs Python 3.14+, not 3.12 — verified empirically (coverage 7.15.2 `CoverageWarning: Can't use core=sysmon`). Dropped the now-inert `core = "sysmon"` / `COVERAGE_CORE` settings from `bot/pyproject.toml`, `bot/taskfile.yml`, `ci.yml`; 3.12 floor kept for its own sake, not as a sysmon prerequisite. |
 | 2026-07-18 | Michael + Claude design swarm | Amendment A1 (fork-PR announce lane, ADR-6): BD-4 mechanism retired/hygiene carried forward, BD-5 reaffirmed + extended (G-19/G-20), BD-6 Announce-PAT retired; G-table delta — G-08/G-17 retired, G-11 partially superseded, G-12 reframed verify-only, G-18 collapses to always-dry, G-09 reinterpreted, G-19 (owners-membership auto-merge) + G-20 (maintainers-YAML reviewer assignment) added. Original rows preserved; markers point to Amendment A1. |
+| 2026-07-25 | Claude (sonnet, WP-B8) | Added `Superseded By` (partial) and Amendment A2: corrected "observation object" mechanism/module-map/schema-file wording to the verbatim-OCI-image-index shape, per `adr_oci_index_only_dispatch.md`. No BD decision or G-table disposition reversed. |
+| 2026-07-25 | Claude (sonnet, WP-B8) | Added Amendment A3: corrected BD-5's `validate.yml` job count from two to three (`schema-validate-pr` / `governance-gate` / `arm-auto-merge`), reflecting the checkout-free auto-merge-arming job with `contents: write` and its `--disable-auto` disarm branch (Track B/WP-B7 implementation). Unrelated to the dispatch ADR. |
+| 2026-07-25 | Claude (sonnet, WP-B8 review-fix) | Amendment A2: added the missing trust-boundary consequence (`o/` now carries unsanctioned, publisher-controlled bytes — schema no longer locks it) and named all four `schema/*.schema.json` files in BD-1's enumeration and G-01 (was three, naming two); flagged G-09/G-13's remaining "observation object(s)"/"observation ledger" wording with their own Amendment A2 markers, matching G-01's in-place correction. Amendment A3: `governance-gate`'s permission description corrected from "`contents: read` only" to its full scope (`pull-requests`/`statuses`/`issues: write` alongside read-only `contents`) — the prior wording understated a `pull_request_target` job's privilege in a security ADR. |

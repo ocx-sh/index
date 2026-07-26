@@ -81,9 +81,10 @@ props — the same static pages serve empty-catalog and populated-catalog states
 - `usePackageRoot(ns, pkg)` — fetches the wire root `/p/<ns>/<pkg>.json`; its
   TypeScript interface mirrors the wire field names 1:1 (snake_case, matching
   `schema/root.schema.json`); returns `{root, loading, error, notFound}`.
-- `useObservation()` — lazy-fetches an observation object
-  (`/p/<ns>/<pkg>/o/sha256/<hex>.json`) on demand, with a module-level cache
-  keyed by digest and in-flight-request dedup.
+- `useImageIndex()` — lazy-fetches the OCI image index a tag resolved to
+  (`/p/<ns>/<pkg>/o/sha256/<hex>.json`, stored verbatim as the registry
+  served it) on demand, with a module-level cache keyed by digest and
+  in-flight-request dedup.
 
 CAS asset URLs (`casUrl()`, `utils/cas.ts`) always build from the bare
 `<ns>/<pkg>` route params — never from `root.name`, which carries the
@@ -144,7 +145,7 @@ verify against that module for the authoritative shape.
       "latestVersion": "3.28.1",
       "tagCount": 4,
       // union of "<os>/<architecture>" across every non-yanked tag's
-      // observation object, deduped + sorted
+      // image index, deduped + sorted
       "platforms": ["linux/amd64", "linux/arm64"],
       // pre-resolved CAS paths (never a bare digest) — null when the
       // package has no desc.logo/desc.readme

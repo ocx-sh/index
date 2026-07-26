@@ -15,12 +15,12 @@ Three frozen URL shapes, gated by `format_version`:
 - `/config.json` — `{"format_version": 1}`
 - `/p/<namespace>/<package>.json` — package root: governance fields + a `tags`
   map from every announced tag (owner-curated) to a content digest
-- `/p/<namespace>/<package>/o/sha256/<hex>.json` — immutable observation
-  object: the set of OCI platforms and the manifest digest each resolved to
+- `/p/<namespace>/<package>/o/sha256/<hex>.json` — the OCI image index a
+  tag resolved to, stored verbatim as the registry served it
 
-**Locked observation**: an observation object is a frozen record of which
-platform resolved to which manifest digest at the moment the index bot last
-observed the registry — not a live query, not a cache.
+**Locked, not live**: this is a frozen copy of the exact bytes a registry
+served for a tag's image index at the moment the index bot last observed
+it — not a live query, not a cache.
 
 Published shapes and field semantics are a one-way door once OCX clients bake
 the endpoint in: additive changes only, `format_version` gates the rest. See

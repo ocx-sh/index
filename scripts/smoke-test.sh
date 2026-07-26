@@ -19,7 +19,7 @@ IFS=$'\n\t'
 # Checks: config.json (200, ETag, Cache-Control cache-rule guard,
 # format_version), conditional GET (If-None-Match -> 304), c/index.json
 # (200, ETag) with its own conditional GET (If-None-Match -> 304), a sample
-# root's digest chain (root tags[].content -> observation object ->
+# root's digest chain (root tags[].content -> image index object ->
 # recomputed sha256), data/catalog/catalog.json (200, valid JSON, has a
 # "packages" key — render always emits this tree, even pre-seed as
 # "packages": [], so a non-200/invalid-shape here is always a real failure,
@@ -380,7 +380,7 @@ check_digest_chain() {
     obj_headers="${WORKDIR}/obj-${hex}.headers"
     obj_status=$(fetch "${BASE_URL}/p/${ROOT_PKG}/o/sha256/${hex}.json" "$obj_body" "$obj_headers")
     if [[ "$obj_status" != "200" ]]; then
-      fail "digest-chain (${ROOT_PKG}) ${digest}" "observation object HTTP ${obj_status}" "$EXIT_HTTP"
+      fail "digest-chain (${ROOT_PKG}) ${digest}" "image index HTTP ${obj_status}" "$EXIT_HTTP"
       all_ok=0
       continue
     fi
@@ -392,7 +392,7 @@ check_digest_chain() {
   done <<<"$digests"
 
   if [[ "$all_ok" -eq 1 ]]; then
-    pass "digest-chain (${ROOT_PKG})" "all observation objects verified"
+    pass "digest-chain (${ROOT_PKG})" "all image indices verified"
   fi
 }
 

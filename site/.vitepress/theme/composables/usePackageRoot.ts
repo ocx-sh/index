@@ -45,6 +45,12 @@ export interface PackageRoot {
   superseded_by?: string | null
   created: string
   upstream?: Upstream
+  /** Repository whose CI produced the builds (bot-derived from the latest
+   * version's `org.opencontainers.image.source` annotation) — NOT
+   * `upstream.repository_url`, which attributes the vendor a namespace
+   * mirrors. Schema-restricted to `https://`; still run through `safeHref`
+   * before it reaches an `:href`. */
+  source?: string | null
   desc: Desc | null
   tags: Record<string, TagEntry>
 }

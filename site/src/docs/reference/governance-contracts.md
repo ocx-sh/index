@@ -7,7 +7,7 @@ title: Governance Contracts
 The index bot and its workflows enforce twenty governance contracts,
 originally defined in `design_spec_registry_indirection.md` against the
 pointer-only index and carried forward — several reinterpreted — under the
-locked-observation wire format. Design authority:
+locked wire format. Design authority:
 [`adr_index_bot_and_workflow_security.md`](https://github.com/ocx-sh/index/blob/main/.claude/artifacts/adr_index_bot_and_workflow_security.md)
 and its Amendment A1, [`adr_fork_pr_announce.md`](https://github.com/ocx-sh/index/blob/main/.claude/artifacts/adr_fork_pr_announce.md).
 

@@ -14,19 +14,19 @@ status, and it is always a human-reviewed change.
 - **Does**: adds a `yanked: {reason, at}` object to exactly one row in
   `tags`, per
   [`root.schema.json`](https://index.ocx.sh/schema/root.schema.json).
-- **Does not**: delete the tag row, delete or mutate the observation
-  object it points at, or affect any other tag — including tags that
-  happen to share the same `content` digest (emergent aliases).
+- **Does not**: delete the tag row, delete or mutate the OCI image index it
+  points at, or affect any other tag — including tags that happen to share
+  the same `content` digest (emergent aliases).
 
-Observation objects are immutable CAS content. A yanked tag's `content`
-digest stays exactly as fetchable as before — a consumer that already
-pinned that exact digest (a lockfile, a reproducible build) is unaffected.
-What changes is forward-looking: new resolutions SHOULD treat a yanked tag
-as excluded from default selection. Render-time reachability pruning
-(garbage collection of the deployment artifact) only drops an observation
-object once **no** tag row anywhere references its digest — yanking one
-alias of a shared digest never orphans the object while another
-non-yanked tag still points at it.
+Image indices are immutable CAS content. A yanked tag's `content` digest
+stays exactly as fetchable as before — a consumer that already pinned that
+exact digest (a lockfile, a reproducible build) is unaffected. What changes
+is forward-looking: new resolutions SHOULD treat a yanked tag as excluded
+from default selection. Render-time reachability pruning (garbage
+collection of the deployment artifact) only drops an image index once
+**no** tag row anywhere references its digest — yanking one alias of a
+shared digest never orphans the object while another non-yanked tag still
+points at it.
 
 ## Procedure
 
