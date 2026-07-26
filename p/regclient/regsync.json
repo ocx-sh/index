@@ -1,0 +1,24 @@
+{
+  "name": "ocx.sh/regclient/regsync",
+  "repository": "oci://ocx.sh/regclient/regsync",
+  "owners": [
+    {
+      "github": "michael-herwig",
+      "github_id": 3511590
+    },
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-07-26",
+  "desc": null,
+  "upstream": {
+    "org": "regclient",
+    "repository_url": "https://github.com/regclient/regclient",
+    "disclaimer": "Unaffiliated mirror. regsync is a project of the regclient authors; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
