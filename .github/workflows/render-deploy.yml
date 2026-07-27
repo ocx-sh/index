@@ -8,9 +8,14 @@ on:
   # for the machine lane. Before the lane existed a human merged every announce
   # and this deployed as a side effect; afterwards #64 and #66 both merged and
   # published nothing, and index.ocx.sh served a stale tree with no failing
-  # check anywhere (issue #67). The schedule is the trigger a bot merge does
-  # reach. `guard` below keeps the cost to one cheap job per tick when main has
-  # not moved.
+  # check anywhere (issue #67).
+  #
+  # The machine lane's real trigger is now `workflow_dispatch` below, fired by
+  # `governance.yml`'s `deploy-on-merge` job -- see there for why that is the
+  # one trigger a bot merge can reach. The schedule below is the BACKSTOP for
+  # when that job never gets to fire (cancelled, timed out on a slow required
+  # check, or a merge that happened some other way), not the primary path.
+  # `guard` keeps the cost to one cheap job per tick when main has not moved.
   #
   # `*/15` is a request, NOT a guarantee, and the gap between the two is large
   # enough to matter when sizing how stale index.ocx.sh may be. Measured over
@@ -22,18 +27,19 @@ on:
   # tail is hours. Read "up to a few hours", not "up to 15 minutes". Tightening
   # the cron does not help -- the floor is already 4x the interval.
   #
-  # Do not try to close this with a bot-fired dispatch. `workflow_dispatch` and
+  # Why the dispatch works where `push` does not: `workflow_dispatch` and
   # `repository_dispatch` ARE the documented exceptions to the GITHUB_TOKEN
-  # recursion guard, so firing one from a job does work -- but nothing
-  # bot-initiated survives the merge to call it: `pull_request` `closed` is not
-  # an exception, so no post-merge event runs at all. Chaining `workflow_run`
-  # off the PR's checks and polling for the merge reintroduces a race, which is
-  # the same failure mode as #67.
+  # recursion guard. The part that was missing was never the trigger, it was a
+  # bot process still alive AFTER the merge to fire it -- `pull_request`
+  # `closed` is not an exception, so no post-merge event runs at all. The
+  # `pull_request_target` run that armed the merge does survive it, and that is
+  # what `deploy-on-merge` uses.
   #
   # Merging under a non-GITHUB_TOKEN identity would make `push` above fire as
   # designed, and is ruled out: the announce bot opens a pull request from its
   # fork and holds no write access here. Any fix must work without granting it
-  # any. Tracked in #67.
+  # any -- and the one above does: `deploy-on-merge` runs in THIS repository,
+  # off base-authored YAML, and holds `actions: write` and nothing else.
   schedule:
     - cron: '*/15 * * * *'
   workflow_dispatch:

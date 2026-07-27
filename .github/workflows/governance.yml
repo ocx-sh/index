@@ -37,13 +37,22 @@ name: governance
 #     and withdraws again the moment a re-run says the PR is no longer
 #     machine-lane. GitHub itself merges once branch protection's required
 #     checks are green — no polling, no second bot.
+#   deploy-on-merge (checkout-free, `actions: write` and nothing else): the
+#     machine lane's deploy trigger. GitHub performs the armed merge with
+#     GITHUB_TOKEN, whose push starts no workflow run, so `render-deploy`'s
+#     `push` trigger never fires for this lane (#67). This job stays alive
+#     across the merge and fires the one trigger that IS exempt from that
+#     recursion guard — `workflow_dispatch`. It can merge nothing and write
+#     nothing; losing it costs the fast path only.
 #
 # "governance/review-required" is deliberately NOT a required check and must
 # not become one: governance-check reports it `pending` for every human-lane
 # PR and nothing re-runs it green after approval, so requiring it would
-# deadlock the human lane permanently. Neither job in this file may be added
-# to the required-check list either: `arm-auto-merge`'s superseded pending
-# runs are cancelled by design.
+# deadlock the human lane permanently. No job in this file may be added to
+# the required-check list either: `arm-auto-merge`'s superseded pending runs
+# and `deploy-on-merge`'s superseded polls are cancelled by design — and
+# `deploy-on-merge` waits ON the required checks, so requiring it would
+# deadlock the machine lane against itself.
 
 on:
   # zizmor: ignore[dangerous-triggers] ADR-4 BD-5's deliberate privileged
@@ -174,3 +183,77 @@ jobs:
           fi
           gh pr merge "$PR_NUMBER" --repo "$REPO" --disable-auto
           echo "::notice title=auto-merge::PR #$PR_NUMBER is no longer machine-lane (G-19) - auto-merge withdrawn, human review required."
+
+  deploy-on-merge:
+    name: deploy-on-merge
+    needs: [governance-gate, arm-auto-merge]
+    if: needs.governance-gate.outputs.disposition == 'success'
+    runs-on: ubuntu-latest
+    # The whole point is to outlive the merge, so the ceiling is generous;
+    # the loop below stops itself at 25 min so its own warning gets printed
+    # instead of being cut off by this.
+    timeout-minutes: 30
+    # NOT arm-auto-merge's group, and cancel-in-progress on purpose. Sharing
+    # the arm group would park a fresh withdrawal behind this job's 25-minute
+    # wait, which is exactly the stale-arm window that serialization exists to
+    # prevent. A `synchronize` supersedes the poll instead: the newer run
+    # watches the same PR for the same outcome. Never add this job to the
+    # required-check list - a superseded run is cancelled by design.
+    concurrency:
+      group: deploy-on-merge-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
+    # No checkout, no `uses:`, no secret, and deliberately NOT contents:
+    # write - this job only observes the PR and pushes a button. Pinned by
+    # bot/tests/security/test_workflow_split.py.
+    permissions:
+      actions: write # gh workflow run render-deploy.yml (workflow_dispatch)
+      pull-requests: read # gh pr view
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      REPO: ${{ github.repository }}
+    steps:
+      # Issue #67. `arm-auto-merge` hands the merge to GitHub, which performs
+      # it with GITHUB_TOKEN - and a push made with GITHUB_TOKEN starts no
+      # workflow run, so `render-deploy`'s `push` trigger never fires for the
+      # machine lane and index.ocx.sh silently stops advancing. `*/15` is the
+      # standing mitigation and delivers ~hourly in practice (#67's measured
+      # gap series: worst 222 min).
+      #
+      # `workflow_dispatch` IS a documented exception to that recursion guard,
+      # so a bot-fired dispatch does start a run. The thing that was missing
+      # was a bot process still alive after the merge to fire it - this job is
+      # that process. It holds no write on the base branch and cannot merge
+      # anything; it watches the merge `arm-auto-merge` already armed and,
+      # the moment GitHub lands it, dispatches the deploy. Race window is one
+      # poll interval (15 s), not one cron gap.
+      #
+      # Failure is a soft landing by construction: arming is what merges the
+      # PR, and that has already happened by the time this job runs, so a
+      # cancelled/timed-out/failed poll costs the fast path only - the
+      # schedule still deploys, exactly as it does today. That is why the
+      # timeout warns instead of failing: red here would mean "the PR sat
+      # waiting for a required check", which is normal, and would train the
+      # lane's only red X to be ignored.
+      - name: Dispatch render-deploy once the merge lands
+        run: |
+          set -euo pipefail
+          for _ in $(seq 1 100); do
+            state="$(gh pr view "$PR_NUMBER" --repo "$REPO" --json state --jq .state)"
+            case "$state" in
+              MERGED)
+                # --ref main, not the merge commit: `workflow_dispatch` only
+                # accepts a ref, and main can only have moved FORWARD past our
+                # merge, so the tree deployed always contains it.
+                gh workflow run render-deploy.yml --repo "$REPO" --ref main
+                echo "::notice title=deploy::PR #$PR_NUMBER merged - render-deploy dispatched for main."
+                exit 0
+                ;;
+              CLOSED)
+                echo "::notice title=deploy::PR #$PR_NUMBER was closed without merging - nothing to deploy."
+                exit 0
+                ;;
+            esac
+            sleep 15
+          done
+          echo "::warning title=deploy::PR #$PR_NUMBER did not merge within 25 min (required checks still pending?). Auto-merge stays armed and will land it; render-deploy falls back to its schedule - see #67 for what that actually delivers."

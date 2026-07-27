@@ -3,8 +3,8 @@ name: validate
 # The UNPRIVILEGED half of ADR-4 (adr_index_bot_and_workflow_security.md)
 # BD-5's privileged/unprivileged split, extended by ADR-6
 # (adr_fork_pr_announce.md) for the fork-PR announce lane. The privileged half
-# — `governance-gate` + `arm-auto-merge` on `pull_request_target` — lives in
-# `governance.yml`.
+# — `governance-gate` + `arm-auto-merge` + `deploy-on-merge` on
+# `pull_request_target` — lives in `governance.yml`.
 #
 # One trigger per workflow, and that is a security property, not tidiness.
 # Both halves used to live in this file, which declared BOTH `pull_request`
