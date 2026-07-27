@@ -53,6 +53,24 @@ name: governance
 # and `deploy-on-merge`'s superseded polls are cancelled by design — and
 # `deploy-on-merge` waits ON the required checks, so requiring it would
 # deadlock the machine lane against itself.
+#
+# One consequence of that design, accepted rather than scoped away: a
+# cancelled JOB sets the whole RUN's conclusion. A superseded `deploy-on-merge`
+# poll therefore makes an otherwise clean governance run conclude `cancelled`
+# (live: run 30246486520 — governance-gate success, arm-auto-merge success,
+# deploy-on-merge cancelled → run `cancelled`; before this job existed the
+# same run would have read `success`). Both escapes are worse than the flip:
+# dropping `cancel-in-progress` stacks a second 25-minute poll behind the
+# first and dispatches the deploy twice, and moving the job into its own
+# workflow duplicates the privileged `pull_request_target` gate it reads
+# `disposition` from. The flip is also the honest signal — that run really
+# did not finish every job it started.
+#
+# So the RUN-level conclusion of this workflow carries no governance meaning
+# and must not be audited or alerted on. Read the per-job conclusions instead
+# (`gh run view <id> --json jobs`): `governance-gate` and `arm-auto-merge` are
+# the ones that mean something, and a `cancelled` on either is the pending-job
+# supersession described one paragraph up, never a withdrawal that was skipped.
 
 on:
   # zizmor: ignore[dangerous-triggers] ADR-4 BD-5's deliberate privileged
@@ -235,18 +253,32 @@ jobs:
       # timeout warns instead of failing: red here would mean "the PR sat
       # waiting for a required check", which is normal, and would train the
       # lane's only red X to be ignored.
+      # Every API call below is fail-OPEN, the deliberate opposite of
+      # `arm-auto-merge`'s unguarded reads. That job runs BEFORE the merge and
+      # must go red rather than leave a stale arm standing; this one runs
+      # after, so `set -e` on a single 502 or secondary rate-limit — in up to
+      # 100 polls plus a dispatch — would paint an already-merged PR red,
+      # which is precisely the never-red-on-a-merged-PR property argued
+      # above, and far likelier than the timeout that path already softened
+      # to a warning. Nothing in this step may exit non-zero.
       - name: Dispatch render-deploy once the merge lands
         run: |
           set -euo pipefail
+          api_failures=0
           for _ in $(seq 1 100); do
-            state="$(gh pr view "$PR_NUMBER" --repo "$REPO" --json state --jq .state)"
+            # A failed read leaves `state` empty, matches no case below, and
+            # polls again; only the count survives, for the warning's sake.
+            state="$(gh pr view "$PR_NUMBER" --repo "$REPO" --json state --jq .state)" || api_failures=$((api_failures + 1))
             case "$state" in
               MERGED)
                 # --ref main, not the merge commit: `workflow_dispatch` only
                 # accepts a ref, and main can only have moved FORWARD past our
                 # merge, so the tree deployed always contains it.
-                gh workflow run render-deploy.yml --repo "$REPO" --ref main
-                echo "::notice title=deploy::PR #$PR_NUMBER merged - render-deploy dispatched for main."
+                if gh workflow run render-deploy.yml --repo "$REPO" --ref main; then
+                  echo "::notice title=deploy::PR #$PR_NUMBER merged - render-deploy dispatched for main."
+                else
+                  echo "::warning title=deploy::PR #$PR_NUMBER merged but the render-deploy dispatch was rejected; render-deploy falls back to its schedule - see #67 for what that actually delivers."
+                fi
                 exit 0
                 ;;
               CLOSED)
@@ -256,4 +288,4 @@ jobs:
             esac
             sleep 15
           done
-          echo "::warning title=deploy::PR #$PR_NUMBER did not merge within 25 min (required checks still pending?). Auto-merge stays armed and will land it; render-deploy falls back to its schedule - see #67 for what that actually delivers."
+          echo "::warning title=deploy::PR #$PR_NUMBER did not merge within 25 min ($api_failures of 100 polls could not reach the API; required checks still pending?). Auto-merge stays armed and will land it; render-deploy falls back to its schedule - see #67 for what that actually delivers."
