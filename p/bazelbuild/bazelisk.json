@@ -20,5 +20,50 @@
     "repository_url": "https://github.com/bazelbuild/bazelisk",
     "disclaimer": "Unaffiliated mirror. Bazelisk is a project of the Bazel authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "1.26.0": {
+      "content": "sha256:d37c8d30a9d17fb2aa7d0279350edd85c07dcd252910ae8cf4dfb813220c4d62",
+      "observed": "2026-07-27T06:17:11Z"
+    },
+    "1.26": {
+      "content": "sha256:d37c8d30a9d17fb2aa7d0279350edd85c07dcd252910ae8cf4dfb813220c4d62",
+      "observed": "2026-07-27T06:17:11Z"
+    },
+    "1": {
+      "content": "sha256:a6219dce910a84696f7e38fb6e0c27ad7c557869b455cda5fcc67091c1d4997e",
+      "observed": "2026-07-27T06:17:11Z"
+    },
+    "latest": {
+      "content": "sha256:a6219dce910a84696f7e38fb6e0c27ad7c557869b455cda5fcc67091c1d4997e",
+      "observed": "2026-07-27T06:17:11Z"
+    },
+    "1.27.0": {
+      "content": "sha256:fcb6adf67d92b02659c354e75db5eb362f642cb046f9d615b072ece420ec124d",
+      "observed": "2026-07-27T06:17:11Z"
+    },
+    "1.27": {
+      "content": "sha256:fcb6adf67d92b02659c354e75db5eb362f642cb046f9d615b072ece420ec124d",
+      "observed": "2026-07-27T06:17:11Z"
+    },
+    "1.28.0": {
+      "content": "sha256:5d43fcf7e1f7af433c5f069e8aac364c7203ef8c10585ddea6b4db79f472ae57",
+      "observed": "2026-07-27T06:17:11Z"
+    },
+    "1.28": {
+      "content": "sha256:072c752e244f0ce269010e91abe7f8eb83d1cb953775719b3233184c25b9b7b0",
+      "observed": "2026-07-27T06:17:11Z"
+    },
+    "1.28.1": {
+      "content": "sha256:072c752e244f0ce269010e91abe7f8eb83d1cb953775719b3233184c25b9b7b0",
+      "observed": "2026-07-27T06:17:11Z"
+    },
+    "1.29.0": {
+      "content": "sha256:a6219dce910a84696f7e38fb6e0c27ad7c557869b455cda5fcc67091c1d4997e",
+      "observed": "2026-07-27T06:17:11Z"
+    },
+    "1.29": {
+      "content": "sha256:a6219dce910a84696f7e38fb6e0c27ad7c557869b455cda5fcc67091c1d4997e",
+      "observed": "2026-07-27T06:17:11Z"
+    }
+  }
 }
