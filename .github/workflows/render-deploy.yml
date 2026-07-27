@@ -28,9 +28,12 @@ on:
   # bot-initiated survives the merge to call it: `pull_request` `closed` is not
   # an exception, so no post-merge event runs at all. Chaining `workflow_run`
   # off the PR's checks and polling for the merge reintroduces a race, which is
-  # the same failure mode as #67. The fix that deletes the problem is to merge
-  # under an identity that is not GITHUB_TOKEN, so `push` above fires as
-  # designed; that is a repo-permissions decision, tracked in #67.
+  # the same failure mode as #67.
+  #
+  # Merging under a non-GITHUB_TOKEN identity would make `push` above fire as
+  # designed, and is ruled out: the announce bot opens a pull request from its
+  # fork and holds no write access here. Any fix must work without granting it
+  # any. Tracked in #67.
   schedule:
     - cron: '*/15 * * * *'
   workflow_dispatch:
