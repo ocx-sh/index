@@ -14,7 +14,22 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-07-26",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:6834f28d825920c484ad754644567372c4aa38a2bb3b1c871c3153138b23eddc",
+    "title": "Bazelisk",
+    "description": "Bazel version launcher \u2014 automatically downloads and runs the correct Bazel version for your workspace",
+    "keywords": [
+      "bazelisk",
+      "bazel",
+      "build",
+      "build-system",
+      "launcher",
+      "google",
+      "bazelbuild"
+    ],
+    "readme": "sha256:d062ee1818069806f2e273cecc9b3493b379eeb684221653a564b834a96f5d36",
+    "logo": "sha256:65302b813427f5c3363762f84f8d47bb4770ee6b983494f5dc18a406e6ff04b4"
+  },
   "upstream": {
     "org": "bazelbuild",
     "repository_url": "https://github.com/bazelbuild/bazelisk",
