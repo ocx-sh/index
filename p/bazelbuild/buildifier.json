@@ -14,11 +14,92 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-07-28",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:708135c15e3d337ed43d68be2934f39535164c861e0a8f7692f1b4600d3b1af0",
+    "title": "Buildifier",
+    "description": "Formatter and linter for Bazel BUILD, WORKSPACE, and .bzl files \u2014 the standard code style for Bazel's Starlark dialect",
+    "keywords": [
+      "buildifier",
+      "bazel",
+      "buildtools",
+      "formatter",
+      "linter",
+      "starlark",
+      "build-file",
+      "bazelbuild"
+    ],
+    "readme": "sha256:abcf9e31f47a8d00ce83107f41fb1cd1d47cecb33a2479759d9dceb78305bf1e",
+    "logo": "sha256:65302b813427f5c3363762f84f8d47bb4770ee6b983494f5dc18a406e6ff04b4"
+  },
   "upstream": {
     "org": "bazelbuild",
     "repository_url": "https://github.com/bazelbuild/buildtools/tree/master/buildifier",
     "disclaimer": "Unaffiliated mirror. Buildifier is a project of the Bazel authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "5.1.0_20260728": {
+      "content": "sha256:ac4a09446f7d8fa2355faeef68532ec7faef842f1752d5b033047ff39732612d",
+      "observed": "2026-07-28T23:30:01Z"
+    },
+    "6.0.0_20260728": {
+      "content": "sha256:a3b283c98191ca472d6609ae3923cc2bab0b005b9da67153b8eac30f063d981d",
+      "observed": "2026-07-28T23:30:01Z"
+    },
+    "6.0.1_20260728": {
+      "content": "sha256:80be05897680fb388c484f39d80daab5f94aaea0bbe0490c52f3b57d0786b735",
+      "observed": "2026-07-28T23:30:01Z"
+    },
+    "6.1.0_20260728": {
+      "content": "sha256:05acada3ee1d210417e13841e605d6d44b2260f89864e4e2171ffb87a6922881",
+      "observed": "2026-07-28T23:30:01Z"
+    },
+    "6.1.1_20260728": {
+      "content": "sha256:75dda29641ae165696d1ad8f078915ad48b49630a6a1bb251fa33511af8e1b7f",
+      "observed": "2026-07-28T23:30:01Z"
+    },
+    "5.1.0": {
+      "content": "sha256:ac4a09446f7d8fa2355faeef68532ec7faef842f1752d5b033047ff39732612d",
+      "observed": "2026-07-28T23:30:01Z"
+    },
+    "5.1": {
+      "content": "sha256:ac4a09446f7d8fa2355faeef68532ec7faef842f1752d5b033047ff39732612d",
+      "observed": "2026-07-28T23:30:01Z"
+    },
+    "5": {
+      "content": "sha256:ac4a09446f7d8fa2355faeef68532ec7faef842f1752d5b033047ff39732612d",
+      "observed": "2026-07-28T23:30:01Z"
+    },
+    "latest": {
+      "content": "sha256:75dda29641ae165696d1ad8f078915ad48b49630a6a1bb251fa33511af8e1b7f",
+      "observed": "2026-07-28T23:30:01Z"
+    },
+    "6.0.0": {
+      "content": "sha256:a3b283c98191ca472d6609ae3923cc2bab0b005b9da67153b8eac30f063d981d",
+      "observed": "2026-07-28T23:30:01Z"
+    },
+    "6.0": {
+      "content": "sha256:80be05897680fb388c484f39d80daab5f94aaea0bbe0490c52f3b57d0786b735",
+      "observed": "2026-07-28T23:30:01Z"
+    },
+    "6": {
+      "content": "sha256:75dda29641ae165696d1ad8f078915ad48b49630a6a1bb251fa33511af8e1b7f",
+      "observed": "2026-07-28T23:30:01Z"
+    },
+    "6.0.1": {
+      "content": "sha256:80be05897680fb388c484f39d80daab5f94aaea0bbe0490c52f3b57d0786b735",
+      "observed": "2026-07-28T23:30:01Z"
+    },
+    "6.1.0": {
+      "content": "sha256:05acada3ee1d210417e13841e605d6d44b2260f89864e4e2171ffb87a6922881",
+      "observed": "2026-07-28T23:30:01Z"
+    },
+    "6.1": {
+      "content": "sha256:75dda29641ae165696d1ad8f078915ad48b49630a6a1bb251fa33511af8e1b7f",
+      "observed": "2026-07-28T23:30:01Z"
+    },
+    "6.1.1": {
+      "content": "sha256:75dda29641ae165696d1ad8f078915ad48b49630a6a1bb251fa33511af8e1b7f",
+      "observed": "2026-07-28T23:30:01Z"
+    }
+  }
 }
