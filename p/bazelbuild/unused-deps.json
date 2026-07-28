@@ -14,11 +14,91 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-07-28",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:3a7e0419e1b355b9f31c574f43f82af3b75fd954b643f9256d0e208e4ab2b506",
+    "title": "Unused Deps",
+    "description": "Static analysis for Bazel java_library targets that finds unused dependencies and emits the buildozer commands to remove them",
+    "keywords": [
+      "unused-deps",
+      "unused_deps",
+      "bazel",
+      "buildtools",
+      "java",
+      "dependencies",
+      "bazelbuild"
+    ],
+    "readme": "sha256:5fa06d49a9445832a9bf5d0dc9d73b1d20c8d6fc8ef418bbaf4d61cc6a932932",
+    "logo": "sha256:65302b813427f5c3363762f84f8d47bb4770ee6b983494f5dc18a406e6ff04b4"
+  },
   "upstream": {
     "org": "bazelbuild",
     "repository_url": "https://github.com/bazelbuild/buildtools/tree/master/unused_deps",
     "disclaimer": "Unaffiliated mirror. unused_deps is a project of the Bazel authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "5.1.0_20260728": {
+      "content": "sha256:13a0b24d6fdab9e0b1bbd558a55016259c297ce5081b3fb8c31c21777df4876f",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "5.1.0": {
+      "content": "sha256:13a0b24d6fdab9e0b1bbd558a55016259c297ce5081b3fb8c31c21777df4876f",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "5.1": {
+      "content": "sha256:13a0b24d6fdab9e0b1bbd558a55016259c297ce5081b3fb8c31c21777df4876f",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "5": {
+      "content": "sha256:13a0b24d6fdab9e0b1bbd558a55016259c297ce5081b3fb8c31c21777df4876f",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "latest": {
+      "content": "sha256:dd37ede90c5a5344d61240529d32a349ec71e8a22689c93be24b2f4768f7de91",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "6.0.0_20260728": {
+      "content": "sha256:4459ebdf24958aabc60aad3fdd4fe78aabea94c7c22557106a74c5cea67e316e",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "6.0.0": {
+      "content": "sha256:4459ebdf24958aabc60aad3fdd4fe78aabea94c7c22557106a74c5cea67e316e",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "6.0": {
+      "content": "sha256:0c3b5ac0f08c56377fac297115c533d13e66ad04c79b3cbba62462f8c2e8c970",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "6": {
+      "content": "sha256:dd37ede90c5a5344d61240529d32a349ec71e8a22689c93be24b2f4768f7de91",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "6.0.1_20260728": {
+      "content": "sha256:0c3b5ac0f08c56377fac297115c533d13e66ad04c79b3cbba62462f8c2e8c970",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "6.0.1": {
+      "content": "sha256:0c3b5ac0f08c56377fac297115c533d13e66ad04c79b3cbba62462f8c2e8c970",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "6.1.0_20260728": {
+      "content": "sha256:928116f001f4a9524a0ec08e7ee98b394b2a8dea9e198ceceac5dc2cef217097",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "6.1.0": {
+      "content": "sha256:928116f001f4a9524a0ec08e7ee98b394b2a8dea9e198ceceac5dc2cef217097",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "6.1": {
+      "content": "sha256:dd37ede90c5a5344d61240529d32a349ec71e8a22689c93be24b2f4768f7de91",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "6.1.1_20260728": {
+      "content": "sha256:dd37ede90c5a5344d61240529d32a349ec71e8a22689c93be24b2f4768f7de91",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "6.1.1": {
+      "content": "sha256:dd37ede90c5a5344d61240529d32a349ec71e8a22689c93be24b2f4768f7de91",
+      "observed": "2026-07-28T23:29:59Z"
+    }
+  }
 }
