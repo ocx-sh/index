@@ -1,0 +1,24 @@
+{
+  "name": "ocx.sh/bazelbuild/buildozer",
+  "repository": "oci://ghcr.io/ocx-contrib/bazelbuild/buildozer",
+  "owners": [
+    {
+      "github": "michael-herwig",
+      "github_id": 3511590
+    },
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-07-28",
+  "desc": null,
+  "upstream": {
+    "org": "bazelbuild",
+    "repository_url": "https://github.com/bazelbuild/buildtools/tree/master/buildozer",
+    "disclaimer": "Unaffiliated mirror. Buildozer is a project of the Bazel authors; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
