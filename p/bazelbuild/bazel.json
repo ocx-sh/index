@@ -14,11 +14,86 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-07-28",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:947751e7e5cdeec644ad99626552078ca908793bcaf5eb1ff508f00bd27de5bc",
+    "title": "Bazel",
+    "description": "Google's multi-language build and test tool \u2014 reproducible, incremental builds that scale from a laptop to a monorepo with thousands of targets",
+    "keywords": [
+      "bazel",
+      "build",
+      "build-system",
+      "google",
+      "monorepo",
+      "bazelbuild"
+    ],
+    "readme": "sha256:ee28200eef431ee2da720122d55a31ab73c8a92d89a63765a74269a9658ba93b",
+    "logo": "sha256:65302b813427f5c3363762f84f8d47bb4770ee6b983494f5dc18a406e6ff04b4"
+  },
   "upstream": {
     "org": "bazelbuild",
     "repository_url": "https://github.com/bazelbuild/bazel",
     "disclaimer": "Unaffiliated mirror. Bazel is a project of the Bazel authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "9.0.1_20260728": {
+      "content": "sha256:18cbb92e005be6448f990723da9695da8081b2cc860c69daf433c3e2034a66f2",
+      "observed": "2026-07-28T23:27:24Z"
+    },
+    "9.0.2_20260728": {
+      "content": "sha256:0cb625e1375ed3d505187c4071da5138097bef3f412332d5745795ca739f0add",
+      "observed": "2026-07-28T23:27:24Z"
+    },
+    "9.1.0_20260728": {
+      "content": "sha256:b1e1ce8306f62b35850735eac1686861985c807db5a54b1e4e0439717a52fe39",
+      "observed": "2026-07-28T23:27:24Z"
+    },
+    "9.1.1_20260728": {
+      "content": "sha256:1c8f0b287c136211160ee3e7f4414c948b49f28dba209b8eb46294f2245671a9",
+      "observed": "2026-07-28T23:27:24Z"
+    },
+    "9.2.0_20260728": {
+      "content": "sha256:252fc12c947fd30b67c2f522f56cd297efef03c85495905242fdceb4ff808c0c",
+      "observed": "2026-07-28T23:27:24Z"
+    },
+    "9.0.1": {
+      "content": "sha256:18cbb92e005be6448f990723da9695da8081b2cc860c69daf433c3e2034a66f2",
+      "observed": "2026-07-28T23:27:24Z"
+    },
+    "9.0": {
+      "content": "sha256:0cb625e1375ed3d505187c4071da5138097bef3f412332d5745795ca739f0add",
+      "observed": "2026-07-28T23:27:24Z"
+    },
+    "9": {
+      "content": "sha256:252fc12c947fd30b67c2f522f56cd297efef03c85495905242fdceb4ff808c0c",
+      "observed": "2026-07-28T23:27:24Z"
+    },
+    "latest": {
+      "content": "sha256:252fc12c947fd30b67c2f522f56cd297efef03c85495905242fdceb4ff808c0c",
+      "observed": "2026-07-28T23:27:24Z"
+    },
+    "9.0.2": {
+      "content": "sha256:0cb625e1375ed3d505187c4071da5138097bef3f412332d5745795ca739f0add",
+      "observed": "2026-07-28T23:27:24Z"
+    },
+    "9.1.0": {
+      "content": "sha256:b1e1ce8306f62b35850735eac1686861985c807db5a54b1e4e0439717a52fe39",
+      "observed": "2026-07-28T23:27:24Z"
+    },
+    "9.1": {
+      "content": "sha256:1c8f0b287c136211160ee3e7f4414c948b49f28dba209b8eb46294f2245671a9",
+      "observed": "2026-07-28T23:27:24Z"
+    },
+    "9.1.1": {
+      "content": "sha256:1c8f0b287c136211160ee3e7f4414c948b49f28dba209b8eb46294f2245671a9",
+      "observed": "2026-07-28T23:27:24Z"
+    },
+    "9.2.0": {
+      "content": "sha256:252fc12c947fd30b67c2f522f56cd297efef03c85495905242fdceb4ff808c0c",
+      "observed": "2026-07-28T23:27:24Z"
+    },
+    "9.2": {
+      "content": "sha256:252fc12c947fd30b67c2f522f56cd297efef03c85495905242fdceb4ff808c0c",
+      "observed": "2026-07-28T23:27:24Z"
+    }
+  }
 }
