@@ -81,12 +81,12 @@
       "observed": "2026-07-27T06:17:11Z"
     },
     "1.25.0": {
-      "content": "sha256:4f8981b5c09bea9d31f830c96afe02d6adf60ac73491a6048e24aab8d1354e59",
-      "observed": "2026-07-27T17:24:57Z"
+      "content": "sha256:9c1e2118f54c24d6210362d1cd5229118d91c5b060dfba97338a83e1da6f20dc",
+      "observed": "2026-07-28T23:44:25Z"
     },
     "1.25": {
-      "content": "sha256:4f8981b5c09bea9d31f830c96afe02d6adf60ac73491a6048e24aab8d1354e59",
-      "observed": "2026-07-27T17:24:57Z"
+      "content": "sha256:9c1e2118f54c24d6210362d1cd5229118d91c5b060dfba97338a83e1da6f20dc",
+      "observed": "2026-07-28T23:44:25Z"
     }
   }
 }
