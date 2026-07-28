@@ -14,11 +14,90 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-07-28",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:1caba7d9f7fd94874474732ba65f9f98be73a8b8ef423f2189cbfeda7fa233c1",
+    "title": "Buildozer",
+    "description": "Command-line tool for scripted, bulk edits to Bazel BUILD files \u2014 add, remove, or rename targets and attributes across a workspace",
+    "keywords": [
+      "buildozer",
+      "bazel",
+      "buildtools",
+      "build-file",
+      "refactoring",
+      "bazelbuild"
+    ],
+    "readme": "sha256:1020ec3b94bb0949f9e9366acfc9a4a6f0723488253a3f3b8e2ceaa2005a2e77",
+    "logo": "sha256:65302b813427f5c3363762f84f8d47bb4770ee6b983494f5dc18a406e6ff04b4"
+  },
   "upstream": {
     "org": "bazelbuild",
     "repository_url": "https://github.com/bazelbuild/buildtools/tree/master/buildozer",
     "disclaimer": "Unaffiliated mirror. Buildozer is a project of the Bazel authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "5.1.0_20260728": {
+      "content": "sha256:c26ca85dcda627d77af5f6ce0f5443712645e70de612bc990db9208e5e3a4236",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "5.1.0": {
+      "content": "sha256:c26ca85dcda627d77af5f6ce0f5443712645e70de612bc990db9208e5e3a4236",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "5.1": {
+      "content": "sha256:c26ca85dcda627d77af5f6ce0f5443712645e70de612bc990db9208e5e3a4236",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "5": {
+      "content": "sha256:c26ca85dcda627d77af5f6ce0f5443712645e70de612bc990db9208e5e3a4236",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "latest": {
+      "content": "sha256:cdfec7576eddfa65247fcecba6f4f291f4006a317e12dc3b3fa95e7605ffa731",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "6.0.0_20260728": {
+      "content": "sha256:2c6b6293ea5e070f8a0ab829fc8986b49fa531550b20395c577773f513ac4d5c",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "6.0.0": {
+      "content": "sha256:2c6b6293ea5e070f8a0ab829fc8986b49fa531550b20395c577773f513ac4d5c",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "6.0": {
+      "content": "sha256:ecd9569fccf4a6eb6fa9e3a253751580fb426e21358a995a3f13ba0fc0d0ad6b",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "6": {
+      "content": "sha256:cdfec7576eddfa65247fcecba6f4f291f4006a317e12dc3b3fa95e7605ffa731",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "6.0.1_20260728": {
+      "content": "sha256:ecd9569fccf4a6eb6fa9e3a253751580fb426e21358a995a3f13ba0fc0d0ad6b",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "6.0.1": {
+      "content": "sha256:ecd9569fccf4a6eb6fa9e3a253751580fb426e21358a995a3f13ba0fc0d0ad6b",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "6.1.0_20260728": {
+      "content": "sha256:8164efe4d12c35305535319ccf8473aace30e5dd6f55677f155ee36c12570ab4",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "6.1.0": {
+      "content": "sha256:8164efe4d12c35305535319ccf8473aace30e5dd6f55677f155ee36c12570ab4",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "6.1": {
+      "content": "sha256:cdfec7576eddfa65247fcecba6f4f291f4006a317e12dc3b3fa95e7605ffa731",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "6.1.1_20260728": {
+      "content": "sha256:cdfec7576eddfa65247fcecba6f4f291f4006a317e12dc3b3fa95e7605ffa731",
+      "observed": "2026-07-28T23:29:59Z"
+    },
+    "6.1.1": {
+      "content": "sha256:cdfec7576eddfa65247fcecba6f4f291f4006a317e12dc3b3fa95e7605ffa731",
+      "observed": "2026-07-28T23:29:59Z"
+    }
+  }
 }
