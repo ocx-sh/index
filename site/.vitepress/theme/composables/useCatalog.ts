@@ -16,9 +16,9 @@ export interface CatalogPackage {
   description: string
   keywords: string[]
   latestVersion: string | null
-  /** Variant names the package ships, read straight off the root's own
-   * `variants` field (`core/render.py` does not re-derive it). Absent when
-   * the package ships only the default variant — which is also why
+  /** Variant names the package ships, derived by `core/render.py` from the
+   * root's own `tags` (`version_order.variant_names`). Absent when the
+   * package ships only the default variant — which is also why
    * `latestVersion` can be non-null while this is undefined: that field
    * deliberately ignores variant-prefixed tags. */
   variants?: string[]
