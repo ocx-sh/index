@@ -14,11 +14,85 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-07-29",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:c0633e27cf5efda7a4c09b2f8e1db203b707bc34a7d8dba0ae9c14faa4bb9e85",
+    "title": "CMake",
+    "description": "Cross-platform build system generator \u2014 one configuration, native build files for Make, Ninja, Visual Studio and Xcode",
+    "keywords": [
+      "cmake",
+      "build",
+      "build-system",
+      "cpp",
+      "c",
+      "cross-platform",
+      "kitware",
+      "ctest",
+      "cpack"
+    ],
+    "readme": "sha256:7936c508f27e98a73d3a6b4241dd04abba927a0aa10c4af03806b3974ecbd28a",
+    "logo": "sha256:1e35e5c48316e9c1139265fc76109724fe900bfd1ce5fd52efb4f5a8b4637323"
+  },
   "upstream": {
     "org": "Kitware",
     "repository_url": "https://github.com/Kitware/CMake",
     "disclaimer": "Unaffiliated mirror. CMake is a project of Kitware, Inc.; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "4.3.2_20260729": {
+      "content": "sha256:ac11e548177834e3a984645be6e8411029a5b988eaac384bfe4bb8c7537d32b5",
+      "observed": "2026-07-29T01:28:36Z"
+    },
+    "4.3.2": {
+      "content": "sha256:ac11e548177834e3a984645be6e8411029a5b988eaac384bfe4bb8c7537d32b5",
+      "observed": "2026-07-29T01:28:36Z"
+    },
+    "4.3": {
+      "content": "sha256:52ba9e52d73b972df4709e69823818a177272cd516c6df3fc2eb7abc752f56c2",
+      "observed": "2026-07-29T01:28:36Z"
+    },
+    "4": {
+      "content": "sha256:7bfbabd3671a0ce2ec65239b6c09b532d3a7676863595101ee9bc84218c0611d",
+      "observed": "2026-07-29T01:28:36Z"
+    },
+    "latest": {
+      "content": "sha256:7bfbabd3671a0ce2ec65239b6c09b532d3a7676863595101ee9bc84218c0611d",
+      "observed": "2026-07-29T01:28:36Z"
+    },
+    "4.3.3_20260729": {
+      "content": "sha256:6870f4e94411cc70043ac49651af484f4c4da3ba897da95860121386532da5ed",
+      "observed": "2026-07-29T01:28:36Z"
+    },
+    "4.3.3": {
+      "content": "sha256:6870f4e94411cc70043ac49651af484f4c4da3ba897da95860121386532da5ed",
+      "observed": "2026-07-29T01:28:36Z"
+    },
+    "4.3.4_20260729": {
+      "content": "sha256:52ba9e52d73b972df4709e69823818a177272cd516c6df3fc2eb7abc752f56c2",
+      "observed": "2026-07-29T01:28:36Z"
+    },
+    "4.3.4": {
+      "content": "sha256:52ba9e52d73b972df4709e69823818a177272cd516c6df3fc2eb7abc752f56c2",
+      "observed": "2026-07-29T01:28:36Z"
+    },
+    "4.4.0_20260729": {
+      "content": "sha256:77ae4ba84f5ede1734cf75267d49361ad80972193f1614c35c67412e217754c7",
+      "observed": "2026-07-29T01:28:36Z"
+    },
+    "4.4.0": {
+      "content": "sha256:77ae4ba84f5ede1734cf75267d49361ad80972193f1614c35c67412e217754c7",
+      "observed": "2026-07-29T01:28:36Z"
+    },
+    "4.4": {
+      "content": "sha256:7bfbabd3671a0ce2ec65239b6c09b532d3a7676863595101ee9bc84218c0611d",
+      "observed": "2026-07-29T01:28:36Z"
+    },
+    "4.4.1_20260729": {
+      "content": "sha256:7bfbabd3671a0ce2ec65239b6c09b532d3a7676863595101ee9bc84218c0611d",
+      "observed": "2026-07-29T01:28:36Z"
+    },
+    "4.4.1": {
+      "content": "sha256:7bfbabd3671a0ce2ec65239b6c09b532d3a7676863595101ee9bc84218c0611d",
+      "observed": "2026-07-29T01:28:36Z"
+    }
+  }
 }
