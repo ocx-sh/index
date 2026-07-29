@@ -1,0 +1,21 @@
+{
+  "name": "ocx.sh/astral-sh/python-build-standalone",
+  "repository": "oci://ghcr.io/ocx-contrib/python-build-standalone",
+  "owners": [
+    {
+      "github": "OCXbot",
+      "github_id": 999999
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-07-29",
+  "desc": null,
+  "variants": [],
+  "tags": {
+    "3.13.1": {
+      "content": "sha256:6ad719f6259afaa5bed18249caf9da727fa16efaa7f2f99958a735e6520d8fc7",
+      "observed": "2026-07-29T00:00:00Z"
+    }
+  }
+}

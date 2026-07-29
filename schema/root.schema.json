@@ -49,6 +49,18 @@
       "pattern": "^https://[^\\s]+$",
       "maxLength": 2048
     },
+    "variants": {
+      "type": "array",
+      "description": "Variant names observed across tags — the sorted, deduplicated set of `<variant>-` prefixes carried by tags that parse as versions. Bot-derived, never human-set: a pure projection of `tags`, recorded so a consumer can learn a package ships variants without re-implementing the version grammar. Omitted (never `[]`) when the package ships only the default variant, so every root published before this field existed stays valid AND byte-identical. The default variant is the absence of a prefix and has no name here, so this array never contains an empty string. A bare rolling tag (`slim`) is not a version and so never appears: it becomes legible as a variant only alongside a versioned `slim-*` sibling, an inference the display layer makes and this field does not.",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9.]*$",
+        "not": { "const": "latest" },
+        "description": "One variant name, matching the version grammar's prefix production. `latest` is reserved: `Version::parse` refuses it as a prefix, so a tag named `latest-3.28.1` is not a version and yields no variant. The `not` fails a hand-authored root closed — the byte gate is a round-trip and would happily accept a fabricated name the derivation could never produce."
+      }
+    },
     "desc": {
       "description": "Nullable — a package that has never published __ocx.desc on the physical registry has desc: null (ADR: adr_locked_observation_index_format.md D6).",
       "oneOf": [

@@ -48,3 +48,16 @@ root-invalid-reserved-tag-canonical-sha384.json|'sha384.bbbbbbbbbbbbbbbbbbbbbbbb
 # tag-grammar bound and reports two errors. The required substring is still the
 # reservation clause: the reservation is what this fixture exists to prove.
 root-invalid-reserved-tag-canonical-sha512.json|'sha512.cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc' should not be valid under {'anyOf'
+
+# `variants` (bot-derived projection of `tags`). Every row below pins a state
+# the derivation cannot produce, so a hand-authored root claiming it is caught
+# here -- the byte gate is a round-trip and would accept any of them.
+# "no variants" has exactly one spelling: the key omitted, never `[]`.
+root-invalid-variants-empty-array.json|$.variants: [] should be non-empty
+# The default variant is the ABSENCE of a prefix. `ocx index list --variants`
+# renders it as an empty-string placeholder; that placeholder is a display
+# artifact and must never reach the wire.
+root-invalid-variants-default-sentinel.json|$.variants[0]: '' does not match '^[a-z][a-z0-9.]*$'
+root-invalid-variants-reserved-latest.json|$.variants[0]: 'latest' should not be valid under {'const': 'latest'}
+root-invalid-variants-uppercase-name.json|$.variants[0]: 'Slim' does not match '^[a-z][a-z0-9.]*$'
+root-invalid-variants-duplicate-name.json|$.variants: ['slim', 'slim'] has non-unique elements

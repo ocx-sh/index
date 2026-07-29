@@ -539,6 +539,8 @@ def serialize_package_root(root: PackageRoot) -> bytes:
         data["superseded_by"] = root.superseded_by
     if root.source is not None:
         data["source"] = root.source
+    if root.variants:
+        data["variants"] = list(root.variants)
     data["tags"] = {tag: _tag_entry_to_dict(entry) for tag, entry in root.tags.items()}
     text = json.dumps(data, indent=2, sort_keys=False) + "\n"
     return text.encode("utf-8")
@@ -569,6 +571,12 @@ def parse_package_root(raw: bytes) -> PackageRoot:
         upstream = None if upstream_raw is None else _upstream_from_dict(upstream_raw)
         superseded_by = data.get("superseded_by")
         source = data.get("source")
+        # An absent key and an empty array both mean "no variants"; the
+        # serializer only ever emits the former, so `[]` on the wire
+        # round-trips to an omitted key. That normalization is deliberate —
+        # one spelling for one state — and is exactly what the byte gate
+        # rejects a hand-authored `"variants": []` for.
+        variants = tuple(data.get("variants") or ())
         tags = {name: _tag_entry_from_dict(t) for name, t in data["tags"].items()}
         return PackageRoot(
             name=data["name"],
@@ -581,6 +589,7 @@ def parse_package_root(raw: bytes) -> PackageRoot:
             upstream=upstream,
             superseded_by=superseded_by,
             source=source,
+            variants=variants,
             tags=tags,
         )
     except (KeyError, TypeError, AttributeError) as exc:

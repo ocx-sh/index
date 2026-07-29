@@ -56,6 +56,12 @@ const platforms = computed(() =>
         <div class="card-title-row">
           <span class="card-title">{{ pkg.title }}</span>
           <span v-if="pkg.latestVersion" class="card-version">{{ pkg.latestVersion }}</span>
+          <span
+            v-for="variant in pkg.variants"
+            :key="variant"
+            class="card-variant"
+            :title="`ships a ${variant} variant`"
+          >{{ variant }}</span>
           <span v-if="pkg.status === 'deprecated'" class="card-deprecated">DEPRECATED</span>
         </div>
         <div class="card-name">{{ bareName }}</div>
@@ -161,6 +167,22 @@ const platforms = computed(() =>
   font-size: var(--text-xs);
   font-weight: 500;
   color: var(--c-text-3);
+}
+
+/* Variant chips sit beside the version because that is what they qualify:
+ * `latestVersion` names the DEFAULT variant's newest release and ignores
+ * variant-prefixed tags entirely, so without these the card silently
+ * under-reports what the package ships. Keyword-chip tokens, not coral —
+ * a variant is a fact about the package, not a call to action (see
+ * `.card-deprecated`'s note and palette.css). */
+.card-variant {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: 500;
+  color: var(--c-kw);
+  background: var(--c-kw-bg);
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
 }
 
 /* Same shape/sizing as IdentityBlock's `.identity-deprecated` badge, but

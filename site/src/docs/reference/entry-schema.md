@@ -47,8 +47,33 @@ sync protocol built on top of this shape.
 | `created` | string, `YYYY-MM-DD` | yes | human (PR), set once | date first claimed |
 | `upstream` | [Upstream](#upstream) object | no | human (PR) | mandatory by governance for third-party vendor namespaces; omitted for OCX first-party entries |
 | `source` | string, `https://…` | no | bot-regenerated | repository whose CI produced the published builds, from the `org.opencontainers.image.source` annotation on the latest version's manifest; omitted (or `null`) when that annotation is absent. Not `upstream.repository_url` — see below |
+| `variants` | array of string | no | bot-regenerated | variant names observed across `tags` — sorted, deduplicated, ≥1 item. Omitted (never `[]`) when the package ships only the default variant. See [Variants](#variants) |
 | `desc` | [Desc](#desc) object \| `null` | yes (nullable) | bot-regenerated | `null` if `__ocx.desc` never published |
 | `tags` | map: tag name → [TagEntry](#tagentry) | yes | bot-regenerated, except `yanked` | every observed tag, no filtering |
+
+### Variants
+
+A **variant** is a build of the same version with different software-level
+characteristics — an optimisation profile, a feature set, a libc. It is spelled
+as a tag prefix: `slim-3.13.1` is the `slim` variant of `3.13.1`, and an
+unprefixed `3.13.1` is the *default* variant.
+
+`variants` is a **projection of `tags`**, not an independent declaration.
+Recompute it and you get the same answer: take every tag that parses as a
+version, keep the ones carrying a prefix, sort and deduplicate the prefixes. It
+is recorded so that reading "does this package ship variants" does not require
+re-implementing the version grammar. `latest` is reserved and is never a
+variant name.
+
+Two consequences worth knowing:
+
+- The default variant has no name. It is the *absence* of a prefix, so it never
+  appears in this array — `variants: ["slim"]` on a package that also publishes
+  `3.13.1` means two variants ship, the default and `slim`.
+- A bare rolling tag (`slim`, no version) is not a version, so it contributes
+  nothing on its own. It is legible as a variant pointer only alongside a
+  versioned `slim-*` sibling — an inference the package page makes when it
+  renders, and one this field does not make.
 
 ### Owner
 
