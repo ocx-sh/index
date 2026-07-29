@@ -8,6 +8,7 @@ it is what makes the recorded field safe to read instead of re-deriving.
 from __future__ import annotations
 
 import json
+from typing import Any, cast
 
 from indexbot.core.observe import Observation
 from indexbot.core.regenerate import regenerate
@@ -181,10 +182,10 @@ def _catalog_row(root: PackageRoot) -> dict[str, object]:
     )
     plan = build_render_plan((source,))
     catalog = next(f for f in plan if f.path == "data/catalog/catalog.json")
-    packages = json.loads(catalog.content)["packages"]
-    assert isinstance(packages, list)
-    row: dict[str, object] = packages[0]
-    return row
+    document = cast("dict[str, Any]", json.loads(catalog.content))
+    packages = cast("list[dict[str, object]]", document["packages"])
+    assert len(packages) == 1
+    return packages[0]
 
 
 def test_the_catalog_grid_row_carries_the_recorded_variants() -> None:
