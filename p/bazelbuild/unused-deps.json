@@ -99,6 +99,26 @@
     "6.1.1": {
       "content": "sha256:dd37ede90c5a5344d61240529d32a349ec71e8a22689c93be24b2f4768f7de91",
       "observed": "2026-07-28T23:29:59Z"
+    },
+    "5.0.0_20260729": {
+      "content": "sha256:6ffe280f457edbb17f58bcba20e17d17f9b9b026ce4694ebd17fc095a9a5ecb0",
+      "observed": "2026-07-29T03:55:42Z"
+    },
+    "5.0.0": {
+      "content": "sha256:6ffe280f457edbb17f58bcba20e17d17f9b9b026ce4694ebd17fc095a9a5ecb0",
+      "observed": "2026-07-29T03:55:42Z"
+    },
+    "5.0": {
+      "content": "sha256:eb8cd7a33e1adfbec5fcb420d4438babbe29d01040cadf6fc3375f0b4cae8ba9",
+      "observed": "2026-07-29T03:55:42Z"
+    },
+    "5.0.1_20260729": {
+      "content": "sha256:eb8cd7a33e1adfbec5fcb420d4438babbe29d01040cadf6fc3375f0b4cae8ba9",
+      "observed": "2026-07-29T03:55:42Z"
+    },
+    "5.0.1": {
+      "content": "sha256:eb8cd7a33e1adfbec5fcb420d4438babbe29d01040cadf6fc3375f0b4cae8ba9",
+      "observed": "2026-07-29T03:55:42Z"
     }
   }
 }
