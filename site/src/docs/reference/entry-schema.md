@@ -60,7 +60,9 @@ unprefixed `3.13.1` is the *default* variant.
 
 `variants` is a **projection of `tags`**, not an independent declaration, and
 the PR gate enforces exactly that: `check_variants_match_tags` re-derives the
-set from the root's own tags and rejects any mismatch, in either direction.
+set from the root's own tags and rejects a *present* field that disagrees.
+Omitting it is always allowed — an absent field claims nothing, and the
+catalog derives the set from `tags` regardless of what the root stores.
 Recompute it and you get the same answer: take every tag that parses as a
 version, keep the ones carrying a prefix, sort and deduplicate the prefixes. It
 is recorded so that reading "does this package ship variants" does not require
