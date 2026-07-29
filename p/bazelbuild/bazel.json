@@ -3,10 +3,6 @@
   "repository": "oci://ghcr.io/ocx-contrib/bazelbuild/bazel",
   "owners": [
     {
-      "github": "michael-herwig",
-      "github_id": 3511590
-    },
-    {
       "github": "ocx-bot",
       "github_id": 309019509
     }
