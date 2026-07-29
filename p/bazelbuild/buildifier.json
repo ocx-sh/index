@@ -100,6 +100,26 @@
     "6.1.1": {
       "content": "sha256:75dda29641ae165696d1ad8f078915ad48b49630a6a1bb251fa33511af8e1b7f",
       "observed": "2026-07-28T23:30:01Z"
+    },
+    "5.0.0_20260729": {
+      "content": "sha256:ce3682e70b68bd14777cbab4bede0aeae3ea2c0036dec6d87c76a989132491df",
+      "observed": "2026-07-29T03:46:26Z"
+    },
+    "5.0.0": {
+      "content": "sha256:ce3682e70b68bd14777cbab4bede0aeae3ea2c0036dec6d87c76a989132491df",
+      "observed": "2026-07-29T03:46:26Z"
+    },
+    "5.0": {
+      "content": "sha256:3d617316339b26005a14baf3e759e1e1c6d4d11ca57415c7700c94813452b194",
+      "observed": "2026-07-29T03:46:26Z"
+    },
+    "5.0.1_20260729": {
+      "content": "sha256:3d617316339b26005a14baf3e759e1e1c6d4d11ca57415c7700c94813452b194",
+      "observed": "2026-07-29T03:46:26Z"
+    },
+    "5.0.1": {
+      "content": "sha256:3d617316339b26005a14baf3e759e1e1c6d4d11ca57415c7700c94813452b194",
+      "observed": "2026-07-29T03:46:26Z"
     }
   }
 }
