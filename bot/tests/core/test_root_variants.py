@@ -197,10 +197,28 @@ def test_a_variant_the_tags_do_not_support_is_rejected() -> None:
     assert "slim" in str(excinfo.value)
 
 
-def test_a_variant_the_tags_imply_but_the_field_omits_is_rejected() -> None:
+def test_a_variant_the_tags_imply_but_the_field_omits_is_accepted() -> None:
+    # The stage-2 shape, and the reason this gate had to be relaxed: once ocx
+    # stopped writing `variants`, every announce of a variant-shipping package
+    # records an empty set while the derivation is non-empty. Requiring a
+    # match unconditionally red every one of them. Absence asserts nothing —
+    # the catalog derives the truth from `tags` — so there is no false claim
+    # to catch here.
+    check_variants_match_tags(_root({"slim-3.13.1": _entry(_DIGEST_B)}))
+
+
+def test_a_recorded_variant_set_that_disagrees_is_still_rejected() -> None:
+    # The property the relaxation must NOT cost: a non-empty field is still
+    # held to the derivation, in both directions. Under-claiming a variant the
+    # tags imply is a false claim exactly as much as over-claiming one.
     with pytest.raises(ValidationError) as excinfo:
-        check_variants_match_tags(_root({"slim-3.13.1": _entry(_DIGEST_B)}))
-    assert "slim" in str(excinfo.value)
+        check_variants_match_tags(
+            _root(
+                {"slim-3.13.1": _entry(_DIGEST_B), "musl-3.13.1": _entry(_DIGEST_A)},
+                variants=("slim",),
+            )
+        )
+    assert "musl" in str(excinfo.value)
 
 
 def test_the_check_is_the_gate_a_hand_authored_root_cannot_pass() -> None:

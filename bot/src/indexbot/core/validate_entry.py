@@ -233,21 +233,30 @@ def check_upstream_repository_url_scheme(root: PackageRoot) -> None:
 
 
 def check_variants_match_tags(root: PackageRoot) -> None:
-    """`variants` must equal the derivation over this root's own `tags`.
+    """A *recorded* `variants` must equal the derivation over this root's own
+    `tags`. Recording nothing is always legal.
 
-    The field is a projection, and this is what makes that a *guarantee*
-    rather than a description. Neither existing gate can express it: the
-    schema can constrain the shape but not the relationship, and the byte
-    gate is a parse -> serialize round-trip, so it accepts any well-formed
-    value a human typed. Without this check, a hand-authored root could claim
-    a variant set no derivation could produce and survive until the next
-    announce silently overwrote it.
+    The field is vestigial: `core/render.py` derives the catalog's `variants`
+    from `tags`, and ocx no longer writes the field at all. What this gate
+    still buys is tamper resistance on the one input neither other gate can
+    police — the schema constrains shape but not the relationship to `tags`,
+    and the byte gate is a parse -> serialize round-trip, so it accepts any
+    well-formed value a human typed. A hand-authored root claiming a variant
+    set no derivation could produce must not survive.
 
-    Calls `version_order.variant_names` — the same function `regenerate`
-    writes with, so the gate and the writer cannot disagree by construction.
-    A root predating the field passes trivially: no variant tags, empty
-    recorded set.
+    **Absence is not a tamper vector, which is why it passes.** An omitted
+    field asserts nothing, and the catalog derives the truth from `tags`
+    regardless — there is no false claim to make by leaving it out. Requiring
+    a match unconditionally would instead red every announce of every
+    variant-shipping package the moment ocx stopped writing it, because the
+    announced root records an empty set while the derivation is non-empty.
+
+    Calls `version_order.variant_names` — the same function `render.py`
+    derives with, so the gate and the renderer cannot disagree by
+    construction.
     """
+    if not root.variants:
+        return
     derived = variant_names(root.tags)
     if root.variants != derived:
         raise ValidationError(
