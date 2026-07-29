@@ -1,0 +1,24 @@
+{
+  "name": "ocx.sh/kitware/cmake",
+  "repository": "oci://ghcr.io/ocx-contrib/kitware/cmake",
+  "owners": [
+    {
+      "github": "michael-herwig",
+      "github_id": 3511590
+    },
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-07-29",
+  "desc": null,
+  "upstream": {
+    "org": "Kitware",
+    "repository_url": "https://github.com/Kitware/CMake",
+    "disclaimer": "Unaffiliated mirror. CMake is a project of Kitware, Inc.; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
