@@ -41,6 +41,7 @@ from typing import Any, Final, cast
 from urllib.parse import urlsplit
 
 from indexbot.core.policy import INDEX_POLICY_PATH
+from indexbot.core.version_order import variant_names
 from indexbot.errors import AnomalyError, ValidationError
 from indexbot.model import (
     Desc,
@@ -228,6 +229,30 @@ def check_upstream_repository_url_scheme(root: PackageRoot) -> None:
         raise ValidationError(
             f"upstream.repository_url {root.upstream.repository_url!r} must use "
             f"http or https scheme, got {scheme!r}"
+        )
+
+
+def check_variants_match_tags(root: PackageRoot) -> None:
+    """`variants` must equal the derivation over this root's own `tags`.
+
+    The field is a projection, and this is what makes that a *guarantee*
+    rather than a description. Neither existing gate can express it: the
+    schema can constrain the shape but not the relationship, and the byte
+    gate is a parse -> serialize round-trip, so it accepts any well-formed
+    value a human typed. Without this check, a hand-authored root could claim
+    a variant set no derivation could produce and survive until the next
+    announce silently overwrote it.
+
+    Calls `version_order.variant_names` — the same function `regenerate`
+    writes with, so the gate and the writer cannot disagree by construction.
+    A root predating the field passes trivially: no variant tags, empty
+    recorded set.
+    """
+    derived = variant_names(root.tags)
+    if root.variants != derived:
+        raise ValidationError(
+            f"variants {list(root.variants)} does not match the set derived from tags "
+            f"{list(derived)} — the field is a projection of `tags`, not an independent claim"
         )
 
 

@@ -10,11 +10,18 @@ from __future__ import annotations
 import json
 from typing import Any, cast
 
+import pytest
+
 from indexbot.core.observe import Observation
 from indexbot.core.regenerate import regenerate
 from indexbot.core.render import SourcePackage, build_render_plan
-from indexbot.core.validate_entry import parse_package_root, serialize_package_root
+from indexbot.core.validate_entry import (
+    check_variants_match_tags,
+    parse_package_root,
+    serialize_package_root,
+)
 from indexbot.core.version_order import variant_names
+from indexbot.errors import ValidationError
 from indexbot.model import Owner, PackageId, PackageRoot, TagEntry
 from tests.fakes import FixedClock
 
@@ -166,6 +173,45 @@ def test_parsing_a_root_that_predates_the_field_yields_an_empty_tuple() -> None:
     )
     assert parse_package_root(legacy).variants == ()
     assert serialize_package_root(parse_package_root(legacy)) == legacy
+
+
+# --- the projection is enforced, not merely described -----------------------
+
+
+def test_a_root_whose_variants_match_its_tags_passes_the_check() -> None:
+    check_variants_match_tags(_root({"slim-3.13.1": _entry(_DIGEST_B)}, variants=("slim",)))
+
+
+def test_a_root_predating_the_field_passes_the_check() -> None:
+    # Every root published before `variants` existed: no field, no variant
+    # tags, so the derivation and the (empty) recorded set agree trivially.
+    check_variants_match_tags(_root({"3.13.1": _entry(_DIGEST_A)}))
+
+
+def test_a_variant_the_tags_do_not_support_is_rejected() -> None:
+    with pytest.raises(ValidationError) as excinfo:
+        check_variants_match_tags(_root({"3.13.1": _entry(_DIGEST_A)}, variants=("slim",)))
+    assert "slim" in str(excinfo.value)
+
+
+def test_a_variant_the_tags_imply_but_the_field_omits_is_rejected() -> None:
+    with pytest.raises(ValidationError) as excinfo:
+        check_variants_match_tags(_root({"slim-3.13.1": _entry(_DIGEST_B)}))
+    assert "slim" in str(excinfo.value)
+
+
+def test_the_check_is_the_gate_a_hand_authored_root_cannot_pass() -> None:
+    # The byte gate is a parse->serialize round-trip, so it accepts any
+    # well-formed `variants` value; the schema cannot express "matches the
+    # tags" either. Without this check a hand-authored PR could claim a
+    # variant set no derivation could produce, and it would survive until the
+    # next announce silently overwrote it.
+    hand_authored = _root({"3.13.1": _entry(_DIGEST_A)}, variants=("nonexistent",))
+    assert serialize_package_root(parse_package_root(serialize_package_root(hand_authored))) == (
+        serialize_package_root(hand_authored)
+    ), "the byte gate passes it"
+    with pytest.raises(ValidationError):
+        check_variants_match_tags(hand_authored)
 
 
 # --- catalog view-model ----------------------------------------------------

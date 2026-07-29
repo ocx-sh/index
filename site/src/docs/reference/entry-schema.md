@@ -58,7 +58,9 @@ characteristics — an optimisation profile, a feature set, a libc. It is spelle
 as a tag prefix: `slim-3.13.1` is the `slim` variant of `3.13.1`, and an
 unprefixed `3.13.1` is the *default* variant.
 
-`variants` is a **projection of `tags`**, not an independent declaration.
+`variants` is a **projection of `tags`**, not an independent declaration, and
+the PR gate enforces exactly that: `check_variants_match_tags` re-derives the
+set from the root's own tags and rejects any mismatch, in either direction.
 Recompute it and you get the same answer: take every tag that parses as a
 version, keep the ones carrying a prefix, sort and deduplicate the prefixes. It
 is recorded so that reading "does this package ship variants" does not require
