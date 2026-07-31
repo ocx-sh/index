@@ -550,6 +550,26 @@
     "6.3.0": {
       "content": "sha256:aabb4062294edc8a04321e7a1708e7e7b4600cba5788d728c095c24ef9a9a82d",
       "observed": "2026-07-31T03:55:56Z"
+    },
+    "6.0.0_20260731": {
+      "content": "sha256:60145c1ba7241d133133694abde1f9f732a74288ef3fc6c60e334eb935c8ed48",
+      "observed": "2026-07-31T09:22:43Z"
+    },
+    "6.0.0": {
+      "content": "sha256:60145c1ba7241d133133694abde1f9f732a74288ef3fc6c60e334eb935c8ed48",
+      "observed": "2026-07-31T09:22:43Z"
+    },
+    "6.0": {
+      "content": "sha256:60145c1ba7241d133133694abde1f9f732a74288ef3fc6c60e334eb935c8ed48",
+      "observed": "2026-07-31T09:22:43Z"
+    },
+    "6.1.0_20260731": {
+      "content": "sha256:9e7e5bdf7994b0b803bdfebbe8dce2f3ce7de83a41cf2bcb151e24a62a7b9da2",
+      "observed": "2026-07-31T09:22:43Z"
+    },
+    "6.1.0": {
+      "content": "sha256:9e7e5bdf7994b0b803bdfebbe8dce2f3ce7de83a41cf2bcb151e24a62a7b9da2",
+      "observed": "2026-07-31T09:22:43Z"
     }
   }
 }
