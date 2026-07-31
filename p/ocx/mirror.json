@@ -1,6 +1,6 @@
 {
   "name": "ocx.sh/ocx/mirror",
-  "repository": "oci://ocx.sh/ocx/mirror",
+  "repository": "oci://ghcr.io/ocx-sh/ocx/mirror",
   "owners": [
     {
       "github": "ocx-bot",
