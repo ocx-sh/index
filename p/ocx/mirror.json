@@ -10,11 +10,25 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-07-26",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:72d1466f17726a76e2676872941917679e5964193feb5315513c3f71180bc242",
+    "title": "OCX Mirror",
+    "description": "Mirror upstream tool releases into OCI registries as OCX packages",
+    "keywords": [
+      "mirror",
+      "oci",
+      "registry",
+      "github-releases",
+      "ci",
+      "ocx"
+    ],
+    "readme": "sha256:9104dadc71c59466770115777f680278fd0e7c8125ae462216c6fae862efdd8d",
+    "logo": "sha256:5d8afbaf6ef2cafd09dad44e199cd56b3b9653f7056705f08c43b69a20e1eef2"
+  },
   "tags": {
     "0": {
-      "content": "sha256:13375c8ab8bc05351d5a2b63c19c2270b366222457865dcd375a22a860af14ef",
-      "observed": "2026-07-26T19:10:55Z"
+      "content": "sha256:a00f80a813bb9a5d391872efc46f04b49dc3fb7fab775d3f9a9af4f20ef106aa",
+      "observed": "2026-07-31T20:01:46Z"
     },
     "0.4": {
       "content": "sha256:13375c8ab8bc05351d5a2b63c19c2270b366222457865dcd375a22a860af14ef",
@@ -29,8 +43,20 @@
       "observed": "2026-07-26T19:10:55Z"
     },
     "latest": {
-      "content": "sha256:13375c8ab8bc05351d5a2b63c19c2270b366222457865dcd375a22a860af14ef",
-      "observed": "2026-07-26T19:10:55Z"
+      "content": "sha256:a00f80a813bb9a5d391872efc46f04b49dc3fb7fab775d3f9a9af4f20ef106aa",
+      "observed": "2026-07-31T20:01:46Z"
+    },
+    "0.5.0_20260731194825": {
+      "content": "sha256:a00f80a813bb9a5d391872efc46f04b49dc3fb7fab775d3f9a9af4f20ef106aa",
+      "observed": "2026-07-31T20:01:46Z"
+    },
+    "0.5.0": {
+      "content": "sha256:a00f80a813bb9a5d391872efc46f04b49dc3fb7fab775d3f9a9af4f20ef106aa",
+      "observed": "2026-07-31T20:01:46Z"
+    },
+    "0.5": {
+      "content": "sha256:a00f80a813bb9a5d391872efc46f04b49dc3fb7fab775d3f9a9af4f20ef106aa",
+      "observed": "2026-07-31T20:01:46Z"
     }
   }
 }
