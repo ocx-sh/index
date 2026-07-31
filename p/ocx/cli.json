@@ -10,11 +10,25 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-07-26",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:78578920d25f08afed9bb7cb62e40e7f249c6a812f026ef11cb64d83f9d5a990",
+    "title": "OCX",
+    "description": "Install pre-built tools from OCI registries, switch versions instantly, and run with clean environments",
+    "keywords": [
+      "package-manager",
+      "oci",
+      "registry",
+      "toolchain",
+      "ci",
+      "cli"
+    ],
+    "readme": "sha256:54cfbd86805ba3b31a2bab39140c58a82e7ff6c6fe5f57a4c2be728953c091be",
+    "logo": "sha256:5d8afbaf6ef2cafd09dad44e199cd56b3b9653f7056705f08c43b69a20e1eef2"
+  },
   "tags": {
     "0": {
-      "content": "sha256:91701d97b74233d38775d14aebfc6b141f6c8023134ae813a32c4aa78b3d313b",
-      "observed": "2026-07-26T19:08:06Z"
+      "content": "sha256:78dac126c2e348e1f9c96874ba421b8ebad3b3a2b2b1b21090ee194762d6f336",
+      "observed": "2026-07-31T17:02:16Z"
     },
     "0.3": {
       "content": "sha256:b15e79aea60ce5d1cee9c84f00bd166805c8e6d710311fbdf8685265ead9bbfc",
@@ -161,8 +175,20 @@
       "observed": "2026-07-26T19:08:06Z"
     },
     "latest": {
-      "content": "sha256:91701d97b74233d38775d14aebfc6b141f6c8023134ae813a32c4aa78b3d313b",
-      "observed": "2026-07-26T19:08:06Z"
+      "content": "sha256:78dac126c2e348e1f9c96874ba421b8ebad3b3a2b2b1b21090ee194762d6f336",
+      "observed": "2026-07-31T17:02:16Z"
+    },
+    "0.5.0_20260731170106": {
+      "content": "sha256:78dac126c2e348e1f9c96874ba421b8ebad3b3a2b2b1b21090ee194762d6f336",
+      "observed": "2026-07-31T17:02:16Z"
+    },
+    "0.5.0": {
+      "content": "sha256:78dac126c2e348e1f9c96874ba421b8ebad3b3a2b2b1b21090ee194762d6f336",
+      "observed": "2026-07-31T17:02:16Z"
+    },
+    "0.5": {
+      "content": "sha256:78dac126c2e348e1f9c96874ba421b8ebad3b3a2b2b1b21090ee194762d6f336",
+      "observed": "2026-07-31T17:02:16Z"
     }
   }
 }
