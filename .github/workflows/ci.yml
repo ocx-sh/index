@@ -59,6 +59,10 @@ jobs:
 
   bot-audit:
     name: bot-audit
+    # The only job here a `schedule` can reach, so the only one needing the
+    # upstream guard (cron is upstream-only -- see render-deploy.yml's
+    # `guard`). PR and push behaviour is unchanged, forks included.
+    if: github.event_name != 'schedule' || github.repository_owner == 'ocx-sh'
     runs-on: ubuntu-latest
     permissions:
       contents: read

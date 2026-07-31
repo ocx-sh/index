@@ -59,6 +59,13 @@ jobs:
   # retries on the next tick instead of being recorded as done.
   guard:
     name: guard
+    # Cron is upstream-only. A fork inherits every `schedule:` in this tree and
+    # GitHub keeps firing it there: ocx-contrib/index (the announce bot's fork)
+    # ran this workflow every 15 minutes and failed all 33 times, because no
+    # fork holds the Cloudflare secrets. Guarding `guard` skips the whole
+    # workflow -- `deploy` needs it and `smoke` needs `deploy`. Owner, not
+    # `github.repository`, so a repo rename does not silently stop deploys.
+    if: github.repository_owner == 'ocx-sh'
     runs-on: ubuntu-latest
     permissions:
       actions: read

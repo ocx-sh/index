@@ -37,6 +37,10 @@ concurrency:
 jobs:
   reconcile:
     name: reconcile
+    # Cron is upstream-only (see render-deploy.yml's `guard`): a fork sweeping
+    # this repo's roots against registry truth files its anomaly issues in the
+    # fork, where nobody reads them.
+    if: github.repository_owner == 'ocx-sh'
     runs-on: ubuntu-latest
     permissions:
       contents: read # checkout only — verify-only reconcile never writes to p/

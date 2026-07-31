@@ -22,6 +22,9 @@ concurrency:
 jobs:
   stale:
     name: stale
+    # Cron is upstream-only (see render-deploy.yml's `guard`): FP-8 triage is
+    # this repo's PR queue, never a fork's.
+    if: github.repository_owner == 'ocx-sh'
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write # actions/stale labels + closes stale PRs

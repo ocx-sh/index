@@ -102,6 +102,9 @@ the deployed tree currently renders `config.json` and an empty catalog.
   `pull_request_target`
 - Any `client_payload` field validated (regex, no path traversal) via env-var
   indirection — never `run:` interpolation
+- **Cron is upstream-only** — every job a `schedule` can reach carries
+  `if: github.repository_owner == 'ocx-sh'` (or excludes the schedule event);
+  forks inherit every cron and run it off their own stale YAML
 - **Cache Rule**: never enable Cloudflare caching for `*.json` on the index zone
 
 ## Wire Contract = One-Way Door

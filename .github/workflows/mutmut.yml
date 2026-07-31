@@ -10,6 +10,8 @@ permissions: {}
 jobs:
   mutmut:
     name: mutmut
+    # Cron is upstream-only (see render-deploy.yml's `guard`).
+    if: github.repository_owner == 'ocx-sh'
     runs-on: ubuntu-latest
     # ponytail: baseline signal only (ADR-4 BD-3) — surviving mutants are
     # triaged manually, not gated. Promote to blocking if the count stays
