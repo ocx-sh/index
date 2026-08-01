@@ -10,11 +10,83 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-01",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:1e1afea5475627f0480f5f021d69904458978b8cde4181f5f4e31f94bc9a40bc",
+    "title": "ruff",
+    "description": "An extremely fast Python linter and code formatter, written in Rust",
+    "keywords": [
+      "python",
+      "linter",
+      "formatter",
+      "lint",
+      "static-analysis",
+      "astral",
+      "ruff"
+    ],
+    "readme": "sha256:71b07dc2ed0a087d02c4274013549ddf3d147c78083410a73d51743e7a54e7da",
+    "logo": "sha256:212b5f62d95b2cfb120d9f9d494af7761ee35afad17a6f666a9ab3aa85e0b9b1"
+  },
   "upstream": {
     "org": "astral-sh",
     "repository_url": "https://github.com/astral-sh/ruff",
     "disclaimer": "Unaffiliated mirror. ruff is a project of Astral Software Inc.; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.15.20_20260801": {
+      "content": "sha256:ccd5409c3b2a65f1b930d815078b7663b355bcee448500cf849308a7da1014b6",
+      "observed": "2026-08-01T17:45:45Z"
+    },
+    "0.15.20": {
+      "content": "sha256:ccd5409c3b2a65f1b930d815078b7663b355bcee448500cf849308a7da1014b6",
+      "observed": "2026-08-01T17:45:45Z"
+    },
+    "0.15": {
+      "content": "sha256:31e06d8206648b85b0a088dd55cf7df12504b321c7f384962090a47aacefe51c",
+      "observed": "2026-08-01T17:45:45Z"
+    },
+    "0": {
+      "content": "sha256:e5600477858c61ce98eaa7923770e2d944f8c5f2f6cc8a4819669b10dc501634",
+      "observed": "2026-08-01T17:45:45Z"
+    },
+    "latest": {
+      "content": "sha256:e5600477858c61ce98eaa7923770e2d944f8c5f2f6cc8a4819669b10dc501634",
+      "observed": "2026-08-01T17:45:45Z"
+    },
+    "0.15.21_20260801": {
+      "content": "sha256:7492f72fcc96826d7d040682f476407c01c3cb04325220f3788ba502a584d5b3",
+      "observed": "2026-08-01T17:45:45Z"
+    },
+    "0.15.21": {
+      "content": "sha256:7492f72fcc96826d7d040682f476407c01c3cb04325220f3788ba502a584d5b3",
+      "observed": "2026-08-01T17:45:45Z"
+    },
+    "0.15.22_20260801": {
+      "content": "sha256:31e06d8206648b85b0a088dd55cf7df12504b321c7f384962090a47aacefe51c",
+      "observed": "2026-08-01T17:45:45Z"
+    },
+    "0.15.22": {
+      "content": "sha256:31e06d8206648b85b0a088dd55cf7df12504b321c7f384962090a47aacefe51c",
+      "observed": "2026-08-01T17:45:45Z"
+    },
+    "0.16.0_20260801": {
+      "content": "sha256:fbb1c62df43a14d32bb68e6cfa42563241d9ec2c194a499360129c5f54c78a72",
+      "observed": "2026-08-01T17:45:45Z"
+    },
+    "0.16.0": {
+      "content": "sha256:fbb1c62df43a14d32bb68e6cfa42563241d9ec2c194a499360129c5f54c78a72",
+      "observed": "2026-08-01T17:45:45Z"
+    },
+    "0.16": {
+      "content": "sha256:e5600477858c61ce98eaa7923770e2d944f8c5f2f6cc8a4819669b10dc501634",
+      "observed": "2026-08-01T17:45:45Z"
+    },
+    "0.16.1_20260801": {
+      "content": "sha256:e5600477858c61ce98eaa7923770e2d944f8c5f2f6cc8a4819669b10dc501634",
+      "observed": "2026-08-01T17:45:45Z"
+    },
+    "0.16.1": {
+      "content": "sha256:e5600477858c61ce98eaa7923770e2d944f8c5f2f6cc8a4819669b10dc501634",
+      "observed": "2026-08-01T17:45:45Z"
+    }
+  }
 }
