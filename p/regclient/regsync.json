@@ -10,11 +10,76 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-07-26",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:54cf8d16fa5358cc4ddb0e013e895723da888fb7d2fd5db8ec1430e1ebb701ca",
+    "title": "regsync",
+    "description": "Registry mirroring tool \u2014 sync images and repositories between OCI/Docker registries from a declarative config",
+    "keywords": [
+      "regsync",
+      "regclient",
+      "oci",
+      "registry",
+      "docker",
+      "mirror",
+      "sync",
+      "containers"
+    ],
+    "readme": "sha256:9d0d2506b524faaaeea3f1c3fb7fc0853466e0051c0f4017be0a5d7d96b05b19",
+    "logo": "sha256:9e58325d33d79b1799d4b0d80195e7196d386c3a68f9b79e34ceace6447ab43b"
+  },
   "upstream": {
     "org": "regclient",
     "repository_url": "https://github.com/regclient/regclient",
     "disclaimer": "Unaffiliated mirror. regsync is a project of the regclient authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.9.0_20260801": {
+      "content": "sha256:1f865f1c183edae886982be6fe221a54924334baab5b411bafb6a9bc66c4603f",
+      "observed": "2026-08-01T20:55:34Z"
+    },
+    "0.9.0": {
+      "content": "sha256:1f865f1c183edae886982be6fe221a54924334baab5b411bafb6a9bc66c4603f",
+      "observed": "2026-08-01T20:55:34Z"
+    },
+    "0.9": {
+      "content": "sha256:f42af5d6a67ec1bffe79f454e837377d6b810a7194c79dae56a12962fa9fde78",
+      "observed": "2026-08-01T20:55:34Z"
+    },
+    "0.9.1_20260801": {
+      "content": "sha256:f691c820a981745e7d101a4eca2c06be64ff652c387a934a77459b85a7a76dc9",
+      "observed": "2026-08-01T20:55:34Z"
+    },
+    "0.9.1": {
+      "content": "sha256:f691c820a981745e7d101a4eca2c06be64ff652c387a934a77459b85a7a76dc9",
+      "observed": "2026-08-01T20:55:34Z"
+    },
+    "0.9.2_20260801": {
+      "content": "sha256:f42af5d6a67ec1bffe79f454e837377d6b810a7194c79dae56a12962fa9fde78",
+      "observed": "2026-08-01T20:55:34Z"
+    },
+    "0.9.2": {
+      "content": "sha256:f42af5d6a67ec1bffe79f454e837377d6b810a7194c79dae56a12962fa9fde78",
+      "observed": "2026-08-01T20:55:34Z"
+    },
+    "0.10.0_20260801": {
+      "content": "sha256:b98659cdb16df62513dc36018ad6431e330568c4ae95df791b9811f2a95814c3",
+      "observed": "2026-08-01T20:55:34Z"
+    },
+    "0.10.0": {
+      "content": "sha256:b98659cdb16df62513dc36018ad6431e330568c4ae95df791b9811f2a95814c3",
+      "observed": "2026-08-01T20:55:34Z"
+    },
+    "0.10": {
+      "content": "sha256:b98659cdb16df62513dc36018ad6431e330568c4ae95df791b9811f2a95814c3",
+      "observed": "2026-08-01T20:55:34Z"
+    },
+    "0.11.0_20260801": {
+      "content": "sha256:ac117dbdf6df163a4f827d1b4417cbce6c487f6de04221beb68e5fd72d71d002",
+      "observed": "2026-08-01T20:55:34Z"
+    },
+    "0.11.0": {
+      "content": "sha256:ac117dbdf6df163a4f827d1b4417cbce6c487f6de04221beb68e5fd72d71d002",
+      "observed": "2026-08-01T20:55:34Z"
+    }
+  }
 }
