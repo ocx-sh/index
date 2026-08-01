@@ -10,11 +10,81 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-01",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:cea1b62cc2c0c3289c4659ab46a3b3ae24ef30af1a86383871aba662bda91c8d",
+    "title": "regctl",
+    "description": "Registry CLI \u2014 inspect, copy and manipulate OCI/Docker images and their manifests without a Docker daemon",
+    "keywords": [
+      "regctl",
+      "regclient",
+      "oci",
+      "registry",
+      "docker",
+      "image",
+      "manifest",
+      "containers",
+      "cli"
+    ],
+    "readme": "sha256:e722f3536b80f1cefe99fc01c0ca13be02d61e440fdd2caaa333c7e413e19df4",
+    "logo": "sha256:9e58325d33d79b1799d4b0d80195e7196d386c3a68f9b79e34ceace6447ab43b"
+  },
   "upstream": {
     "org": "regclient",
     "repository_url": "https://github.com/regclient/regclient",
     "disclaimer": "Unaffiliated mirror. regctl is a project of the regclient authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.11.1_20260801": {
+      "content": "sha256:4eff55a54674176287e53f5e1bc81bbeaf208f4ed88d2ba0c312916737de5bb7",
+      "observed": "2026-08-01T20:55:46Z"
+    },
+    "0.11.1": {
+      "content": "sha256:4eff55a54674176287e53f5e1bc81bbeaf208f4ed88d2ba0c312916737de5bb7",
+      "observed": "2026-08-01T20:55:46Z"
+    },
+    "0.11": {
+      "content": "sha256:4645ad02631561ba0e15b0d813d35c4bb045efd240d1b76fbf688e2e454121c4",
+      "observed": "2026-08-01T20:55:46Z"
+    },
+    "0": {
+      "content": "sha256:4645ad02631561ba0e15b0d813d35c4bb045efd240d1b76fbf688e2e454121c4",
+      "observed": "2026-08-01T20:55:46Z"
+    },
+    "latest": {
+      "content": "sha256:4645ad02631561ba0e15b0d813d35c4bb045efd240d1b76fbf688e2e454121c4",
+      "observed": "2026-08-01T20:55:46Z"
+    },
+    "0.11.2_20260801": {
+      "content": "sha256:1b218431e1b883ee3f960977c718e7166a3e91543f58683636f601ca77989729",
+      "observed": "2026-08-01T20:55:46Z"
+    },
+    "0.11.2": {
+      "content": "sha256:1b218431e1b883ee3f960977c718e7166a3e91543f58683636f601ca77989729",
+      "observed": "2026-08-01T20:55:46Z"
+    },
+    "0.11.3_20260801": {
+      "content": "sha256:b65bb4d29d41dfec7cf0a04c30b1c7e7b76e4d092a55e1e680f5b30585ef3210",
+      "observed": "2026-08-01T20:55:46Z"
+    },
+    "0.11.3": {
+      "content": "sha256:b65bb4d29d41dfec7cf0a04c30b1c7e7b76e4d092a55e1e680f5b30585ef3210",
+      "observed": "2026-08-01T20:55:46Z"
+    },
+    "0.11.4_20260801": {
+      "content": "sha256:be1cd4117470fbab8b3e6f2ef8168e597b6d4ecbeb39f703fc79ce9995abf3c0",
+      "observed": "2026-08-01T20:55:46Z"
+    },
+    "0.11.4": {
+      "content": "sha256:be1cd4117470fbab8b3e6f2ef8168e597b6d4ecbeb39f703fc79ce9995abf3c0",
+      "observed": "2026-08-01T20:55:46Z"
+    },
+    "0.11.5_20260801": {
+      "content": "sha256:4645ad02631561ba0e15b0d813d35c4bb045efd240d1b76fbf688e2e454121c4",
+      "observed": "2026-08-01T20:55:46Z"
+    },
+    "0.11.5": {
+      "content": "sha256:4645ad02631561ba0e15b0d813d35c4bb045efd240d1b76fbf688e2e454121c4",
+      "observed": "2026-08-01T20:55:46Z"
+    }
+  }
 }
