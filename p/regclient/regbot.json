@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/regclient/regbot",
+  "repository": "oci://ghcr.io/ocx-contrib/regclient/regbot",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-01",
+  "desc": null,
+  "upstream": {
+    "org": "regclient",
+    "repository_url": "https://github.com/regclient/regclient",
+    "disclaimer": "Unaffiliated mirror. regbot is a project of the regclient authors; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}

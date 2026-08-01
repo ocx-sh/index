@@ -1,6 +1,6 @@
 {
   "name": "ocx.sh/regclient/regsync",
-  "repository": "oci://ocx.sh/regclient/regsync",
+  "repository": "oci://ghcr.io/ocx-contrib/regclient/regsync",
   "owners": [
     {
       "github": "ocx-bot",
