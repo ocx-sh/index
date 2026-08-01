@@ -10,11 +10,156 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-01",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:83b30739793fd613196a5d57f619868891ea719fa8a37ed8e6d5cadc488dfd13",
+    "title": "GitHub CLI",
+    "description": "GitHub on the command line \u2014 issues, pull requests, releases, and workflows",
+    "keywords": [
+      "gh",
+      "github",
+      "cli",
+      "git",
+      "devops",
+      "ci",
+      "pull-request",
+      "issues"
+    ],
+    "readme": "sha256:392251b711af10793e709659a9f67896f597d44a15052d9c019bf5838002069c",
+    "logo": "sha256:4df7d5b50576ea734eee31998c71267f259627a0ddd699b8f778194aa5638290"
+  },
   "upstream": {
     "org": "cli",
     "repository_url": "https://github.com/cli/cli",
     "disclaimer": "Unaffiliated mirror. The GitHub CLI is a project of GitHub, Inc.; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "2.93.0_20260801": {
+      "content": "sha256:b226f2b1fb570ab733e72582005679a68f0418a30c4dd501dbb57da2e001b4d6",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.93.0": {
+      "content": "sha256:b226f2b1fb570ab733e72582005679a68f0418a30c4dd501dbb57da2e001b4d6",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.93": {
+      "content": "sha256:b226f2b1fb570ab733e72582005679a68f0418a30c4dd501dbb57da2e001b4d6",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2": {
+      "content": "sha256:35f3efd1828df57d47464bb712b06da7dd9ee696a2b2f74d8f402324b32349b1",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "latest": {
+      "content": "sha256:35f3efd1828df57d47464bb712b06da7dd9ee696a2b2f74d8f402324b32349b1",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.94.0_20260801": {
+      "content": "sha256:d5e76a8c8f07d8c922ae593b9bca872bc650714100e0cd307aa3e6b99d7c75ad",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.94.0": {
+      "content": "sha256:d5e76a8c8f07d8c922ae593b9bca872bc650714100e0cd307aa3e6b99d7c75ad",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.94": {
+      "content": "sha256:d5e76a8c8f07d8c922ae593b9bca872bc650714100e0cd307aa3e6b99d7c75ad",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.95.0_20260801": {
+      "content": "sha256:49447cc0f72c44a5c22f2fbbc3e37d22b45521938692749d4f7e2b3fae40ac3a",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.95.0": {
+      "content": "sha256:49447cc0f72c44a5c22f2fbbc3e37d22b45521938692749d4f7e2b3fae40ac3a",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.95": {
+      "content": "sha256:49447cc0f72c44a5c22f2fbbc3e37d22b45521938692749d4f7e2b3fae40ac3a",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.96.0_20260801": {
+      "content": "sha256:7000c1b1e34c5291eff377896687bbb55bfa7ce18228047762284244f39c13fe",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.96.0": {
+      "content": "sha256:7000c1b1e34c5291eff377896687bbb55bfa7ce18228047762284244f39c13fe",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.96": {
+      "content": "sha256:7000c1b1e34c5291eff377896687bbb55bfa7ce18228047762284244f39c13fe",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.97.0_20260801": {
+      "content": "sha256:35f3efd1828df57d47464bb712b06da7dd9ee696a2b2f74d8f402324b32349b1",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.97.0": {
+      "content": "sha256:35f3efd1828df57d47464bb712b06da7dd9ee696a2b2f74d8f402324b32349b1",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.97": {
+      "content": "sha256:35f3efd1828df57d47464bb712b06da7dd9ee696a2b2f74d8f402324b32349b1",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.88.1_20260801": {
+      "content": "sha256:5c47273cc7349ac6cd9ba0f055f97a061c49405d2accad8dcc43b7f96863274d",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.88.1": {
+      "content": "sha256:5c47273cc7349ac6cd9ba0f055f97a061c49405d2accad8dcc43b7f96863274d",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.88": {
+      "content": "sha256:5c47273cc7349ac6cd9ba0f055f97a061c49405d2accad8dcc43b7f96863274d",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.89.0_20260801": {
+      "content": "sha256:dc4db847432769a3b9aaa98b35da02826e3c8887bfe111ab7b05fe66744acac8",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.89.0": {
+      "content": "sha256:dc4db847432769a3b9aaa98b35da02826e3c8887bfe111ab7b05fe66744acac8",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.89": {
+      "content": "sha256:dc4db847432769a3b9aaa98b35da02826e3c8887bfe111ab7b05fe66744acac8",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.90.0_20260801": {
+      "content": "sha256:96d44089c8ddbba62588d87b7917916e11f161de9b2212789a514602d696e2a8",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.90.0": {
+      "content": "sha256:96d44089c8ddbba62588d87b7917916e11f161de9b2212789a514602d696e2a8",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.90": {
+      "content": "sha256:96d44089c8ddbba62588d87b7917916e11f161de9b2212789a514602d696e2a8",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.91.0_20260801": {
+      "content": "sha256:a656af5c9cd5ea544c701951d954670f8e7cdf661d6a70b9b9b536396012aa74",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.91.0": {
+      "content": "sha256:a656af5c9cd5ea544c701951d954670f8e7cdf661d6a70b9b9b536396012aa74",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.91": {
+      "content": "sha256:a656af5c9cd5ea544c701951d954670f8e7cdf661d6a70b9b9b536396012aa74",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.92.0_20260801": {
+      "content": "sha256:5750625938a42d4d7fa3a82e8a305a03dcd35eec2cfb31cb91ec48fb32450b57",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.92.0": {
+      "content": "sha256:5750625938a42d4d7fa3a82e8a305a03dcd35eec2cfb31cb91ec48fb32450b57",
+      "observed": "2026-08-01T20:44:30Z"
+    },
+    "2.92": {
+      "content": "sha256:5750625938a42d4d7fa3a82e8a305a03dcd35eec2cfb31cb91ec48fb32450b57",
+      "observed": "2026-08-01T20:44:30Z"
+    }
+  }
 }
