@@ -10,11 +10,83 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-01",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:11483a206e42dea6a0b91820282cfc578e82ce22afee4a3d772f18d19443255e",
+    "title": "uv",
+    "description": "An extremely fast Python package and project manager, written in Rust",
+    "keywords": [
+      "python",
+      "package-manager",
+      "pip",
+      "venv",
+      "resolver",
+      "astral",
+      "uv"
+    ],
+    "readme": "sha256:dfc02fe6d331f84f1b2ba83a908322db4db3375184e8a513a537170e3e17cd14",
+    "logo": "sha256:e93df1c4aa84c478581ac10203b672949a11505e5624cea84be3114efc4c57b6"
+  },
   "upstream": {
     "org": "astral-sh",
     "repository_url": "https://github.com/astral-sh/uv",
     "disclaimer": "Unaffiliated mirror. uv is a project of Astral Software Inc.; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.11.31_20260801": {
+      "content": "sha256:d7a806f220e8d4fa6e834b6f4113b730c4accf9ed15eed2de15273d7360e70f1",
+      "observed": "2026-08-01T17:45:45Z"
+    },
+    "0.11.31": {
+      "content": "sha256:d7a806f220e8d4fa6e834b6f4113b730c4accf9ed15eed2de15273d7360e70f1",
+      "observed": "2026-08-01T17:45:45Z"
+    },
+    "0.11": {
+      "content": "sha256:1f0a2a8dec1eb777c6ce7bbf126215ce2196805bda5804b84c1d8b0b3a2700cf",
+      "observed": "2026-08-01T17:45:45Z"
+    },
+    "0": {
+      "content": "sha256:2a1ff6b73bc52f671149fbd393b00e2f3336bc8adfbd44ab05aa894ac3823ddf",
+      "observed": "2026-08-01T17:45:45Z"
+    },
+    "latest": {
+      "content": "sha256:2a1ff6b73bc52f671149fbd393b00e2f3336bc8adfbd44ab05aa894ac3823ddf",
+      "observed": "2026-08-01T17:45:45Z"
+    },
+    "0.11.32_20260801": {
+      "content": "sha256:5e6e60465b4cfada7cbc7bb7d5b316f3e8e5377f9bad0079a9fc923e2d83438e",
+      "observed": "2026-08-01T17:45:45Z"
+    },
+    "0.11.32": {
+      "content": "sha256:5e6e60465b4cfada7cbc7bb7d5b316f3e8e5377f9bad0079a9fc923e2d83438e",
+      "observed": "2026-08-01T17:45:45Z"
+    },
+    "0.11.33_20260801": {
+      "content": "sha256:1f0a2a8dec1eb777c6ce7bbf126215ce2196805bda5804b84c1d8b0b3a2700cf",
+      "observed": "2026-08-01T17:45:45Z"
+    },
+    "0.11.33": {
+      "content": "sha256:1f0a2a8dec1eb777c6ce7bbf126215ce2196805bda5804b84c1d8b0b3a2700cf",
+      "observed": "2026-08-01T17:45:45Z"
+    },
+    "0.12.0_20260801": {
+      "content": "sha256:3b238bb6301e7e56d1b80704a5582b083dec28fb81e5814f16455337c6eea9fd",
+      "observed": "2026-08-01T17:45:45Z"
+    },
+    "0.12.0": {
+      "content": "sha256:3b238bb6301e7e56d1b80704a5582b083dec28fb81e5814f16455337c6eea9fd",
+      "observed": "2026-08-01T17:45:45Z"
+    },
+    "0.12": {
+      "content": "sha256:2a1ff6b73bc52f671149fbd393b00e2f3336bc8adfbd44ab05aa894ac3823ddf",
+      "observed": "2026-08-01T17:45:45Z"
+    },
+    "0.12.1_20260801": {
+      "content": "sha256:2a1ff6b73bc52f671149fbd393b00e2f3336bc8adfbd44ab05aa894ac3823ddf",
+      "observed": "2026-08-01T17:45:45Z"
+    },
+    "0.12.1": {
+      "content": "sha256:2a1ff6b73bc52f671149fbd393b00e2f3336bc8adfbd44ab05aa894ac3823ddf",
+      "observed": "2026-08-01T17:45:45Z"
+    }
+  }
 }
