@@ -10,11 +10,79 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-01",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:4969161c3f4c7d368a73cca6d67ab9599ccfa850904ee20943e8cd5b133bafb6",
+    "title": "ty",
+    "description": "An extremely fast Python type checker and language server, written in Rust",
+    "keywords": [
+      "python",
+      "type-checker",
+      "types",
+      "static-analysis",
+      "lsp",
+      "astral",
+      "ty"
+    ],
+    "readme": "sha256:8a1dfd6592928b1a504d4e14eace9a7fb37c48e223a572f12c929173609e082d",
+    "logo": "sha256:775fb733d4afa3a528ff4d13b011f248944b5ac39301a46410affff18f9c3940"
+  },
   "upstream": {
     "org": "astral-sh",
     "repository_url": "https://github.com/astral-sh/ty",
     "disclaimer": "Unaffiliated mirror. ty is a project of Astral Software Inc.; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.0.61_20260801": {
+      "content": "sha256:902c211c50216fe0f6fd1912863e34ad632268f1cf74cfc4b198dd14669b98cd",
+      "observed": "2026-08-01T17:43:54Z"
+    },
+    "0.0.61": {
+      "content": "sha256:902c211c50216fe0f6fd1912863e34ad632268f1cf74cfc4b198dd14669b98cd",
+      "observed": "2026-08-01T17:43:54Z"
+    },
+    "0.0": {
+      "content": "sha256:adc1cb90f292bcdaba92f8cf1fe46583eb668c5527603f0ae1fa327ec5c8d4c9",
+      "observed": "2026-08-01T17:43:54Z"
+    },
+    "0": {
+      "content": "sha256:adc1cb90f292bcdaba92f8cf1fe46583eb668c5527603f0ae1fa327ec5c8d4c9",
+      "observed": "2026-08-01T17:43:54Z"
+    },
+    "latest": {
+      "content": "sha256:adc1cb90f292bcdaba92f8cf1fe46583eb668c5527603f0ae1fa327ec5c8d4c9",
+      "observed": "2026-08-01T17:43:54Z"
+    },
+    "0.0.62_20260801": {
+      "content": "sha256:39838033981fef3a7be3e5d833c937b7225105c2cebdfea98f8e07afea0482ee",
+      "observed": "2026-08-01T17:43:54Z"
+    },
+    "0.0.62": {
+      "content": "sha256:39838033981fef3a7be3e5d833c937b7225105c2cebdfea98f8e07afea0482ee",
+      "observed": "2026-08-01T17:43:54Z"
+    },
+    "0.0.63_20260801": {
+      "content": "sha256:3c2d7817fb6d8d4dd4694ad714e7e217788f68ff927dd42d2c026f3175168b1b",
+      "observed": "2026-08-01T17:43:54Z"
+    },
+    "0.0.63": {
+      "content": "sha256:3c2d7817fb6d8d4dd4694ad714e7e217788f68ff927dd42d2c026f3175168b1b",
+      "observed": "2026-08-01T17:43:54Z"
+    },
+    "0.0.64_20260801": {
+      "content": "sha256:c3362608c9fab5f64d395d51394cea5d5e3c8afaa7c3602759d20838dde795e4",
+      "observed": "2026-08-01T17:43:54Z"
+    },
+    "0.0.64": {
+      "content": "sha256:c3362608c9fab5f64d395d51394cea5d5e3c8afaa7c3602759d20838dde795e4",
+      "observed": "2026-08-01T17:43:54Z"
+    },
+    "0.0.65_20260801": {
+      "content": "sha256:adc1cb90f292bcdaba92f8cf1fe46583eb668c5527603f0ae1fa327ec5c8d4c9",
+      "observed": "2026-08-01T17:43:54Z"
+    },
+    "0.0.65": {
+      "content": "sha256:adc1cb90f292bcdaba92f8cf1fe46583eb668c5527603f0ae1fa327ec5c8d4c9",
+      "observed": "2026-08-01T17:43:54Z"
+    }
+  }
 }

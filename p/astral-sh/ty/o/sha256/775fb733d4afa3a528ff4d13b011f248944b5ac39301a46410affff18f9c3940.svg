@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="100"
+   height="100"
+   viewBox="0 0 100 100"
+   fill="none"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="ty.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="6.4311362"
+     inkscape:cx="-27.522353"
+     inkscape:cy="136.91204"
+     inkscape:window-width="7680"
+     inkscape:window-height="2054"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <rect
+     width="100"
+     height="100"
+     rx="0"
+     fill="#261230"
+     id="rect1"
+     x="0"
+     y="0" />
+  <path
+     d="M70 36.4H53.2V30H33.2V36.4H30V51.6H33.2V62.2136C33.2 66.5139 36.6861 70 40.9864 70H70V54.8H53.2V51.6H62.2136C66.5139 51.6 70 48.1139 70 43.8136V36.4Z"
+     fill="#46EBE1"
+     id="path1" />
+</svg>
