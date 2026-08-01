@@ -10,11 +10,48 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-01",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:a58966ec43427f4fb2afb8c58f21b743b0aed96d27313c14e1478ee318d204b0",
+    "title": "Grimoire",
+    "description": "Package manager for AI-agent config \u2014 skills, rules, agents, and MCP servers, installed into every coding agent you use",
+    "keywords": [
+      "grimoire",
+      "grim",
+      "ai",
+      "skills",
+      "rules",
+      "oci",
+      "package-manager",
+      "rust"
+    ],
+    "readme": "sha256:fa45042f932c9f3ee308860897a0e98c657bae3f7d9e58e1b6335d419fd8a990",
+    "logo": "sha256:426b5e5beb45a891f38682dd468a3aef1632a785e868a003281ca94f28062262"
+  },
   "upstream": {
     "org": "grimoire-rs",
     "repository_url": "https://github.com/grimoire-rs/grimoire",
     "disclaimer": null
   },
-  "tags": {}
+  "tags": {
+    "0.11.1_20260801194411": {
+      "content": "sha256:71f73a1e58b8e3faf7a11a8f32a59f0975d376589a4fa6c0d74a676d3fa49820",
+      "observed": "2026-08-01T19:45:47Z"
+    },
+    "0.11.1": {
+      "content": "sha256:71f73a1e58b8e3faf7a11a8f32a59f0975d376589a4fa6c0d74a676d3fa49820",
+      "observed": "2026-08-01T19:45:47Z"
+    },
+    "0.11": {
+      "content": "sha256:71f73a1e58b8e3faf7a11a8f32a59f0975d376589a4fa6c0d74a676d3fa49820",
+      "observed": "2026-08-01T19:45:47Z"
+    },
+    "0": {
+      "content": "sha256:71f73a1e58b8e3faf7a11a8f32a59f0975d376589a4fa6c0d74a676d3fa49820",
+      "observed": "2026-08-01T19:45:47Z"
+    },
+    "latest": {
+      "content": "sha256:71f73a1e58b8e3faf7a11a8f32a59f0975d376589a4fa6c0d74a676d3fa49820",
+      "observed": "2026-08-01T19:45:47Z"
+    }
+  }
 }
