@@ -10,11 +10,78 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-01",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:f08a900ce843e7405a780e4ab33ab100b4fa23bfb422db85d01dda40483682af",
+    "title": "regbot",
+    "description": "Policy-driven registry automation bot \u2014 runs Lua scripts on a schedule to prune, retag and maintain OCI/Docker registries",
+    "keywords": [
+      "regbot",
+      "regclient",
+      "oci",
+      "registry",
+      "docker",
+      "automation",
+      "lua",
+      "gc",
+      "retention",
+      "containers"
+    ],
+    "readme": "sha256:b876249db8548d0130373c41fcf06b5f586c8f43201077438c89101b4c4751c8",
+    "logo": "sha256:9e58325d33d79b1799d4b0d80195e7196d386c3a68f9b79e34ceace6447ab43b"
+  },
   "upstream": {
     "org": "regclient",
     "repository_url": "https://github.com/regclient/regclient",
     "disclaimer": "Unaffiliated mirror. regbot is a project of the regclient authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.9.0_20260801": {
+      "content": "sha256:4973d06717c9b65a1cceb63e9e8415543ed98bae6be47fb961e15154953f29be",
+      "observed": "2026-08-01T20:55:35Z"
+    },
+    "0.9.0": {
+      "content": "sha256:4973d06717c9b65a1cceb63e9e8415543ed98bae6be47fb961e15154953f29be",
+      "observed": "2026-08-01T20:55:35Z"
+    },
+    "0.9": {
+      "content": "sha256:e6860944872f9605859945778b1f266c64d7ad90892b565f48129051dd152ed0",
+      "observed": "2026-08-01T20:55:35Z"
+    },
+    "0.9.1_20260801": {
+      "content": "sha256:40190d3c2b108a22388f6c493bc4b526a64542d37515e8ae9ecc2f14c75f0aab",
+      "observed": "2026-08-01T20:55:35Z"
+    },
+    "0.9.1": {
+      "content": "sha256:40190d3c2b108a22388f6c493bc4b526a64542d37515e8ae9ecc2f14c75f0aab",
+      "observed": "2026-08-01T20:55:35Z"
+    },
+    "0.9.2_20260801": {
+      "content": "sha256:e6860944872f9605859945778b1f266c64d7ad90892b565f48129051dd152ed0",
+      "observed": "2026-08-01T20:55:35Z"
+    },
+    "0.9.2": {
+      "content": "sha256:e6860944872f9605859945778b1f266c64d7ad90892b565f48129051dd152ed0",
+      "observed": "2026-08-01T20:55:35Z"
+    },
+    "0.10.0_20260801": {
+      "content": "sha256:42b5e3f42f5cd519a80ec273e000819b7c2836367d8dcd0c2a1194f99777132d",
+      "observed": "2026-08-01T20:55:35Z"
+    },
+    "0.10.0": {
+      "content": "sha256:42b5e3f42f5cd519a80ec273e000819b7c2836367d8dcd0c2a1194f99777132d",
+      "observed": "2026-08-01T20:55:35Z"
+    },
+    "0.10": {
+      "content": "sha256:42b5e3f42f5cd519a80ec273e000819b7c2836367d8dcd0c2a1194f99777132d",
+      "observed": "2026-08-01T20:55:35Z"
+    },
+    "0.11.0_20260801": {
+      "content": "sha256:ca177165ff252be36d3f1d17c99343466c71e18b79fdb0858b035737c6f75c1b",
+      "observed": "2026-08-01T20:55:35Z"
+    },
+    "0.11.0": {
+      "content": "sha256:ca177165ff252be36d3f1d17c99343466c71e18b79fdb0858b035737c6f75c1b",
+      "observed": "2026-08-01T20:55:35Z"
+    }
+  }
 }
