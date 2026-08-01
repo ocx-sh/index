@@ -10,11 +10,62 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-01",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:531371e967b4fe581de183b0ad5e7f881c2feab14723592f9076b8549949b063",
+    "title": "Amazon Corretto",
+    "description": "No-cost, production-ready OpenJDK distribution by Amazon",
+    "keywords": [
+      "java",
+      "jdk",
+      "openjdk",
+      "corretto",
+      "amazon",
+      "runtime"
+    ],
+    "readme": "sha256:be7e37a2fa5bf8919d43ea3520cdac83896f09b367daa070c927bd317a9efaa0",
+    "logo": "sha256:25406fffc6daf0f28542d4585dbd43a79b10d4a9487c861b2d20a8bd6c484f8e"
+  },
   "upstream": {
     "org": "corretto",
     "repository_url": "https://github.com/corretto/corretto-21",
     "disclaimer": "Unaffiliated mirror. Amazon Corretto is a no-cost distribution of OpenJDK by Amazon Web Services; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "25.0.2_10001": {
+      "content": "sha256:8f9911a5454a4aa981ec6d736bff8d8b892ce27fac4903a32fc797b066364a42",
+      "observed": "2026-08-01T21:03:25Z"
+    },
+    "25.0.2": {
+      "content": "sha256:8f9911a5454a4aa981ec6d736bff8d8b892ce27fac4903a32fc797b066364a42",
+      "observed": "2026-08-01T21:03:25Z"
+    },
+    "25.0": {
+      "content": "sha256:d2a4cd1c652315452084b0e7bd6ae0bd3b05ba7c69fe2e2ec7d32ccb68079564",
+      "observed": "2026-08-01T21:03:25Z"
+    },
+    "25": {
+      "content": "sha256:d2a4cd1c652315452084b0e7bd6ae0bd3b05ba7c69fe2e2ec7d32ccb68079564",
+      "observed": "2026-08-01T21:03:25Z"
+    },
+    "latest": {
+      "content": "sha256:d2a4cd1c652315452084b0e7bd6ae0bd3b05ba7c69fe2e2ec7d32ccb68079564",
+      "observed": "2026-08-01T21:03:25Z"
+    },
+    "25.0.3_9001": {
+      "content": "sha256:b3a147f7814abbdc28fb2b249f5cf85e24760a7b0227c8a939ff4e6f80dec3ad",
+      "observed": "2026-08-01T21:03:25Z"
+    },
+    "25.0.3": {
+      "content": "sha256:b3a147f7814abbdc28fb2b249f5cf85e24760a7b0227c8a939ff4e6f80dec3ad",
+      "observed": "2026-08-01T21:03:25Z"
+    },
+    "25.0.4_7001": {
+      "content": "sha256:d2a4cd1c652315452084b0e7bd6ae0bd3b05ba7c69fe2e2ec7d32ccb68079564",
+      "observed": "2026-08-01T21:03:25Z"
+    },
+    "25.0.4": {
+      "content": "sha256:d2a4cd1c652315452084b0e7bd6ae0bd3b05ba7c69fe2e2ec7d32ccb68079564",
+      "observed": "2026-08-01T21:03:25Z"
+    }
+  }
 }
