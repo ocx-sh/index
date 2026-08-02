@@ -199,6 +199,14 @@
     "0.108": {
       "content": "sha256:ab7319dec8065e615ef325016a7ada5e17c3050f98e81b250f8b21bf34291863",
       "observed": "2026-08-02T13:44:29Z"
+    },
+    "0.105.0_20260802": {
+      "content": "sha256:48bda9b70a189f44c6d9b018210c2905dd27825b7963fa5fa16b2cf83f8ccb5b",
+      "observed": "2026-08-02T19:20:18Z"
+    },
+    "0.105.0": {
+      "content": "sha256:48bda9b70a189f44c6d9b018210c2905dd27825b7963fa5fa16b2cf83f8ccb5b",
+      "observed": "2026-08-02T19:20:18Z"
     }
   }
 }
