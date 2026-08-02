@@ -10,11 +10,56 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:988960166288ba5a50faa40e2fce9eb35c5126b7488e43c28a67713bc8a1b7fd",
+    "title": "opencode",
+    "description": "The open source AI coding agent for the terminal",
+    "keywords": [
+      "opencode",
+      "ai",
+      "coding-agent",
+      "llm",
+      "terminal",
+      "tui",
+      "cli",
+      "developer-tools"
+    ],
+    "readme": "sha256:6916d1f397c8a4002a6068154a2f365d51ea51cf45c7075ac6a86d4cb0d9ea59",
+    "logo": "sha256:990281225a2e6331e61aea5743eca101bbebd6992f1e029825dd3682a6f85261"
+  },
   "upstream": {
     "org": "anomalyco",
     "repository_url": "https://github.com/anomalyco/opencode",
     "disclaimer": "Unaffiliated mirror. opencode is a project of Anomaly Innovations; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "1.18.9_20260802": {
+      "content": "sha256:967965a046e6b61d35b10f2724ae1ba5b49494ffeea3276db976673745f2ece3",
+      "observed": "2026-08-02T10:40:15Z"
+    },
+    "1.18.9": {
+      "content": "sha256:967965a046e6b61d35b10f2724ae1ba5b49494ffeea3276db976673745f2ece3",
+      "observed": "2026-08-02T10:40:15Z"
+    },
+    "1.18": {
+      "content": "sha256:de23abba13c15a8f0a1f6f9c2d80f38a620c3cf0ee682adc07c4f2471327e5bc",
+      "observed": "2026-08-02T10:40:15Z"
+    },
+    "1": {
+      "content": "sha256:de23abba13c15a8f0a1f6f9c2d80f38a620c3cf0ee682adc07c4f2471327e5bc",
+      "observed": "2026-08-02T10:40:15Z"
+    },
+    "latest": {
+      "content": "sha256:de23abba13c15a8f0a1f6f9c2d80f38a620c3cf0ee682adc07c4f2471327e5bc",
+      "observed": "2026-08-02T10:40:15Z"
+    },
+    "1.18.10_20260802": {
+      "content": "sha256:aee11d0121c167836a413eb7bec4db50cf589a3a0a4b126f4ffd6d174b1f4100",
+      "observed": "2026-08-02T10:40:15Z"
+    },
+    "1.18.10": {
+      "content": "sha256:aee11d0121c167836a413eb7bec4db50cf589a3a0a4b126f4ffd6d174b1f4100",
+      "observed": "2026-08-02T10:40:15Z"
+    }
+  }
 }
