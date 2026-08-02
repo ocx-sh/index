@@ -10,11 +10,63 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:5d373052c47998c4ef11158385ec8c9e31b70fbb3497de503e26e097541542d4",
+    "title": "Helm",
+    "description": "The package manager for Kubernetes \u2014 find, share, and use software built for Kubernetes",
+    "keywords": [
+      "helm",
+      "kubernetes",
+      "k8s",
+      "charts",
+      "package-manager",
+      "cloud-native",
+      "cncf"
+    ],
+    "readme": "sha256:ddd05ca4c82a2f1385ee0a87fddafb0cb9144542f94b4526b700899f71b1100c",
+    "logo": "sha256:ad04fbc7841a55023ad7806aa133a86ebd0aab21c2179be97f9048617138e7b1"
+  },
   "upstream": {
     "org": "helm",
     "repository_url": "https://github.com/helm/helm",
     "disclaimer": "Unaffiliated mirror. Helm is a graduated CNCF project; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "4.1.4": {
+      "content": "sha256:d74476f0e695a2bfa09ab18b18224a6b12ba4fdf5da7639a4dd9486c4de0df2e",
+      "observed": "2026-08-02T10:33:28Z"
+    },
+    "4.1": {
+      "content": "sha256:d74476f0e695a2bfa09ab18b18224a6b12ba4fdf5da7639a4dd9486c4de0df2e",
+      "observed": "2026-08-02T10:33:28Z"
+    },
+    "4": {
+      "content": "sha256:e9ef97cefedb068af88e8fb7f6b80d23be659cea75ea7a385d95e5b23000c1cd",
+      "observed": "2026-08-02T10:33:28Z"
+    },
+    "latest": {
+      "content": "sha256:e9ef97cefedb068af88e8fb7f6b80d23be659cea75ea7a385d95e5b23000c1cd",
+      "observed": "2026-08-02T10:33:28Z"
+    },
+    "4.2.0": {
+      "content": "sha256:7c20dce2721952fa79db2dbf8a541d5554e227250fe4622f925dcee851a2b855",
+      "observed": "2026-08-02T10:33:28Z"
+    },
+    "4.2": {
+      "content": "sha256:e9ef97cefedb068af88e8fb7f6b80d23be659cea75ea7a385d95e5b23000c1cd",
+      "observed": "2026-08-02T10:33:28Z"
+    },
+    "4.2.1": {
+      "content": "sha256:5ce8cc461234746d47280fa2b56bc9a53ee511ec28f5993b8da70a34681006f2",
+      "observed": "2026-08-02T10:33:28Z"
+    },
+    "4.2.2": {
+      "content": "sha256:9f3ca3d47736ef9ad9b88fbe5faf685ba17384cd43c80b55001ba5421a7c4b5c",
+      "observed": "2026-08-02T10:33:28Z"
+    },
+    "4.2.3": {
+      "content": "sha256:e9ef97cefedb068af88e8fb7f6b80d23be659cea75ea7a385d95e5b23000c1cd",
+      "observed": "2026-08-02T10:33:28Z"
+    }
+  }
 }
