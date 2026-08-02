@@ -10,11 +10,43 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:e8d4cb127852a7016ce657085fe16bec83c37ea72e56bd143be044e9af6463f8",
+    "title": "Elvish",
+    "description": "Expressive, safe, and extensible Unix-like shell with a rich programming language",
+    "keywords": [
+      "elvish",
+      "shell",
+      "unix",
+      "scripting",
+      "repl",
+      "interactive",
+      "programming-language"
+    ],
+    "readme": "sha256:8fd55895351e2fc0ecdb6e639dd9401c49ada6f2b664ecb7c0246be1f2189126",
+    "logo": "sha256:8f206ace77dea299f27f6f0ae31a87a1ca61869746e16b086d8577244e03a183"
+  },
   "upstream": {
     "org": "elves",
     "repository_url": "https://github.com/elves/elvish",
     "disclaimer": "Unaffiliated mirror. Elvish is a project of the Elvish authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.21.0": {
+      "content": "sha256:a8b7c3ac357d276f883782b76be7aef9e643295b05aebbc52be2a19e15a7a80b",
+      "observed": "2026-08-02T10:31:02Z"
+    },
+    "0.21": {
+      "content": "sha256:a8b7c3ac357d276f883782b76be7aef9e643295b05aebbc52be2a19e15a7a80b",
+      "observed": "2026-08-02T10:31:02Z"
+    },
+    "0": {
+      "content": "sha256:a8b7c3ac357d276f883782b76be7aef9e643295b05aebbc52be2a19e15a7a80b",
+      "observed": "2026-08-02T10:31:02Z"
+    },
+    "latest": {
+      "content": "sha256:a8b7c3ac357d276f883782b76be7aef9e643295b05aebbc52be2a19e15a7a80b",
+      "observed": "2026-08-02T10:31:02Z"
+    }
+  }
 }
