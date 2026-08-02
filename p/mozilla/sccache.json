@@ -10,11 +10,95 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:6dccd73e2fb62c6d3a8d7d83740905370d9ed6b6cd9472b7b0cb249a3fdb1d6f",
+    "title": "sccache",
+    "description": "Compiler-cache wrapper that skips recompilation and supports local and remote cloud storage",
+    "keywords": [
+      "sccache",
+      "compiler-cache",
+      "build-cache",
+      "ccache",
+      "rust",
+      "mozilla",
+      "caching"
+    ],
+    "readme": "sha256:dabde239d70fafca3ba9fc0cfcc8732718d9abeae35bc99beb989f15ce867932",
+    "logo": "sha256:f53c0d8a8905a604197ae7086154e34ccd0932cbefec83f88efe5d38edd58bd2"
+  },
   "upstream": {
     "org": "mozilla",
     "repository_url": "https://github.com/mozilla/sccache",
     "disclaimer": "Unaffiliated mirror. sccache is a project of Mozilla; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.13.0_20260802": {
+      "content": "sha256:32eb62fa8dc8eb9abac09b74028f2a1f43e03bb3d568539d1b86d5226f94af78",
+      "observed": "2026-08-02T10:59:33Z"
+    },
+    "0.13.0": {
+      "content": "sha256:32eb62fa8dc8eb9abac09b74028f2a1f43e03bb3d568539d1b86d5226f94af78",
+      "observed": "2026-08-02T10:59:33Z"
+    },
+    "0.13": {
+      "content": "sha256:32eb62fa8dc8eb9abac09b74028f2a1f43e03bb3d568539d1b86d5226f94af78",
+      "observed": "2026-08-02T10:59:33Z"
+    },
+    "0": {
+      "content": "sha256:73624334d23b28f5dcdfe335b12013af4f0c30737cf07dfa0425dbdf366b017f",
+      "observed": "2026-08-02T10:59:33Z"
+    },
+    "latest": {
+      "content": "sha256:73624334d23b28f5dcdfe335b12013af4f0c30737cf07dfa0425dbdf366b017f",
+      "observed": "2026-08-02T10:59:33Z"
+    },
+    "0.14.0_20260802": {
+      "content": "sha256:ac60b0e5619b9bf46c447e185f4950e42c26aa1cd8f172fc6258e6f7018aa811",
+      "observed": "2026-08-02T10:59:33Z"
+    },
+    "0.14.0": {
+      "content": "sha256:ac60b0e5619b9bf46c447e185f4950e42c26aa1cd8f172fc6258e6f7018aa811",
+      "observed": "2026-08-02T10:59:33Z"
+    },
+    "0.14": {
+      "content": "sha256:ac60b0e5619b9bf46c447e185f4950e42c26aa1cd8f172fc6258e6f7018aa811",
+      "observed": "2026-08-02T10:59:33Z"
+    },
+    "0.15.0_20260802": {
+      "content": "sha256:bb1d538e0b0f3f4644d31174a7778cae850132b4166339fc974e4b71a614d800",
+      "observed": "2026-08-02T10:59:33Z"
+    },
+    "0.15.0": {
+      "content": "sha256:bb1d538e0b0f3f4644d31174a7778cae850132b4166339fc974e4b71a614d800",
+      "observed": "2026-08-02T10:59:33Z"
+    },
+    "0.15": {
+      "content": "sha256:bb1d538e0b0f3f4644d31174a7778cae850132b4166339fc974e4b71a614d800",
+      "observed": "2026-08-02T10:59:33Z"
+    },
+    "0.16.0_20260802": {
+      "content": "sha256:93e3bf16bf991dd85482faba13f099ecb326dff946ef3e0b6a148a770e4e1547",
+      "observed": "2026-08-02T10:59:33Z"
+    },
+    "0.16.0": {
+      "content": "sha256:93e3bf16bf991dd85482faba13f099ecb326dff946ef3e0b6a148a770e4e1547",
+      "observed": "2026-08-02T10:59:33Z"
+    },
+    "0.16": {
+      "content": "sha256:93e3bf16bf991dd85482faba13f099ecb326dff946ef3e0b6a148a770e4e1547",
+      "observed": "2026-08-02T10:59:33Z"
+    },
+    "0.17.0_20260802": {
+      "content": "sha256:73624334d23b28f5dcdfe335b12013af4f0c30737cf07dfa0425dbdf366b017f",
+      "observed": "2026-08-02T10:59:33Z"
+    },
+    "0.17.0": {
+      "content": "sha256:73624334d23b28f5dcdfe335b12013af4f0c30737cf07dfa0425dbdf366b017f",
+      "observed": "2026-08-02T10:59:33Z"
+    },
+    "0.17": {
+      "content": "sha256:73624334d23b28f5dcdfe335b12013af4f0c30737cf07dfa0425dbdf366b017f",
+      "observed": "2026-08-02T10:59:33Z"
+    }
+  }
 }
