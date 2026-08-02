@@ -10,11 +10,87 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:dbcf8031459314f8c3dcd73661cadbc23cc3dc474f07aa7084fd6c7a28ee2af9",
+    "title": "Nushell",
+    "description": "A new type of shell with structured data pipelines instead of plain text",
+    "keywords": [
+      "nushell",
+      "nu",
+      "shell",
+      "structured-data",
+      "pipeline",
+      "cli",
+      "rust"
+    ],
+    "readme": "sha256:86b8803d09786e845c4e35490df97bd118d4d148cb31c40e6aab87e94ff1afde",
+    "logo": "sha256:0f2322faf065d94077a997cdfbaa1931c98af9dca1b67593741bf94af112ff8e"
+  },
   "upstream": {
     "org": "nushell",
     "repository_url": "https://github.com/nushell/nushell",
     "disclaimer": "Unaffiliated mirror. Nushell is a project of the Nushell authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.112.2_20260802": {
+      "content": "sha256:30f66c4c9002de6fc8b04ab9269db639b269b72d9dd733089095dd38ee2b5998",
+      "observed": "2026-08-02T10:32:19Z"
+    },
+    "0.112.2": {
+      "content": "sha256:30f66c4c9002de6fc8b04ab9269db639b269b72d9dd733089095dd38ee2b5998",
+      "observed": "2026-08-02T10:32:19Z"
+    },
+    "0.112": {
+      "content": "sha256:30f66c4c9002de6fc8b04ab9269db639b269b72d9dd733089095dd38ee2b5998",
+      "observed": "2026-08-02T10:32:19Z"
+    },
+    "0": {
+      "content": "sha256:ff198760f07af872d4e4d23f28c827cd8cb4ae51a63d557065b3c54cd378bbc9",
+      "observed": "2026-08-02T10:32:19Z"
+    },
+    "latest": {
+      "content": "sha256:ff198760f07af872d4e4d23f28c827cd8cb4ae51a63d557065b3c54cd378bbc9",
+      "observed": "2026-08-02T10:32:19Z"
+    },
+    "0.113.0_20260802": {
+      "content": "sha256:a93b00ac139be8029559806693855c9d361e97bc02ea468d156ec87921336e05",
+      "observed": "2026-08-02T10:32:19Z"
+    },
+    "0.113.0": {
+      "content": "sha256:a93b00ac139be8029559806693855c9d361e97bc02ea468d156ec87921336e05",
+      "observed": "2026-08-02T10:32:19Z"
+    },
+    "0.113": {
+      "content": "sha256:0dbb6d4fefd3a0617a3beefad27ea51527de2ef5807c4af5fda0a17370870607",
+      "observed": "2026-08-02T10:32:19Z"
+    },
+    "0.113.1_20260802": {
+      "content": "sha256:0dbb6d4fefd3a0617a3beefad27ea51527de2ef5807c4af5fda0a17370870607",
+      "observed": "2026-08-02T10:32:19Z"
+    },
+    "0.113.1": {
+      "content": "sha256:0dbb6d4fefd3a0617a3beefad27ea51527de2ef5807c4af5fda0a17370870607",
+      "observed": "2026-08-02T10:32:19Z"
+    },
+    "0.114.0_20260802": {
+      "content": "sha256:430dc60e0453c9f7c16e61361d909ce3c465f6b62360e7137288d2a74ba9e4f2",
+      "observed": "2026-08-02T10:32:19Z"
+    },
+    "0.114.0": {
+      "content": "sha256:430dc60e0453c9f7c16e61361d909ce3c465f6b62360e7137288d2a74ba9e4f2",
+      "observed": "2026-08-02T10:32:19Z"
+    },
+    "0.114": {
+      "content": "sha256:ff198760f07af872d4e4d23f28c827cd8cb4ae51a63d557065b3c54cd378bbc9",
+      "observed": "2026-08-02T10:32:19Z"
+    },
+    "0.114.1_20260802": {
+      "content": "sha256:ff198760f07af872d4e4d23f28c827cd8cb4ae51a63d557065b3c54cd378bbc9",
+      "observed": "2026-08-02T10:32:19Z"
+    },
+    "0.114.1": {
+      "content": "sha256:ff198760f07af872d4e4d23f28c827cd8cb4ae51a63d557065b3c54cd378bbc9",
+      "observed": "2026-08-02T10:32:19Z"
+    }
+  }
 }
