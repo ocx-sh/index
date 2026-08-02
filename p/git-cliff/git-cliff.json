@@ -10,11 +10,66 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:ca5fe8009d81be3b29cff58e77328edce078d88c3c43a38461f530f8552d064c",
+    "title": "git-cliff",
+    "description": "A highly customizable changelog generator that follows Conventional Commit specifications",
+    "keywords": [
+      "git-cliff",
+      "changelog",
+      "conventional-commits",
+      "release",
+      "versioning",
+      "rust"
+    ],
+    "readme": "sha256:710110184e60269b93aa070e5d4f68f619624df8e047602c42de0147fff10911",
+    "logo": "sha256:3fdc7d6d763b71c2b79eb916c0886543ad9df5fa4bba61c671c74a27a0990aba"
+  },
   "upstream": {
     "org": "orhun",
     "repository_url": "https://github.com/orhun/git-cliff",
     "disclaimer": "Unaffiliated mirror. git-cliff is a project of Orhun Parmaksiz; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "2.12.0_20260802": {
+      "content": "sha256:0d8add27a70df948494ace2511bc9cf04a45b8a8616133c0598d86db43d2b52e",
+      "observed": "2026-08-02T10:38:43Z"
+    },
+    "2.12.0": {
+      "content": "sha256:0d8add27a70df948494ace2511bc9cf04a45b8a8616133c0598d86db43d2b52e",
+      "observed": "2026-08-02T10:38:43Z"
+    },
+    "2.12": {
+      "content": "sha256:0d8add27a70df948494ace2511bc9cf04a45b8a8616133c0598d86db43d2b52e",
+      "observed": "2026-08-02T10:38:43Z"
+    },
+    "2": {
+      "content": "sha256:6b6289dc669fd9e069f2f2b3638bbdcf5f10e07ebd6b15e24ece77881ef6c003",
+      "observed": "2026-08-02T10:38:43Z"
+    },
+    "latest": {
+      "content": "sha256:6b6289dc669fd9e069f2f2b3638bbdcf5f10e07ebd6b15e24ece77881ef6c003",
+      "observed": "2026-08-02T10:38:43Z"
+    },
+    "2.13.0_20260802": {
+      "content": "sha256:e731b9dcad0a4dc5a7156d953cc8319e19e30aead51ffc572c383dbcdc9cdc40",
+      "observed": "2026-08-02T10:38:43Z"
+    },
+    "2.13.0": {
+      "content": "sha256:e731b9dcad0a4dc5a7156d953cc8319e19e30aead51ffc572c383dbcdc9cdc40",
+      "observed": "2026-08-02T10:38:43Z"
+    },
+    "2.13": {
+      "content": "sha256:6b6289dc669fd9e069f2f2b3638bbdcf5f10e07ebd6b15e24ece77881ef6c003",
+      "observed": "2026-08-02T10:38:43Z"
+    },
+    "2.13.1_20260802": {
+      "content": "sha256:6b6289dc669fd9e069f2f2b3638bbdcf5f10e07ebd6b15e24ece77881ef6c003",
+      "observed": "2026-08-02T10:38:43Z"
+    },
+    "2.13.1": {
+      "content": "sha256:6b6289dc669fd9e069f2f2b3638bbdcf5f10e07ebd6b15e24ece77881ef6c003",
+      "observed": "2026-08-02T10:38:43Z"
+    }
+  }
 }
