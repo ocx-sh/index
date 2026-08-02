@@ -83,6 +83,18 @@
     "1.7.12": {
       "content": "sha256:743656e5a103b26fdcffcb78509a7f69d3993e6fda0a33dbe8a571d45355dd3e",
       "observed": "2026-08-02T10:14:46Z"
+    },
+    "1.7.0": {
+      "content": "sha256:abd752bd4e107751b7759b75167b7fe18d4a77142cabeeb37ab0165254e5106c",
+      "observed": "2026-08-02T10:49:07Z"
+    },
+    "1.7.1": {
+      "content": "sha256:b1032da14da5cc9b3c11ef52b3dcda9e7488b9b7a26094cec5745092f0493540",
+      "observed": "2026-08-02T10:49:07Z"
+    },
+    "1.7.2": {
+      "content": "sha256:19f29aad4952bc9e33ef486357f62837d6292dff2a34237b2226d2aa0b04af9b",
+      "observed": "2026-08-02T10:49:07Z"
     }
   }
 }
