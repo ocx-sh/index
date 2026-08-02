@@ -10,11 +10,67 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:ef89733ddea4cee350ebb35e35a1f7ab81c3fda845c6e336bbd40378ad2497cb",
+    "title": "RTK",
+    "description": "CLI proxy that filters and summarizes command output to cut LLM token usage 60-90%",
+    "keywords": [
+      "rtk",
+      "cli",
+      "llm",
+      "tokens",
+      "proxy",
+      "rust",
+      "ai"
+    ],
+    "readme": "sha256:83117dc71beb1cf93be27bb0124749d6df0a7ff57c5b4fbab79403ebcef67fa9",
+    "logo": "sha256:38d40e6c598eb18a5221dbd9b81cc90405a475311074e37de5ec0a437049b081"
+  },
   "upstream": {
     "org": "rtk-ai",
     "repository_url": "https://github.com/rtk-ai/rtk",
     "disclaimer": "Unaffiliated mirror. rtk is a project of the rtk-ai authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.42.4": {
+      "content": "sha256:72ab7796fa2e2ee22e5b54ccca5a817d97683a8bba9ad998a6a0095a06227ef6",
+      "observed": "2026-08-02T10:33:40Z"
+    },
+    "0.42": {
+      "content": "sha256:72ab7796fa2e2ee22e5b54ccca5a817d97683a8bba9ad998a6a0095a06227ef6",
+      "observed": "2026-08-02T10:33:40Z"
+    },
+    "0": {
+      "content": "sha256:5c508c1c495829829d823c00e4122221a2c5bcc585f5f36d6252c8c8ec61913e",
+      "observed": "2026-08-02T10:33:40Z"
+    },
+    "latest": {
+      "content": "sha256:5c508c1c495829829d823c00e4122221a2c5bcc585f5f36d6252c8c8ec61913e",
+      "observed": "2026-08-02T10:33:40Z"
+    },
+    "0.43.0": {
+      "content": "sha256:ad069710b945680c15bbc7367d0167da85a4e70b8d72757bb6323c284633166f",
+      "observed": "2026-08-02T10:33:40Z"
+    },
+    "0.43": {
+      "content": "sha256:ad069710b945680c15bbc7367d0167da85a4e70b8d72757bb6323c284633166f",
+      "observed": "2026-08-02T10:33:40Z"
+    },
+    "0.44.0": {
+      "content": "sha256:9ddf43d23e53985a0887c9ba3d72d028571ed07d385c20023781cb73e574a3ac",
+      "observed": "2026-08-02T10:33:40Z"
+    },
+    "0.44": {
+      "content": "sha256:5c508c1c495829829d823c00e4122221a2c5bcc585f5f36d6252c8c8ec61913e",
+      "observed": "2026-08-02T10:33:40Z"
+    },
+    "0.44.1": {
+      "content": "sha256:171d9a01d8c0f021ff6eab584f7c35cf3ea9862b8e2352e79b84d80f053282ab",
+      "observed": "2026-08-02T10:33:40Z"
+    },
+    "0.44.2": {
+      "content": "sha256:5c508c1c495829829d823c00e4122221a2c5bcc585f5f36d6252c8c8ec61913e",
+      "observed": "2026-08-02T10:33:40Z"
+    }
+  }
 }
