@@ -10,11 +10,59 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:a0ec545cec533ae1a802314b7508b81ebc1ea3b111c01f6fa3c6c5d6eef91c66",
+    "title": "fnox",
+    "description": "Encrypted, remote-capable secret manager for loading secrets into your environment and commands",
+    "keywords": [
+      "fnox",
+      "secrets",
+      "secret-manager",
+      "encryption",
+      "env",
+      "jdx",
+      "rust"
+    ],
+    "readme": "sha256:675168705981e0430c89f38d4dc4f1dade7d4c3a7dd12ec57b4079b308e2fc61",
+    "logo": "sha256:d6f62b58fa81130b9012ea07789e9e06e6fc4cdd03456197e2459abdce52b3bf"
+  },
   "upstream": {
     "org": "jdx",
     "repository_url": "https://github.com/jdx/fnox",
     "disclaimer": "Unaffiliated mirror. fnox is a project of Jeff Dickey (jdx); this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "1.29.0_20260802": {
+      "content": "sha256:bfbe7985f6de092318754a9eae15218a23e642311006e4276eb25f797cd027cb",
+      "observed": "2026-08-02T10:41:37Z"
+    },
+    "1.29.0": {
+      "content": "sha256:bfbe7985f6de092318754a9eae15218a23e642311006e4276eb25f797cd027cb",
+      "observed": "2026-08-02T10:41:37Z"
+    },
+    "1.29": {
+      "content": "sha256:bfbe7985f6de092318754a9eae15218a23e642311006e4276eb25f797cd027cb",
+      "observed": "2026-08-02T10:41:37Z"
+    },
+    "1": {
+      "content": "sha256:80b019a427b1f241f6191a351fc8d58ffe7733cfab69c841ba891e98fae23fd0",
+      "observed": "2026-08-02T10:41:37Z"
+    },
+    "latest": {
+      "content": "sha256:80b019a427b1f241f6191a351fc8d58ffe7733cfab69c841ba891e98fae23fd0",
+      "observed": "2026-08-02T10:41:37Z"
+    },
+    "1.30.0_20260802": {
+      "content": "sha256:b5980cbae276584eb7ef54ef5b7e44e268e9761058bae3f0b00bf0435641a39e",
+      "observed": "2026-08-02T10:41:37Z"
+    },
+    "1.30.0": {
+      "content": "sha256:b5980cbae276584eb7ef54ef5b7e44e268e9761058bae3f0b00bf0435641a39e",
+      "observed": "2026-08-02T10:41:37Z"
+    },
+    "1.30": {
+      "content": "sha256:05b6d51610effcb04628e6e66ba834b976f545e6c1033546d14c56219117c53d",
+      "observed": "2026-08-02T10:41:37Z"
+    }
+  }
 }
