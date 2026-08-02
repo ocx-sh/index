@@ -33,8 +33,12 @@
   },
   "tags": {
     "7.6.0": {
-      "content": "sha256:ff11a0b048600a41f0da32e1efcb65a73de4d924236a9c06d2d8ec176f9fad4a",
-      "observed": "2026-08-02T10:40:09Z"
+      "content": "sha256:4d527285fbc76fd8af08dc8d60e2d9756116fd65162f1d31af9984e55a34c434",
+      "observed": "2026-08-02T10:42:10Z"
+    },
+    "7.6.1": {
+      "content": "sha256:c810c3ba192e75a3dd0a1e937c71e2d202ae9a7dafc38bd42263fea57068d232",
+      "observed": "2026-08-02T10:42:10Z"
     }
   }
 }
