@@ -10,11 +10,47 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:b1afbe554d0c90503503b905b5294d4956c1ef7af841d634adf053aa17d02a07",
+    "title": "Ninja",
+    "description": "A small build system with a focus on speed",
+    "keywords": [
+      "ninja",
+      "build-system",
+      "build",
+      "cmake",
+      "meson",
+      "c++",
+      "make-alternative"
+    ],
+    "readme": "sha256:eeadb05dfeba306976d8bbf1e493de262b2ae1f812f5f76cc86ca38f0e58cfef",
+    "logo": "sha256:3933f52e464793f2b80f8b4fb6fa1027c718aacdcbc4ace35f24bbf9fc167ae1"
+  },
   "upstream": {
     "org": "ninja-build",
     "repository_url": "https://github.com/ninja-build/ninja",
     "disclaimer": "Unaffiliated mirror. Ninja is a project of the Ninja authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "1.12.0": {
+      "content": "sha256:54ebf76d388cf351da211f03adfd9ae38512bf01324879b1044af4e9ec136507",
+      "observed": "2026-08-02T10:30:21Z"
+    },
+    "1.12.1": {
+      "content": "sha256:c11ff6a55035da5f6953899aca25ee1c8eaee027d3e4034a0970f5a5d2fba9e1",
+      "observed": "2026-08-02T10:30:21Z"
+    },
+    "1.13.0": {
+      "content": "sha256:daea906ce9c3f0c9f924a6b41a7dd27401b5cd280862d3b771b0576806684e83",
+      "observed": "2026-08-02T10:30:21Z"
+    },
+    "1.13.1": {
+      "content": "sha256:26792541aff17970afdd91171df99d764a11a93fa45e8fb1d8244b5e883b3b96",
+      "observed": "2026-08-02T10:30:21Z"
+    },
+    "1.13.2": {
+      "content": "sha256:b6f2045e782d0f240194816acec4ec54197f2a091e156db754233249503b85b1",
+      "observed": "2026-08-02T10:30:21Z"
+    }
+  }
 }
