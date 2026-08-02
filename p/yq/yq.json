@@ -10,11 +10,86 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:7b27e2d39ac0ce2a247b58ad07a2060753b562066210de1b69474a76149733e5",
+    "title": "yq",
+    "description": "Portable command-line YAML, JSON, XML, CSV, TOML, HCL and properties processor",
+    "keywords": [
+      "yq",
+      "yaml",
+      "json",
+      "xml",
+      "csv",
+      "toml",
+      "cli",
+      "query",
+      "processor",
+      "mikefarah"
+    ],
+    "readme": "sha256:79d7dc95f9e13659e50a1c9646dee3e6d3a32f1b7d26c2460d577a376a602631",
+    "logo": "sha256:2dd600c4db2fd57dc7d2f9fd2f6c56f86582fa15c19e10f50b1b2d58ec823f1b"
+  },
   "upstream": {
     "org": "mikefarah",
     "repository_url": "https://github.com/mikefarah/yq",
     "disclaimer": "Unaffiliated mirror. yq is a project of Mike Farah; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "4.52.2_20260802": {
+      "content": "sha256:867b51197705554ae301573e5b9e784485cac1c189ccf8b422e911132356a93e",
+      "observed": "2026-08-02T10:11:52Z"
+    },
+    "4.52.2": {
+      "content": "sha256:867b51197705554ae301573e5b9e784485cac1c189ccf8b422e911132356a93e",
+      "observed": "2026-08-02T10:11:52Z"
+    },
+    "4.52": {
+      "content": "sha256:b6949ea96c7c9147f6f89c132dcc3959b62e1291c4e31aa11cdf380406273703",
+      "observed": "2026-08-02T10:11:52Z"
+    },
+    "4": {
+      "content": "sha256:fa211d72ad159df04b7ee1f42e80ff9c559b27fbff0d9a0af4445099489e9464",
+      "observed": "2026-08-02T10:11:52Z"
+    },
+    "latest": {
+      "content": "sha256:fa211d72ad159df04b7ee1f42e80ff9c559b27fbff0d9a0af4445099489e9464",
+      "observed": "2026-08-02T10:11:52Z"
+    },
+    "4.52.4_20260802": {
+      "content": "sha256:c9e0d8ee1299f13fed48fc378646ad9f3e5f7a0cb48cd78ca3323cdc082191e0",
+      "observed": "2026-08-02T10:11:52Z"
+    },
+    "4.52.4": {
+      "content": "sha256:c9e0d8ee1299f13fed48fc378646ad9f3e5f7a0cb48cd78ca3323cdc082191e0",
+      "observed": "2026-08-02T10:11:52Z"
+    },
+    "4.52.5_20260802": {
+      "content": "sha256:b6949ea96c7c9147f6f89c132dcc3959b62e1291c4e31aa11cdf380406273703",
+      "observed": "2026-08-02T10:11:52Z"
+    },
+    "4.52.5": {
+      "content": "sha256:b6949ea96c7c9147f6f89c132dcc3959b62e1291c4e31aa11cdf380406273703",
+      "observed": "2026-08-02T10:11:52Z"
+    },
+    "4.53.2_20260802": {
+      "content": "sha256:c9acea84bd620cbaed1f25e9731c821efdcb2725174ba10c077b1d07dfca0ab2",
+      "observed": "2026-08-02T10:11:52Z"
+    },
+    "4.53.2": {
+      "content": "sha256:c9acea84bd620cbaed1f25e9731c821efdcb2725174ba10c077b1d07dfca0ab2",
+      "observed": "2026-08-02T10:11:52Z"
+    },
+    "4.53": {
+      "content": "sha256:fa211d72ad159df04b7ee1f42e80ff9c559b27fbff0d9a0af4445099489e9464",
+      "observed": "2026-08-02T10:11:52Z"
+    },
+    "4.53.3_20260802": {
+      "content": "sha256:fa211d72ad159df04b7ee1f42e80ff9c559b27fbff0d9a0af4445099489e9464",
+      "observed": "2026-08-02T10:11:52Z"
+    },
+    "4.53.3": {
+      "content": "sha256:fa211d72ad159df04b7ee1f42e80ff9c559b27fbff0d9a0af4445099489e9464",
+      "observed": "2026-08-02T10:11:52Z"
+    }
+  }
 }
