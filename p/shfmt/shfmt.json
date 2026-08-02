@@ -118,6 +118,10 @@
     "3.9": {
       "content": "sha256:2fad0a3a0896766c666cbd67cd4d468d4d408db216efb8c5bc224be62095685e",
       "observed": "2026-08-02T13:22:36Z"
+    },
+    "3.5.0": {
+      "content": "sha256:517520f2c492a5e0af0e296de7e567307bac7c139ed95e1ebe5b46e5c17a0bb3",
+      "observed": "2026-08-02T19:11:04Z"
     }
   }
 }
