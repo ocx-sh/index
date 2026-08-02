@@ -120,6 +120,18 @@
     "2.1": {
       "content": "sha256:49703027edd696b87ce10e99be030932a4e0c3603481b96606c470ef67b43676",
       "observed": "2026-08-02T13:20:42Z"
+    },
+    "2.0.0": {
+      "content": "sha256:05573485659ad2df241f60238d158598bd0765704e706e20134e1c922540c536",
+      "observed": "2026-08-02T19:01:06Z"
+    },
+    "2.0.1": {
+      "content": "sha256:1fab88c5c80c9e73bd1b06afc97faefc49bc689ab9fcfaf03c096ba92d3b7460",
+      "observed": "2026-08-02T19:01:06Z"
+    },
+    "2.0.2": {
+      "content": "sha256:e8bc064791e064cdc9f21de37e62c7b06bc68be94f22325a691eb42cc0080ce1",
+      "observed": "2026-08-02T19:01:06Z"
     }
   }
 }
