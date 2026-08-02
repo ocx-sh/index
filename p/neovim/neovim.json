@@ -10,11 +10,59 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:20a59a526ab4ac458d045d12bef0979c2f6f164c07d7b62add7c7253eae068c2",
+    "title": "Neovim",
+    "description": "Hyperextensible Vim-based text editor focused on extensibility and usability",
+    "keywords": [
+      "neovim",
+      "nvim",
+      "vim",
+      "editor",
+      "text-editor",
+      "lua",
+      "tui"
+    ],
+    "readme": "sha256:9cf9931c0325a6762a0e2e6e1e3056cda37ec7053601eacbcca25e8fbfc7f142",
+    "logo": "sha256:4d63e1b4de99e936dd8b3c94d5a6ce2b1e7892790030e4e2f47f8ccf9d56d27a"
+  },
   "upstream": {
     "org": "neovim",
     "repository_url": "https://github.com/neovim/neovim",
     "disclaimer": "Unaffiliated mirror. Neovim is a project of the Neovim authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.12.0": {
+      "content": "sha256:179c6207b767711e2677164d2865bc790b2ae68fefd53414f299fd12eb79bac4",
+      "observed": "2026-08-02T10:40:10Z"
+    },
+    "0.12": {
+      "content": "sha256:b72d671431aa864042a3ef964cd66f47fec05f4f5db2e2c23233a66daa0adcfa",
+      "observed": "2026-08-02T10:40:10Z"
+    },
+    "0": {
+      "content": "sha256:b72d671431aa864042a3ef964cd66f47fec05f4f5db2e2c23233a66daa0adcfa",
+      "observed": "2026-08-02T10:40:10Z"
+    },
+    "latest": {
+      "content": "sha256:b72d671431aa864042a3ef964cd66f47fec05f4f5db2e2c23233a66daa0adcfa",
+      "observed": "2026-08-02T10:40:10Z"
+    },
+    "0.12.1": {
+      "content": "sha256:6622614f2f0c3befefff8ae68194374fa9c494585fc76a17b131010cca92d4f4",
+      "observed": "2026-08-02T10:40:10Z"
+    },
+    "0.12.2": {
+      "content": "sha256:fb9f58b2d81cc999ea5ea14e6c3fe53300fbf8ddadf8f02d968102ae4fee5ce0",
+      "observed": "2026-08-02T10:40:10Z"
+    },
+    "0.12.3": {
+      "content": "sha256:121fae10200b18573b1b8f2054c09be5999215e6cad1bc3a2abf0f4a63fc9f41",
+      "observed": "2026-08-02T10:40:10Z"
+    },
+    "0.12.4": {
+      "content": "sha256:b72d671431aa864042a3ef964cd66f47fec05f4f5db2e2c23233a66daa0adcfa",
+      "observed": "2026-08-02T10:40:10Z"
+    }
+  }
 }
