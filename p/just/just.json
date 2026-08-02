@@ -208,6 +208,58 @@
     "1.48.1": {
       "content": "sha256:9c598534b1877d42443b15f11f63d992e1585c6286523abdda7492b34e02ccdc",
       "observed": "2026-08-02T10:59:34Z"
+    },
+    "1.43.0_20260802": {
+      "content": "sha256:7f91b86ca39a6755f89bcb2cb6f74a975f3e1fab55ffd4b05a2cf61a6bdf7795",
+      "observed": "2026-08-02T13:27:25Z"
+    },
+    "1.43.0": {
+      "content": "sha256:7f91b86ca39a6755f89bcb2cb6f74a975f3e1fab55ffd4b05a2cf61a6bdf7795",
+      "observed": "2026-08-02T13:27:25Z"
+    },
+    "1.43": {
+      "content": "sha256:e107211d5793bb65f0559f719bc613221130286e44b62161eb14078a73141b0a",
+      "observed": "2026-08-02T13:27:25Z"
+    },
+    "1.43.1_20260802": {
+      "content": "sha256:e107211d5793bb65f0559f719bc613221130286e44b62161eb14078a73141b0a",
+      "observed": "2026-08-02T13:27:25Z"
+    },
+    "1.43.1": {
+      "content": "sha256:e107211d5793bb65f0559f719bc613221130286e44b62161eb14078a73141b0a",
+      "observed": "2026-08-02T13:27:25Z"
+    },
+    "1.44.0_20260802": {
+      "content": "sha256:0f70a8874fdd9f72f1190065c7c7967fa343eff057b7d9df5934dcf91a7adcba",
+      "observed": "2026-08-02T13:27:25Z"
+    },
+    "1.44.0": {
+      "content": "sha256:0f70a8874fdd9f72f1190065c7c7967fa343eff057b7d9df5934dcf91a7adcba",
+      "observed": "2026-08-02T13:27:25Z"
+    },
+    "1.44": {
+      "content": "sha256:450966fe3d937ddc1aae2225a96769e02b83a5ed2e91d6b3c287c9b631bdbc26",
+      "observed": "2026-08-02T13:27:25Z"
+    },
+    "1.44.1_20260802": {
+      "content": "sha256:450966fe3d937ddc1aae2225a96769e02b83a5ed2e91d6b3c287c9b631bdbc26",
+      "observed": "2026-08-02T13:27:25Z"
+    },
+    "1.44.1": {
+      "content": "sha256:450966fe3d937ddc1aae2225a96769e02b83a5ed2e91d6b3c287c9b631bdbc26",
+      "observed": "2026-08-02T13:27:25Z"
+    },
+    "1.45.0_20260802": {
+      "content": "sha256:8bf9b0261f7f52b9e7de09cfd4b37b337099ad5546d8852af1f747d613fdf2ff",
+      "observed": "2026-08-02T13:27:25Z"
+    },
+    "1.45.0": {
+      "content": "sha256:8bf9b0261f7f52b9e7de09cfd4b37b337099ad5546d8852af1f747d613fdf2ff",
+      "observed": "2026-08-02T13:27:25Z"
+    },
+    "1.45": {
+      "content": "sha256:8bf9b0261f7f52b9e7de09cfd4b37b337099ad5546d8852af1f747d613fdf2ff",
+      "observed": "2026-08-02T13:27:25Z"
     }
   }
 }
