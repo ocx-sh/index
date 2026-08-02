@@ -10,11 +10,69 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:45061d0520cbaafb5d5ca636cd8cfbf6be366e6c0e23d0ea216f6397a749a3b7",
+    "title": "pnpm",
+    "description": "Fast, disk-space-efficient package manager for JavaScript and Node.js",
+    "keywords": [
+      "pnpm",
+      "package-manager",
+      "javascript",
+      "nodejs",
+      "npm",
+      "node",
+      "monorepo",
+      "workspace",
+      "lockfile"
+    ],
+    "readme": "sha256:7936346c65de42baf17314f8ae966a6ea3bd743579721d592a03e3fbfdfdb9a2",
+    "logo": "sha256:512e2f89b4994b39cb7b0cd64fda507b95a31b6220f7ba3223d2da4e2113aae8"
+  },
   "upstream": {
     "org": "pnpm",
     "repository_url": "https://github.com/pnpm/pnpm",
     "disclaimer": "Unaffiliated mirror. pnpm is a project of the pnpm authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "11.12.0": {
+      "content": "sha256:e8ab2dda611aa502ff3afa5e2913c7e975d5ad87bc516d863e6cf083b4fb8589",
+      "observed": "2026-08-02T10:50:53Z"
+    },
+    "11.13.0": {
+      "content": "sha256:93f520c10f6acc544f24596217c66fa9ce083e973a0aea90db16f854ef1ec9ca",
+      "observed": "2026-08-02T10:50:53Z"
+    },
+    "11.13.1": {
+      "content": "sha256:3221f367f0e52f2e1d9db4e8ea088ba725fe69048674ea512dc49d4c13f6f3f8",
+      "observed": "2026-08-02T10:50:53Z"
+    },
+    "11.14.0": {
+      "content": "sha256:c81d731e403723eb070f12aff8975eee42ef7ae882b347cef7e9f03e54cb2b26",
+      "observed": "2026-08-02T10:50:53Z"
+    },
+    "11.15.0": {
+      "content": "sha256:3d6ac360388de9acbf7a997d8314709da69be3f9763d2c6b18375d5867a79de1",
+      "observed": "2026-08-02T10:50:53Z"
+    },
+    "11.15.1": {
+      "content": "sha256:e22c03d5a8c4a5fe185823aee34255b62c84fba7959fdbcad117c7ef71c90738",
+      "observed": "2026-08-02T10:50:53Z"
+    },
+    "11.16.0": {
+      "content": "sha256:3fd83436bc4d3f579f13357464a74a83fa1f20242b3c666caf167399b4a1fa43",
+      "observed": "2026-08-02T10:50:53Z"
+    },
+    "11.17.0": {
+      "content": "sha256:ccdfd12653ddc15de5eb9e1959efaf28efcc086331359a6396f13822b8b7d570",
+      "observed": "2026-08-02T10:50:53Z"
+    },
+    "11.18.0": {
+      "content": "sha256:65e3a66f153423312698a0722d57fc0fe62ceb67ce2afff6a08eb2abfad087db",
+      "observed": "2026-08-02T10:50:53Z"
+    },
+    "11.19.0": {
+      "content": "sha256:0f3378fbd8c1ecc06e617dddb92ad51cc80d88457b5045d837d5459be7f9b9e0",
+      "observed": "2026-08-02T10:50:53Z"
+    }
+  }
 }
