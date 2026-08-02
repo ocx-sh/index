@@ -10,11 +10,75 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:cddcbd10f8cd2bd7aa0f31f42ca295a7da5ff839dd609e193a261c6e6c6d918e",
+    "title": "GitLab CLI",
+    "description": "GitLab on the command line \u2014 merge requests, issues, pipelines, and releases",
+    "keywords": [
+      "glab",
+      "gitlab",
+      "cli",
+      "git",
+      "devops",
+      "ci",
+      "merge-request"
+    ],
+    "readme": "sha256:c0d706da4407e03798304844b868c12d3e5f9c759ec49d6d37e68acc70f9e566",
+    "logo": "sha256:fb435df8557dba763d1219f53130d15ea94a33473b08dfeec642c656439153c0"
+  },
   "upstream": {
     "org": "gitlab-org",
     "repository_url": "https://gitlab.com/gitlab-org/cli",
     "disclaimer": "Unaffiliated mirror. the GitLab CLI (glab) is a project of GitLab Inc.; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "1.107.0": {
+      "content": "sha256:cead9deb9dbe77c1ab2f4d98d3c0e104f80ad29056b2a7050ba680909ac531f3",
+      "observed": "2026-08-02T10:47:15Z"
+    },
+    "1.107": {
+      "content": "sha256:cead9deb9dbe77c1ab2f4d98d3c0e104f80ad29056b2a7050ba680909ac531f3",
+      "observed": "2026-08-02T10:47:15Z"
+    },
+    "1": {
+      "content": "sha256:acf84305f46a5752d04d9b32ffc203af0fbcefd2e47bc2308a2478ad32d425b6",
+      "observed": "2026-08-02T10:47:15Z"
+    },
+    "latest": {
+      "content": "sha256:acf84305f46a5752d04d9b32ffc203af0fbcefd2e47bc2308a2478ad32d425b6",
+      "observed": "2026-08-02T10:47:15Z"
+    },
+    "1.108.0": {
+      "content": "sha256:cbcad32e259912ca45e8166724270fe008d53a03861ffd37cfe3d4ff4bfb6a29",
+      "observed": "2026-08-02T10:47:15Z"
+    },
+    "1.108": {
+      "content": "sha256:cbcad32e259912ca45e8166724270fe008d53a03861ffd37cfe3d4ff4bfb6a29",
+      "observed": "2026-08-02T10:47:15Z"
+    },
+    "1.109.0": {
+      "content": "sha256:f755324216899f7596b10e38224302807c509af20129ce727df20f0b1dc0d97d",
+      "observed": "2026-08-02T10:47:15Z"
+    },
+    "1.109": {
+      "content": "sha256:f755324216899f7596b10e38224302807c509af20129ce727df20f0b1dc0d97d",
+      "observed": "2026-08-02T10:47:15Z"
+    },
+    "1.110.0": {
+      "content": "sha256:61c8ca10cae285e26737f452a2a6fc03e5b94d5315efe53d12319965635439fc",
+      "observed": "2026-08-02T10:47:15Z"
+    },
+    "1.110": {
+      "content": "sha256:61c8ca10cae285e26737f452a2a6fc03e5b94d5315efe53d12319965635439fc",
+      "observed": "2026-08-02T10:47:15Z"
+    },
+    "1.111.0": {
+      "content": "sha256:acf84305f46a5752d04d9b32ffc203af0fbcefd2e47bc2308a2478ad32d425b6",
+      "observed": "2026-08-02T10:47:15Z"
+    },
+    "1.111": {
+      "content": "sha256:acf84305f46a5752d04d9b32ffc203af0fbcefd2e47bc2308a2478ad32d425b6",
+      "observed": "2026-08-02T10:47:15Z"
+    }
+  }
 }
