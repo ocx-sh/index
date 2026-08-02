@@ -10,11 +10,66 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:6a2da7328e4e4135738379ea54295ef43d5e020c1a05b0733c58f50ed9e75bfb",
+    "title": "Node.js",
+    "description": "JavaScript runtime built on Chrome's V8 JavaScript engine",
+    "keywords": [
+      "nodejs",
+      "node",
+      "javascript",
+      "typescript",
+      "runtime",
+      "v8"
+    ],
+    "readme": "sha256:36888fdca6c4965c8cf841e2abbbd9d839c25286f5091ff698a46b7e5715ff89",
+    "logo": "sha256:8e8a0d3d42e9d8f8f4b7670277258aced845af35bd1917c851c3b5d72baaa398"
+  },
   "upstream": {
     "org": "nodejs",
     "repository_url": "https://github.com/nodejs/node",
     "disclaimer": "Unaffiliated mirror. Node.js is a project of the OpenJS Foundation; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "24.15.0": {
+      "content": "sha256:469069de3fc807be748f573d7c5890ae107f3df1ae59c9cae3f956344e7037b3",
+      "observed": "2026-08-02T10:39:27Z"
+    },
+    "24.15": {
+      "content": "sha256:469069de3fc807be748f573d7c5890ae107f3df1ae59c9cae3f956344e7037b3",
+      "observed": "2026-08-02T10:39:27Z"
+    },
+    "24": {
+      "content": "sha256:10f3d95b6ba52dd309707b44c55f9687a9b3a4ac5922b46b1c4171af95eb955c",
+      "observed": "2026-08-02T10:39:27Z"
+    },
+    "latest": {
+      "content": "sha256:10f3d95b6ba52dd309707b44c55f9687a9b3a4ac5922b46b1c4171af95eb955c",
+      "observed": "2026-08-02T10:39:27Z"
+    },
+    "24.16.0": {
+      "content": "sha256:54e82c17129add9b1b4ad074db9d21fbf8a9e290ed66068dbd317958576718ba",
+      "observed": "2026-08-02T10:39:27Z"
+    },
+    "24.16": {
+      "content": "sha256:54e82c17129add9b1b4ad074db9d21fbf8a9e290ed66068dbd317958576718ba",
+      "observed": "2026-08-02T10:39:27Z"
+    },
+    "24.17.0": {
+      "content": "sha256:4feec948fde423d20ea8af043449cbed3cbaa0ba012ee10f47cbd14caf254439",
+      "observed": "2026-08-02T10:39:27Z"
+    },
+    "24.17": {
+      "content": "sha256:4feec948fde423d20ea8af043449cbed3cbaa0ba012ee10f47cbd14caf254439",
+      "observed": "2026-08-02T10:39:27Z"
+    },
+    "24.18.0": {
+      "content": "sha256:cb3d4bd2ccb96cd4aacda86b304b3eb6d55e041b1f02871432c355b81a66ebf1",
+      "observed": "2026-08-02T10:39:27Z"
+    },
+    "24.18": {
+      "content": "sha256:cb3d4bd2ccb96cd4aacda86b304b3eb6d55e041b1f02871432c355b81a66ebf1",
+      "observed": "2026-08-02T10:39:27Z"
+    }
+  }
 }
