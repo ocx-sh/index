@@ -10,11 +10,95 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:1b54d9830828ca3b260cfe6d300af547105954520b9e5f101d261c2af500e553",
+    "title": "HawkEye",
+    "description": "License header checker and formatter",
+    "keywords": [
+      "hawkeye",
+      "license",
+      "header",
+      "spdx",
+      "licenseheader",
+      "compliance",
+      "lint"
+    ],
+    "readme": "sha256:503d7c85808e3beb0c1084b66b93d1d4482936843109588338b67f4bd798c4b9",
+    "logo": "sha256:b1176559a5748400dff26b93af0e5e738ae218b9e6775b4f7568df8698ede2a5"
+  },
   "upstream": {
     "org": "korandoru",
     "repository_url": "https://github.com/korandoru/hawkeye",
     "disclaimer": "Unaffiliated mirror. HawkEye is a project of the Korandoru authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "6.3.0_20260802": {
+      "content": "sha256:1ed280aed5fb377fb39f6808175d564de08803d3efb13403c6845d73dafbec6f",
+      "observed": "2026-08-02T10:27:59Z"
+    },
+    "6.3.0": {
+      "content": "sha256:1ed280aed5fb377fb39f6808175d564de08803d3efb13403c6845d73dafbec6f",
+      "observed": "2026-08-02T10:27:59Z"
+    },
+    "6.3": {
+      "content": "sha256:1ed280aed5fb377fb39f6808175d564de08803d3efb13403c6845d73dafbec6f",
+      "observed": "2026-08-02T10:27:59Z"
+    },
+    "6": {
+      "content": "sha256:2e3dd7d48bfd8aeeb755c58251e5a7f4ff118b80f4e31c47eb79fe0f421bbdee",
+      "observed": "2026-08-02T10:27:59Z"
+    },
+    "latest": {
+      "content": "sha256:2e3dd7d48bfd8aeeb755c58251e5a7f4ff118b80f4e31c47eb79fe0f421bbdee",
+      "observed": "2026-08-02T10:27:59Z"
+    },
+    "6.4.0_20260802": {
+      "content": "sha256:f6b1a8f8d8d0cc93a85b62a0d2b8c51190a48b17bc957c9a625084fbe28ce911",
+      "observed": "2026-08-02T10:27:59Z"
+    },
+    "6.4.0": {
+      "content": "sha256:f6b1a8f8d8d0cc93a85b62a0d2b8c51190a48b17bc957c9a625084fbe28ce911",
+      "observed": "2026-08-02T10:27:59Z"
+    },
+    "6.4": {
+      "content": "sha256:7ce487015a28e9691940ca442fd45e14bf8b7cf1bd92b647284b2ef1e98c44b6",
+      "observed": "2026-08-02T10:27:59Z"
+    },
+    "6.4.1_20260802": {
+      "content": "sha256:beb69c57ebe9e9bebc3efd08fa5a8491d3254bb5ef59ac27a53e5f8a490b9f41",
+      "observed": "2026-08-02T10:27:59Z"
+    },
+    "6.4.1": {
+      "content": "sha256:beb69c57ebe9e9bebc3efd08fa5a8491d3254bb5ef59ac27a53e5f8a490b9f41",
+      "observed": "2026-08-02T10:27:59Z"
+    },
+    "6.4.2_20260802": {
+      "content": "sha256:7ce487015a28e9691940ca442fd45e14bf8b7cf1bd92b647284b2ef1e98c44b6",
+      "observed": "2026-08-02T10:27:59Z"
+    },
+    "6.4.2": {
+      "content": "sha256:7ce487015a28e9691940ca442fd45e14bf8b7cf1bd92b647284b2ef1e98c44b6",
+      "observed": "2026-08-02T10:27:59Z"
+    },
+    "6.5.0_20260802": {
+      "content": "sha256:cb721c932b108c752fd1c4c2849d679710e108812720c86e8dbb788ec33e8675",
+      "observed": "2026-08-02T10:27:59Z"
+    },
+    "6.5.0": {
+      "content": "sha256:cb721c932b108c752fd1c4c2849d679710e108812720c86e8dbb788ec33e8675",
+      "observed": "2026-08-02T10:27:59Z"
+    },
+    "6.5": {
+      "content": "sha256:2e3dd7d48bfd8aeeb755c58251e5a7f4ff118b80f4e31c47eb79fe0f421bbdee",
+      "observed": "2026-08-02T10:27:59Z"
+    },
+    "6.5.1_20260802": {
+      "content": "sha256:2e3dd7d48bfd8aeeb755c58251e5a7f4ff118b80f4e31c47eb79fe0f421bbdee",
+      "observed": "2026-08-02T10:27:59Z"
+    },
+    "6.5.1": {
+      "content": "sha256:2e3dd7d48bfd8aeeb755c58251e5a7f4ff118b80f4e31c47eb79fe0f421bbdee",
+      "observed": "2026-08-02T10:27:59Z"
+    }
+  }
 }
