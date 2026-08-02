@@ -10,11 +10,82 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:fc67777e6b1b7268847baa5e032558169ed01cc9aac6d3619b1a461329b29133",
+    "title": "Task",
+    "description": "A task runner and build tool simpler than GNU Make",
+    "keywords": [
+      "task",
+      "taskfile",
+      "build",
+      "automation",
+      "make",
+      "go"
+    ],
+    "readme": "sha256:8d5fa73b5a87661d134c30a3162d66d7bad60a00efce32702674a8f42d42e6c5",
+    "logo": "sha256:b7ad5362bcfe37c24d7aa213db0796d287965c15b57ddd176f73600c3cb44521"
+  },
   "upstream": {
     "org": "go-task",
     "repository_url": "https://github.com/go-task/task",
     "disclaimer": "Unaffiliated mirror. Task is a project of the go-task authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "3.49.1_20260802": {
+      "content": "sha256:18934d5ad0340a0c6e391dda040df452c6e0a68711032dc6e0458e4a17a6dacf",
+      "observed": "2026-08-02T10:39:04Z"
+    },
+    "3.49.1": {
+      "content": "sha256:18934d5ad0340a0c6e391dda040df452c6e0a68711032dc6e0458e4a17a6dacf",
+      "observed": "2026-08-02T10:39:04Z"
+    },
+    "3.49": {
+      "content": "sha256:18934d5ad0340a0c6e391dda040df452c6e0a68711032dc6e0458e4a17a6dacf",
+      "observed": "2026-08-02T10:39:04Z"
+    },
+    "3": {
+      "content": "sha256:44f95d8ad229b73a8e719f03a21b4b647ca42f94295c9142b420f7a030ceaa18",
+      "observed": "2026-08-02T10:39:04Z"
+    },
+    "latest": {
+      "content": "sha256:44f95d8ad229b73a8e719f03a21b4b647ca42f94295c9142b420f7a030ceaa18",
+      "observed": "2026-08-02T10:39:04Z"
+    },
+    "3.50.0_20260802": {
+      "content": "sha256:0f9d7992cdb965ecb01a1511c28e391ef0e1157540016ad7dbd9f7a04c5ae92b",
+      "observed": "2026-08-02T10:39:04Z"
+    },
+    "3.50.0": {
+      "content": "sha256:0f9d7992cdb965ecb01a1511c28e391ef0e1157540016ad7dbd9f7a04c5ae92b",
+      "observed": "2026-08-02T10:39:04Z"
+    },
+    "3.50": {
+      "content": "sha256:0f9d7992cdb965ecb01a1511c28e391ef0e1157540016ad7dbd9f7a04c5ae92b",
+      "observed": "2026-08-02T10:39:04Z"
+    },
+    "3.51.1_20260802": {
+      "content": "sha256:aee9d13b0673db723c726361a4fbb89a11083a642f71ccff1de98051f0ae12ba",
+      "observed": "2026-08-02T10:39:04Z"
+    },
+    "3.51.1": {
+      "content": "sha256:aee9d13b0673db723c726361a4fbb89a11083a642f71ccff1de98051f0ae12ba",
+      "observed": "2026-08-02T10:39:04Z"
+    },
+    "3.51": {
+      "content": "sha256:aee9d13b0673db723c726361a4fbb89a11083a642f71ccff1de98051f0ae12ba",
+      "observed": "2026-08-02T10:39:04Z"
+    },
+    "3.52.0_20260802": {
+      "content": "sha256:44f95d8ad229b73a8e719f03a21b4b647ca42f94295c9142b420f7a030ceaa18",
+      "observed": "2026-08-02T10:39:04Z"
+    },
+    "3.52.0": {
+      "content": "sha256:44f95d8ad229b73a8e719f03a21b4b647ca42f94295c9142b420f7a030ceaa18",
+      "observed": "2026-08-02T10:39:04Z"
+    },
+    "3.52": {
+      "content": "sha256:44f95d8ad229b73a8e719f03a21b4b647ca42f94295c9142b420f7a030ceaa18",
+      "observed": "2026-08-02T10:39:04Z"
+    }
+  }
 }
