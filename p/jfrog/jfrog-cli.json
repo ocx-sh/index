@@ -10,11 +10,76 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:108c5f3a5891d239b785fd0f3faa55d6a1960167fc22ef5410bb3330aba4f146",
+    "title": "JFrog CLI",
+    "description": "Command-line client automating access to JFrog Artifactory, Xray, and the JFrog Platform",
+    "keywords": [
+      "jfrog-cli",
+      "jf",
+      "jfrog",
+      "artifactory",
+      "xray",
+      "devops",
+      "cli",
+      "package-management"
+    ],
+    "readme": "sha256:3b7440de9844242cb459156ff1dfc03069351b0f4228fd5f7cfbb9f0bb8e05f1",
+    "logo": "sha256:b8aa6f6a3843796ada80b791a34375dbe0a58e9f439de8d6d2fca425c9e81173"
+  },
   "upstream": {
     "org": "jfrog",
     "repository_url": "https://github.com/jfrog/jfrog-cli",
     "disclaimer": "Unaffiliated mirror. the JFrog CLI is a project of JFrog Ltd.; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "2.113.0": {
+      "content": "sha256:8299ece9bd52d07f81a2a00aaa41b2c10a0da4bb0eefd2df5d3a1dacf6f12a12",
+      "observed": "2026-08-02T10:35:03Z"
+    },
+    "2.113": {
+      "content": "sha256:8299ece9bd52d07f81a2a00aaa41b2c10a0da4bb0eefd2df5d3a1dacf6f12a12",
+      "observed": "2026-08-02T10:35:03Z"
+    },
+    "2": {
+      "content": "sha256:e240ad166cea59c3e1531993dc4e7632142b0b762f60e6b154893e181aa96952",
+      "observed": "2026-08-02T10:35:03Z"
+    },
+    "latest": {
+      "content": "sha256:e240ad166cea59c3e1531993dc4e7632142b0b762f60e6b154893e181aa96952",
+      "observed": "2026-08-02T10:35:03Z"
+    },
+    "2.114.0": {
+      "content": "sha256:1f441b388ce72b20bfe6d46a3a749c1735efeffd4240619681c405d65cebcc0f",
+      "observed": "2026-08-02T10:35:03Z"
+    },
+    "2.114": {
+      "content": "sha256:1f441b388ce72b20bfe6d46a3a749c1735efeffd4240619681c405d65cebcc0f",
+      "observed": "2026-08-02T10:35:03Z"
+    },
+    "2.115.0": {
+      "content": "sha256:e2379cde3a8ba70626a5aeb69b43fd055f73d445f6926303d9250dbc679ad26a",
+      "observed": "2026-08-02T10:35:03Z"
+    },
+    "2.115": {
+      "content": "sha256:e2379cde3a8ba70626a5aeb69b43fd055f73d445f6926303d9250dbc679ad26a",
+      "observed": "2026-08-02T10:35:03Z"
+    },
+    "2.116.0": {
+      "content": "sha256:590610b2af69410eeebf47a8bb5ae6bf39b93b61b479e4d05c89e96ea2d38881",
+      "observed": "2026-08-02T10:35:03Z"
+    },
+    "2.116": {
+      "content": "sha256:590610b2af69410eeebf47a8bb5ae6bf39b93b61b479e4d05c89e96ea2d38881",
+      "observed": "2026-08-02T10:35:03Z"
+    },
+    "2.117.0": {
+      "content": "sha256:e240ad166cea59c3e1531993dc4e7632142b0b762f60e6b154893e181aa96952",
+      "observed": "2026-08-02T10:35:03Z"
+    },
+    "2.117": {
+      "content": "sha256:e240ad166cea59c3e1531993dc4e7632142b0b762f60e6b154893e181aa96952",
+      "observed": "2026-08-02T10:35:03Z"
+    }
+  }
 }
