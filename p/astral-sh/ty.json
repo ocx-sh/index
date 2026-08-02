@@ -243,6 +243,14 @@
     "0.0.45": {
       "content": "sha256:136eddd8ec3e7f4384a77e51172a6c70512763559f477cd3e3632d066fae8a4a",
       "observed": "2026-08-02T10:58:41Z"
+    },
+    "0.0.40_20260802": {
+      "content": "sha256:700ebe380a130abdd4a4d2b8c428e01352c59f5e9bf719fda91241999994b6b3",
+      "observed": "2026-08-02T14:02:36Z"
+    },
+    "0.0.40": {
+      "content": "sha256:700ebe380a130abdd4a4d2b8c428e01352c59f5e9bf719fda91241999994b6b3",
+      "observed": "2026-08-02T14:02:36Z"
     }
   }
 }
