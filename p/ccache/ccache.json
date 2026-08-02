@@ -84,6 +84,14 @@
     "4.13.6": {
       "content": "sha256:7681faec2772a7d744b5fd0ee934303a150f562aba962af3461da13ba4d4728f",
       "observed": "2026-08-02T10:38:36Z"
+    },
+    "4.13.1_20260802": {
+      "content": "sha256:9df6c34cffb96d6ecd3143b12b3e578426a3a1ca18fd488adb3d6547baa364fe",
+      "observed": "2026-08-02T10:50:11Z"
+    },
+    "4.13.1": {
+      "content": "sha256:9df6c34cffb96d6ecd3143b12b3e578426a3a1ca18fd488adb3d6547baa364fe",
+      "observed": "2026-08-02T10:50:11Z"
     }
   }
 }
