@@ -10,11 +10,51 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:f151cc7ce934358dd7d9a01bb35707a50a84146470bb279a83404b7fc06b7792",
+    "title": "hyperfine",
+    "description": "A command-line benchmarking tool with statistical analysis, warmup runs, and export to JSON/CSV/Markdown",
+    "keywords": [
+      "hyperfine",
+      "benchmark",
+      "benchmarking",
+      "performance",
+      "cli",
+      "statistics",
+      "rust"
+    ],
+    "readme": "sha256:72e4d4b4fd4f330995e3d9cff125a1fae7af38e2caf219de14f5bc038864dfe7",
+    "logo": "sha256:40964e958de853fc804817a1bf4434ae4fa75212fef137310c3dc2fd5b8d6a29"
+  },
   "upstream": {
     "org": "sharkdp",
     "repository_url": "https://github.com/sharkdp/hyperfine",
     "disclaimer": "Unaffiliated mirror. hyperfine is a project of David Peter (sharkdp); this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "1.19.0": {
+      "content": "sha256:5ac271930d0be38b8a12788db809d4322349de9ed5a3de39939e5f6f6e9808a3",
+      "observed": "2026-08-02T10:40:12Z"
+    },
+    "1.19": {
+      "content": "sha256:5ac271930d0be38b8a12788db809d4322349de9ed5a3de39939e5f6f6e9808a3",
+      "observed": "2026-08-02T10:40:12Z"
+    },
+    "1": {
+      "content": "sha256:4f65b04f9bc1e71e67328187fbafaa466c81357e79aedbb4a05ce1dad2e9c672",
+      "observed": "2026-08-02T10:40:12Z"
+    },
+    "latest": {
+      "content": "sha256:4f65b04f9bc1e71e67328187fbafaa466c81357e79aedbb4a05ce1dad2e9c672",
+      "observed": "2026-08-02T10:40:12Z"
+    },
+    "1.20.0": {
+      "content": "sha256:4f65b04f9bc1e71e67328187fbafaa466c81357e79aedbb4a05ce1dad2e9c672",
+      "observed": "2026-08-02T10:40:12Z"
+    },
+    "1.20": {
+      "content": "sha256:4f65b04f9bc1e71e67328187fbafaa466c81357e79aedbb4a05ce1dad2e9c672",
+      "observed": "2026-08-02T10:40:12Z"
+    }
+  }
 }
