@@ -10,11 +10,80 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:c7421fa4ec94d9b8b5c0e9451487413b303b94675d3dd700208e8f0d69727840",
+    "title": "ccache",
+    "description": "A fast C/C++ compiler cache that speeds up recompilation by caching previous compilations",
+    "keywords": [
+      "ccache",
+      "compiler-cache",
+      "c",
+      "cpp",
+      "build",
+      "caching",
+      "gcc",
+      "clang"
+    ],
+    "readme": "sha256:e0f9b3f5192e9fcf6948b48a16bd83886224a446f8388af5b0e5463c2949bb7c",
+    "logo": "sha256:5c5370ded30c8e7747e230c23d90bffb610af87b438f5a981f2b88a2a95c4689"
+  },
   "upstream": {
     "org": "ccache",
     "repository_url": "https://github.com/ccache/ccache",
     "disclaimer": "Unaffiliated mirror. ccache is a project of the ccache authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "4.13.2_20260802": {
+      "content": "sha256:0af49106f581cbb1b3f28324f91b962f9952990647cbca0b11a9c66deb811eca",
+      "observed": "2026-08-02T10:38:36Z"
+    },
+    "4.13.2": {
+      "content": "sha256:0af49106f581cbb1b3f28324f91b962f9952990647cbca0b11a9c66deb811eca",
+      "observed": "2026-08-02T10:38:36Z"
+    },
+    "4.13": {
+      "content": "sha256:7681faec2772a7d744b5fd0ee934303a150f562aba962af3461da13ba4d4728f",
+      "observed": "2026-08-02T10:38:36Z"
+    },
+    "4": {
+      "content": "sha256:7681faec2772a7d744b5fd0ee934303a150f562aba962af3461da13ba4d4728f",
+      "observed": "2026-08-02T10:38:36Z"
+    },
+    "latest": {
+      "content": "sha256:7681faec2772a7d744b5fd0ee934303a150f562aba962af3461da13ba4d4728f",
+      "observed": "2026-08-02T10:38:36Z"
+    },
+    "4.13.3_20260802": {
+      "content": "sha256:3df1990bb84f0b07dba29644549ebfc31591108e60da3f9981b9f5e6f2376bf6",
+      "observed": "2026-08-02T10:38:36Z"
+    },
+    "4.13.3": {
+      "content": "sha256:3df1990bb84f0b07dba29644549ebfc31591108e60da3f9981b9f5e6f2376bf6",
+      "observed": "2026-08-02T10:38:36Z"
+    },
+    "4.13.4_20260802": {
+      "content": "sha256:70059e6555ec75897c328780f34f72c5a40e99264755664e58d69f97db970c0f",
+      "observed": "2026-08-02T10:38:36Z"
+    },
+    "4.13.4": {
+      "content": "sha256:70059e6555ec75897c328780f34f72c5a40e99264755664e58d69f97db970c0f",
+      "observed": "2026-08-02T10:38:36Z"
+    },
+    "4.13.5_20260802": {
+      "content": "sha256:f4a9236efab20c2eba704929cefb13ed233ece7d7311a93fae8604a467a8c56d",
+      "observed": "2026-08-02T10:38:36Z"
+    },
+    "4.13.5": {
+      "content": "sha256:f4a9236efab20c2eba704929cefb13ed233ece7d7311a93fae8604a467a8c56d",
+      "observed": "2026-08-02T10:38:36Z"
+    },
+    "4.13.6_20260802": {
+      "content": "sha256:7681faec2772a7d744b5fd0ee934303a150f562aba962af3461da13ba4d4728f",
+      "observed": "2026-08-02T10:38:36Z"
+    },
+    "4.13.6": {
+      "content": "sha256:7681faec2772a7d744b5fd0ee934303a150f562aba962af3461da13ba4d4728f",
+      "observed": "2026-08-02T10:38:36Z"
+    }
+  }
 }
