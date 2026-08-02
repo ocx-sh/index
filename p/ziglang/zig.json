@@ -10,11 +10,55 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:43ffdcf3babc53b682e82c686a8cf552298f02a8245994b9fd3f77473689a059",
+    "title": "Zig",
+    "description": "General-purpose language and toolchain for robust, optimal, reusable software",
+    "keywords": [
+      "zig",
+      "ziglang",
+      "compiler",
+      "toolchain",
+      "systems",
+      "c",
+      "cross-compilation"
+    ],
+    "readme": "sha256:be4430c9d2ad0c26cd19d2c9fa5fd4b6703b9ec733d4e49757d48b04bd843521",
+    "logo": "sha256:ecc0a34fa5f753e5bb1730f97dea337b6df2722b59aa52696ea90e2ea6e45ed4"
+  },
   "upstream": {
     "org": "ziglang",
     "repository_url": "https://github.com/ziglang/zig",
     "disclaimer": "Unaffiliated mirror. Zig is a project of the Zig Software Foundation; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.14.0": {
+      "content": "sha256:a85a2dde7f4e82b03de82621670f0f880dc2918674c2f0171af100226c983a53",
+      "observed": "2026-08-02T10:40:18Z"
+    },
+    "0.14": {
+      "content": "sha256:15be674b9374e5004afb4b9e3b96659dfe5d0b69c6be6bab7d37b6b01247d7df",
+      "observed": "2026-08-02T10:40:18Z"
+    },
+    "0": {
+      "content": "sha256:2b7e14e65678a67de7d0a43121228df9f9d674a2271827f10db1ea50cc29fb63",
+      "observed": "2026-08-02T10:40:18Z"
+    },
+    "latest": {
+      "content": "sha256:2b7e14e65678a67de7d0a43121228df9f9d674a2271827f10db1ea50cc29fb63",
+      "observed": "2026-08-02T10:40:18Z"
+    },
+    "0.14.1": {
+      "content": "sha256:15be674b9374e5004afb4b9e3b96659dfe5d0b69c6be6bab7d37b6b01247d7df",
+      "observed": "2026-08-02T10:40:18Z"
+    },
+    "0.15.1": {
+      "content": "sha256:cf6275f96d4efbcb1879c0f7a5c7eb0e7234c81ad6689b93c68406a424188921",
+      "observed": "2026-08-02T10:40:18Z"
+    },
+    "0.15": {
+      "content": "sha256:cf6275f96d4efbcb1879c0f7a5c7eb0e7234c81ad6689b93c68406a424188921",
+      "observed": "2026-08-02T10:40:18Z"
+    }
+  }
 }
