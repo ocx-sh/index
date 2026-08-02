@@ -10,11 +10,64 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:f3fa8fcb296b974e46f27f2a2b7a4d6de6a0555007155c72b7e5f67429eb9c31",
+    "title": "OSV-Scanner",
+    "description": "Vulnerability scanner that matches your dependencies against the OSV database",
+    "keywords": [
+      "osv-scanner",
+      "osv",
+      "vulnerability",
+      "security",
+      "sca",
+      "dependencies",
+      "scanner",
+      "google"
+    ],
+    "readme": "sha256:7707a356b9de7ff8800090bb53849304c498ef39cd041182443d8f52848a57c5",
+    "logo": "sha256:16677f1ba1543da6827c6d5357e278098b30e5756e561fde9254825d934c7e3d"
+  },
   "upstream": {
     "org": "google",
     "repository_url": "https://github.com/google/osv-scanner",
     "disclaimer": "Unaffiliated mirror. OSV-Scanner is a project of Google LLC; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "2.3.3": {
+      "content": "sha256:be4d88bf074d2a1e621e614c09ef62ba808a622b8f485c5d93bd60e74a6e09c7",
+      "observed": "2026-08-02T11:30:38Z"
+    },
+    "2.3": {
+      "content": "sha256:66ef774b7d964a869ab6bc5c9a884194caeb735158a1f611f8b19c480abe460b",
+      "observed": "2026-08-02T11:30:38Z"
+    },
+    "2": {
+      "content": "sha256:9762d3d3b400ee6bd0c818ce28d0e7be10c9f141d86da46a6de395c78c484855",
+      "observed": "2026-08-02T11:30:38Z"
+    },
+    "latest": {
+      "content": "sha256:9762d3d3b400ee6bd0c818ce28d0e7be10c9f141d86da46a6de395c78c484855",
+      "observed": "2026-08-02T11:30:38Z"
+    },
+    "2.3.5": {
+      "content": "sha256:5e87380fd6edc966323882000e2bd505ae14393649a69af6b6f02d233384b555",
+      "observed": "2026-08-02T11:30:38Z"
+    },
+    "2.3.6": {
+      "content": "sha256:70adbd7eff61d2715bf7d7d0c9ec3f103808f3245ec37907cb0ae5893192a4c3",
+      "observed": "2026-08-02T11:30:38Z"
+    },
+    "2.3.8": {
+      "content": "sha256:66ef774b7d964a869ab6bc5c9a884194caeb735158a1f611f8b19c480abe460b",
+      "observed": "2026-08-02T11:30:38Z"
+    },
+    "2.4.0": {
+      "content": "sha256:9762d3d3b400ee6bd0c818ce28d0e7be10c9f141d86da46a6de395c78c484855",
+      "observed": "2026-08-02T11:30:38Z"
+    },
+    "2.4": {
+      "content": "sha256:9762d3d3b400ee6bd0c818ce28d0e7be10c9f141d86da46a6de395c78c484855",
+      "observed": "2026-08-02T11:30:38Z"
+    }
+  }
 }
