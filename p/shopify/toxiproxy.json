@@ -10,11 +10,86 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:e050f9481e5b9e91057305e595578c115a95bb02496607b3aea3873b565333cf",
+    "title": "Toxiproxy",
+    "description": "TCP proxy to simulate network and system conditions for chaos and resiliency testing",
+    "keywords": [
+      "toxiproxy",
+      "proxy",
+      "chaos-engineering",
+      "resiliency",
+      "networking",
+      "testing"
+    ],
+    "readme": "sha256:b5d5135e5ca73f850f3f7feca482ee9cc0b6db9ed8594228a0559526dd9c9b02",
+    "logo": "sha256:378654502a9d07c3f297701fd207e47cd74d9bed814c8a7064a03bad6ed63e21"
+  },
   "upstream": {
     "org": "Shopify",
     "repository_url": "https://github.com/Shopify/toxiproxy",
     "disclaimer": "Unaffiliated mirror. Toxiproxy is a project of Shopify Inc.; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "client-2.12.0_20260802": {
+      "content": "sha256:5e84a7ab6beada3d878d6c12eb343b940a8dce8e9c5456d06ae589364ee00bd6",
+      "observed": "2026-08-02T10:30:22Z"
+    },
+    "client-2.12.0": {
+      "content": "sha256:5e84a7ab6beada3d878d6c12eb343b940a8dce8e9c5456d06ae589364ee00bd6",
+      "observed": "2026-08-02T10:30:22Z"
+    },
+    "client-2.12": {
+      "content": "sha256:5e84a7ab6beada3d878d6c12eb343b940a8dce8e9c5456d06ae589364ee00bd6",
+      "observed": "2026-08-02T10:30:22Z"
+    },
+    "client-2": {
+      "content": "sha256:5e84a7ab6beada3d878d6c12eb343b940a8dce8e9c5456d06ae589364ee00bd6",
+      "observed": "2026-08-02T10:30:22Z"
+    },
+    "client": {
+      "content": "sha256:5e84a7ab6beada3d878d6c12eb343b940a8dce8e9c5456d06ae589364ee00bd6",
+      "observed": "2026-08-02T10:30:22Z"
+    },
+    "server-2.12.0_20260802": {
+      "content": "sha256:1f5dc9f1e1a470aca3596b2e0ef821346445c43254821bf3d7a42feba507b8e8",
+      "observed": "2026-08-02T10:30:22Z"
+    },
+    "server-2.12.0": {
+      "content": "sha256:1f5dc9f1e1a470aca3596b2e0ef821346445c43254821bf3d7a42feba507b8e8",
+      "observed": "2026-08-02T10:30:22Z"
+    },
+    "server-2.12": {
+      "content": "sha256:1f5dc9f1e1a470aca3596b2e0ef821346445c43254821bf3d7a42feba507b8e8",
+      "observed": "2026-08-02T10:30:22Z"
+    },
+    "server-2": {
+      "content": "sha256:1f5dc9f1e1a470aca3596b2e0ef821346445c43254821bf3d7a42feba507b8e8",
+      "observed": "2026-08-02T10:30:22Z"
+    },
+    "server": {
+      "content": "sha256:1f5dc9f1e1a470aca3596b2e0ef821346445c43254821bf3d7a42feba507b8e8",
+      "observed": "2026-08-02T10:30:22Z"
+    },
+    "2.12.0_20260802": {
+      "content": "sha256:a3be36228dbc419a9cb7291ac9f650b40300d25e2d94da8df66c1938a95711bc",
+      "observed": "2026-08-02T10:30:22Z"
+    },
+    "2.12.0": {
+      "content": "sha256:a3be36228dbc419a9cb7291ac9f650b40300d25e2d94da8df66c1938a95711bc",
+      "observed": "2026-08-02T10:30:22Z"
+    },
+    "2.12": {
+      "content": "sha256:a3be36228dbc419a9cb7291ac9f650b40300d25e2d94da8df66c1938a95711bc",
+      "observed": "2026-08-02T10:30:22Z"
+    },
+    "2": {
+      "content": "sha256:a3be36228dbc419a9cb7291ac9f650b40300d25e2d94da8df66c1938a95711bc",
+      "observed": "2026-08-02T10:30:22Z"
+    },
+    "latest": {
+      "content": "sha256:a3be36228dbc419a9cb7291ac9f650b40300d25e2d94da8df66c1938a95711bc",
+      "observed": "2026-08-02T10:30:22Z"
+    }
+  }
 }
