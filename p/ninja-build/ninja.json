@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/ninja-build/ninja",
+  "repository": "oci://ghcr.io/ocx-contrib/ninja-build/ninja",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-02",
+  "desc": null,
+  "upstream": {
+    "org": "ninja-build",
+    "repository_url": "https://github.com/ninja-build/ninja",
+    "disclaimer": "Unaffiliated mirror. Ninja is a project of the Ninja authors; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}

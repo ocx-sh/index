@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/shopify/toxiproxy",
+  "repository": "oci://ghcr.io/ocx-contrib/shopify/toxiproxy",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-02",
+  "desc": null,
+  "upstream": {
+    "org": "Shopify",
+    "repository_url": "https://github.com/Shopify/toxiproxy",
+    "disclaimer": "Unaffiliated mirror. Toxiproxy is a project of Shopify Inc.; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}

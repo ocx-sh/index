@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/go-task/task",
+  "repository": "oci://ghcr.io/ocx-contrib/go-task/task",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-02",
+  "desc": null,
+  "upstream": {
+    "org": "go-task",
+    "repository_url": "https://github.com/go-task/task",
+    "disclaimer": "Unaffiliated mirror. Task is a project of the go-task authors; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}

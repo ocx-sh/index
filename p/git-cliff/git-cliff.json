@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/git-cliff/git-cliff",
+  "repository": "oci://ghcr.io/ocx-contrib/git-cliff/git-cliff",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-02",
+  "desc": null,
+  "upstream": {
+    "org": "orhun",
+    "repository_url": "https://github.com/orhun/git-cliff",
+    "disclaimer": "Unaffiliated mirror. git-cliff is a project of Orhun Parmaksiz; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}

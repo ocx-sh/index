@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/ccache/ccache",
+  "repository": "oci://ghcr.io/ocx-contrib/ccache/ccache",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-02",
+  "desc": null,
+  "upstream": {
+    "org": "ccache",
+    "repository_url": "https://github.com/ccache/ccache",
+    "disclaimer": "Unaffiliated mirror. ccache is a project of the ccache authors; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}

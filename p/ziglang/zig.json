@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/ziglang/zig",
+  "repository": "oci://ghcr.io/ocx-contrib/ziglang/zig",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-02",
+  "desc": null,
+  "upstream": {
+    "org": "ziglang",
+    "repository_url": "https://github.com/ziglang/zig",
+    "disclaimer": "Unaffiliated mirror. Zig is a project of the Zig Software Foundation; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}

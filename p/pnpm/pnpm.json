@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/pnpm/pnpm",
+  "repository": "oci://ghcr.io/ocx-contrib/pnpm/pnpm",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-02",
+  "desc": null,
+  "upstream": {
+    "org": "pnpm",
+    "repository_url": "https://github.com/pnpm/pnpm",
+    "disclaimer": "Unaffiliated mirror. pnpm is a project of the pnpm authors; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}

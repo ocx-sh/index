@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/sharkdp/hyperfine",
+  "repository": "oci://ghcr.io/ocx-contrib/sharkdp/hyperfine",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-02",
+  "desc": null,
+  "upstream": {
+    "org": "sharkdp",
+    "repository_url": "https://github.com/sharkdp/hyperfine",
+    "disclaimer": "Unaffiliated mirror. hyperfine is a project of David Peter (sharkdp); this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}

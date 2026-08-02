@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/anomalyco/opencode",
+  "repository": "oci://ghcr.io/ocx-contrib/anomalyco/opencode",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-02",
+  "desc": null,
+  "upstream": {
+    "org": "anomalyco",
+    "repository_url": "https://github.com/anomalyco/opencode",
+    "disclaimer": "Unaffiliated mirror. opencode is a project of Anomaly Innovations; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}

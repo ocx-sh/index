@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/direnv/direnv",
+  "repository": "oci://ghcr.io/ocx-contrib/direnv/direnv",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-02",
+  "desc": null,
+  "upstream": {
+    "org": "direnv",
+    "repository_url": "https://github.com/direnv/direnv",
+    "disclaimer": "Unaffiliated mirror. direnv is a project of the direnv authors; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}

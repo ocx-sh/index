@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/reviewdog/reviewdog",
+  "repository": "oci://ghcr.io/ocx-contrib/reviewdog/reviewdog",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-02",
+  "desc": null,
+  "upstream": {
+    "org": "reviewdog",
+    "repository_url": "https://github.com/reviewdog/reviewdog",
+    "disclaimer": "Unaffiliated mirror. reviewdog is a project of the reviewdog authors; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
