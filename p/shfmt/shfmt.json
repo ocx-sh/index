@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/shfmt/shfmt",
+  "repository": "oci://ghcr.io/ocx-contrib/shfmt/shfmt",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-02",
+  "desc": null,
+  "upstream": {
+    "org": "mvdan",
+    "repository_url": "https://github.com/mvdan/sh",
+    "disclaimer": "Unaffiliated mirror. shfmt is part of the mvdan/sh project by Daniel Mart\u00ed; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
