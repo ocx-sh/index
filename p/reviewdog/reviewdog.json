@@ -10,11 +10,83 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:c08d10275c85f3d3bb5e6f9e5b1bf19340df406bbdb127d11a43ff7a29949914",
+    "title": "reviewdog",
+    "description": "Automated code review tool that posts any linter's findings as review comments",
+    "keywords": [
+      "reviewdog",
+      "code-review",
+      "linter",
+      "ci",
+      "errorformat",
+      "diff",
+      "rdjson"
+    ],
+    "readme": "sha256:7e9a1570bf6d22b5f434d331e0c798250ad73fa1f7043b9adeb5d6b93c7d1b5d",
+    "logo": "sha256:ba7cc5ef99e3a5eb8465e240878fa553febe5b8df6d3230310293be4c08187cd"
+  },
   "upstream": {
     "org": "reviewdog",
     "repository_url": "https://github.com/reviewdog/reviewdog",
     "disclaimer": "Unaffiliated mirror. reviewdog is a project of the reviewdog authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.20.0_20260802": {
+      "content": "sha256:3d23f8094b7809571602d492af53409688b440a49fb8a2a511a1392171f20525",
+      "observed": "2026-08-02T10:39:36Z"
+    },
+    "0.20.0": {
+      "content": "sha256:3d23f8094b7809571602d492af53409688b440a49fb8a2a511a1392171f20525",
+      "observed": "2026-08-02T10:39:36Z"
+    },
+    "0.20": {
+      "content": "sha256:5968336eec6aa5b9674733e90cc9b98d58e4ed7403c48160ef557dd883f014d7",
+      "observed": "2026-08-02T10:39:36Z"
+    },
+    "0": {
+      "content": "sha256:07f0a3be522d7274e5b044757948beb072643e762ff356e0c96d03f180b34432",
+      "observed": "2026-08-02T10:39:36Z"
+    },
+    "latest": {
+      "content": "sha256:07f0a3be522d7274e5b044757948beb072643e762ff356e0c96d03f180b34432",
+      "observed": "2026-08-02T10:39:36Z"
+    },
+    "0.20.1_20260802": {
+      "content": "sha256:b7c35d3ba5e1b33c60a9b80cafd22dd5bafcb700e4ab4df7a21cdde259833b07",
+      "observed": "2026-08-02T10:39:36Z"
+    },
+    "0.20.1": {
+      "content": "sha256:b7c35d3ba5e1b33c60a9b80cafd22dd5bafcb700e4ab4df7a21cdde259833b07",
+      "observed": "2026-08-02T10:39:36Z"
+    },
+    "0.20.2_20260802": {
+      "content": "sha256:740e834ea003e287b1366f8494d86942521c07d0084f7f4e7717810b6bfcc3e8",
+      "observed": "2026-08-02T10:39:36Z"
+    },
+    "0.20.2": {
+      "content": "sha256:740e834ea003e287b1366f8494d86942521c07d0084f7f4e7717810b6bfcc3e8",
+      "observed": "2026-08-02T10:39:36Z"
+    },
+    "0.20.3_20260802": {
+      "content": "sha256:5968336eec6aa5b9674733e90cc9b98d58e4ed7403c48160ef557dd883f014d7",
+      "observed": "2026-08-02T10:39:36Z"
+    },
+    "0.20.3": {
+      "content": "sha256:5968336eec6aa5b9674733e90cc9b98d58e4ed7403c48160ef557dd883f014d7",
+      "observed": "2026-08-02T10:39:36Z"
+    },
+    "0.21.0_20260802": {
+      "content": "sha256:07f0a3be522d7274e5b044757948beb072643e762ff356e0c96d03f180b34432",
+      "observed": "2026-08-02T10:39:36Z"
+    },
+    "0.21.0": {
+      "content": "sha256:07f0a3be522d7274e5b044757948beb072643e762ff356e0c96d03f180b34432",
+      "observed": "2026-08-02T10:39:36Z"
+    },
+    "0.21": {
+      "content": "sha256:07f0a3be522d7274e5b044757948beb072643e762ff356e0c96d03f180b34432",
+      "observed": "2026-08-02T10:39:36Z"
+    }
+  }
 }
