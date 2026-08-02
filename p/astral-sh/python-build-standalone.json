@@ -30,9 +30,6 @@
     "repository_url": "https://github.com/astral-sh/python-build-standalone",
     "disclaimer": "Unaffiliated mirror. python-build-standalone is a project of Astral Software Inc.; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "variants": [
-    "slim"
-  ],
   "tags": {
     "slim-3.12.13_20260728": {
       "content": "sha256:d8a019f7b680e1cdd1d258765fbc85456fbff963c71de068f471edaf7daa4e29",
