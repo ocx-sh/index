@@ -10,11 +10,43 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:d6358acc1d9aaca72735d44ad762e43c24a200c368e6951d9609514def3b3129",
+    "title": "ShellCheck",
+    "description": "Static analysis tool for shell scripts",
+    "keywords": [
+      "shellcheck",
+      "shell",
+      "bash",
+      "sh",
+      "linter",
+      "static-analysis",
+      "lint"
+    ],
+    "readme": "sha256:5a027053c33d85dfb6c79bc1231fd5bffafb5372853b3f027f0972836d4094dc",
+    "logo": "sha256:539fa063573ffd7a06f08ce29d0e03d5a973e3e088fd23cfbc6d8d032cbaf5cb"
+  },
   "upstream": {
     "org": "koalaman",
     "repository_url": "https://github.com/koalaman/shellcheck",
     "disclaimer": "Unaffiliated mirror. ShellCheck is a project of Vidar Holen; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.11.0": {
+      "content": "sha256:cd9b61690d83069cced04e17c5d8288e3f3b32c3cc2ffca36e69c18951128210",
+      "observed": "2026-08-02T10:09:03Z"
+    },
+    "0.11": {
+      "content": "sha256:cd9b61690d83069cced04e17c5d8288e3f3b32c3cc2ffca36e69c18951128210",
+      "observed": "2026-08-02T10:09:03Z"
+    },
+    "0": {
+      "content": "sha256:cd9b61690d83069cced04e17c5d8288e3f3b32c3cc2ffca36e69c18951128210",
+      "observed": "2026-08-02T10:09:03Z"
+    },
+    "latest": {
+      "content": "sha256:cd9b61690d83069cced04e17c5d8288e3f3b32c3cc2ffca36e69c18951128210",
+      "observed": "2026-08-02T10:09:03Z"
+    }
+  }
 }
