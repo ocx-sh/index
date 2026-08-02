@@ -10,11 +10,48 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:a490931eb31fd122ebb7a27fb7a5b4a32f2fafba5ab1cfc72c9d8145c5a0837a",
+    "title": "Lychee",
+    "description": "Fast, async, stream-based link checker written in Rust for Markdown, HTML, and websites",
+    "keywords": [
+      "lychee",
+      "link-checker",
+      "broken-links",
+      "markdown",
+      "html",
+      "validator",
+      "rust",
+      "documentation"
+    ],
+    "readme": "sha256:20d7f2b26d3611c60809f25c3d2578fba4e845c617ec7f87f7b494e3041a301d",
+    "logo": "sha256:5d222e3b0f0a261391c071524eae1610149e4a3c0502152c296cd091cc479346"
+  },
   "upstream": {
     "org": "lycheeverse",
     "repository_url": "https://github.com/lycheeverse/lychee",
     "disclaimer": "Unaffiliated mirror. lychee is a project of the lycheeverse authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.24.1": {
+      "content": "sha256:aaacf9b6d0d4d1ce8740f9e269ee6c90f8b7d340cc626804705138b441a5e5d1",
+      "observed": "2026-08-02T10:39:01Z"
+    },
+    "0.24": {
+      "content": "sha256:377362deef05190646eecd2119e16c2cf765a231d0c869005d8eaabe1b13f850",
+      "observed": "2026-08-02T10:39:01Z"
+    },
+    "0": {
+      "content": "sha256:377362deef05190646eecd2119e16c2cf765a231d0c869005d8eaabe1b13f850",
+      "observed": "2026-08-02T10:39:01Z"
+    },
+    "latest": {
+      "content": "sha256:377362deef05190646eecd2119e16c2cf765a231d0c869005d8eaabe1b13f850",
+      "observed": "2026-08-02T10:39:01Z"
+    },
+    "0.24.2": {
+      "content": "sha256:377362deef05190646eecd2119e16c2cf765a231d0c869005d8eaabe1b13f850",
+      "observed": "2026-08-02T10:39:01Z"
+    }
+  }
 }
