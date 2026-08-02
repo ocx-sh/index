@@ -10,11 +10,74 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:4fb50af0662add83368d6ef30f1f7082bc0bc673fe84d89402633f0e03dd1af0",
+    "title": "shfmt",
+    "description": "A shell parser and formatter with POSIX shell, Bash, and mksh support",
+    "keywords": [
+      "shfmt",
+      "shell",
+      "bash",
+      "mksh",
+      "posix",
+      "formatter",
+      "parser",
+      "sh",
+      "format",
+      "lint"
+    ],
+    "readme": "sha256:ccfcd6069a24cf704c6d2d40aa84065445b184dbba8e603ae1440d2534d9b846",
+    "logo": "sha256:45af2a765ce20eee0fc499e0cdecc4df61d10cae3925364fab504b62ae9c9098"
+  },
   "upstream": {
     "org": "mvdan",
     "repository_url": "https://github.com/mvdan/sh",
     "disclaimer": "Unaffiliated mirror. shfmt is part of the mvdan/sh project by Daniel Mart\u00ed; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "3.10.0": {
+      "content": "sha256:97b4799d8f74f94bce8a09b9215c350d0feb7448662d99933fd8ca27b7d91400",
+      "observed": "2026-08-02T10:11:43Z"
+    },
+    "3.10": {
+      "content": "sha256:97b4799d8f74f94bce8a09b9215c350d0feb7448662d99933fd8ca27b7d91400",
+      "observed": "2026-08-02T10:11:43Z"
+    },
+    "3": {
+      "content": "sha256:3b3ea593c8f7a78f947aab6b251b9f104941eb8080982f008bae172a0a30ca92",
+      "observed": "2026-08-02T10:11:43Z"
+    },
+    "latest": {
+      "content": "sha256:3b3ea593c8f7a78f947aab6b251b9f104941eb8080982f008bae172a0a30ca92",
+      "observed": "2026-08-02T10:11:43Z"
+    },
+    "3.11.0": {
+      "content": "sha256:bae7cbcb795610031ab341aa6ce35c2c538aab41256ae82663b287f91953591a",
+      "observed": "2026-08-02T10:11:43Z"
+    },
+    "3.11": {
+      "content": "sha256:bae7cbcb795610031ab341aa6ce35c2c538aab41256ae82663b287f91953591a",
+      "observed": "2026-08-02T10:11:43Z"
+    },
+    "3.12.0": {
+      "content": "sha256:c9f46b0e3860090086533f89c4958a7c7ed0f0b5440ca0a029bc12f126607a0e",
+      "observed": "2026-08-02T10:11:43Z"
+    },
+    "3.12": {
+      "content": "sha256:c9f46b0e3860090086533f89c4958a7c7ed0f0b5440ca0a029bc12f126607a0e",
+      "observed": "2026-08-02T10:11:43Z"
+    },
+    "3.13.0": {
+      "content": "sha256:c5de3e7987546a5b245022897591b08f461df4627ece81e0a51303eac2e0bbb1",
+      "observed": "2026-08-02T10:11:43Z"
+    },
+    "3.13": {
+      "content": "sha256:3b3ea593c8f7a78f947aab6b251b9f104941eb8080982f008bae172a0a30ca92",
+      "observed": "2026-08-02T10:11:43Z"
+    },
+    "3.13.1": {
+      "content": "sha256:3b3ea593c8f7a78f947aab6b251b9f104941eb8080982f008bae172a0a30ca92",
+      "observed": "2026-08-02T10:11:43Z"
+    }
+  }
 }
