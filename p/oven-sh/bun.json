@@ -10,11 +10,60 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:5917a21a218420da3756e4c477f8f8e23b329c6a166179dbc3752d34650f424e",
+    "title": "Bun",
+    "description": "Incredibly fast JavaScript runtime, bundler, test runner, and package manager",
+    "keywords": [
+      "bun",
+      "javascript",
+      "typescript",
+      "runtime",
+      "bundler",
+      "package-manager",
+      "test-runner",
+      "node"
+    ],
+    "readme": "sha256:4e78d812ff150a147c5b74616f50a1ef09bcba21ec63c1c7c73e102082116392",
+    "logo": "sha256:99abbfd0a82e087d49ade13c50b20b1a54a3ee9ece708d55225f36e2e82b78ab"
+  },
   "upstream": {
     "org": "oven-sh",
     "repository_url": "https://github.com/oven-sh/bun",
     "disclaimer": "Unaffiliated mirror. Bun is a project of Oven; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "1.3.10": {
+      "content": "sha256:998ce72bc5c6085b7d9e399f83b98cb24ec69f83627ca6e9377c872519c3f6a5",
+      "observed": "2026-08-02T10:37:34Z"
+    },
+    "1.3": {
+      "content": "sha256:bc09a2190c30fe015f7b25b0a79ea2706e41982339a7bfd0fd7931d92e0e408c",
+      "observed": "2026-08-02T10:37:34Z"
+    },
+    "1": {
+      "content": "sha256:bc09a2190c30fe015f7b25b0a79ea2706e41982339a7bfd0fd7931d92e0e408c",
+      "observed": "2026-08-02T10:37:34Z"
+    },
+    "latest": {
+      "content": "sha256:bc09a2190c30fe015f7b25b0a79ea2706e41982339a7bfd0fd7931d92e0e408c",
+      "observed": "2026-08-02T10:37:34Z"
+    },
+    "1.3.11": {
+      "content": "sha256:726a8ac0eaa7355114530dd53c2d85266a49a9d2668a1b97083ba77757af2050",
+      "observed": "2026-08-02T10:37:34Z"
+    },
+    "1.3.12": {
+      "content": "sha256:8ebffe4f76c91c4a3795695d1446026446999fab1a315c8e33f7c0d12aa6f4b5",
+      "observed": "2026-08-02T10:37:34Z"
+    },
+    "1.3.13": {
+      "content": "sha256:8d3aa9e7775b48b3fcd62de8a8bbb8f5c2d9a3ecf62a09b687f1e1c334b8b297",
+      "observed": "2026-08-02T10:37:34Z"
+    },
+    "1.3.14": {
+      "content": "sha256:bc09a2190c30fe015f7b25b0a79ea2706e41982339a7bfd0fd7931d92e0e408c",
+      "observed": "2026-08-02T10:37:34Z"
+    }
+  }
 }
