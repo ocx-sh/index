@@ -39,6 +39,18 @@
     "7.6.1": {
       "content": "sha256:c810c3ba192e75a3dd0a1e937c71e2d202ae9a7dafc38bd42263fea57068d232",
       "observed": "2026-08-02T10:42:10Z"
+    },
+    "7.6.2": {
+      "content": "sha256:cbb3a0bec60108990a34d2f4cad98e78f7eaba1f4a2222d5e62125f84f67bf94",
+      "observed": "2026-08-02T10:45:16Z"
+    },
+    "7.6.3": {
+      "content": "sha256:d355538fc5227056d66ed230d8cab7277762981afd7416e64a8ee69efa73f26d",
+      "observed": "2026-08-02T10:45:16Z"
+    },
+    "7.6.4": {
+      "content": "sha256:c347e5658850f65ff1648fead8325500739dd6569f4ea882a2adea3b2942bbeb",
+      "observed": "2026-08-02T10:45:16Z"
     }
   }
 }
