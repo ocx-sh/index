@@ -10,11 +10,31 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:38041d6d22b3e9b4bc1066e4ee84731e6cad08887cbef6b99cb26e7f9207c0ae",
+    "title": "PowerShell",
+    "description": "Cross-platform automation shell and scripting language for every system",
+    "keywords": [
+      "powershell",
+      "pwsh",
+      "shell",
+      "scripting",
+      "automation",
+      "microsoft",
+      "cross-platform"
+    ],
+    "readme": "sha256:ac9efdcf498658604f43c4193d0fe97ecfdaae90013ce5550cfe03227b6dac39",
+    "logo": "sha256:8fdf921f055cf73f3d5a4f3fc2a518c3f84d5d680ce188c2043ecb9bc1a7260e"
+  },
   "upstream": {
     "org": "PowerShell",
     "repository_url": "https://github.com/PowerShell/PowerShell",
     "disclaimer": "Unaffiliated mirror. PowerShell is a project of Microsoft Corporation; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "7.6.0": {
+      "content": "sha256:ff11a0b048600a41f0da32e1efcb65a73de4d924236a9c06d2d8ec176f9fad4a",
+      "observed": "2026-08-02T10:40:09Z"
+    }
+  }
 }
