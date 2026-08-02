@@ -10,11 +10,92 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:a3f5ec7b3a7277892dc0a6c76ea0c1a8c0eb7e6a9072c562224fb2d79f4d38b2",
+    "title": "just",
+    "description": "A handy command runner \u2014 define and run project-specific commands from a justfile",
+    "keywords": [
+      "just",
+      "command-runner",
+      "make",
+      "task-runner",
+      "build",
+      "automation",
+      "cli",
+      "rust"
+    ],
+    "readme": "sha256:fc2b57ddc98cc7108c8d75d92e08da33fbf3c60c5ff78512fe7a99825d74fe16",
+    "logo": "sha256:6cf4d23448d14c56c09dc1370b807488789f7ae3a4ec945b63d06fb7da8e8b6e"
+  },
   "upstream": {
     "org": "casey",
     "repository_url": "https://github.com/casey/just",
     "disclaimer": "Unaffiliated mirror. just is a project of Casey Rodarmor; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "1.54.0_20260802": {
+      "content": "sha256:da6a7a17d9fa4a4043f0c052221df48d694e55484f69f2325333c5379e125a59",
+      "observed": "2026-08-02T10:10:58Z"
+    },
+    "1.54.0": {
+      "content": "sha256:da6a7a17d9fa4a4043f0c052221df48d694e55484f69f2325333c5379e125a59",
+      "observed": "2026-08-02T10:10:58Z"
+    },
+    "1.54": {
+      "content": "sha256:da6a7a17d9fa4a4043f0c052221df48d694e55484f69f2325333c5379e125a59",
+      "observed": "2026-08-02T10:10:58Z"
+    },
+    "1": {
+      "content": "sha256:dcca2021ab0a39f90a5f5bb045f6d3161c7ebc2524d6faa6a6033a502b544c3e",
+      "observed": "2026-08-02T10:10:58Z"
+    },
+    "latest": {
+      "content": "sha256:dcca2021ab0a39f90a5f5bb045f6d3161c7ebc2524d6faa6a6033a502b544c3e",
+      "observed": "2026-08-02T10:10:58Z"
+    },
+    "1.55.0_20260802": {
+      "content": "sha256:fab100ba2e5bc4fe1ea00edb6d411d6417d6f4490d27c0280f2f8d050fdc07f5",
+      "observed": "2026-08-02T10:10:58Z"
+    },
+    "1.55.0": {
+      "content": "sha256:fab100ba2e5bc4fe1ea00edb6d411d6417d6f4490d27c0280f2f8d050fdc07f5",
+      "observed": "2026-08-02T10:10:58Z"
+    },
+    "1.55": {
+      "content": "sha256:84a2301b0f56fb1a1c2ca44dc4decd972abace9a98d3ef1ab9158de836288ebc",
+      "observed": "2026-08-02T10:10:58Z"
+    },
+    "1.55.1_20260802": {
+      "content": "sha256:84a2301b0f56fb1a1c2ca44dc4decd972abace9a98d3ef1ab9158de836288ebc",
+      "observed": "2026-08-02T10:10:58Z"
+    },
+    "1.55.1": {
+      "content": "sha256:84a2301b0f56fb1a1c2ca44dc4decd972abace9a98d3ef1ab9158de836288ebc",
+      "observed": "2026-08-02T10:10:58Z"
+    },
+    "1.56.0_20260802": {
+      "content": "sha256:144bc2036b3dd987b97b478748c95f1d7155f8a4aace18ae9bc7db860dd0f466",
+      "observed": "2026-08-02T10:10:58Z"
+    },
+    "1.56.0": {
+      "content": "sha256:144bc2036b3dd987b97b478748c95f1d7155f8a4aace18ae9bc7db860dd0f466",
+      "observed": "2026-08-02T10:10:58Z"
+    },
+    "1.56": {
+      "content": "sha256:144bc2036b3dd987b97b478748c95f1d7155f8a4aace18ae9bc7db860dd0f466",
+      "observed": "2026-08-02T10:10:58Z"
+    },
+    "1.57.0_20260802": {
+      "content": "sha256:dcca2021ab0a39f90a5f5bb045f6d3161c7ebc2524d6faa6a6033a502b544c3e",
+      "observed": "2026-08-02T10:10:58Z"
+    },
+    "1.57.0": {
+      "content": "sha256:dcca2021ab0a39f90a5f5bb045f6d3161c7ebc2524d6faa6a6033a502b544c3e",
+      "observed": "2026-08-02T10:10:58Z"
+    },
+    "1.57": {
+      "content": "sha256:dcca2021ab0a39f90a5f5bb045f6d3161c7ebc2524d6faa6a6033a502b544c3e",
+      "observed": "2026-08-02T10:10:58Z"
+    }
+  }
 }
