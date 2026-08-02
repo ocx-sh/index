@@ -10,11 +10,47 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:f88b30e6148fe62e52d0a86e07e23eb1d355b3a90479220f36ef54e2c2f91a97",
+    "title": "direnv",
+    "description": "Per-directory environment switcher that loads and unloads env vars as you cd between projects",
+    "keywords": [
+      "direnv",
+      "environment",
+      "env",
+      "dotenv",
+      "shell",
+      "devenv",
+      "direnv-project"
+    ],
+    "readme": "sha256:7d62c2f6df092a61ee2b08a7c89081d64746d1315acafc2ce9b329afd3a4c49b",
+    "logo": "sha256:b4b94c6b03a36234fc0ea27bc7fc1a649ab09c2ae32f66c3c55b83b64288ba0e"
+  },
   "upstream": {
     "org": "direnv",
     "repository_url": "https://github.com/direnv/direnv",
     "disclaimer": "Unaffiliated mirror. direnv is a project of the direnv authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "2.37.0": {
+      "content": "sha256:5d28442557f50be81d4a8d8d9f2b40f32612ebfadb277f7f374893e9bb931c71",
+      "observed": "2026-08-02T10:37:55Z"
+    },
+    "2.37": {
+      "content": "sha256:2bb7db3404ebd3d7af8a7b20b2b82f321a0057f423cbf4db55fff924d039916f",
+      "observed": "2026-08-02T10:37:55Z"
+    },
+    "2": {
+      "content": "sha256:2bb7db3404ebd3d7af8a7b20b2b82f321a0057f423cbf4db55fff924d039916f",
+      "observed": "2026-08-02T10:37:55Z"
+    },
+    "latest": {
+      "content": "sha256:2bb7db3404ebd3d7af8a7b20b2b82f321a0057f423cbf4db55fff924d039916f",
+      "observed": "2026-08-02T10:37:55Z"
+    },
+    "2.37.1": {
+      "content": "sha256:2bb7db3404ebd3d7af8a7b20b2b82f321a0057f423cbf4db55fff924d039916f",
+      "observed": "2026-08-02T10:37:55Z"
+    }
+  }
 }
