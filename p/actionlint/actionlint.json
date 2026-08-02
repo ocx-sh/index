@@ -10,11 +10,79 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:77fb0c28a78cea1053d0cac3075adf5cc16898bc6debf7101c358d509743ae7b",
+    "title": "actionlint",
+    "description": "Static checker for GitHub Actions workflow files",
+    "keywords": [
+      "actionlint",
+      "github-actions",
+      "workflow",
+      "linter",
+      "ci",
+      "yaml",
+      "shellcheck"
+    ],
+    "readme": "sha256:b9ae29a2a7e1c7ff2e41da401b9e6ce3b058122578aee8df62b0921418063c98",
+    "logo": "sha256:1b2be1eecfed2101628fdf2e3b6ff7599cc87494fae360b89c2a97613597d2e3"
+  },
   "upstream": {
     "org": "rhysd",
     "repository_url": "https://github.com/rhysd/actionlint",
     "disclaimer": "Unaffiliated mirror. actionlint is a project of Ryosuke Fukatani (rhysd); this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "1.7.3": {
+      "content": "sha256:d4faa9cd100cdc3405769102101072366b645918aa85f8522b64bb0b55ce72f5",
+      "observed": "2026-08-02T10:14:46Z"
+    },
+    "1.7": {
+      "content": "sha256:743656e5a103b26fdcffcb78509a7f69d3993e6fda0a33dbe8a571d45355dd3e",
+      "observed": "2026-08-02T10:14:46Z"
+    },
+    "1": {
+      "content": "sha256:743656e5a103b26fdcffcb78509a7f69d3993e6fda0a33dbe8a571d45355dd3e",
+      "observed": "2026-08-02T10:14:46Z"
+    },
+    "latest": {
+      "content": "sha256:743656e5a103b26fdcffcb78509a7f69d3993e6fda0a33dbe8a571d45355dd3e",
+      "observed": "2026-08-02T10:14:46Z"
+    },
+    "1.7.4": {
+      "content": "sha256:0af4d6419168b7633d91703767aaf6b1fca20d5657b4633ab530e4025b3c051c",
+      "observed": "2026-08-02T10:14:46Z"
+    },
+    "1.7.5": {
+      "content": "sha256:7a2e6eeaaf12065e70a55a866ef43e1e48319e8391f5a6276f12572a43866273",
+      "observed": "2026-08-02T10:14:46Z"
+    },
+    "1.7.6": {
+      "content": "sha256:ba37852991860737c2737fa5561b0302357e459fe582b39787d5588a7e86ce7a",
+      "observed": "2026-08-02T10:14:46Z"
+    },
+    "1.7.7": {
+      "content": "sha256:4f1200dfe01fd9e0cdb4074b650d0407ecc269d17b23a86fc512a3e71e2d1def",
+      "observed": "2026-08-02T10:14:46Z"
+    },
+    "1.7.8": {
+      "content": "sha256:862cb4bdf72ebfef705747a0e987dfbce4e3ec413f6b3d55103beb2305498ced",
+      "observed": "2026-08-02T10:14:46Z"
+    },
+    "1.7.9": {
+      "content": "sha256:aa625328a28dc29923840076e84bf2ae7a3d355bbe3f5f9a3d377a02e04aa880",
+      "observed": "2026-08-02T10:14:46Z"
+    },
+    "1.7.10": {
+      "content": "sha256:dd12fa65f31a2db234f2ddfe96107e835565fe2291bddc9fd402f8256ec98e6c",
+      "observed": "2026-08-02T10:14:46Z"
+    },
+    "1.7.11": {
+      "content": "sha256:4d9221302b60463fcabeedb2dccf1c0b5b1fd1996f51823c8732344386cd3706",
+      "observed": "2026-08-02T10:14:46Z"
+    },
+    "1.7.12": {
+      "content": "sha256:743656e5a103b26fdcffcb78509a7f69d3993e6fda0a33dbe8a571d45355dd3e",
+      "observed": "2026-08-02T10:14:46Z"
+    }
+  }
 }
