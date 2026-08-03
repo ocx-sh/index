@@ -10,11 +10,72 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:18602e439ddcd0196580f3e5a9499d2444d4d741378047dec32dfc132a51aeb6",
+    "title": "starship",
+    "description": "The minimal, blazing-fast and infinitely customizable prompt for any shell",
+    "keywords": [
+      "starship",
+      "prompt",
+      "shell",
+      "bash",
+      "zsh",
+      "fish",
+      "powershell",
+      "nushell",
+      "cli",
+      "rust",
+      "terminal",
+      "ps1"
+    ],
+    "readme": "sha256:7cae9abf9f6d88b0c47b7c7512fbb95ca3663e0790fa1cf1bdab4f6ae4d43846",
+    "logo": "sha256:5d6a0c4b91ce00cd54c6e58d613e67fb926375fcaf46a739c7788ed6adea8bc9"
+  },
   "upstream": {
     "org": "starship",
     "repository_url": "https://github.com/starship/starship",
     "disclaimer": "Unaffiliated mirror. starship is a project of the Starship Contributors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "1.25.0_20260803": {
+      "content": "sha256:49e2e75e0f3e42e7af0f976d9311aaaa664af0a174aaafb1d31cd563df171c69",
+      "observed": "2026-08-03T23:44:52Z"
+    },
+    "1.25.0": {
+      "content": "sha256:49e2e75e0f3e42e7af0f976d9311aaaa664af0a174aaafb1d31cd563df171c69",
+      "observed": "2026-08-03T23:44:52Z"
+    },
+    "1.25": {
+      "content": "sha256:deacb99f96e31f8d392566c5ce7a109b876dc442b9cbe37ac234d12488faf503",
+      "observed": "2026-08-03T23:44:52Z"
+    },
+    "1": {
+      "content": "sha256:caf4d2a3bbeda1900285036f4371fa1b3dfc415122135991900fabaf4bd0cd56",
+      "observed": "2026-08-03T23:44:52Z"
+    },
+    "latest": {
+      "content": "sha256:caf4d2a3bbeda1900285036f4371fa1b3dfc415122135991900fabaf4bd0cd56",
+      "observed": "2026-08-03T23:44:52Z"
+    },
+    "1.25.1_20260803": {
+      "content": "sha256:deacb99f96e31f8d392566c5ce7a109b876dc442b9cbe37ac234d12488faf503",
+      "observed": "2026-08-03T23:44:52Z"
+    },
+    "1.25.1": {
+      "content": "sha256:deacb99f96e31f8d392566c5ce7a109b876dc442b9cbe37ac234d12488faf503",
+      "observed": "2026-08-03T23:44:52Z"
+    },
+    "1.26.0_20260803": {
+      "content": "sha256:caf4d2a3bbeda1900285036f4371fa1b3dfc415122135991900fabaf4bd0cd56",
+      "observed": "2026-08-03T23:44:52Z"
+    },
+    "1.26.0": {
+      "content": "sha256:caf4d2a3bbeda1900285036f4371fa1b3dfc415122135991900fabaf4bd0cd56",
+      "observed": "2026-08-03T23:44:52Z"
+    },
+    "1.26": {
+      "content": "sha256:caf4d2a3bbeda1900285036f4371fa1b3dfc415122135991900fabaf4bd0cd56",
+      "observed": "2026-08-03T23:44:52Z"
+    }
+  }
 }
