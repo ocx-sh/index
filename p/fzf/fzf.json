@@ -10,11 +10,65 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:67154e7720b140dda4fc1606793552a211b47f4df0423807603a65096a267ca5",
+    "title": "fzf",
+    "description": "A command-line fuzzy finder \u2014 interactively filter any list, or use --filter as a fuzzy grep",
+    "keywords": [
+      "fzf",
+      "fuzzy-finder",
+      "search",
+      "filter",
+      "cli",
+      "tui",
+      "go",
+      "shell",
+      "productivity"
+    ],
+    "readme": "sha256:22caa8ea959fc5f67b5f0a7f59d124f1ed143ec7834c35b0b4b3cefb04a6dc9a",
+    "logo": "sha256:8c360fcd8901d546113f0e84dd127814e5680f4c1cb13a1d9703eca4da9c00fb"
+  },
   "upstream": {
     "org": "junegunn",
     "repository_url": "https://github.com/junegunn/fzf",
     "disclaimer": "Unaffiliated mirror. fzf is a project of Junegunn Choi; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.74.0_20260803": {
+      "content": "sha256:fe9d0425ccd8d4c4183883bdb4957366d2ac92c9ea17bcf2ddff6e2c92dc15f6",
+      "observed": "2026-08-03T23:22:39Z"
+    },
+    "0.74.0": {
+      "content": "sha256:fe9d0425ccd8d4c4183883bdb4957366d2ac92c9ea17bcf2ddff6e2c92dc15f6",
+      "observed": "2026-08-03T23:22:39Z"
+    },
+    "0.74": {
+      "content": "sha256:c71ea76484e079c96f94515276725824953bda0ccbce5f5cf30e9f918c97170e",
+      "observed": "2026-08-03T23:22:39Z"
+    },
+    "0": {
+      "content": "sha256:c71ea76484e079c96f94515276725824953bda0ccbce5f5cf30e9f918c97170e",
+      "observed": "2026-08-03T23:22:39Z"
+    },
+    "latest": {
+      "content": "sha256:c71ea76484e079c96f94515276725824953bda0ccbce5f5cf30e9f918c97170e",
+      "observed": "2026-08-03T23:22:39Z"
+    },
+    "0.74.1_20260803": {
+      "content": "sha256:11652806af7d83247095f2fa232c54b38fc769801a62da2ebed306df8e0eab1e",
+      "observed": "2026-08-03T23:22:39Z"
+    },
+    "0.74.1": {
+      "content": "sha256:11652806af7d83247095f2fa232c54b38fc769801a62da2ebed306df8e0eab1e",
+      "observed": "2026-08-03T23:22:39Z"
+    },
+    "0.74.2_20260803": {
+      "content": "sha256:c71ea76484e079c96f94515276725824953bda0ccbce5f5cf30e9f918c97170e",
+      "observed": "2026-08-03T23:22:39Z"
+    },
+    "0.74.2": {
+      "content": "sha256:c71ea76484e079c96f94515276725824953bda0ccbce5f5cf30e9f918c97170e",
+      "observed": "2026-08-03T23:22:39Z"
+    }
+  }
 }
