@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <title>fd</title>
+  <g stroke="#06b6d4" stroke-width="26" stroke-linecap="round" stroke-linejoin="round">
+    <!-- magnifier lens -->
+    <circle cx="222" cy="222" r="142" fill="#0891b2" fill-opacity="0.12"/>
+    <!-- folder inside the lens: tab + body -->
+    <path d="M164 268 V186 H206 L222 208 H280 V268 Z" stroke="#22d3ee" stroke-width="22"/>
+    <!-- handle -->
+    <path d="M326 326 L430 430" stroke-width="34"/>
+  </g>
+</svg>

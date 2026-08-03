@@ -10,11 +10,55 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:4581136156e1f4f61884038db56e28cec8b09443e92b536e17968de643bffb67",
+    "title": "fd",
+    "description": "A fast, user-friendly alternative to find, with sensible defaults, regex and glob matching, parallel execution, and gitignore awareness",
+    "keywords": [
+      "fd",
+      "find",
+      "search",
+      "filesystem",
+      "cli",
+      "rust",
+      "gitignore"
+    ],
+    "readme": "sha256:f0c91078fab12cb9cc3cc21f442da4936de609f0709f42a06c933049987c9000",
+    "logo": "sha256:0f68b8a4aae79c41140567333a02b89f7a18a43fae40482e5cc5b92b114f88b7"
+  },
   "upstream": {
     "org": "sharkdp",
     "repository_url": "https://github.com/sharkdp/fd",
     "disclaimer": "Unaffiliated mirror. fd is a project of David Peter (sharkdp); this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "10.4.1_20260803": {
+      "content": "sha256:14b61a6b25f584c82f8416a237dabeb353be6a7f0b2f6734497ea0d2e364d329",
+      "observed": "2026-08-03T22:53:54Z"
+    },
+    "10.4.1": {
+      "content": "sha256:14b61a6b25f584c82f8416a237dabeb353be6a7f0b2f6734497ea0d2e364d329",
+      "observed": "2026-08-03T22:53:54Z"
+    },
+    "10.4": {
+      "content": "sha256:4aadfa25fe7887159506afecc6726e86654e494873c5036ca9caf434da62c1ef",
+      "observed": "2026-08-03T22:53:54Z"
+    },
+    "10": {
+      "content": "sha256:4aadfa25fe7887159506afecc6726e86654e494873c5036ca9caf434da62c1ef",
+      "observed": "2026-08-03T22:53:54Z"
+    },
+    "latest": {
+      "content": "sha256:4aadfa25fe7887159506afecc6726e86654e494873c5036ca9caf434da62c1ef",
+      "observed": "2026-08-03T22:53:54Z"
+    },
+    "10.4.2_20260803": {
+      "content": "sha256:4aadfa25fe7887159506afecc6726e86654e494873c5036ca9caf434da62c1ef",
+      "observed": "2026-08-03T22:53:54Z"
+    },
+    "10.4.2": {
+      "content": "sha256:4aadfa25fe7887159506afecc6726e86654e494873c5036ca9caf434da62c1ef",
+      "observed": "2026-08-03T22:53:54Z"
+    }
+  }
 }
