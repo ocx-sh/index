@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/google/ko",
+  "repository": "oci://ghcr.io/ocx-contrib/google/ko",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": null,
+  "upstream": {
+    "org": "google",
+    "repository_url": "https://github.com/google/ko",
+    "disclaimer": "Unaffiliated mirror. ko is a project of Google LLC; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
