@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <title>bat</title>
+  <g stroke-width="22" stroke-linecap="round" stroke-linejoin="round">
+    <!-- page body -->
+    <rect x="132" y="60" width="248" height="392" rx="26" stroke="#8b5cf6" fill="#7c3aed" fill-opacity="0.12"/>
+    <!-- line-number gutter -->
+    <path d="M188 108 V404" stroke="#a78bfa" stroke-width="16"/>
+    <!-- syntax-highlighted source lines -->
+    <path d="M228 164 H340" stroke="#f59e0b"/>
+    <path d="M228 228 H300" stroke="#22d3ee"/>
+    <path d="M228 292 H348" stroke="#34d399"/>
+    <path d="M228 356 H284" stroke="#f59e0b"/>
+  </g>
+</svg>

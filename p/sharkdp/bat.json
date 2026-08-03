@@ -10,11 +10,67 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:3a183b9ee50e26fa2743126d0bffd6e9f838a1c3f4167b2b04d8eb19d0ec760a",
+    "title": "bat",
+    "description": "A cat clone with syntax highlighting for 150+ languages, Git integration, automatic paging, and themeable output",
+    "keywords": [
+      "bat",
+      "cat",
+      "pager",
+      "syntax-highlighting",
+      "git",
+      "cli",
+      "rust"
+    ],
+    "readme": "sha256:a8a916f0426207b283a29f4114ab342fab424b88a0fe7e97a7940114af21f218",
+    "logo": "sha256:d5c86e56c354125f73b3b672f27a759253ba758a69f3b93d377ff362ae4ddb98"
+  },
   "upstream": {
     "org": "sharkdp",
     "repository_url": "https://github.com/sharkdp/bat",
     "disclaimer": "Unaffiliated mirror. bat is a project of David Peter (sharkdp); this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.25.0_20260803": {
+      "content": "sha256:eea340bbea77fd93a336c82b2eb6d035103c1afa8fd981671dfe30c7b277fbb6",
+      "observed": "2026-08-03T22:48:33Z"
+    },
+    "0.25.0": {
+      "content": "sha256:eea340bbea77fd93a336c82b2eb6d035103c1afa8fd981671dfe30c7b277fbb6",
+      "observed": "2026-08-03T22:48:33Z"
+    },
+    "0.25": {
+      "content": "sha256:eea340bbea77fd93a336c82b2eb6d035103c1afa8fd981671dfe30c7b277fbb6",
+      "observed": "2026-08-03T22:48:33Z"
+    },
+    "0": {
+      "content": "sha256:27aa239919d95398309d7588b4655ef057fa082a31168dd15c4c8edf4a9f00ff",
+      "observed": "2026-08-03T22:48:33Z"
+    },
+    "latest": {
+      "content": "sha256:27aa239919d95398309d7588b4655ef057fa082a31168dd15c4c8edf4a9f00ff",
+      "observed": "2026-08-03T22:48:33Z"
+    },
+    "0.26.0_20260803": {
+      "content": "sha256:30915d22b09940cfce4229e5b5cb69decd187e0dae563425eeb3bb74aef7d48a",
+      "observed": "2026-08-03T22:48:33Z"
+    },
+    "0.26.0": {
+      "content": "sha256:30915d22b09940cfce4229e5b5cb69decd187e0dae563425eeb3bb74aef7d48a",
+      "observed": "2026-08-03T22:48:33Z"
+    },
+    "0.26": {
+      "content": "sha256:27aa239919d95398309d7588b4655ef057fa082a31168dd15c4c8edf4a9f00ff",
+      "observed": "2026-08-03T22:48:33Z"
+    },
+    "0.26.1_20260803": {
+      "content": "sha256:27aa239919d95398309d7588b4655ef057fa082a31168dd15c4c8edf4a9f00ff",
+      "observed": "2026-08-03T22:48:33Z"
+    },
+    "0.26.1": {
+      "content": "sha256:27aa239919d95398309d7588b4655ef057fa082a31168dd15c4c8edf4a9f00ff",
+      "observed": "2026-08-03T22:48:33Z"
+    }
+  }
 }
