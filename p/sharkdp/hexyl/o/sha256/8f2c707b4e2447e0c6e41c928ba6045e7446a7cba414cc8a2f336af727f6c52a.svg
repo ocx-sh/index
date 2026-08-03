@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <title>hexyl</title>
+  <g stroke-width="22" stroke-linecap="round" stroke-linejoin="round">
+    <!-- the dump's border box -->
+    <rect x="52" y="96" width="408" height="320" rx="26" stroke="#64748b" fill="#334155" fill-opacity="0.12"/>
+    <!-- position gutter separator -->
+    <path d="M150 128 V384" stroke="#64748b" stroke-width="16"/>
+    <!-- panel separator between the two hex panels -->
+    <path d="M320 128 V384" stroke="#64748b" stroke-width="16"/>
+    <!-- byte cells, colored by hexyl's own categories:
+         cyan = printable ASCII, yellow = non-ASCII, green = whitespace,
+         slate = NULL -->
+    <path d="M186 176 H222" stroke="#22d3ee"/>
+    <path d="M254 176 H290" stroke="#22d3ee"/>
+    <path d="M356 176 H392" stroke="#f59e0b"/>
+    <path d="M186 256 H222" stroke="#34d399"/>
+    <path d="M254 256 H290" stroke="#f59e0b"/>
+    <path d="M356 256 H392" stroke="#22d3ee"/>
+    <path d="M186 336 H222" stroke="#f59e0b"/>
+    <path d="M254 336 H290" stroke="#22d3ee"/>
+    <path d="M356 336 H392" stroke="#64748b"/>
+    <!-- position column -->
+    <path d="M88 176 H116" stroke="#94a3b8" stroke-width="16"/>
+    <path d="M88 256 H116" stroke="#94a3b8" stroke-width="16"/>
+    <path d="M88 336 H116" stroke="#94a3b8" stroke-width="16"/>
+  </g>
+</svg>

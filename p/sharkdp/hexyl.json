@@ -10,11 +10,72 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:240a609ed011fbdf3f7535c61a2d7068e667f1f8a36bfa576bec2c3bd71970f6",
+    "title": "hexyl",
+    "description": "A command-line hex viewer with colored byte-category output, configurable panels, bases and grouping, and offset/length windowing",
+    "keywords": [
+      "hexyl",
+      "hexdump",
+      "hex",
+      "xxd",
+      "binary",
+      "viewer",
+      "cli",
+      "rust"
+    ],
+    "readme": "sha256:55d87ed44c612d4f7e136ad9aaa9f01e6b79dd12bcceebb79c07bc29d7e72f22",
+    "logo": "sha256:8f2c707b4e2447e0c6e41c928ba6045e7446a7cba414cc8a2f336af727f6c52a"
+  },
   "upstream": {
     "org": "sharkdp",
     "repository_url": "https://github.com/sharkdp/hexyl",
     "disclaimer": "Unaffiliated mirror. hexyl is a project of David Peter (sharkdp); this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.15.0_20260803": {
+      "content": "sha256:282fe65b155cd503f619cc1b7c8d39c7464bbbdecae38fc297f21ae73ec2c260",
+      "observed": "2026-08-03T23:28:52Z"
+    },
+    "0.15.0": {
+      "content": "sha256:282fe65b155cd503f619cc1b7c8d39c7464bbbdecae38fc297f21ae73ec2c260",
+      "observed": "2026-08-03T23:28:52Z"
+    },
+    "0.15": {
+      "content": "sha256:282fe65b155cd503f619cc1b7c8d39c7464bbbdecae38fc297f21ae73ec2c260",
+      "observed": "2026-08-03T23:28:52Z"
+    },
+    "0": {
+      "content": "sha256:d5e6753757f796d31b182eb80df3d06647f32b0eaca42fc576f6dbd0f3984cff",
+      "observed": "2026-08-03T23:28:52Z"
+    },
+    "latest": {
+      "content": "sha256:d5e6753757f796d31b182eb80df3d06647f32b0eaca42fc576f6dbd0f3984cff",
+      "observed": "2026-08-03T23:28:52Z"
+    },
+    "0.16.0_20260803": {
+      "content": "sha256:e5560099121966ad8c8357f7e0b4175a5816c65fb085ad7e98bfb1ff82c4034a",
+      "observed": "2026-08-03T23:28:52Z"
+    },
+    "0.16.0": {
+      "content": "sha256:e5560099121966ad8c8357f7e0b4175a5816c65fb085ad7e98bfb1ff82c4034a",
+      "observed": "2026-08-03T23:28:52Z"
+    },
+    "0.16": {
+      "content": "sha256:e5560099121966ad8c8357f7e0b4175a5816c65fb085ad7e98bfb1ff82c4034a",
+      "observed": "2026-08-03T23:28:52Z"
+    },
+    "0.17.0_20260803": {
+      "content": "sha256:d5e6753757f796d31b182eb80df3d06647f32b0eaca42fc576f6dbd0f3984cff",
+      "observed": "2026-08-03T23:28:52Z"
+    },
+    "0.17.0": {
+      "content": "sha256:d5e6753757f796d31b182eb80df3d06647f32b0eaca42fc576f6dbd0f3984cff",
+      "observed": "2026-08-03T23:28:52Z"
+    },
+    "0.17": {
+      "content": "sha256:d5e6753757f796d31b182eb80df3d06647f32b0eaca42fc576f6dbd0f3984cff",
+      "observed": "2026-08-03T23:28:52Z"
+    }
+  }
 }
