@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/mozilla/geckodriver",
+  "repository": "oci://ghcr.io/ocx-contrib/mozilla/geckodriver",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": null,
+  "upstream": {
+    "org": "mozilla",
+    "repository_url": "https://github.com/mozilla/geckodriver",
+    "disclaimer": "Unaffiliated mirror. geckodriver is a project of Mozilla; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
