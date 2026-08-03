@@ -10,11 +10,70 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:53b27f823835d2b18b5cfb616b247d7b6461f90fe94ba6913cde809f0284dce2",
+    "title": "zoxide",
+    "description": "A smarter cd command \u2014 jump to any directory by a fragment of its name, ranked by how often and how recently you visit it",
+    "keywords": [
+      "zoxide",
+      "cd",
+      "z",
+      "autojump",
+      "directory",
+      "navigation",
+      "shell",
+      "frecency",
+      "cli",
+      "rust"
+    ],
+    "readme": "sha256:9f841a7568198ea615aaea0054d81ca194bc1e9850ebef98c2deefed759a4f00",
+    "logo": "sha256:c9866d993dc40f94ec224e671f2fda7d41f583765145a3c6b0d41448db3390dd"
+  },
   "upstream": {
     "org": "ajeetdsouza",
     "repository_url": "https://github.com/ajeetdsouza/zoxide",
     "disclaimer": "Unaffiliated mirror. zoxide is a project of Ajeet D'Souza; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.9.8_20260803": {
+      "content": "sha256:1cb2a56e5661d72bafe62a5d448646b81c36134417045cd731441ec9290f92f4",
+      "observed": "2026-08-03T23:28:38Z"
+    },
+    "0.9.8": {
+      "content": "sha256:1cb2a56e5661d72bafe62a5d448646b81c36134417045cd731441ec9290f92f4",
+      "observed": "2026-08-03T23:28:38Z"
+    },
+    "0.9": {
+      "content": "sha256:221cbb99830366c71aaa2ff7caf1b37338768eba204b8120dc43c7ab4b59e2db",
+      "observed": "2026-08-03T23:28:38Z"
+    },
+    "0": {
+      "content": "sha256:b7ed281d6fbf69e215b1f1fa1d59ee0c1b08ee4736593a52504bdf5e08aaa9c3",
+      "observed": "2026-08-03T23:28:38Z"
+    },
+    "latest": {
+      "content": "sha256:b7ed281d6fbf69e215b1f1fa1d59ee0c1b08ee4736593a52504bdf5e08aaa9c3",
+      "observed": "2026-08-03T23:28:38Z"
+    },
+    "0.9.9_20260803": {
+      "content": "sha256:221cbb99830366c71aaa2ff7caf1b37338768eba204b8120dc43c7ab4b59e2db",
+      "observed": "2026-08-03T23:28:38Z"
+    },
+    "0.9.9": {
+      "content": "sha256:221cbb99830366c71aaa2ff7caf1b37338768eba204b8120dc43c7ab4b59e2db",
+      "observed": "2026-08-03T23:28:38Z"
+    },
+    "0.10.0_20260803": {
+      "content": "sha256:b7ed281d6fbf69e215b1f1fa1d59ee0c1b08ee4736593a52504bdf5e08aaa9c3",
+      "observed": "2026-08-03T23:28:38Z"
+    },
+    "0.10.0": {
+      "content": "sha256:b7ed281d6fbf69e215b1f1fa1d59ee0c1b08ee4736593a52504bdf5e08aaa9c3",
+      "observed": "2026-08-03T23:28:38Z"
+    },
+    "0.10": {
+      "content": "sha256:b7ed281d6fbf69e215b1f1fa1d59ee0c1b08ee4736593a52504bdf5e08aaa9c3",
+      "observed": "2026-08-03T23:28:38Z"
+    }
+  }
 }
