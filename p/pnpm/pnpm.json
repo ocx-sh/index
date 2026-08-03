@@ -193,6 +193,22 @@
     "11.4": {
       "content": "sha256:48152c43a5db12c10183607598f1a9003de98bf2a1e54c8e13dc2e929db99f13",
       "observed": "2026-08-02T19:30:01Z"
+    },
+    "11.20.0": {
+      "content": "sha256:1ac94129472d30cf267dda3f4ec6d8e2f691cba2d952cbc73b8571e02164a19c",
+      "observed": "2026-08-03T14:32:17Z"
+    },
+    "11.20": {
+      "content": "sha256:1ac94129472d30cf267dda3f4ec6d8e2f691cba2d952cbc73b8571e02164a19c",
+      "observed": "2026-08-03T14:32:17Z"
+    },
+    "11": {
+      "content": "sha256:1ac94129472d30cf267dda3f4ec6d8e2f691cba2d952cbc73b8571e02164a19c",
+      "observed": "2026-08-03T14:32:17Z"
+    },
+    "latest": {
+      "content": "sha256:1ac94129472d30cf267dda3f4ec6d8e2f691cba2d952cbc73b8571e02164a19c",
+      "observed": "2026-08-03T14:32:17Z"
     }
   }
 }
