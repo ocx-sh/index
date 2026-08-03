@@ -10,11 +10,57 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:12c5b77d64a241c4531442e0704bc0ee27ff71d6d0c59aa694192753561bbfce",
+    "title": "mise",
+    "description": "Polyglot dev-tool version manager, environment manager and task runner in a single static binary",
+    "keywords": [
+      "mise",
+      "mise-en-place",
+      "version-manager",
+      "dev-tools",
+      "task-runner",
+      "env",
+      "asdf",
+      "jdx",
+      "rust"
+    ],
+    "readme": "sha256:7ce7a79eef496661114c61153dd13d5a92f9e9cde857c64bfcece42b202a5149",
+    "logo": "sha256:e86fe652d7e59a8aeb852e39417f430681814cf58b8e30409c3b914a90f6fb8e"
+  },
   "upstream": {
     "org": "jdx",
     "repository_url": "https://github.com/jdx/mise",
     "disclaimer": "Unaffiliated mirror. mise is a project of Jeff Dickey (jdx); this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "2026.8.0_20260803": {
+      "content": "sha256:7b037326afc189cd13f646b3264d713a7de8afc58a664e6e812e40a8eb274d1f",
+      "observed": "2026-08-03T23:35:52Z"
+    },
+    "2026.8.0": {
+      "content": "sha256:7b037326afc189cd13f646b3264d713a7de8afc58a664e6e812e40a8eb274d1f",
+      "observed": "2026-08-03T23:35:52Z"
+    },
+    "2026.8": {
+      "content": "sha256:2f96daa5fd73c755a8c2039e4ad759b203a6614810e4062c5b5311b96a278301",
+      "observed": "2026-08-03T23:35:52Z"
+    },
+    "2026": {
+      "content": "sha256:2f96daa5fd73c755a8c2039e4ad759b203a6614810e4062c5b5311b96a278301",
+      "observed": "2026-08-03T23:35:52Z"
+    },
+    "latest": {
+      "content": "sha256:2f96daa5fd73c755a8c2039e4ad759b203a6614810e4062c5b5311b96a278301",
+      "observed": "2026-08-03T23:35:52Z"
+    },
+    "2026.8.1_20260803": {
+      "content": "sha256:2f96daa5fd73c755a8c2039e4ad759b203a6614810e4062c5b5311b96a278301",
+      "observed": "2026-08-03T23:35:52Z"
+    },
+    "2026.8.1": {
+      "content": "sha256:2f96daa5fd73c755a8c2039e4ad759b203a6614810e4062c5b5311b96a278301",
+      "observed": "2026-08-03T23:35:52Z"
+    }
+  }
 }
