@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/zoxide/zoxide",
+  "repository": "oci://ghcr.io/ocx-contrib/zoxide/zoxide",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": null,
+  "upstream": {
+    "org": "ajeetdsouza",
+    "repository_url": "https://github.com/ajeetdsouza/zoxide",
+    "disclaimer": "Unaffiliated mirror. zoxide is a project of Ajeet D'Souza; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
