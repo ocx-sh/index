@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <title>ripgrep</title>
+  <!-- Original mark authored for the OCX mirror: a recursive text search.
+       Upstream publishes no logo. Rounded strokes only, no text, so it stays
+       legible at 32px and on either a light or a dark background. -->
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <!-- lines of text being searched -->
+    <g stroke="#64748b" stroke-width="26">
+      <path d="M64 108 H400"/>
+      <path d="M64 180 H320"/>
+      <path d="M64 324 H288"/>
+      <path d="M64 396 H368"/>
+    </g>
+    <!-- the matched line, highlighted -->
+    <path d="M64 252 H352" stroke="#f59e0b" stroke-width="34"/>
+    <!-- magnifying glass over the match -->
+    <circle cx="300" cy="252" r="108" stroke="#e2483d" stroke-width="36" fill="none"/>
+    <path d="M377 329 L464 416" stroke="#e2483d" stroke-width="44"/>
+  </g>
+</svg>

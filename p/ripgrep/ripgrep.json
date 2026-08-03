@@ -10,11 +10,73 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:fcc57ec5f3996050a5227b0dc443a6c89d38f541b43a60cfe704a352ff9e11a1",
+    "title": "ripgrep",
+    "description": "A line-oriented search tool that recursively searches directories for a regex pattern, respecting .gitignore",
+    "keywords": [
+      "ripgrep",
+      "rg",
+      "grep",
+      "search",
+      "regex",
+      "recursive",
+      "gitignore",
+      "cli",
+      "rust"
+    ],
+    "readme": "sha256:1ac1b97b6edc736322b9407bb5006083fcb820325aa839f7b2a49b0c98aabaeb",
+    "logo": "sha256:3b96f8015fd948499a8faeafc938938609938752a7e79552f9f4d3f8744e6782"
+  },
   "upstream": {
     "org": "BurntSushi",
     "repository_url": "https://github.com/BurntSushi/ripgrep",
     "disclaimer": "Unaffiliated mirror. ripgrep is a project of Andrew Gallant; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "15.0.0_20260803": {
+      "content": "sha256:8410e98a020319646c35c634169f275e46b1937becb84d9e63876339a40281e2",
+      "observed": "2026-08-03T23:23:09Z"
+    },
+    "15.0.0": {
+      "content": "sha256:8410e98a020319646c35c634169f275e46b1937becb84d9e63876339a40281e2",
+      "observed": "2026-08-03T23:23:09Z"
+    },
+    "15.0": {
+      "content": "sha256:8410e98a020319646c35c634169f275e46b1937becb84d9e63876339a40281e2",
+      "observed": "2026-08-03T23:23:09Z"
+    },
+    "15": {
+      "content": "sha256:9ef57db62fcccc4e736eaba186e828406f540669a9f822279f689b10045cc08e",
+      "observed": "2026-08-03T23:23:09Z"
+    },
+    "latest": {
+      "content": "sha256:9ef57db62fcccc4e736eaba186e828406f540669a9f822279f689b10045cc08e",
+      "observed": "2026-08-03T23:23:09Z"
+    },
+    "15.1.0_20260803": {
+      "content": "sha256:e7a497ce25a206b5616f51ba88d3a4b07e8d0e32dae562d20fb98eac85bb1638",
+      "observed": "2026-08-03T23:23:09Z"
+    },
+    "15.1.0": {
+      "content": "sha256:e7a497ce25a206b5616f51ba88d3a4b07e8d0e32dae562d20fb98eac85bb1638",
+      "observed": "2026-08-03T23:23:09Z"
+    },
+    "15.1": {
+      "content": "sha256:e7a497ce25a206b5616f51ba88d3a4b07e8d0e32dae562d20fb98eac85bb1638",
+      "observed": "2026-08-03T23:23:09Z"
+    },
+    "15.2.0_20260803": {
+      "content": "sha256:9ef57db62fcccc4e736eaba186e828406f540669a9f822279f689b10045cc08e",
+      "observed": "2026-08-03T23:23:09Z"
+    },
+    "15.2.0": {
+      "content": "sha256:9ef57db62fcccc4e736eaba186e828406f540669a9f822279f689b10045cc08e",
+      "observed": "2026-08-03T23:23:09Z"
+    },
+    "15.2": {
+      "content": "sha256:9ef57db62fcccc4e736eaba186e828406f540669a9f822279f689b10045cc08e",
+      "observed": "2026-08-03T23:23:09Z"
+    }
+  }
 }
