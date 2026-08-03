@@ -10,11 +10,67 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:4bde455ead04cf71287eebbbb64db3d77dcdce186ec1c5d987b672ab7712167a",
+    "title": "crane",
+    "description": "Registry client for pulling, pushing, copying and inspecting container images without a Docker daemon",
+    "keywords": [
+      "crane",
+      "gcrane",
+      "krane",
+      "container",
+      "registry",
+      "oci",
+      "docker",
+      "image",
+      "ggcr",
+      "go-containerregistry",
+      "google"
+    ],
+    "readme": "sha256:0048429b9bca1663dbeae328318d47eac32df959c310e475b45bc595735c4586",
+    "logo": "sha256:102b5fca01ab84bb7a68ae179f2b8054e10321020160de3f2e42c48984b4cda8"
+  },
   "upstream": {
     "org": "google",
     "repository_url": "https://github.com/google/go-containerregistry",
     "disclaimer": "Unaffiliated mirror. crane is a project of Google LLC; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.21.6_20260803": {
+      "content": "sha256:7eeeaef04200e6fc3db755c2a7dac0f947de0a5a070becb6c03cc8026ecc398b",
+      "observed": "2026-08-03T23:27:32Z"
+    },
+    "0.21.6": {
+      "content": "sha256:7eeeaef04200e6fc3db755c2a7dac0f947de0a5a070becb6c03cc8026ecc398b",
+      "observed": "2026-08-03T23:27:32Z"
+    },
+    "0.21": {
+      "content": "sha256:e7a502c692fc3183c6653899ae73a7480f9f4c964b3da028cae9ddc04f4883a9",
+      "observed": "2026-08-03T23:27:32Z"
+    },
+    "0": {
+      "content": "sha256:e7a502c692fc3183c6653899ae73a7480f9f4c964b3da028cae9ddc04f4883a9",
+      "observed": "2026-08-03T23:27:32Z"
+    },
+    "latest": {
+      "content": "sha256:e7a502c692fc3183c6653899ae73a7480f9f4c964b3da028cae9ddc04f4883a9",
+      "observed": "2026-08-03T23:27:32Z"
+    },
+    "0.21.7_20260803": {
+      "content": "sha256:1971de3ecc19495a725ab4fbf8f4b476d6a5a0cf256b81d5adcefd0d28d23f25",
+      "observed": "2026-08-03T23:27:32Z"
+    },
+    "0.21.7": {
+      "content": "sha256:1971de3ecc19495a725ab4fbf8f4b476d6a5a0cf256b81d5adcefd0d28d23f25",
+      "observed": "2026-08-03T23:27:32Z"
+    },
+    "0.21.8_20260803": {
+      "content": "sha256:e7a502c692fc3183c6653899ae73a7480f9f4c964b3da028cae9ddc04f4883a9",
+      "observed": "2026-08-03T23:27:32Z"
+    },
+    "0.21.8": {
+      "content": "sha256:e7a502c692fc3183c6653899ae73a7480f9f4c964b3da028cae9ddc04f4883a9",
+      "observed": "2026-08-03T23:27:32Z"
+    }
+  }
 }
