@@ -10,11 +10,74 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:5dfbc4bd98281d1bd4f4bb06a7cce66e7541cae31185a2a669480a7e0ed4870e",
+    "title": "difftastic",
+    "description": "A structural diff that understands syntax \u2014 compares syntax trees, not lines",
+    "keywords": [
+      "difftastic",
+      "difft",
+      "diff",
+      "structural-diff",
+      "syntax",
+      "tree-sitter",
+      "git",
+      "vcs",
+      "cli",
+      "rust"
+    ],
+    "readme": "sha256:4e8d664135ccd9af9909782238555b5f98fb2c40f1592f58bcaf14a5b0274a2d",
+    "logo": "sha256:154568627ba465baf9250a528dd69477d4e540467965673b4d4508f5872a0033"
+  },
   "upstream": {
     "org": "Wilfred",
     "repository_url": "https://github.com/Wilfred/difftastic",
     "disclaimer": "Unaffiliated mirror. difftastic is a project of Wilfred Hughes; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.67.0_20260803": {
+      "content": "sha256:46899eee0fc911004d45980044b7f904b10c5ee05ce112fa481c2e4ce33b4ab6",
+      "observed": "2026-08-03T23:29:50Z"
+    },
+    "0.67.0": {
+      "content": "sha256:46899eee0fc911004d45980044b7f904b10c5ee05ce112fa481c2e4ce33b4ab6",
+      "observed": "2026-08-03T23:29:50Z"
+    },
+    "0.67": {
+      "content": "sha256:46899eee0fc911004d45980044b7f904b10c5ee05ce112fa481c2e4ce33b4ab6",
+      "observed": "2026-08-03T23:29:50Z"
+    },
+    "0": {
+      "content": "sha256:e7db0d1775142bc72b67c1c58b74603e39a8f9d5cce60c747291d7539d87da40",
+      "observed": "2026-08-03T23:29:50Z"
+    },
+    "latest": {
+      "content": "sha256:e7db0d1775142bc72b67c1c58b74603e39a8f9d5cce60c747291d7539d87da40",
+      "observed": "2026-08-03T23:29:50Z"
+    },
+    "0.68.0_20260803": {
+      "content": "sha256:5d5d4ce4f9180dcff443fe8c0b10d04919dd602c7a6b876d1d61f016ec16ef57",
+      "observed": "2026-08-03T23:29:50Z"
+    },
+    "0.68.0": {
+      "content": "sha256:5d5d4ce4f9180dcff443fe8c0b10d04919dd602c7a6b876d1d61f016ec16ef57",
+      "observed": "2026-08-03T23:29:50Z"
+    },
+    "0.68": {
+      "content": "sha256:5d5d4ce4f9180dcff443fe8c0b10d04919dd602c7a6b876d1d61f016ec16ef57",
+      "observed": "2026-08-03T23:29:50Z"
+    },
+    "0.69.0_20260803": {
+      "content": "sha256:e7db0d1775142bc72b67c1c58b74603e39a8f9d5cce60c747291d7539d87da40",
+      "observed": "2026-08-03T23:29:50Z"
+    },
+    "0.69.0": {
+      "content": "sha256:e7db0d1775142bc72b67c1c58b74603e39a8f9d5cce60c747291d7539d87da40",
+      "observed": "2026-08-03T23:29:50Z"
+    },
+    "0.69": {
+      "content": "sha256:e7db0d1775142bc72b67c1c58b74603e39a8f9d5cce60c747291d7539d87da40",
+      "observed": "2026-08-03T23:29:50Z"
+    }
+  }
 }
