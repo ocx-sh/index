@@ -10,11 +10,68 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:6c3a50d027f1778862eb39c7dad61c5ff720222bf8a6095f5dfb9685cd320207",
+    "title": "geckodriver",
+    "description": "WebDriver server that drives Firefox \u2014 the W3C WebDriver proxy for Mozilla's Gecko browsers",
+    "keywords": [
+      "geckodriver",
+      "webdriver",
+      "firefox",
+      "selenium",
+      "browser-automation",
+      "w3c",
+      "mozilla",
+      "testing"
+    ],
+    "readme": "sha256:6608cd8790a7baa7195d995e0189009652d051dc997f838c7c3c6079704ca6a2",
+    "logo": "sha256:6688b2157d85e3f32c441d0c48b29d70714ad22af1c58ff342f11f1edd53e3da"
+  },
   "upstream": {
     "org": "mozilla",
     "repository_url": "https://github.com/mozilla/geckodriver",
     "disclaimer": "Unaffiliated mirror. geckodriver is a project of Mozilla; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.36.0_20260803": {
+      "content": "sha256:23f0d217b8c0e8ae6c135b159fe0d2c49a2428f488185b30804c8b70f0f7c6a6",
+      "observed": "2026-08-03T23:29:37Z"
+    },
+    "0.36.0": {
+      "content": "sha256:23f0d217b8c0e8ae6c135b159fe0d2c49a2428f488185b30804c8b70f0f7c6a6",
+      "observed": "2026-08-03T23:29:37Z"
+    },
+    "0.36": {
+      "content": "sha256:23f0d217b8c0e8ae6c135b159fe0d2c49a2428f488185b30804c8b70f0f7c6a6",
+      "observed": "2026-08-03T23:29:37Z"
+    },
+    "0": {
+      "content": "sha256:302cf6bfc869c01b06e202ab2f5086239304c3dbfcca176da0b5b3ca0e7a1427",
+      "observed": "2026-08-03T23:29:37Z"
+    },
+    "latest": {
+      "content": "sha256:302cf6bfc869c01b06e202ab2f5086239304c3dbfcca176da0b5b3ca0e7a1427",
+      "observed": "2026-08-03T23:29:37Z"
+    },
+    "0.37.0_20260803": {
+      "content": "sha256:3ba30cbdc320b84077730b275ad3816f78a23bfe657cd4f7b9535d0bae671b7c",
+      "observed": "2026-08-03T23:29:37Z"
+    },
+    "0.37.0": {
+      "content": "sha256:3ba30cbdc320b84077730b275ad3816f78a23bfe657cd4f7b9535d0bae671b7c",
+      "observed": "2026-08-03T23:29:37Z"
+    },
+    "0.37": {
+      "content": "sha256:302cf6bfc869c01b06e202ab2f5086239304c3dbfcca176da0b5b3ca0e7a1427",
+      "observed": "2026-08-03T23:29:37Z"
+    },
+    "0.37.1_20260803": {
+      "content": "sha256:302cf6bfc869c01b06e202ab2f5086239304c3dbfcca176da0b5b3ca0e7a1427",
+      "observed": "2026-08-03T23:29:37Z"
+    },
+    "0.37.1": {
+      "content": "sha256:302cf6bfc869c01b06e202ab2f5086239304c3dbfcca176da0b5b3ca0e7a1427",
+      "observed": "2026-08-03T23:29:37Z"
+    }
+  }
 }

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" role="img" aria-label="geckodriver">
+  <title>geckodriver</title>
+  <!-- browser window under automation -->
+  <rect x="56" y="88" width="400" height="336" rx="36" fill="#1f2937" stroke="#f97316" stroke-width="20"/>
+  <!-- title bar -->
+  <path d="M56 168 H456" stroke="#f97316" stroke-width="20" stroke-linecap="round"/>
+  <circle cx="112" cy="128" r="14" fill="#f97316"/>
+  <circle cx="160" cy="128" r="14" fill="#fbbf24"/>
+  <circle cx="208" cy="128" r="14" fill="#38bdf8"/>
+  <!-- automation cursor: a steering pointer driving the page -->
+  <path d="M212 232 L340 296 L286 314 L262 372 Z" fill="#38bdf8" stroke="#38bdf8" stroke-width="18" stroke-linejoin="round"/>
+  <!-- command channel -->
+  <path d="M108 232 H180" stroke="#94a3b8" stroke-width="18" stroke-linecap="round"/>
+  <path d="M108 296 H164" stroke="#94a3b8" stroke-width="18" stroke-linecap="round"/>
+  <path d="M108 360 H148" stroke="#94a3b8" stroke-width="18" stroke-linecap="round"/>
+</svg>
