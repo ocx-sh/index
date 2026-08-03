@@ -40,12 +40,12 @@
       "observed": "2026-08-02T10:39:27Z"
     },
     "24": {
-      "content": "sha256:5d44d8f8142539288b6db4941a34d85f045e13a0744a729022130ca15c54a4e2",
-      "observed": "2026-08-02T10:41:26Z"
+      "content": "sha256:59295767e9a6e245b71d4740f61798a63f913d78171bb951ed5fd2c94d698251",
+      "observed": "2026-08-03T14:32:10Z"
     },
     "latest": {
-      "content": "sha256:5d44d8f8142539288b6db4941a34d85f045e13a0744a729022130ca15c54a4e2",
-      "observed": "2026-08-02T10:41:26Z"
+      "content": "sha256:59295767e9a6e245b71d4740f61798a63f913d78171bb951ed5fd2c94d698251",
+      "observed": "2026-08-03T14:32:10Z"
     },
     "24.16.0": {
       "content": "sha256:54e82c17129add9b1b4ad074db9d21fbf8a9e290ed66068dbd317958576718ba",
@@ -262,6 +262,42 @@
     "22.13.1": {
       "content": "sha256:ded8bd570493c7b7f4b8918fa916046d97c8eda1c753aa819015441dfe448019",
       "observed": "2026-08-03T09:37:27Z"
+    },
+    "20.19.6": {
+      "content": "sha256:8881ff845e0b3717fef0e0e2afce964d4342bfc92a57383b4000dd698611fda0",
+      "observed": "2026-08-03T14:32:10Z"
+    },
+    "20.19": {
+      "content": "sha256:8881ff845e0b3717fef0e0e2afce964d4342bfc92a57383b4000dd698611fda0",
+      "observed": "2026-08-03T14:32:10Z"
+    },
+    "20": {
+      "content": "sha256:5131fe67ccf08e906bb94ad4c80d24c5aa817e75f6bdf5087eb047ae804198e0",
+      "observed": "2026-08-03T14:32:10Z"
+    },
+    "20.20.0": {
+      "content": "sha256:7532a9b9dc311fff1c89f3d42719f103a01f5daeab61ab7cdff936729b320c0d",
+      "observed": "2026-08-03T14:32:10Z"
+    },
+    "20.20": {
+      "content": "sha256:5131fe67ccf08e906bb94ad4c80d24c5aa817e75f6bdf5087eb047ae804198e0",
+      "observed": "2026-08-03T14:32:10Z"
+    },
+    "20.20.1": {
+      "content": "sha256:4e8f6a6f17567e69c89a2e10afae3b85de2c0959db9ce04f096699cd558532a4",
+      "observed": "2026-08-03T14:32:10Z"
+    },
+    "20.20.2": {
+      "content": "sha256:5131fe67ccf08e906bb94ad4c80d24c5aa817e75f6bdf5087eb047ae804198e0",
+      "observed": "2026-08-03T14:32:10Z"
+    },
+    "24.19.0": {
+      "content": "sha256:59295767e9a6e245b71d4740f61798a63f913d78171bb951ed5fd2c94d698251",
+      "observed": "2026-08-03T14:32:10Z"
+    },
+    "24.19": {
+      "content": "sha256:59295767e9a6e245b71d4740f61798a63f913d78171bb951ed5fd2c94d698251",
+      "observed": "2026-08-03T14:32:10Z"
     }
   }
 }
