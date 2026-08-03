@@ -239,6 +239,18 @@
     "3.17.2": {
       "content": "sha256:6011c369c6292dddc0eeda4072d8e8df446f4d6885ba060bc40c7eb7b637e099",
       "observed": "2026-08-03T14:17:36Z"
+    },
+    "3.16.0": {
+      "content": "sha256:d87bc5af4acb59e52000f771cfd34eafcf97cf6ec8ab8fa7ef01068eccfac554",
+      "observed": "2026-08-03T18:39:50Z"
+    },
+    "3.16.1": {
+      "content": "sha256:0473cb4cc17c032f81e7c6ee6788b2f075511f33d5ef1235592627530a5ac15d",
+      "observed": "2026-08-03T18:39:50Z"
+    },
+    "3.16.2": {
+      "content": "sha256:3e25318767b9d5f770779287c152ab03acb12aa528ee086ca0956fafd1f6d617",
+      "observed": "2026-08-03T18:39:50Z"
     }
   }
 }
