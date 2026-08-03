@@ -10,11 +10,60 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:d2f160b2e80e097aad6e15290cffa51c6d7f83e65790155586070bea7403ff6b",
+    "title": "vivid",
+    "description": "A themeable LS_COLORS generator that turns a filetype database and 30+ built-in color themes into the environment variable ls, eza and friends read",
+    "keywords": [
+      "vivid",
+      "ls-colors",
+      "ls_colors",
+      "theme",
+      "terminal",
+      "colors",
+      "cli",
+      "rust"
+    ],
+    "readme": "sha256:92f9cc7ef9864d079443184ebfa2b1081609527a27c587e7f8c4dc02b499fa6a",
+    "logo": "sha256:7805da511469fd935dc6c01a9ee1cfc6eb9fb5199b48766e3421eeb88ad9a47b"
+  },
   "upstream": {
     "org": "sharkdp",
     "repository_url": "https://github.com/sharkdp/vivid",
     "disclaimer": "Unaffiliated mirror. vivid is a project of David Peter (sharkdp); this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.10.1_20260803": {
+      "content": "sha256:a244101816d50013d12269c9a65d8e7548a3c9e6eaaf9280675e36b9c6ca6002",
+      "observed": "2026-08-03T23:46:06Z"
+    },
+    "0.10.1": {
+      "content": "sha256:a244101816d50013d12269c9a65d8e7548a3c9e6eaaf9280675e36b9c6ca6002",
+      "observed": "2026-08-03T23:46:06Z"
+    },
+    "0.10": {
+      "content": "sha256:a244101816d50013d12269c9a65d8e7548a3c9e6eaaf9280675e36b9c6ca6002",
+      "observed": "2026-08-03T23:46:06Z"
+    },
+    "0": {
+      "content": "sha256:520705201ca47f250f9057a529f2ce0958de80085dbad065ae734289e76fafd3",
+      "observed": "2026-08-03T23:46:06Z"
+    },
+    "latest": {
+      "content": "sha256:520705201ca47f250f9057a529f2ce0958de80085dbad065ae734289e76fafd3",
+      "observed": "2026-08-03T23:46:06Z"
+    },
+    "0.11.1_20260803": {
+      "content": "sha256:520705201ca47f250f9057a529f2ce0958de80085dbad065ae734289e76fafd3",
+      "observed": "2026-08-03T23:46:06Z"
+    },
+    "0.11.1": {
+      "content": "sha256:520705201ca47f250f9057a529f2ce0958de80085dbad065ae734289e76fafd3",
+      "observed": "2026-08-03T23:46:06Z"
+    },
+    "0.11": {
+      "content": "sha256:520705201ca47f250f9057a529f2ce0958de80085dbad065ae734289e76fafd3",
+      "observed": "2026-08-03T23:46:06Z"
+    }
+  }
 }
