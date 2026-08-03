@@ -10,11 +10,71 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:4562acb2a77c590d969d3ac298c2ffe79cfaa89a9e61d50c521ac3b538192fda",
+    "title": "ko",
+    "description": "Build and deploy Go applications as container images without a Dockerfile or a Docker daemon",
+    "keywords": [
+      "ko",
+      "go",
+      "golang",
+      "container",
+      "image",
+      "kubernetes",
+      "oci",
+      "build",
+      "deploy",
+      "daemonless",
+      "google"
+    ],
+    "readme": "sha256:1b3bf9a177322ae26943618049333ce76d883c104aec334242cf7142a5400e2b",
+    "logo": "sha256:98ffe9a6c3b209d639ea2c5a29adabd9468f66d538ffd0ec56a978fe96f6b754"
+  },
   "upstream": {
     "org": "google",
     "repository_url": "https://github.com/google/ko",
     "disclaimer": "Unaffiliated mirror. ko is a project of Google LLC; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.18.1_20260803": {
+      "content": "sha256:50f368eea87fd2550406aaab6c1e432f31b2a7ac2d0de1c102bb01a91f20f4fb",
+      "observed": "2026-08-03T23:50:17Z"
+    },
+    "0.18.1": {
+      "content": "sha256:50f368eea87fd2550406aaab6c1e432f31b2a7ac2d0de1c102bb01a91f20f4fb",
+      "observed": "2026-08-03T23:50:17Z"
+    },
+    "0.18": {
+      "content": "sha256:50f368eea87fd2550406aaab6c1e432f31b2a7ac2d0de1c102bb01a91f20f4fb",
+      "observed": "2026-08-03T23:50:17Z"
+    },
+    "0": {
+      "content": "sha256:0e4e66749733e415c5bbf30829695e069dae25da3b6e6c6cf8087a68d33196e0",
+      "observed": "2026-08-03T23:50:17Z"
+    },
+    "latest": {
+      "content": "sha256:0e4e66749733e415c5bbf30829695e069dae25da3b6e6c6cf8087a68d33196e0",
+      "observed": "2026-08-03T23:50:17Z"
+    },
+    "0.19.0_20260803": {
+      "content": "sha256:872e6e5ed7abfcbf88e19f2dbfe37fd5f262e53de65b644bb352039644e76861",
+      "observed": "2026-08-03T23:50:17Z"
+    },
+    "0.19.0": {
+      "content": "sha256:872e6e5ed7abfcbf88e19f2dbfe37fd5f262e53de65b644bb352039644e76861",
+      "observed": "2026-08-03T23:50:17Z"
+    },
+    "0.19": {
+      "content": "sha256:0e4e66749733e415c5bbf30829695e069dae25da3b6e6c6cf8087a68d33196e0",
+      "observed": "2026-08-03T23:50:17Z"
+    },
+    "0.19.1_20260803": {
+      "content": "sha256:0e4e66749733e415c5bbf30829695e069dae25da3b6e6c6cf8087a68d33196e0",
+      "observed": "2026-08-03T23:50:17Z"
+    },
+    "0.19.1": {
+      "content": "sha256:0e4e66749733e415c5bbf30829695e069dae25da3b6e6c6cf8087a68d33196e0",
+      "observed": "2026-08-03T23:50:17Z"
+    }
+  }
 }
