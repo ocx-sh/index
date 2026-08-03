@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/lsd-rs/lsd",
+  "repository": "oci://ghcr.io/ocx-contrib/lsd-rs/lsd",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": null,
+  "upstream": {
+    "org": "lsd-rs",
+    "repository_url": "https://github.com/lsd-rs/lsd",
+    "disclaimer": "Unaffiliated mirror. lsd is a project of Peltoche and the lsd-rs organization; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
