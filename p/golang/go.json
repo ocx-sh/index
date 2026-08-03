@@ -10,11 +10,78 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-03",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:833640ebd711b5e65df1c6464423b84c4c063ea02d9f6009e716773a1222d21a",
+    "title": "Go",
+    "description": "The Go programming language toolchain \u2014 compiler, standard library, and tools",
+    "keywords": [
+      "go",
+      "golang",
+      "compiler",
+      "toolchain",
+      "build",
+      "google"
+    ],
+    "readme": "sha256:1a37e04b0b587c84170a74bbc6192009a0dca41e959ae3b901fa37fc6b8147a9",
+    "logo": "sha256:c89d8c4a31dd4f6487e69bc3bdb6585a52466a393f6e8d863bfc1a0189bc213c"
+  },
   "upstream": {
     "org": "golang",
     "repository_url": "https://github.com/golang/go",
     "disclaimer": "Unaffiliated mirror. Go is a project of Google and the Go Authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "1.26.1_20260803": {
+      "content": "sha256:6fd1908d6382b77f0baae0e6e365e32f6e5dca6afc2ff4e99de570f5522457fa",
+      "observed": "2026-08-03T19:50:15Z"
+    },
+    "1.26.1": {
+      "content": "sha256:6fd1908d6382b77f0baae0e6e365e32f6e5dca6afc2ff4e99de570f5522457fa",
+      "observed": "2026-08-03T19:50:15Z"
+    },
+    "1.26": {
+      "content": "sha256:f7a0c1d00a030130b626b866985d3104017b634ff6b44e062ecde60d574a44d6",
+      "observed": "2026-08-03T19:50:15Z"
+    },
+    "1": {
+      "content": "sha256:f7a0c1d00a030130b626b866985d3104017b634ff6b44e062ecde60d574a44d6",
+      "observed": "2026-08-03T19:50:15Z"
+    },
+    "latest": {
+      "content": "sha256:f7a0c1d00a030130b626b866985d3104017b634ff6b44e062ecde60d574a44d6",
+      "observed": "2026-08-03T19:50:15Z"
+    },
+    "1.26.2_20260803": {
+      "content": "sha256:27398b32047972573a138b95d24ae7f59934ec5e392f4f1cbbcd5a1116fdc042",
+      "observed": "2026-08-03T19:50:15Z"
+    },
+    "1.26.2": {
+      "content": "sha256:27398b32047972573a138b95d24ae7f59934ec5e392f4f1cbbcd5a1116fdc042",
+      "observed": "2026-08-03T19:50:15Z"
+    },
+    "1.26.3_20260803": {
+      "content": "sha256:cdf504b7ad61db480491d46028240749b9f8e173ad436e6d87289e67ffac7f84",
+      "observed": "2026-08-03T19:50:15Z"
+    },
+    "1.26.3": {
+      "content": "sha256:cdf504b7ad61db480491d46028240749b9f8e173ad436e6d87289e67ffac7f84",
+      "observed": "2026-08-03T19:50:15Z"
+    },
+    "1.26.4_20260803": {
+      "content": "sha256:2699b7cb846450ebbbd51ca9f9cc7147f044c3678c0ba82c8784041098443f40",
+      "observed": "2026-08-03T19:50:15Z"
+    },
+    "1.26.4": {
+      "content": "sha256:2699b7cb846450ebbbd51ca9f9cc7147f044c3678c0ba82c8784041098443f40",
+      "observed": "2026-08-03T19:50:15Z"
+    },
+    "1.26.5_20260803": {
+      "content": "sha256:f7a0c1d00a030130b626b866985d3104017b634ff6b44e062ecde60d574a44d6",
+      "observed": "2026-08-03T19:50:15Z"
+    },
+    "1.26.5": {
+      "content": "sha256:f7a0c1d00a030130b626b866985d3104017b634ff6b44e062ecde60d574a44d6",
+      "observed": "2026-08-03T19:50:15Z"
+    }
+  }
 }
