@@ -10,11 +10,78 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:051eaae80eb2e6300507e06717396c621b660fa09de261765e1fbab04854c4be",
+    "title": "Cocogitto",
+    "description": "The conventional commits toolbox \u2014 verify, log, changelog and version-bump a Git history",
+    "keywords": [
+      "cocogitto",
+      "cog",
+      "conventional-commits",
+      "semver",
+      "changelog",
+      "git",
+      "release",
+      "versioning",
+      "rust",
+      "cli"
+    ],
+    "readme": "sha256:141c8ee92767ade34376ac4c047a3e5046d0776012d9047ed7baf6ed60e6aab3",
+    "logo": "sha256:199adcf2e5109d427d1eb63d6dd4598505900cfce04b65058e77ee945232307e"
+  },
   "upstream": {
     "org": "Cocogitto",
     "repository_url": "https://github.com/cocogitto/cocogitto",
     "disclaimer": "Unaffiliated mirror. Cocogitto is a project of Paul Delafosse and the Cocogitto contributors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "6.4.0_20260804": {
+      "content": "sha256:2a19818536dbb725463fd36ca17857bf82f8a670c0ee6efc41c55d4bf9b8771a",
+      "observed": "2026-08-04T02:35:32Z"
+    },
+    "6.4.0": {
+      "content": "sha256:2a19818536dbb725463fd36ca17857bf82f8a670c0ee6efc41c55d4bf9b8771a",
+      "observed": "2026-08-04T02:35:32Z"
+    },
+    "6.4": {
+      "content": "sha256:2a19818536dbb725463fd36ca17857bf82f8a670c0ee6efc41c55d4bf9b8771a",
+      "observed": "2026-08-04T02:35:32Z"
+    },
+    "6": {
+      "content": "sha256:7c47ea9637be8d9b9e21846112d0fdb96f47ddc7c00ed53b0695f8e8f38c0f06",
+      "observed": "2026-08-04T02:35:32Z"
+    },
+    "latest": {
+      "content": "sha256:94b51b7ec4e2e63018c3e34be3e226d2e361afb4146e426deae0d66ab415726e",
+      "observed": "2026-08-04T02:35:32Z"
+    },
+    "6.5.0_20260804": {
+      "content": "sha256:7c47ea9637be8d9b9e21846112d0fdb96f47ddc7c00ed53b0695f8e8f38c0f06",
+      "observed": "2026-08-04T02:35:32Z"
+    },
+    "6.5.0": {
+      "content": "sha256:7c47ea9637be8d9b9e21846112d0fdb96f47ddc7c00ed53b0695f8e8f38c0f06",
+      "observed": "2026-08-04T02:35:32Z"
+    },
+    "6.5": {
+      "content": "sha256:7c47ea9637be8d9b9e21846112d0fdb96f47ddc7c00ed53b0695f8e8f38c0f06",
+      "observed": "2026-08-04T02:35:32Z"
+    },
+    "7.0.0_20260804": {
+      "content": "sha256:94b51b7ec4e2e63018c3e34be3e226d2e361afb4146e426deae0d66ab415726e",
+      "observed": "2026-08-04T02:35:32Z"
+    },
+    "7.0.0": {
+      "content": "sha256:94b51b7ec4e2e63018c3e34be3e226d2e361afb4146e426deae0d66ab415726e",
+      "observed": "2026-08-04T02:35:32Z"
+    },
+    "7.0": {
+      "content": "sha256:94b51b7ec4e2e63018c3e34be3e226d2e361afb4146e426deae0d66ab415726e",
+      "observed": "2026-08-04T02:35:32Z"
+    },
+    "7": {
+      "content": "sha256:94b51b7ec4e2e63018c3e34be3e226d2e361afb4146e426deae0d66ab415726e",
+      "observed": "2026-08-04T02:35:32Z"
+    }
+  }
 }
