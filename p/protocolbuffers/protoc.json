@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/protocolbuffers/protoc",
+  "repository": "oci://ghcr.io/ocx-contrib/protocolbuffers/protoc",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": null,
+  "upstream": {
+    "org": "protocolbuffers",
+    "repository_url": "https://github.com/protocolbuffers/protobuf",
+    "disclaimer": "Unaffiliated mirror. Protocol Buffers is a project of Google LLC; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
