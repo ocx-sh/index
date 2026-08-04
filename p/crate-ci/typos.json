@@ -10,11 +10,74 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:ac373490c6eed98e524d8c7cded982ba3d7623e72d4701e2452f104b46e1be79",
+    "title": "typos",
+    "description": "A fast source-code spell checker that finds and corrects misspellings in code, comments and filenames",
+    "keywords": [
+      "typos",
+      "spell-check",
+      "spelling",
+      "linter",
+      "source-code",
+      "static-analysis",
+      "pre-commit",
+      "ci",
+      "rust",
+      "cli"
+    ],
+    "readme": "sha256:2200d64cfcec0675afc039a59bcbb49770beb462d8428d234dae7a6722a576a3",
+    "logo": "sha256:dba9556ffc539951de48fd49d2660607b472a2470b9a34a7dc6b7185f4d74f57"
+  },
   "upstream": {
     "org": "crate-ci",
     "repository_url": "https://github.com/crate-ci/typos",
     "disclaimer": "Unaffiliated mirror. typos is a project of the crate-ci organization; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "1.47.2_20260804": {
+      "content": "sha256:54f14fbc0ad620f8235d2338c6bc11e780ea9327ecd6a6eb7c2315e33968bc4f",
+      "observed": "2026-08-04T00:45:29Z"
+    },
+    "1.47.2": {
+      "content": "sha256:54f14fbc0ad620f8235d2338c6bc11e780ea9327ecd6a6eb7c2315e33968bc4f",
+      "observed": "2026-08-04T00:45:29Z"
+    },
+    "1.47": {
+      "content": "sha256:54f14fbc0ad620f8235d2338c6bc11e780ea9327ecd6a6eb7c2315e33968bc4f",
+      "observed": "2026-08-04T00:45:29Z"
+    },
+    "1": {
+      "content": "sha256:6c8e87c8dba54a06f6212e83fa62584375cadadfa895923189a81662ee4d1d12",
+      "observed": "2026-08-04T00:45:29Z"
+    },
+    "latest": {
+      "content": "sha256:6c8e87c8dba54a06f6212e83fa62584375cadadfa895923189a81662ee4d1d12",
+      "observed": "2026-08-04T00:45:29Z"
+    },
+    "1.48.0_20260804": {
+      "content": "sha256:8031b185db494ea3101d2e1017065719b837d57109c84df8dfc9b24da34429dd",
+      "observed": "2026-08-04T00:45:29Z"
+    },
+    "1.48.0": {
+      "content": "sha256:8031b185db494ea3101d2e1017065719b837d57109c84df8dfc9b24da34429dd",
+      "observed": "2026-08-04T00:45:29Z"
+    },
+    "1.48": {
+      "content": "sha256:8031b185db494ea3101d2e1017065719b837d57109c84df8dfc9b24da34429dd",
+      "observed": "2026-08-04T00:45:29Z"
+    },
+    "1.49.0_20260804": {
+      "content": "sha256:6c8e87c8dba54a06f6212e83fa62584375cadadfa895923189a81662ee4d1d12",
+      "observed": "2026-08-04T00:45:29Z"
+    },
+    "1.49.0": {
+      "content": "sha256:6c8e87c8dba54a06f6212e83fa62584375cadadfa895923189a81662ee4d1d12",
+      "observed": "2026-08-04T00:45:29Z"
+    },
+    "1.49": {
+      "content": "sha256:6c8e87c8dba54a06f6212e83fa62584375cadadfa895923189a81662ee4d1d12",
+      "observed": "2026-08-04T00:45:29Z"
+    }
+  }
 }
