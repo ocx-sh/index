@@ -10,11 +10,66 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:64277a9d31698be340f1f6240849d5c13ce9615b954eb0b7f26827be622a945c",
+    "title": "deno",
+    "description": "Secure-by-default runtime for JavaScript and TypeScript, with a built-in toolchain",
+    "keywords": [
+      "deno",
+      "javascript",
+      "typescript",
+      "runtime",
+      "v8",
+      "jsr",
+      "npm",
+      "formatter",
+      "linter",
+      "test-runner"
+    ],
+    "readme": "sha256:1931f7776ec7bd5beef6dd3aa218915b594948d7827c3705294c3d0b8e0471f7",
+    "logo": "sha256:7a3f5dfce5ad5c1cb3d5fafe9178b26d324e9dcf89135004ec1a180c718070e8"
+  },
   "upstream": {
     "org": "denoland",
     "repository_url": "https://github.com/denoland/deno",
     "disclaimer": "Unaffiliated mirror. Deno is a project of the Deno authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "2.9.2_20260804": {
+      "content": "sha256:06774c82d79426a3e9f2a420db2a15aa13024c753d61cacc47d79a49e7ce54fb",
+      "observed": "2026-08-04T07:04:49Z"
+    },
+    "2.9.2": {
+      "content": "sha256:06774c82d79426a3e9f2a420db2a15aa13024c753d61cacc47d79a49e7ce54fb",
+      "observed": "2026-08-04T07:04:49Z"
+    },
+    "2.9": {
+      "content": "sha256:1126e53eb1ef411b0b82099192e50ec649daa16a4fda55112ca64e256d027f72",
+      "observed": "2026-08-04T07:04:49Z"
+    },
+    "2": {
+      "content": "sha256:1126e53eb1ef411b0b82099192e50ec649daa16a4fda55112ca64e256d027f72",
+      "observed": "2026-08-04T07:04:49Z"
+    },
+    "latest": {
+      "content": "sha256:1126e53eb1ef411b0b82099192e50ec649daa16a4fda55112ca64e256d027f72",
+      "observed": "2026-08-04T07:04:49Z"
+    },
+    "2.9.3_20260804": {
+      "content": "sha256:b5851634cca308e431404f4e15960d33e71e5d5b3cd58651dc15fe6d26f5a435",
+      "observed": "2026-08-04T07:04:49Z"
+    },
+    "2.9.3": {
+      "content": "sha256:b5851634cca308e431404f4e15960d33e71e5d5b3cd58651dc15fe6d26f5a435",
+      "observed": "2026-08-04T07:04:49Z"
+    },
+    "2.9.4_20260804": {
+      "content": "sha256:1126e53eb1ef411b0b82099192e50ec649daa16a4fda55112ca64e256d027f72",
+      "observed": "2026-08-04T07:04:49Z"
+    },
+    "2.9.4": {
+      "content": "sha256:1126e53eb1ef411b0b82099192e50ec649daa16a4fda55112ca64e256d027f72",
+      "observed": "2026-08-04T07:04:49Z"
+    }
+  }
 }
