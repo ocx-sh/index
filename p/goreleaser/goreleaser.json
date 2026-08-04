@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/goreleaser/goreleaser",
+  "repository": "oci://ghcr.io/ocx-contrib/goreleaser/goreleaser",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": null,
+  "upstream": {
+    "org": "goreleaser",
+    "repository_url": "https://github.com/goreleaser/goreleaser",
+    "disclaimer": "Unaffiliated mirror. GoReleaser is a project of Carlos Alexandro Becker; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
