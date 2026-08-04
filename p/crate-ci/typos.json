@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/crate-ci/typos",
+  "repository": "oci://ghcr.io/ocx-contrib/crate-ci/typos",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": null,
+  "upstream": {
+    "org": "crate-ci",
+    "repository_url": "https://github.com/crate-ci/typos",
+    "disclaimer": "Unaffiliated mirror. typos is a project of the crate-ci organization; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
