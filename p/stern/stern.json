@@ -10,11 +10,71 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:c379459ccc5c9e348fcb8f7e170e370325ec8140577625995e6e935a47c1e858",
+    "title": "stern",
+    "description": "Tail logs from multiple Kubernetes pods and containers at once, colour-coded per pod, with live pod discovery",
+    "keywords": [
+      "stern",
+      "kubernetes",
+      "k8s",
+      "logs",
+      "tail",
+      "kubectl",
+      "containers",
+      "pods",
+      "observability",
+      "cli",
+      "go"
+    ],
+    "readme": "sha256:30f2032bb6daa9a9d1342a0da0be65b0ff06dc558cfa80d1a0d3523517a90c22",
+    "logo": "sha256:d4aa3dcc2b76494329a4df6972030d90e7481ecd7e84537394fcbe39e71e8e02"
+  },
   "upstream": {
     "org": "stern",
     "repository_url": "https://github.com/stern/stern",
     "disclaimer": "Unaffiliated mirror. stern is a project of the stern authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "1.33.0_20260804": {
+      "content": "sha256:07cfbf231518539ede09498b7b1053ab0a2eee5918cb8ff7f88a327562529d0f",
+      "observed": "2026-08-04T01:58:32Z"
+    },
+    "1.33.0": {
+      "content": "sha256:07cfbf231518539ede09498b7b1053ab0a2eee5918cb8ff7f88a327562529d0f",
+      "observed": "2026-08-04T01:58:32Z"
+    },
+    "1.33": {
+      "content": "sha256:fbb34bce91d1b024d202cf844caf44cd6f77d79f8a4ec35fb65fb35f57172f52",
+      "observed": "2026-08-04T01:58:32Z"
+    },
+    "1": {
+      "content": "sha256:3fd1ebfaad605458f2c161d714f8f370d2dd80fa32a4aa77635114fdb681e174",
+      "observed": "2026-08-04T01:58:32Z"
+    },
+    "latest": {
+      "content": "sha256:3fd1ebfaad605458f2c161d714f8f370d2dd80fa32a4aa77635114fdb681e174",
+      "observed": "2026-08-04T01:58:32Z"
+    },
+    "1.33.1_20260804": {
+      "content": "sha256:fbb34bce91d1b024d202cf844caf44cd6f77d79f8a4ec35fb65fb35f57172f52",
+      "observed": "2026-08-04T01:58:32Z"
+    },
+    "1.33.1": {
+      "content": "sha256:fbb34bce91d1b024d202cf844caf44cd6f77d79f8a4ec35fb65fb35f57172f52",
+      "observed": "2026-08-04T01:58:32Z"
+    },
+    "1.34.0_20260804": {
+      "content": "sha256:3fd1ebfaad605458f2c161d714f8f370d2dd80fa32a4aa77635114fdb681e174",
+      "observed": "2026-08-04T01:58:32Z"
+    },
+    "1.34.0": {
+      "content": "sha256:3fd1ebfaad605458f2c161d714f8f370d2dd80fa32a4aa77635114fdb681e174",
+      "observed": "2026-08-04T01:58:32Z"
+    },
+    "1.34": {
+      "content": "sha256:3fd1ebfaad605458f2c161d714f8f370d2dd80fa32a4aa77635114fdb681e174",
+      "observed": "2026-08-04T01:58:32Z"
+    }
+  }
 }
