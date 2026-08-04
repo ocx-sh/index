@@ -10,11 +10,72 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:497a9bec0b7af4d2e478106eb310a018785c4c7d7afe1d06c7afcb889ed3bd6b",
+    "title": "Hugo",
+    "description": "The world's fastest static site generator \u2014 builds a whole site from Markdown, templates and assets in milliseconds, with a built-in asset pipeline",
+    "keywords": [
+      "hugo",
+      "static-site-generator",
+      "ssg",
+      "jamstack",
+      "markdown",
+      "templates",
+      "blog",
+      "website",
+      "sass",
+      "scss",
+      "go",
+      "cli"
+    ],
+    "readme": "sha256:6d3dbed4645591615977c563e2bd2581ed519aec6804c5feb381515da90555e3",
+    "logo": "sha256:4abf7657a4889e044a9cd3e7628d04b91b2e9bf0a879e08c5f44db4f5b39e79b"
+  },
   "upstream": {
     "org": "gohugoio",
     "repository_url": "https://github.com/gohugoio/hugo",
     "disclaimer": "Unaffiliated mirror. Hugo is a project of The Hugo Authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.163.2_20260804": {
+      "content": "sha256:066dc7c566a861cb8643c298d648ff32f63e26a18ff15b11658e0116e0eb87fe",
+      "observed": "2026-08-04T02:44:51Z"
+    },
+    "0.163.2": {
+      "content": "sha256:066dc7c566a861cb8643c298d648ff32f63e26a18ff15b11658e0116e0eb87fe",
+      "observed": "2026-08-04T02:44:51Z"
+    },
+    "0.163": {
+      "content": "sha256:0c1445601c489490276f8f1b3e5eff12f3d93e4a5b0c75d8f26373cfae2f057e",
+      "observed": "2026-08-04T02:44:51Z"
+    },
+    "0": {
+      "content": "sha256:b633251eb8db832490768305d993d1dfc709f5f4b8c31a2e168dab57c8029ef5",
+      "observed": "2026-08-04T02:44:51Z"
+    },
+    "latest": {
+      "content": "sha256:b633251eb8db832490768305d993d1dfc709f5f4b8c31a2e168dab57c8029ef5",
+      "observed": "2026-08-04T02:44:51Z"
+    },
+    "0.163.3_20260804": {
+      "content": "sha256:0c1445601c489490276f8f1b3e5eff12f3d93e4a5b0c75d8f26373cfae2f057e",
+      "observed": "2026-08-04T02:44:51Z"
+    },
+    "0.163.3": {
+      "content": "sha256:0c1445601c489490276f8f1b3e5eff12f3d93e4a5b0c75d8f26373cfae2f057e",
+      "observed": "2026-08-04T02:44:51Z"
+    },
+    "0.164.0_20260804": {
+      "content": "sha256:b633251eb8db832490768305d993d1dfc709f5f4b8c31a2e168dab57c8029ef5",
+      "observed": "2026-08-04T02:44:51Z"
+    },
+    "0.164.0": {
+      "content": "sha256:b633251eb8db832490768305d993d1dfc709f5f4b8c31a2e168dab57c8029ef5",
+      "observed": "2026-08-04T02:44:51Z"
+    },
+    "0.164": {
+      "content": "sha256:b633251eb8db832490768305d993d1dfc709f5f4b8c31a2e168dab57c8029ef5",
+      "observed": "2026-08-04T02:44:51Z"
+    }
+  }
 }
