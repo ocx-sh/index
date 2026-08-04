@@ -10,11 +10,72 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:b2ca75a7254f5174c9051969f9b53f075024b358011dab93c770ed5f201b278e",
+    "title": "biome",
+    "description": "One fast Rust toolchain for web projects \u2014 formatter, linter and import sorter for JavaScript, TypeScript, JSX, JSON, CSS and GraphQL",
+    "keywords": [
+      "biome",
+      "biomejs",
+      "formatter",
+      "linter",
+      "javascript",
+      "typescript",
+      "jsx",
+      "tsx",
+      "json",
+      "css",
+      "graphql",
+      "prettier",
+      "eslint",
+      "import-sort",
+      "rust",
+      "cli"
+    ],
+    "readme": "sha256:4dad91843df4c51a5afa604ea1ac117d97ded0d225bd198778eecfcbe8187155",
+    "logo": "sha256:c717fb987f250d509fb37b806cfec4cb8c40450dab122eaa22bd137ff0f2e167"
+  },
   "upstream": {
     "org": "biomejs",
     "repository_url": "https://github.com/biomejs/biome",
     "disclaimer": "Unaffiliated mirror. Biome is a project of the Biome Developers and Contributors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "2.5.4_20260804": {
+      "content": "sha256:a7fe965c9ab7529f08c2f137adb653e15412a0a1594decc4af130373cd78bcb3",
+      "observed": "2026-08-04T07:39:26Z"
+    },
+    "2.5.4": {
+      "content": "sha256:a7fe965c9ab7529f08c2f137adb653e15412a0a1594decc4af130373cd78bcb3",
+      "observed": "2026-08-04T07:39:26Z"
+    },
+    "2.5": {
+      "content": "sha256:6dd486cd447a1fd7a4eb1d2ed4ba50cae86159aaea158135129fcafd8d32e20d",
+      "observed": "2026-08-04T07:39:26Z"
+    },
+    "2": {
+      "content": "sha256:6dd486cd447a1fd7a4eb1d2ed4ba50cae86159aaea158135129fcafd8d32e20d",
+      "observed": "2026-08-04T07:39:26Z"
+    },
+    "latest": {
+      "content": "sha256:6dd486cd447a1fd7a4eb1d2ed4ba50cae86159aaea158135129fcafd8d32e20d",
+      "observed": "2026-08-04T07:39:26Z"
+    },
+    "2.5.5_20260804": {
+      "content": "sha256:2d44558a48278ab5d83d0483e73286c8ea24f38a95980f6949d21413534241fd",
+      "observed": "2026-08-04T07:39:26Z"
+    },
+    "2.5.5": {
+      "content": "sha256:2d44558a48278ab5d83d0483e73286c8ea24f38a95980f6949d21413534241fd",
+      "observed": "2026-08-04T07:39:26Z"
+    },
+    "2.5.6_20260804": {
+      "content": "sha256:6dd486cd447a1fd7a4eb1d2ed4ba50cae86159aaea158135129fcafd8d32e20d",
+      "observed": "2026-08-04T07:39:26Z"
+    },
+    "2.5.6": {
+      "content": "sha256:6dd486cd447a1fd7a4eb1d2ed4ba50cae86159aaea158135129fcafd8d32e20d",
+      "observed": "2026-08-04T07:39:26Z"
+    }
+  }
 }
