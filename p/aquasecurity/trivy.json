@@ -10,11 +10,79 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:6f3c0271fcc3115cf7da2ed19d5643c8fd2627678f2a8bf435f0de7476d8d5cc",
+    "title": "trivy",
+    "description": "All-in-one security scanner \u2014 vulnerabilities, misconfigurations, secrets, licenses and SBOMs across containers, filesystems, git repos, Kubernetes and IaC",
+    "keywords": [
+      "trivy",
+      "aquasecurity",
+      "security",
+      "vulnerability-scanner",
+      "sca",
+      "sbom",
+      "cve",
+      "secret-scanning",
+      "misconfiguration",
+      "iac",
+      "kubernetes",
+      "containers",
+      "devsecops",
+      "cli",
+      "go"
+    ],
+    "readme": "sha256:394529b8ac32c765b4329ca22adc43904bc17ebef4603a8849592249c0056f52",
+    "logo": "sha256:fca3a95008ce5e3827a6318c9017dfb9e571cd944b59f54e669b93b1b7df0191"
+  },
   "upstream": {
     "org": "Aqua Security",
     "repository_url": "https://github.com/aquasecurity/trivy",
     "disclaimer": "Unaffiliated mirror. Trivy is a project of Aqua Security Software Ltd.; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.71.2_20260804": {
+      "content": "sha256:c93542127f4e4ae081e31e4ae606c1aa9d0c680f9183d87a8316c85fe5400c64",
+      "observed": "2026-08-04T02:43:20Z"
+    },
+    "0.71.2": {
+      "content": "sha256:c93542127f4e4ae081e31e4ae606c1aa9d0c680f9183d87a8316c85fe5400c64",
+      "observed": "2026-08-04T02:43:20Z"
+    },
+    "0.71": {
+      "content": "sha256:c93542127f4e4ae081e31e4ae606c1aa9d0c680f9183d87a8316c85fe5400c64",
+      "observed": "2026-08-04T02:43:20Z"
+    },
+    "0": {
+      "content": "sha256:243db07aaf29b95d758ee43418688d1f079edf69ee5e86b384c3a7515fabe137",
+      "observed": "2026-08-04T02:43:20Z"
+    },
+    "latest": {
+      "content": "sha256:243db07aaf29b95d758ee43418688d1f079edf69ee5e86b384c3a7515fabe137",
+      "observed": "2026-08-04T02:43:20Z"
+    },
+    "0.72.0_20260804": {
+      "content": "sha256:72b62a4d7cbc5f27c99572efbd4319f04c40fbf149228ad9ad01ebf8090bce93",
+      "observed": "2026-08-04T02:43:20Z"
+    },
+    "0.72.0": {
+      "content": "sha256:72b62a4d7cbc5f27c99572efbd4319f04c40fbf149228ad9ad01ebf8090bce93",
+      "observed": "2026-08-04T02:43:20Z"
+    },
+    "0.72": {
+      "content": "sha256:72b62a4d7cbc5f27c99572efbd4319f04c40fbf149228ad9ad01ebf8090bce93",
+      "observed": "2026-08-04T02:43:20Z"
+    },
+    "0.73.0_20260804": {
+      "content": "sha256:243db07aaf29b95d758ee43418688d1f079edf69ee5e86b384c3a7515fabe137",
+      "observed": "2026-08-04T02:43:20Z"
+    },
+    "0.73.0": {
+      "content": "sha256:243db07aaf29b95d758ee43418688d1f079edf69ee5e86b384c3a7515fabe137",
+      "observed": "2026-08-04T02:43:20Z"
+    },
+    "0.73": {
+      "content": "sha256:243db07aaf29b95d758ee43418688d1f079edf69ee5e86b384c3a7515fabe137",
+      "observed": "2026-08-04T02:43:20Z"
+    }
+  }
 }
