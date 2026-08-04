@@ -10,11 +10,70 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:890a00db24da2c38255e105bf947d305ad4231a068084eaddc3af16f6ec6d1dc",
+    "title": "kustomize",
+    "description": "Template-free customization of Kubernetes YAML through declarative overlays",
+    "keywords": [
+      "kustomize",
+      "kubernetes",
+      "k8s",
+      "yaml",
+      "overlay",
+      "patch",
+      "configmap",
+      "gitops",
+      "manifest",
+      "kubernetes-sigs"
+    ],
+    "readme": "sha256:6b2890c25cd26b47f672ed7e57b4821bb1d97e4a27e485cc68ed9f1f1d5fde4f",
+    "logo": "sha256:33459e23cf64cce18683078ae169aa2ece8db6239aca71bdc3750b8b7b920d1a"
+  },
   "upstream": {
     "org": "kubernetes-sigs",
     "repository_url": "https://github.com/kubernetes-sigs/kustomize",
     "disclaimer": "Unaffiliated mirror. kustomize is a project of The Kubernetes Authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "5.7.1_20260804": {
+      "content": "sha256:9902c469601977e1ece8e32ad98817e67eb1fcb217c9da3341ebd3a194f47449",
+      "observed": "2026-08-04T01:52:38Z"
+    },
+    "5.7.1": {
+      "content": "sha256:9902c469601977e1ece8e32ad98817e67eb1fcb217c9da3341ebd3a194f47449",
+      "observed": "2026-08-04T01:52:38Z"
+    },
+    "5.7": {
+      "content": "sha256:9902c469601977e1ece8e32ad98817e67eb1fcb217c9da3341ebd3a194f47449",
+      "observed": "2026-08-04T01:52:38Z"
+    },
+    "5": {
+      "content": "sha256:1c5056079e9dbf026249bc7bd478dafe82ddd0ca3e3c8496391da37f210f1b9b",
+      "observed": "2026-08-04T01:52:38Z"
+    },
+    "latest": {
+      "content": "sha256:1c5056079e9dbf026249bc7bd478dafe82ddd0ca3e3c8496391da37f210f1b9b",
+      "observed": "2026-08-04T01:52:38Z"
+    },
+    "5.8.0_20260804": {
+      "content": "sha256:24f6d370acb32fc4e6bd4b4cc4361cb72ffe92b9de92b07d6592f91d233f37e4",
+      "observed": "2026-08-04T01:52:38Z"
+    },
+    "5.8.0": {
+      "content": "sha256:24f6d370acb32fc4e6bd4b4cc4361cb72ffe92b9de92b07d6592f91d233f37e4",
+      "observed": "2026-08-04T01:52:38Z"
+    },
+    "5.8": {
+      "content": "sha256:1c5056079e9dbf026249bc7bd478dafe82ddd0ca3e3c8496391da37f210f1b9b",
+      "observed": "2026-08-04T01:52:38Z"
+    },
+    "5.8.1_20260804": {
+      "content": "sha256:1c5056079e9dbf026249bc7bd478dafe82ddd0ca3e3c8496391da37f210f1b9b",
+      "observed": "2026-08-04T01:52:38Z"
+    },
+    "5.8.1": {
+      "content": "sha256:1c5056079e9dbf026249bc7bd478dafe82ddd0ca3e3c8496391da37f210f1b9b",
+      "observed": "2026-08-04T01:52:38Z"
+    }
+  }
 }
