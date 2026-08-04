@@ -10,11 +10,73 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:c3f1d9a33a1de1c52ec13205b3683bf68d7262247c42f9896bf14939bfad958c",
+    "title": "miniserve",
+    "description": "Single-binary CLI that serves a file or directory over HTTP right now, with uploads, auth, TLS, archives and WebDAV",
+    "keywords": [
+      "miniserve",
+      "http",
+      "http-server",
+      "file-server",
+      "static-server",
+      "webdav",
+      "upload",
+      "cli",
+      "rust"
+    ],
+    "readme": "sha256:e4145892899c3af9d767294d717e76b15887bb26ecc5bba66a0461f3d79593ce",
+    "logo": "sha256:eb3af8aee136828d57ca55fb7dd8c833f8800c8d53eef8859e47b2175e6d1ef7"
+  },
   "upstream": {
     "org": "svenstaro",
     "repository_url": "https://github.com/svenstaro/miniserve",
     "disclaimer": "Unaffiliated mirror. miniserve is a project of Sven-Hendrik Haase; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.33.0_20260804": {
+      "content": "sha256:bcffa19e093aa6fba63b163180bfad57943bddcb0f58d5441c9484cdcd3c5836",
+      "observed": "2026-08-04T00:55:15Z"
+    },
+    "0.33.0": {
+      "content": "sha256:bcffa19e093aa6fba63b163180bfad57943bddcb0f58d5441c9484cdcd3c5836",
+      "observed": "2026-08-04T00:55:15Z"
+    },
+    "0.33": {
+      "content": "sha256:bcffa19e093aa6fba63b163180bfad57943bddcb0f58d5441c9484cdcd3c5836",
+      "observed": "2026-08-04T00:55:15Z"
+    },
+    "0": {
+      "content": "sha256:5faa786e5eec41fcbdb208d3e16291e5febcc4953bbb28050e6fe82536b1b9e8",
+      "observed": "2026-08-04T00:55:15Z"
+    },
+    "latest": {
+      "content": "sha256:5faa786e5eec41fcbdb208d3e16291e5febcc4953bbb28050e6fe82536b1b9e8",
+      "observed": "2026-08-04T00:55:15Z"
+    },
+    "0.34.0_20260804": {
+      "content": "sha256:ecc9bb85d1f406cc5f867a30b0455ebcbb5db1a51158143bea8dc7f04389fb0a",
+      "observed": "2026-08-04T00:55:15Z"
+    },
+    "0.34.0": {
+      "content": "sha256:ecc9bb85d1f406cc5f867a30b0455ebcbb5db1a51158143bea8dc7f04389fb0a",
+      "observed": "2026-08-04T00:55:15Z"
+    },
+    "0.34": {
+      "content": "sha256:ecc9bb85d1f406cc5f867a30b0455ebcbb5db1a51158143bea8dc7f04389fb0a",
+      "observed": "2026-08-04T00:55:15Z"
+    },
+    "0.35.0_20260804": {
+      "content": "sha256:5faa786e5eec41fcbdb208d3e16291e5febcc4953bbb28050e6fe82536b1b9e8",
+      "observed": "2026-08-04T00:55:15Z"
+    },
+    "0.35.0": {
+      "content": "sha256:5faa786e5eec41fcbdb208d3e16291e5febcc4953bbb28050e6fe82536b1b9e8",
+      "observed": "2026-08-04T00:55:15Z"
+    },
+    "0.35": {
+      "content": "sha256:5faa786e5eec41fcbdb208d3e16291e5febcc4953bbb28050e6fe82536b1b9e8",
+      "observed": "2026-08-04T00:55:15Z"
+    }
+  }
 }
