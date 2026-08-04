@@ -10,11 +10,59 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:480694bb8612b6ba6c4da8f2b91ccecce0078f21a5298411fd7ba444df4a1195",
+    "title": "cargo-cyclonedx",
+    "description": "Generates a CycloneDX Software Bill-of-Materials (SBOM) for Cargo-based Rust projects",
+    "keywords": [
+      "cyclonedx",
+      "cargo-cyclonedx",
+      "sbom",
+      "bom",
+      "supply-chain",
+      "rust",
+      "cargo",
+      "dependencies",
+      "licenses",
+      "purl",
+      "owasp"
+    ],
+    "readme": "sha256:30a5093c50d2ef412b6ec5584534ef0d85379269fa07088272657c6cb1745faa",
+    "logo": "sha256:493c6832e6392e51d8829f16ed7eab0f32050e6c3b2bf14f8e1dc196eca2bb1e"
+  },
   "upstream": {
     "org": "CycloneDX",
     "repository_url": "https://github.com/CycloneDX/cyclonedx-rust-cargo",
     "disclaimer": "Unaffiliated mirror. cargo-cyclonedx is a project of the OWASP Foundation; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.5.8_20260804": {
+      "content": "sha256:b2c01b28ec92970179027bc27b2647dd02de492807602cbdbdd57f33b75223f8",
+      "observed": "2026-08-04T07:08:26Z"
+    },
+    "0.5.8": {
+      "content": "sha256:b2c01b28ec92970179027bc27b2647dd02de492807602cbdbdd57f33b75223f8",
+      "observed": "2026-08-04T07:08:26Z"
+    },
+    "0.5": {
+      "content": "sha256:27f452215089a920e8bcb352429118ca0408016ce681b97aef45bff2b13a6bfd",
+      "observed": "2026-08-04T07:08:26Z"
+    },
+    "0": {
+      "content": "sha256:27f452215089a920e8bcb352429118ca0408016ce681b97aef45bff2b13a6bfd",
+      "observed": "2026-08-04T07:08:26Z"
+    },
+    "latest": {
+      "content": "sha256:27f452215089a920e8bcb352429118ca0408016ce681b97aef45bff2b13a6bfd",
+      "observed": "2026-08-04T07:08:26Z"
+    },
+    "0.5.9_20260804": {
+      "content": "sha256:27f452215089a920e8bcb352429118ca0408016ce681b97aef45bff2b13a6bfd",
+      "observed": "2026-08-04T07:08:26Z"
+    },
+    "0.5.9": {
+      "content": "sha256:27f452215089a920e8bcb352429118ca0408016ce681b97aef45bff2b13a6bfd",
+      "observed": "2026-08-04T07:08:26Z"
+    }
+  }
 }
