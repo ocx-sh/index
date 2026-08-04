@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/k9s/k9s",
+  "repository": "oci://ghcr.io/ocx-contrib/k9s/k9s",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": null,
+  "upstream": {
+    "org": "derailed",
+    "repository_url": "https://github.com/derailed/k9s",
+    "disclaimer": "Unaffiliated mirror. k9s is a project of Imhotep Software LLC; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
