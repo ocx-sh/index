@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/dprint/dprint",
+  "repository": "oci://ghcr.io/ocx-contrib/dprint/dprint",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": null,
+  "upstream": {
+    "org": "dprint",
+    "repository_url": "https://github.com/dprint/dprint",
+    "disclaimer": "Unaffiliated mirror. dprint is a project of David Sherret; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
