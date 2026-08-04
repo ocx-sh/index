@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:861e76650a460e55e375e0d521a06d223accc0a6d3dcbab98e6f56ccba6ae2d4",
+    "digest": "sha256:f626904f65ecf59453365c4fc7e53c2e56ed44563733b17c676e12ed6560df2e",
     "title": "OpenTofu",
     "description": "Declarative infrastructure-as-code \u2014 plan and apply cloud resources from HCL, the community fork of Terraform",
     "keywords": [
@@ -27,7 +27,7 @@
       "cli",
       "go"
     ],
-    "readme": "sha256:298f398ba40f3aaf196cdd40f674d2fb4681fbac097af53e701e10238912d536",
+    "readme": "sha256:934cd6991ebecc624c4caa82d047f79ae3a38a8891953c5a5b0a7796d099876f",
     "logo": "sha256:8bbde074dfc2b0e31461a10a7a08ad6c43b3273f5fc3fc334459ee4c54570ec8"
   },
   "upstream": {
@@ -239,6 +239,46 @@
     "1.11.1": {
       "content": "sha256:c6f2895c3deb4f7b9eb20931deb639cf8c7130f699a8b75768d98de3d0bfc123",
       "observed": "2026-08-04T22:41:05Z"
+    },
+    "1.10.3_20260804": {
+      "content": "sha256:6eb174ab3475062dc772a1b5efb5f5eaf26719898fa4f66502b1fb5b89786bac",
+      "observed": "2026-08-04T23:59:42Z"
+    },
+    "1.10.3": {
+      "content": "sha256:6eb174ab3475062dc772a1b5efb5f5eaf26719898fa4f66502b1fb5b89786bac",
+      "observed": "2026-08-04T23:59:42Z"
+    },
+    "1.10.4_20260804": {
+      "content": "sha256:1ac36415ce9310bee6d52782fc5e5e8e5bff236afbdc13285f3bd9ecfd96192c",
+      "observed": "2026-08-04T23:59:42Z"
+    },
+    "1.10.4": {
+      "content": "sha256:1ac36415ce9310bee6d52782fc5e5e8e5bff236afbdc13285f3bd9ecfd96192c",
+      "observed": "2026-08-04T23:59:42Z"
+    },
+    "1.10.5_20260804": {
+      "content": "sha256:896e4637fe7da134b816eef40651284433f81d47c563c59152ac20ec1184e19c",
+      "observed": "2026-08-04T23:59:42Z"
+    },
+    "1.10.5": {
+      "content": "sha256:896e4637fe7da134b816eef40651284433f81d47c563c59152ac20ec1184e19c",
+      "observed": "2026-08-04T23:59:42Z"
+    },
+    "1.10.6_20260804": {
+      "content": "sha256:3a46375dd62d558aa438d106f18c7aa9630bbeb3025ed28fa3a02ed3c6def777",
+      "observed": "2026-08-04T23:59:42Z"
+    },
+    "1.10.6": {
+      "content": "sha256:3a46375dd62d558aa438d106f18c7aa9630bbeb3025ed28fa3a02ed3c6def777",
+      "observed": "2026-08-04T23:59:42Z"
+    },
+    "1.10.7_20260804": {
+      "content": "sha256:22b233d16d981f84d5a60a5e7c658650c280632b69642ff40767448c8e95b612",
+      "observed": "2026-08-04T23:59:42Z"
+    },
+    "1.10.7": {
+      "content": "sha256:22b233d16d981f84d5a60a5e7c658650c280632b69642ff40767448c8e95b612",
+      "observed": "2026-08-04T23:59:42Z"
     }
   }
 }
