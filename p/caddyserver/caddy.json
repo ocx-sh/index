@@ -10,11 +10,122 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:edd310b884d3aad4bb4a0f3f06c9b507939ddbbd9335efd0c9e4be9521986c00",
+    "title": "caddy",
+    "description": "Extensible web server and reverse proxy that serves every site over HTTPS by default",
+    "keywords": [
+      "caddy",
+      "web-server",
+      "reverse-proxy",
+      "https",
+      "tls",
+      "acme",
+      "letsencrypt",
+      "caddyfile",
+      "file-server",
+      "http3"
+    ],
+    "readme": "sha256:2a0d9b5728db11772309e202051c715be605a8d1f453d52b0f1717108305364b",
+    "logo": "sha256:aee4d61bfbcdaa40cd34160168a434722610cf498f49d72b320a336411768222"
+  },
   "upstream": {
     "org": "caddyserver",
     "repository_url": "https://github.com/caddyserver/caddy",
     "disclaimer": "Unaffiliated mirror. Caddy is a project of ZeroSSL, an HID Global company; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "2.9.0_20260804": {
+      "content": "sha256:0346881b6a32ea151533ce6ff3d1d56d1e8a1438192ab1c62b3aefeb659068cd",
+      "observed": "2026-08-04T07:45:14Z"
+    },
+    "2.9.0": {
+      "content": "sha256:0346881b6a32ea151533ce6ff3d1d56d1e8a1438192ab1c62b3aefeb659068cd",
+      "observed": "2026-08-04T07:45:14Z"
+    },
+    "2.9": {
+      "content": "sha256:86f0caa9645c0d0cf8649fe2585a7962692cd2cec194ef8a029ee2d8dc3dc001",
+      "observed": "2026-08-04T07:45:14Z"
+    },
+    "2": {
+      "content": "sha256:0dd4f2f004f8a1fef88547a78fce7a3f784e1d7215e055887ff9228d116b7132",
+      "observed": "2026-08-04T07:45:14Z"
+    },
+    "latest": {
+      "content": "sha256:0dd4f2f004f8a1fef88547a78fce7a3f784e1d7215e055887ff9228d116b7132",
+      "observed": "2026-08-04T07:45:14Z"
+    },
+    "2.9.1_20260804": {
+      "content": "sha256:86f0caa9645c0d0cf8649fe2585a7962692cd2cec194ef8a029ee2d8dc3dc001",
+      "observed": "2026-08-04T07:45:14Z"
+    },
+    "2.9.1": {
+      "content": "sha256:86f0caa9645c0d0cf8649fe2585a7962692cd2cec194ef8a029ee2d8dc3dc001",
+      "observed": "2026-08-04T07:45:14Z"
+    },
+    "2.10.0_20260804": {
+      "content": "sha256:87c56ef358dbec09558ccb530331350b59a16d6453dc2d056b0436cbc21568e9",
+      "observed": "2026-08-04T07:45:14Z"
+    },
+    "2.10.0": {
+      "content": "sha256:87c56ef358dbec09558ccb530331350b59a16d6453dc2d056b0436cbc21568e9",
+      "observed": "2026-08-04T07:45:14Z"
+    },
+    "2.10": {
+      "content": "sha256:61e5c6b26f8f9a0337184c60ec005b7a60683a9c4519320457f86db383dbfa40",
+      "observed": "2026-08-04T07:45:14Z"
+    },
+    "2.10.1_20260804": {
+      "content": "sha256:ef3d502b95c6c42690be940caafa41fbddbeadc23007335875fc3cb86a0307b9",
+      "observed": "2026-08-04T07:45:14Z"
+    },
+    "2.10.1": {
+      "content": "sha256:ef3d502b95c6c42690be940caafa41fbddbeadc23007335875fc3cb86a0307b9",
+      "observed": "2026-08-04T07:45:14Z"
+    },
+    "2.10.2_20260804": {
+      "content": "sha256:61e5c6b26f8f9a0337184c60ec005b7a60683a9c4519320457f86db383dbfa40",
+      "observed": "2026-08-04T07:45:14Z"
+    },
+    "2.10.2": {
+      "content": "sha256:61e5c6b26f8f9a0337184c60ec005b7a60683a9c4519320457f86db383dbfa40",
+      "observed": "2026-08-04T07:45:14Z"
+    },
+    "2.11.1_20260804": {
+      "content": "sha256:09466e2e4d55277c648bf0857fcf4a0654bfa7a1f78b0bf94a0d026c7f8abd80",
+      "observed": "2026-08-04T07:45:14Z"
+    },
+    "2.11.1": {
+      "content": "sha256:09466e2e4d55277c648bf0857fcf4a0654bfa7a1f78b0bf94a0d026c7f8abd80",
+      "observed": "2026-08-04T07:45:14Z"
+    },
+    "2.11": {
+      "content": "sha256:0dd4f2f004f8a1fef88547a78fce7a3f784e1d7215e055887ff9228d116b7132",
+      "observed": "2026-08-04T07:45:14Z"
+    },
+    "2.11.2_20260804": {
+      "content": "sha256:b1f6affa489e7f44bccc46afb79cb667e13de4315ea003906a14c5d4b465389a",
+      "observed": "2026-08-04T07:45:14Z"
+    },
+    "2.11.2": {
+      "content": "sha256:b1f6affa489e7f44bccc46afb79cb667e13de4315ea003906a14c5d4b465389a",
+      "observed": "2026-08-04T07:45:14Z"
+    },
+    "2.11.3_20260804": {
+      "content": "sha256:763592af7f7366ffd648bcd020b8dfb87d0be11a67a03eb77258b9393379a672",
+      "observed": "2026-08-04T07:45:14Z"
+    },
+    "2.11.3": {
+      "content": "sha256:763592af7f7366ffd648bcd020b8dfb87d0be11a67a03eb77258b9393379a672",
+      "observed": "2026-08-04T07:45:14Z"
+    },
+    "2.11.4_20260804": {
+      "content": "sha256:0dd4f2f004f8a1fef88547a78fce7a3f784e1d7215e055887ff9228d116b7132",
+      "observed": "2026-08-04T07:45:14Z"
+    },
+    "2.11.4": {
+      "content": "sha256:0dd4f2f004f8a1fef88547a78fce7a3f784e1d7215e055887ff9228d116b7132",
+      "observed": "2026-08-04T07:45:14Z"
+    }
+  }
 }
