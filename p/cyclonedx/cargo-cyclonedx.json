@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/cyclonedx/cargo-cyclonedx",
+  "repository": "oci://ghcr.io/ocx-contrib/cyclonedx/cargo-cyclonedx",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": null,
+  "upstream": {
+    "org": "CycloneDX",
+    "repository_url": "https://github.com/CycloneDX/cyclonedx-rust-cargo",
+    "disclaimer": "Unaffiliated mirror. cargo-cyclonedx is a project of the OWASP Foundation; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
