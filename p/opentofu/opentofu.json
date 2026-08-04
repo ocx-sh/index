@@ -10,11 +10,83 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:861e76650a460e55e375e0d521a06d223accc0a6d3dcbab98e6f56ccba6ae2d4",
+    "title": "OpenTofu",
+    "description": "Declarative infrastructure-as-code \u2014 plan and apply cloud resources from HCL, the community fork of Terraform",
+    "keywords": [
+      "opentofu",
+      "tofu",
+      "terraform",
+      "infrastructure-as-code",
+      "iac",
+      "hcl",
+      "devops",
+      "provisioning",
+      "cloud",
+      "cli",
+      "go"
+    ],
+    "readme": "sha256:298f398ba40f3aaf196cdd40f674d2fb4681fbac097af53e701e10238912d536",
+    "logo": "sha256:8bbde074dfc2b0e31461a10a7a08ad6c43b3273f5fc3fc334459ee4c54570ec8"
+  },
   "upstream": {
     "org": "OpenTofu",
     "repository_url": "https://github.com/opentofu/opentofu",
     "disclaimer": "Unaffiliated mirror. OpenTofu is a project of the OpenTofu Authors, hosted by the Linux Foundation; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "1.12.1_20260804": {
+      "content": "sha256:760c574b5484ffcd28db2c43819d7be0b75fae76c0a6981798b1a130cab0fdfc",
+      "observed": "2026-08-04T07:18:35Z"
+    },
+    "1.12.1": {
+      "content": "sha256:760c574b5484ffcd28db2c43819d7be0b75fae76c0a6981798b1a130cab0fdfc",
+      "observed": "2026-08-04T07:18:35Z"
+    },
+    "1.12": {
+      "content": "sha256:a02ea10e5d42d957f10f18b3553febd8c0a9096dcbba59b9083dd76adc3a20ea",
+      "observed": "2026-08-04T07:18:35Z"
+    },
+    "1": {
+      "content": "sha256:a02ea10e5d42d957f10f18b3553febd8c0a9096dcbba59b9083dd76adc3a20ea",
+      "observed": "2026-08-04T07:18:35Z"
+    },
+    "latest": {
+      "content": "sha256:a02ea10e5d42d957f10f18b3553febd8c0a9096dcbba59b9083dd76adc3a20ea",
+      "observed": "2026-08-04T07:18:35Z"
+    },
+    "1.12.2_20260804": {
+      "content": "sha256:3b84f7074b4577f14d698a942e79c8ed4c44df34c649c189835d4005617f1458",
+      "observed": "2026-08-04T07:18:35Z"
+    },
+    "1.12.2": {
+      "content": "sha256:3b84f7074b4577f14d698a942e79c8ed4c44df34c649c189835d4005617f1458",
+      "observed": "2026-08-04T07:18:35Z"
+    },
+    "1.12.3_20260804": {
+      "content": "sha256:a3ecc5e2b74adb3898c9bb23c2cb693a2624b750d299ffb914c66765555790e5",
+      "observed": "2026-08-04T07:18:35Z"
+    },
+    "1.12.3": {
+      "content": "sha256:a3ecc5e2b74adb3898c9bb23c2cb693a2624b750d299ffb914c66765555790e5",
+      "observed": "2026-08-04T07:18:35Z"
+    },
+    "1.12.4_20260804": {
+      "content": "sha256:4e35ba40631646d100d98e4903bdc6e0a27d58ad46a03880d8b06d3953ea4140",
+      "observed": "2026-08-04T07:18:35Z"
+    },
+    "1.12.4": {
+      "content": "sha256:4e35ba40631646d100d98e4903bdc6e0a27d58ad46a03880d8b06d3953ea4140",
+      "observed": "2026-08-04T07:18:35Z"
+    },
+    "1.12.5_20260804": {
+      "content": "sha256:a02ea10e5d42d957f10f18b3553febd8c0a9096dcbba59b9083dd76adc3a20ea",
+      "observed": "2026-08-04T07:18:35Z"
+    },
+    "1.12.5": {
+      "content": "sha256:a02ea10e5d42d957f10f18b3553febd8c0a9096dcbba59b9083dd76adc3a20ea",
+      "observed": "2026-08-04T07:18:35Z"
+    }
+  }
 }
