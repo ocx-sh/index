@@ -10,11 +10,74 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:54e7c71db9d4bc8bd73d03599cb9a3993f4847570ce59b1e61a3f9cd0ea48a92",
+    "title": "kind",
+    "description": "Run local Kubernetes clusters using Docker or Podman containers as nodes",
+    "keywords": [
+      "kind",
+      "kubernetes",
+      "k8s",
+      "cluster",
+      "docker",
+      "podman",
+      "local",
+      "testing",
+      "ci",
+      "kubernetes-sigs"
+    ],
+    "readme": "sha256:c81e1c5cc329fa337225314b9d8648a1f74be239697c3598a3ebdd3faf418135",
+    "logo": "sha256:09c21e3114167cadc5a7eb40895d3262c1d2c369ba858b973b5e4455c04888b3"
+  },
   "upstream": {
     "org": "kubernetes-sigs",
     "repository_url": "https://github.com/kubernetes-sigs/kind",
     "disclaimer": "Unaffiliated mirror. kind is a project of The Kubernetes Authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.30.0_20260804": {
+      "content": "sha256:8f6accb42be1c6138773fd3e5b5f9c7174d564118085c9b13aec1eda60a4208f",
+      "observed": "2026-08-04T01:48:53Z"
+    },
+    "0.30.0": {
+      "content": "sha256:8f6accb42be1c6138773fd3e5b5f9c7174d564118085c9b13aec1eda60a4208f",
+      "observed": "2026-08-04T01:48:53Z"
+    },
+    "0.30": {
+      "content": "sha256:8f6accb42be1c6138773fd3e5b5f9c7174d564118085c9b13aec1eda60a4208f",
+      "observed": "2026-08-04T01:48:53Z"
+    },
+    "0": {
+      "content": "sha256:9be9e9c0ecdeb1de80cf063bde84052ad538b75d1371223a7fddf8fb70888cf0",
+      "observed": "2026-08-04T01:48:53Z"
+    },
+    "latest": {
+      "content": "sha256:9be9e9c0ecdeb1de80cf063bde84052ad538b75d1371223a7fddf8fb70888cf0",
+      "observed": "2026-08-04T01:48:53Z"
+    },
+    "0.31.0_20260804": {
+      "content": "sha256:2a0bbf9eb0346d72bdb8e1544500b312d3249a408f0e6446892a4d1e170c9f0c",
+      "observed": "2026-08-04T01:48:53Z"
+    },
+    "0.31.0": {
+      "content": "sha256:2a0bbf9eb0346d72bdb8e1544500b312d3249a408f0e6446892a4d1e170c9f0c",
+      "observed": "2026-08-04T01:48:53Z"
+    },
+    "0.31": {
+      "content": "sha256:2a0bbf9eb0346d72bdb8e1544500b312d3249a408f0e6446892a4d1e170c9f0c",
+      "observed": "2026-08-04T01:48:53Z"
+    },
+    "0.32.0_20260804": {
+      "content": "sha256:9be9e9c0ecdeb1de80cf063bde84052ad538b75d1371223a7fddf8fb70888cf0",
+      "observed": "2026-08-04T01:48:53Z"
+    },
+    "0.32.0": {
+      "content": "sha256:9be9e9c0ecdeb1de80cf063bde84052ad538b75d1371223a7fddf8fb70888cf0",
+      "observed": "2026-08-04T01:48:53Z"
+    },
+    "0.32": {
+      "content": "sha256:9be9e9c0ecdeb1de80cf063bde84052ad538b75d1371223a7fddf8fb70888cf0",
+      "observed": "2026-08-04T01:48:53Z"
+    }
+  }
 }
