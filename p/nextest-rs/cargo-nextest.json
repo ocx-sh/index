@@ -10,11 +10,67 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:130f6b8e4a8f35941a9c4d91fd8fdd599ec18871fcd2b32dc0fb693191a10dbe",
+    "title": "cargo-nextest",
+    "description": "Next-generation Rust test runner - process-per-test execution, flaky-test retries, partitioned CI sharding and JUnit output",
+    "keywords": [
+      "cargo-nextest",
+      "nextest",
+      "cargo",
+      "rust",
+      "test-runner",
+      "testing",
+      "junit",
+      "flaky-tests",
+      "ci",
+      "sharding",
+      "retries"
+    ],
+    "readme": "sha256:e31c73372a71be9777fe3fd08a5ad0b741f6339b56223c9afa1a2715a684d12d",
+    "logo": "sha256:febc879d4ad0f8d4cf3545cd10ef91716dad3e2e3abcb3e91100bb867887c699"
+  },
   "upstream": {
     "org": "nextest-rs",
     "repository_url": "https://github.com/nextest-rs/nextest",
     "disclaimer": "Unaffiliated mirror. cargo-nextest is a project of The nextest Contributors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.9.137_20260804": {
+      "content": "sha256:f8e08ec7d4091021bf2f9d044df836eb8ba1ed7967c0fa5761bea22a624e8f44",
+      "observed": "2026-08-04T02:40:07Z"
+    },
+    "0.9.137": {
+      "content": "sha256:f8e08ec7d4091021bf2f9d044df836eb8ba1ed7967c0fa5761bea22a624e8f44",
+      "observed": "2026-08-04T02:40:07Z"
+    },
+    "0.9": {
+      "content": "sha256:36725c3d5a914aa77e9d45568ff0ae59520c0679127f0c89b343f32147431afe",
+      "observed": "2026-08-04T02:40:07Z"
+    },
+    "0": {
+      "content": "sha256:36725c3d5a914aa77e9d45568ff0ae59520c0679127f0c89b343f32147431afe",
+      "observed": "2026-08-04T02:40:07Z"
+    },
+    "latest": {
+      "content": "sha256:36725c3d5a914aa77e9d45568ff0ae59520c0679127f0c89b343f32147431afe",
+      "observed": "2026-08-04T02:40:07Z"
+    },
+    "0.9.138_20260804": {
+      "content": "sha256:ab9a1ba9191da6866a1936e399227a2bdc1b89861f30a6ab927521d0bba38774",
+      "observed": "2026-08-04T02:40:07Z"
+    },
+    "0.9.138": {
+      "content": "sha256:ab9a1ba9191da6866a1936e399227a2bdc1b89861f30a6ab927521d0bba38774",
+      "observed": "2026-08-04T02:40:07Z"
+    },
+    "0.9.140_20260804": {
+      "content": "sha256:36725c3d5a914aa77e9d45568ff0ae59520c0679127f0c89b343f32147431afe",
+      "observed": "2026-08-04T02:40:07Z"
+    },
+    "0.9.140": {
+      "content": "sha256:36725c3d5a914aa77e9d45568ff0ae59520c0679127f0c89b343f32147431afe",
+      "observed": "2026-08-04T02:40:07Z"
+    }
+  }
 }
