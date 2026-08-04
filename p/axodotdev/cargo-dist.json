@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/axodotdev/cargo-dist",
+  "repository": "oci://ghcr.io/ocx-contrib/axodotdev/cargo-dist",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": null,
+  "upstream": {
+    "org": "axodotdev",
+    "repository_url": "https://github.com/axodotdev/cargo-dist",
+    "disclaimer": "Unaffiliated mirror. cargo-dist is a project of Axo Developer Co and the axodotdev organization; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
