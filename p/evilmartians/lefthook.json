@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/evilmartians/lefthook",
+  "repository": "oci://ghcr.io/ocx-contrib/evilmartians/lefthook",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": null,
+  "upstream": {
+    "org": "evilmartians",
+    "repository_url": "https://github.com/evilmartians/lefthook",
+    "disclaimer": "Unaffiliated mirror. lefthook is a project of Evil Martians; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
