@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/watchexec/watchexec",
+  "repository": "oci://ghcr.io/ocx-contrib/watchexec/watchexec",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": null,
+  "upstream": {
+    "org": "watchexec",
+    "repository_url": "https://github.com/watchexec/watchexec",
+    "disclaimer": "Unaffiliated mirror. watchexec is a project of F\u00e9lix Saparelli, Matt Green and the watchexec organization; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
