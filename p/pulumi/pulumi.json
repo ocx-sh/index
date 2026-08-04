@@ -10,11 +10,76 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:2833909b059b12724e859aed4c0fb525cf3bf6f40cf8199944b8a761ff4b25e3",
+    "title": "pulumi",
+    "description": "Infrastructure as Code in TypeScript, Python, Go, C#, Java or YAML \u2014 define cloud resources in a real programming language and preview, deploy and destroy them",
+    "keywords": [
+      "pulumi",
+      "infrastructure-as-code",
+      "iac",
+      "cloud",
+      "aws",
+      "azure",
+      "gcp",
+      "kubernetes",
+      "devops",
+      "terraform-alternative",
+      "cli",
+      "go"
+    ],
+    "readme": "sha256:1cc45823bf1f6a9d837c7767d0fe7dc7b3ae6a84b87a08fba8bff8d710587468",
+    "logo": "sha256:1b5b2b58fff08dc0355c926113065b7ef862e389076f2186eafb52af65ab4505"
+  },
   "upstream": {
     "org": "pulumi",
     "repository_url": "https://github.com/pulumi/pulumi",
     "disclaimer": "Unaffiliated mirror. Pulumi is a project of Pulumi Corporation; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "3.253.0_20260804": {
+      "content": "sha256:ce479e07def9360f94426ce19bb74cda260facd3f86547b7ee76ee21a0a3be96",
+      "observed": "2026-08-04T02:53:27Z"
+    },
+    "3.253.0": {
+      "content": "sha256:ce479e07def9360f94426ce19bb74cda260facd3f86547b7ee76ee21a0a3be96",
+      "observed": "2026-08-04T02:53:27Z"
+    },
+    "3.253": {
+      "content": "sha256:ce479e07def9360f94426ce19bb74cda260facd3f86547b7ee76ee21a0a3be96",
+      "observed": "2026-08-04T02:53:27Z"
+    },
+    "3": {
+      "content": "sha256:eab23e191b255927f59dd932d72e37f858757dc1854259f30611f55fe273b5f4",
+      "observed": "2026-08-04T02:53:27Z"
+    },
+    "latest": {
+      "content": "sha256:eab23e191b255927f59dd932d72e37f858757dc1854259f30611f55fe273b5f4",
+      "observed": "2026-08-04T02:53:27Z"
+    },
+    "3.254.0_20260804": {
+      "content": "sha256:dd0b5fdc2f575ddd0b5776b1ca5b7e76dadbb59ee9b9a8059dac0864bc05f207",
+      "observed": "2026-08-04T02:53:27Z"
+    },
+    "3.254.0": {
+      "content": "sha256:dd0b5fdc2f575ddd0b5776b1ca5b7e76dadbb59ee9b9a8059dac0864bc05f207",
+      "observed": "2026-08-04T02:53:27Z"
+    },
+    "3.254": {
+      "content": "sha256:dd0b5fdc2f575ddd0b5776b1ca5b7e76dadbb59ee9b9a8059dac0864bc05f207",
+      "observed": "2026-08-04T02:53:27Z"
+    },
+    "3.255.0_20260804": {
+      "content": "sha256:eab23e191b255927f59dd932d72e37f858757dc1854259f30611f55fe273b5f4",
+      "observed": "2026-08-04T02:53:27Z"
+    },
+    "3.255.0": {
+      "content": "sha256:eab23e191b255927f59dd932d72e37f858757dc1854259f30611f55fe273b5f4",
+      "observed": "2026-08-04T02:53:27Z"
+    },
+    "3.255": {
+      "content": "sha256:eab23e191b255927f59dd932d72e37f858757dc1854259f30611f55fe273b5f4",
+      "observed": "2026-08-04T02:53:27Z"
+    }
+  }
 }
