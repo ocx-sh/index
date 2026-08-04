@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="grpcurl">
+  <title>grpcurl</title>
+  <!--
+    Original mark authored for the OCX catalog entry — upstream publishes no
+    logo of its own. A terminal tile with a shell prompt chevron issuing a
+    call, and a request/response pair returning: grpcurl is a command-line
+    client that speaks RPC.
+  -->
+  <rect width="512" height="512" rx="112" fill="#16202B"/>
+  <!-- prompt chevron -->
+  <path d="M120 168 L200 256 L120 344"
+        fill="none" stroke="#3DDC97" stroke-width="40"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- request: outbound -->
+  <path d="M248 212 H392" fill="none" stroke="#5EC8F2" stroke-width="34" stroke-linecap="round"/>
+  <path d="M348 168 L392 212 L348 256"
+        fill="none" stroke="#5EC8F2" stroke-width="34"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- response: inbound, shorter -->
+  <path d="M392 344 H288" fill="none" stroke="#8C9BAB" stroke-width="34" stroke-linecap="round"/>
+  <path d="M332 300 L288 344 L332 388"
+        fill="none" stroke="#8C9BAB" stroke-width="34"
+        stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

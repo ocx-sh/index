@@ -10,11 +10,71 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:4f8968d5c9c748b5571cc632ac7e0b26e61b8f49af811339ddba24ce56f7a63b",
+    "title": "grpcurl",
+    "description": "Like cURL, but for gRPC \u2014 a command-line client for gRPC servers",
+    "keywords": [
+      "grpcurl",
+      "grpc",
+      "protobuf",
+      "rpc",
+      "cli",
+      "networking",
+      "api"
+    ],
+    "readme": "sha256:0df3304f5e05a72ccba29ef17cbeabe892ebdbbe7def5ea9cc64cb8cc9a7cb09",
+    "logo": "sha256:4611c4ab6111e94361461800a27e0964e8e9a40bd1c7d5d147f19c1de96dc71c"
+  },
   "upstream": {
     "org": "fullstorydev",
     "repository_url": "https://github.com/fullstorydev/grpcurl",
     "disclaimer": "Unaffiliated mirror. grpcurl is a project of Fullstory, Inc; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "1.9.0_20260804": {
+      "content": "sha256:534865e50b5f3299abb28727c2c85aa2a8a7b5167a473ffbf2106177d14c5d24",
+      "observed": "2026-08-04T07:43:11Z"
+    },
+    "1.9.0": {
+      "content": "sha256:534865e50b5f3299abb28727c2c85aa2a8a7b5167a473ffbf2106177d14c5d24",
+      "observed": "2026-08-04T07:43:11Z"
+    },
+    "1.9": {
+      "content": "sha256:250e46e54c5e88d7660c1a0715666fd8d021f9e08a6102bf9171998d052a73b2",
+      "observed": "2026-08-04T07:43:11Z"
+    },
+    "1": {
+      "content": "sha256:250e46e54c5e88d7660c1a0715666fd8d021f9e08a6102bf9171998d052a73b2",
+      "observed": "2026-08-04T07:43:11Z"
+    },
+    "latest": {
+      "content": "sha256:250e46e54c5e88d7660c1a0715666fd8d021f9e08a6102bf9171998d052a73b2",
+      "observed": "2026-08-04T07:43:11Z"
+    },
+    "1.9.1_20260804": {
+      "content": "sha256:650d735dbd975eb677c16b67eba57e128fd67d454c9f7abb9cce0d99c6e43cdd",
+      "observed": "2026-08-04T07:43:11Z"
+    },
+    "1.9.1": {
+      "content": "sha256:650d735dbd975eb677c16b67eba57e128fd67d454c9f7abb9cce0d99c6e43cdd",
+      "observed": "2026-08-04T07:43:11Z"
+    },
+    "1.9.2_20260804": {
+      "content": "sha256:5f3f8637a62747b7cfc94924c469330daffadd51f13d32aa51290ce5b96de30c",
+      "observed": "2026-08-04T07:43:11Z"
+    },
+    "1.9.2": {
+      "content": "sha256:5f3f8637a62747b7cfc94924c469330daffadd51f13d32aa51290ce5b96de30c",
+      "observed": "2026-08-04T07:43:11Z"
+    },
+    "1.9.3_20260804": {
+      "content": "sha256:250e46e54c5e88d7660c1a0715666fd8d021f9e08a6102bf9171998d052a73b2",
+      "observed": "2026-08-04T07:43:11Z"
+    },
+    "1.9.3": {
+      "content": "sha256:250e46e54c5e88d7660c1a0715666fd8d021f9e08a6102bf9171998d052a73b2",
+      "observed": "2026-08-04T07:43:11Z"
+    }
+  }
 }
