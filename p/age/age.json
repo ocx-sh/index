@@ -35,32 +35,32 @@
   },
   "tags": {
     "1.3.0_20260804": {
-      "content": "sha256:effe6c118b596cd21b0c3b2058b15eae9d835ee644440c450a932169aff7125f",
-      "observed": "2026-08-04T00:21:53Z"
+      "content": "sha256:34ba92d109a1a74f3d8391a6677e19e351df1d7a60224d3baef8d62e16febac1",
+      "observed": "2026-08-04T00:26:46Z"
     },
     "1.3.0": {
-      "content": "sha256:effe6c118b596cd21b0c3b2058b15eae9d835ee644440c450a932169aff7125f",
-      "observed": "2026-08-04T00:21:53Z"
+      "content": "sha256:34ba92d109a1a74f3d8391a6677e19e351df1d7a60224d3baef8d62e16febac1",
+      "observed": "2026-08-04T00:26:46Z"
     },
     "1.3": {
-      "content": "sha256:979f670dc267cf80269dbdd4b69c0cb3396135b73cc736a8888948efff196d19",
-      "observed": "2026-08-04T00:21:53Z"
+      "content": "sha256:b06c598a038bdc9a7607d04e50a381c0f3e041838c277f60f93c8746d2076061",
+      "observed": "2026-08-04T00:26:46Z"
     },
     "1": {
-      "content": "sha256:979f670dc267cf80269dbdd4b69c0cb3396135b73cc736a8888948efff196d19",
-      "observed": "2026-08-04T00:21:53Z"
+      "content": "sha256:b06c598a038bdc9a7607d04e50a381c0f3e041838c277f60f93c8746d2076061",
+      "observed": "2026-08-04T00:26:46Z"
     },
     "latest": {
-      "content": "sha256:979f670dc267cf80269dbdd4b69c0cb3396135b73cc736a8888948efff196d19",
-      "observed": "2026-08-04T00:21:53Z"
+      "content": "sha256:b06c598a038bdc9a7607d04e50a381c0f3e041838c277f60f93c8746d2076061",
+      "observed": "2026-08-04T00:26:46Z"
     },
     "1.3.1_20260804": {
-      "content": "sha256:979f670dc267cf80269dbdd4b69c0cb3396135b73cc736a8888948efff196d19",
-      "observed": "2026-08-04T00:21:53Z"
+      "content": "sha256:b06c598a038bdc9a7607d04e50a381c0f3e041838c277f60f93c8746d2076061",
+      "observed": "2026-08-04T00:26:46Z"
     },
     "1.3.1": {
-      "content": "sha256:979f670dc267cf80269dbdd4b69c0cb3396135b73cc736a8888948efff196d19",
-      "observed": "2026-08-04T00:21:53Z"
+      "content": "sha256:b06c598a038bdc9a7607d04e50a381c0f3e041838c277f60f93c8746d2076061",
+      "observed": "2026-08-04T00:26:46Z"
     }
   }
 }
