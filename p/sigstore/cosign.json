@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/sigstore/cosign",
+  "repository": "oci://ghcr.io/ocx-contrib/sigstore/cosign",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": null,
+  "upstream": {
+    "org": "sigstore",
+    "repository_url": "https://github.com/sigstore/cosign",
+    "disclaimer": "Unaffiliated mirror. cosign is a project of Sigstore, an OpenSSF (Linux Foundation) project; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
