@@ -10,11 +10,72 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:caa3a185900c921b5b4d190eaf8f10ca1d3920c34f53bebc3a1890d6b17baa5d",
+    "title": "oxlint",
+    "description": "Oxlint \u2014 the JavaScript/TypeScript linter from the Oxc toolchain, written in Rust. Runs ESLint-compatible correctness rules over a whole repository in a fraction of the time, with no Node.js runtime required.\n",
+    "keywords": [
+      "linter",
+      "javascript",
+      "typescript",
+      "jsx",
+      "eslint",
+      "oxc",
+      "rust",
+      "static-analysis"
+    ],
+    "readme": "sha256:f7fb859c495bd95ab1a4912bc0c018a7755281147347c96179a480cee640b9f7",
+    "logo": "sha256:fc4deff3b678057c570772b64dc43550b6d6a42f66580d612fb898541ac21735"
+  },
   "upstream": {
     "org": "oxc-project",
     "repository_url": "https://github.com/oxc-project/oxc",
     "disclaimer": "Unaffiliated mirror. Oxlint is a project of VoidZero Inc. and the Oxc contributors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "1.75.0_20260804": {
+      "content": "sha256:df9c7ee958a977f989b3a3df6f4200c4ff102d77d1ccfa525ef5190d01445598",
+      "observed": "2026-08-04T07:02:36Z"
+    },
+    "1.75.0": {
+      "content": "sha256:df9c7ee958a977f989b3a3df6f4200c4ff102d77d1ccfa525ef5190d01445598",
+      "observed": "2026-08-04T07:02:36Z"
+    },
+    "1.75": {
+      "content": "sha256:df9c7ee958a977f989b3a3df6f4200c4ff102d77d1ccfa525ef5190d01445598",
+      "observed": "2026-08-04T07:02:36Z"
+    },
+    "1": {
+      "content": "sha256:dfe9254d7d66bb79b0ebf963da64d51a7f9a5f9b2453953b989bbff6a279489d",
+      "observed": "2026-08-04T07:02:36Z"
+    },
+    "latest": {
+      "content": "sha256:dfe9254d7d66bb79b0ebf963da64d51a7f9a5f9b2453953b989bbff6a279489d",
+      "observed": "2026-08-04T07:02:36Z"
+    },
+    "1.76.0_20260804": {
+      "content": "sha256:b73a4d50c59276bdca309716e53ae4988039c96ff5f0bd399b6c9b6d83156630",
+      "observed": "2026-08-04T07:02:36Z"
+    },
+    "1.76.0": {
+      "content": "sha256:b73a4d50c59276bdca309716e53ae4988039c96ff5f0bd399b6c9b6d83156630",
+      "observed": "2026-08-04T07:02:36Z"
+    },
+    "1.76": {
+      "content": "sha256:b73a4d50c59276bdca309716e53ae4988039c96ff5f0bd399b6c9b6d83156630",
+      "observed": "2026-08-04T07:02:36Z"
+    },
+    "1.77.0_20260804": {
+      "content": "sha256:dfe9254d7d66bb79b0ebf963da64d51a7f9a5f9b2453953b989bbff6a279489d",
+      "observed": "2026-08-04T07:02:36Z"
+    },
+    "1.77.0": {
+      "content": "sha256:dfe9254d7d66bb79b0ebf963da64d51a7f9a5f9b2453953b989bbff6a279489d",
+      "observed": "2026-08-04T07:02:36Z"
+    },
+    "1.77": {
+      "content": "sha256:dfe9254d7d66bb79b0ebf963da64d51a7f9a5f9b2453953b989bbff6a279489d",
+      "observed": "2026-08-04T07:02:36Z"
+    }
+  }
 }
