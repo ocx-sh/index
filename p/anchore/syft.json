@@ -10,11 +10,73 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:991a72ad24403b1ee3d9bfa13e410ffac6b5bc1a83e4dad20b924e8f55ee71c7",
+    "title": "Syft",
+    "description": "SBOM generator for container images and filesystems",
+    "keywords": [
+      "syft",
+      "sbom",
+      "spdx",
+      "cyclonedx",
+      "supply-chain",
+      "anchore",
+      "packages",
+      "inventory",
+      "security"
+    ],
+    "readme": "sha256:9f0a487d98dedf05614ff354c5051fe30558f9364aceca91c53cf4a8c4010962",
+    "logo": "sha256:3f3f91e30e146b5a14c45153da5915b73b46cef1714fbeb8605d99aa9d319222"
+  },
   "upstream": {
     "org": "anchore",
     "repository_url": "https://github.com/anchore/syft",
     "disclaimer": "Unaffiliated mirror. Syft is a project of Anchore, Inc.; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "1.48.0_20260804": {
+      "content": "sha256:e6205c24bd42dac870eecf28b5bfb6c45be7fa8838a6ae7172cff2ea7cc450f4",
+      "observed": "2026-08-04T01:43:20Z"
+    },
+    "1.48.0": {
+      "content": "sha256:e6205c24bd42dac870eecf28b5bfb6c45be7fa8838a6ae7172cff2ea7cc450f4",
+      "observed": "2026-08-04T01:43:20Z"
+    },
+    "1.48": {
+      "content": "sha256:e6205c24bd42dac870eecf28b5bfb6c45be7fa8838a6ae7172cff2ea7cc450f4",
+      "observed": "2026-08-04T01:43:20Z"
+    },
+    "1": {
+      "content": "sha256:f0934569d6699fe8be75bac59259393e1455b20cfd770385d8ed0d55157d822f",
+      "observed": "2026-08-04T01:43:20Z"
+    },
+    "latest": {
+      "content": "sha256:f0934569d6699fe8be75bac59259393e1455b20cfd770385d8ed0d55157d822f",
+      "observed": "2026-08-04T01:43:20Z"
+    },
+    "1.49.0_20260804": {
+      "content": "sha256:14142cc5ead495e1ffe76c81ac3cef1a1fcbca22c250edf0e0ea3b5118c36d10",
+      "observed": "2026-08-04T01:43:20Z"
+    },
+    "1.49.0": {
+      "content": "sha256:14142cc5ead495e1ffe76c81ac3cef1a1fcbca22c250edf0e0ea3b5118c36d10",
+      "observed": "2026-08-04T01:43:20Z"
+    },
+    "1.49": {
+      "content": "sha256:14142cc5ead495e1ffe76c81ac3cef1a1fcbca22c250edf0e0ea3b5118c36d10",
+      "observed": "2026-08-04T01:43:20Z"
+    },
+    "1.50.0_20260804": {
+      "content": "sha256:f0934569d6699fe8be75bac59259393e1455b20cfd770385d8ed0d55157d822f",
+      "observed": "2026-08-04T01:43:20Z"
+    },
+    "1.50.0": {
+      "content": "sha256:f0934569d6699fe8be75bac59259393e1455b20cfd770385d8ed0d55157d822f",
+      "observed": "2026-08-04T01:43:20Z"
+    },
+    "1.50": {
+      "content": "sha256:f0934569d6699fe8be75bac59259393e1455b20cfd770385d8ed0d55157d822f",
+      "observed": "2026-08-04T01:43:20Z"
+    }
+  }
 }
