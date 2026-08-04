@@ -10,11 +10,67 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:1c4451111d4d07732ab15a3f015a49c8762cfba41eb8a4df67595ec9c6b4ab50",
+    "title": "lefthook",
+    "description": "Fast, parallel git hooks manager for any language \u2014 one lefthook.yml drives every hook in the repository",
+    "keywords": [
+      "lefthook",
+      "git",
+      "git-hooks",
+      "pre-commit",
+      "pre-push",
+      "hooks",
+      "linter",
+      "formatter",
+      "monorepo",
+      "go",
+      "cli"
+    ],
+    "readme": "sha256:0629e47f4cd9129fe41df3ad67c30c10ae09440146ebee41d1c361ca246431ff",
+    "logo": "sha256:578ebe7d118cd904b8d213785cd4a5ba5ce2fa4a509fc1cb808957bf15728ccd"
+  },
   "upstream": {
     "org": "evilmartians",
     "repository_url": "https://github.com/evilmartians/lefthook",
     "disclaimer": "Unaffiliated mirror. lefthook is a project of Evil Martians; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "2.1.8_20260804": {
+      "content": "sha256:5cc45e8a8d3eb0b2f16d08c1f76d8a3531a057be52f5f72073ea4dd60bc24934",
+      "observed": "2026-08-04T01:30:43Z"
+    },
+    "2.1.8": {
+      "content": "sha256:5cc45e8a8d3eb0b2f16d08c1f76d8a3531a057be52f5f72073ea4dd60bc24934",
+      "observed": "2026-08-04T01:30:43Z"
+    },
+    "2.1": {
+      "content": "sha256:b341e107761d68471cb428c7bb16c444e5d50e1cf39f9d2649eb70deafc4057f",
+      "observed": "2026-08-04T01:30:43Z"
+    },
+    "2": {
+      "content": "sha256:b341e107761d68471cb428c7bb16c444e5d50e1cf39f9d2649eb70deafc4057f",
+      "observed": "2026-08-04T01:30:43Z"
+    },
+    "latest": {
+      "content": "sha256:b341e107761d68471cb428c7bb16c444e5d50e1cf39f9d2649eb70deafc4057f",
+      "observed": "2026-08-04T01:30:43Z"
+    },
+    "2.1.9_20260804": {
+      "content": "sha256:e704b54ff042431739826eaea43c0adf797f7fbc3444850bc40e63b94b69d6f1",
+      "observed": "2026-08-04T01:30:43Z"
+    },
+    "2.1.9": {
+      "content": "sha256:e704b54ff042431739826eaea43c0adf797f7fbc3444850bc40e63b94b69d6f1",
+      "observed": "2026-08-04T01:30:43Z"
+    },
+    "2.1.10_20260804": {
+      "content": "sha256:b341e107761d68471cb428c7bb16c444e5d50e1cf39f9d2649eb70deafc4057f",
+      "observed": "2026-08-04T01:30:43Z"
+    },
+    "2.1.10": {
+      "content": "sha256:b341e107761d68471cb428c7bb16c444e5d50e1cf39f9d2649eb70deafc4057f",
+      "observed": "2026-08-04T01:30:43Z"
+    }
+  }
 }
