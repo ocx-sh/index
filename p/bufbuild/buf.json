@@ -10,11 +10,72 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:648ff3ee6a5be611b0c6bd57523587ed4e109113b3f7e59333e2ab511b40458f",
+    "title": "Buf",
+    "description": "Protobuf toolchain \u2014 lint, detect breaking changes, and build Protocol Buffer schemas",
+    "keywords": [
+      "buf",
+      "protobuf",
+      "protoc",
+      "grpc",
+      "lint",
+      "breaking-change",
+      "schema",
+      "api"
+    ],
+    "readme": "sha256:a7b93ec9714654ea89a97c9d4b26f4c4a2a90e2abd78cec1af25d2ff1f4b7a06",
+    "logo": "sha256:1909027305f974fe55cf8ba75768f9a0bbb274ec6a7b0f7d0161ffed6b89f578"
+  },
   "upstream": {
     "org": "bufbuild",
     "repository_url": "https://github.com/bufbuild/buf",
     "disclaimer": "Unaffiliated mirror. buf is a project of Buf Technologies, Inc.; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "1.70.0_20260804": {
+      "content": "sha256:2b0a7d042475de87545e41cd48e3011fd035fbe35581f17f9ac7c6a7415f1055",
+      "observed": "2026-08-04T02:37:20Z"
+    },
+    "1.70.0": {
+      "content": "sha256:2b0a7d042475de87545e41cd48e3011fd035fbe35581f17f9ac7c6a7415f1055",
+      "observed": "2026-08-04T02:37:20Z"
+    },
+    "1.70": {
+      "content": "sha256:2b0a7d042475de87545e41cd48e3011fd035fbe35581f17f9ac7c6a7415f1055",
+      "observed": "2026-08-04T02:37:20Z"
+    },
+    "1": {
+      "content": "sha256:394309626ad814dae3d041be546e14a4636b39d57e2a7005383a393287475667",
+      "observed": "2026-08-04T02:37:20Z"
+    },
+    "latest": {
+      "content": "sha256:394309626ad814dae3d041be546e14a4636b39d57e2a7005383a393287475667",
+      "observed": "2026-08-04T02:37:20Z"
+    },
+    "1.71.0_20260804": {
+      "content": "sha256:199e1fc0be32c4a5132028dc97452e7ad3a4f323d24bf84b360a9eb28186ce4e",
+      "observed": "2026-08-04T02:37:20Z"
+    },
+    "1.71.0": {
+      "content": "sha256:199e1fc0be32c4a5132028dc97452e7ad3a4f323d24bf84b360a9eb28186ce4e",
+      "observed": "2026-08-04T02:37:20Z"
+    },
+    "1.71": {
+      "content": "sha256:199e1fc0be32c4a5132028dc97452e7ad3a4f323d24bf84b360a9eb28186ce4e",
+      "observed": "2026-08-04T02:37:20Z"
+    },
+    "1.72.0_20260804": {
+      "content": "sha256:394309626ad814dae3d041be546e14a4636b39d57e2a7005383a393287475667",
+      "observed": "2026-08-04T02:37:20Z"
+    },
+    "1.72.0": {
+      "content": "sha256:394309626ad814dae3d041be546e14a4636b39d57e2a7005383a393287475667",
+      "observed": "2026-08-04T02:37:20Z"
+    },
+    "1.72": {
+      "content": "sha256:394309626ad814dae3d041be546e14a4636b39d57e2a7005383a393287475667",
+      "observed": "2026-08-04T02:37:20Z"
+    }
+  }
 }
