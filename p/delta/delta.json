@@ -10,11 +10,59 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:52dcec39ce0488ceaec09eedb905b4e7ab9c3cd1d526404df15967f5afb2bc30",
+    "title": "delta",
+    "description": "A syntax-highlighting pager for git, diff, grep and blame output",
+    "keywords": [
+      "delta",
+      "git-delta",
+      "diff",
+      "git",
+      "pager",
+      "syntax-highlighting",
+      "side-by-side",
+      "blame",
+      "grep",
+      "cli",
+      "rust"
+    ],
+    "readme": "sha256:8dcb38d827ab2784756e084388c066f683194df49a85b3fbfeaf39dbcc6bf565",
+    "logo": "sha256:441a565f26aa17a0e6f5316a7e51447c705fc6c1156c00823a0bbc1308744431"
+  },
   "upstream": {
     "org": "dandavison",
     "repository_url": "https://github.com/dandavison/delta",
     "disclaimer": "Unaffiliated mirror. delta is a project of Dan Davison; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.19.1_20260803": {
+      "content": "sha256:0fb12bc62f0e685d83a96c00e9f84881a2f2d934d2600f23918b225e3246aeef",
+      "observed": "2026-08-04T00:00:59Z"
+    },
+    "0.19.1": {
+      "content": "sha256:0fb12bc62f0e685d83a96c00e9f84881a2f2d934d2600f23918b225e3246aeef",
+      "observed": "2026-08-04T00:00:59Z"
+    },
+    "0.19": {
+      "content": "sha256:76c69233b205ba4fe2d843f7ab0417e362d9076f176ebb48f2b557dc9f319136",
+      "observed": "2026-08-04T00:00:59Z"
+    },
+    "0": {
+      "content": "sha256:76c69233b205ba4fe2d843f7ab0417e362d9076f176ebb48f2b557dc9f319136",
+      "observed": "2026-08-04T00:00:59Z"
+    },
+    "latest": {
+      "content": "sha256:76c69233b205ba4fe2d843f7ab0417e362d9076f176ebb48f2b557dc9f319136",
+      "observed": "2026-08-04T00:00:59Z"
+    },
+    "0.19.2_20260803": {
+      "content": "sha256:76c69233b205ba4fe2d843f7ab0417e362d9076f176ebb48f2b557dc9f319136",
+      "observed": "2026-08-04T00:00:59Z"
+    },
+    "0.19.2": {
+      "content": "sha256:76c69233b205ba4fe2d843f7ab0417e362d9076f176ebb48f2b557dc9f319136",
+      "observed": "2026-08-04T00:00:59Z"
+    }
+  }
 }
