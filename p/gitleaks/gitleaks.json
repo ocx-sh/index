@@ -10,11 +10,72 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:d374edb073aa1b379d10baebc83d7c607f06c34d7e1cd2c0f4c875e27e529784",
+    "title": "gitleaks",
+    "description": "Scan git repositories, directories and stdin for hardcoded secrets \u2014 API keys, tokens and private keys \u2014 past or present",
+    "keywords": [
+      "gitleaks",
+      "secrets",
+      "secret-scanning",
+      "security",
+      "sast",
+      "credentials",
+      "api-keys",
+      "git",
+      "pre-commit",
+      "devsecops",
+      "cli",
+      "go"
+    ],
+    "readme": "sha256:8a3122ce964d9b277bb0aa46847a9f03770d4fcd07a3f1e536552549440230f6",
+    "logo": "sha256:043ffb7ef5c747bd50aeebad004d29753dfbc1193b3570a74b630f4971840218"
+  },
   "upstream": {
     "org": "gitleaks",
     "repository_url": "https://github.com/gitleaks/gitleaks",
     "disclaimer": "Unaffiliated mirror. Gitleaks is a project of Zachary Rice; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "8.29.1_20260804": {
+      "content": "sha256:43ea5ac768ffa345c57177d5a03e0a5665c8b41c765431b17f06a426f0f3f0dd",
+      "observed": "2026-08-04T01:35:34Z"
+    },
+    "8.29.1": {
+      "content": "sha256:43ea5ac768ffa345c57177d5a03e0a5665c8b41c765431b17f06a426f0f3f0dd",
+      "observed": "2026-08-04T01:35:34Z"
+    },
+    "8.29": {
+      "content": "sha256:43ea5ac768ffa345c57177d5a03e0a5665c8b41c765431b17f06a426f0f3f0dd",
+      "observed": "2026-08-04T01:35:34Z"
+    },
+    "8": {
+      "content": "sha256:c1eedc5c43479ef6441e7c6d6dd47719e76fb16f78ab62a91b1d52380b9020d3",
+      "observed": "2026-08-04T01:35:34Z"
+    },
+    "latest": {
+      "content": "sha256:c1eedc5c43479ef6441e7c6d6dd47719e76fb16f78ab62a91b1d52380b9020d3",
+      "observed": "2026-08-04T01:35:34Z"
+    },
+    "8.30.0_20260804": {
+      "content": "sha256:365fd1cb03b562bf26065d6e69d19f7b097c1ce1864327284f64119bea3809ea",
+      "observed": "2026-08-04T01:35:34Z"
+    },
+    "8.30.0": {
+      "content": "sha256:365fd1cb03b562bf26065d6e69d19f7b097c1ce1864327284f64119bea3809ea",
+      "observed": "2026-08-04T01:35:34Z"
+    },
+    "8.30": {
+      "content": "sha256:c1eedc5c43479ef6441e7c6d6dd47719e76fb16f78ab62a91b1d52380b9020d3",
+      "observed": "2026-08-04T01:35:34Z"
+    },
+    "8.30.1_20260804": {
+      "content": "sha256:c1eedc5c43479ef6441e7c6d6dd47719e76fb16f78ab62a91b1d52380b9020d3",
+      "observed": "2026-08-04T01:35:34Z"
+    },
+    "8.30.1": {
+      "content": "sha256:c1eedc5c43479ef6441e7c6d6dd47719e76fb16f78ab62a91b1d52380b9020d3",
+      "observed": "2026-08-04T01:35:34Z"
+    }
+  }
 }
