@@ -10,11 +10,72 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:a9080e0a6b56eb12f0503f5310159afab2042ba3d7d5a95942286418b1bc3a3f",
+    "title": "lazygit",
+    "description": "Simple terminal UI for git \u2014 stage hunks, rebase interactively, resolve conflicts and browse history without leaving the keyboard",
+    "keywords": [
+      "lazygit",
+      "git",
+      "tui",
+      "terminal",
+      "rebase",
+      "staging",
+      "diff",
+      "merge",
+      "commit",
+      "version-control",
+      "go",
+      "cli"
+    ],
+    "readme": "sha256:3791fa937c784b505ecf8be2c5b406eff53446b3bbc6c6ff43f3e7670ba5836d",
+    "logo": "sha256:2928fd344ab45e43f1289571895cf22180b3e54dbc73fd60d7c263a43d65e590"
+  },
   "upstream": {
     "org": "jesseduffield",
     "repository_url": "https://github.com/jesseduffield/lazygit",
     "disclaimer": "Unaffiliated mirror. lazygit is a project of Jesse Duffield; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.62.2_20260804": {
+      "content": "sha256:d668ada9edc1cb157035f2b9bb8e912d24870f7587fdd689ba990d283fce0408",
+      "observed": "2026-08-04T01:58:19Z"
+    },
+    "0.62.2": {
+      "content": "sha256:d668ada9edc1cb157035f2b9bb8e912d24870f7587fdd689ba990d283fce0408",
+      "observed": "2026-08-04T01:58:19Z"
+    },
+    "0.62": {
+      "content": "sha256:d668ada9edc1cb157035f2b9bb8e912d24870f7587fdd689ba990d283fce0408",
+      "observed": "2026-08-04T01:58:19Z"
+    },
+    "0": {
+      "content": "sha256:067113c3252d48258d5015e43a8d754c5f984f7186b544b6815404ef12436446",
+      "observed": "2026-08-04T01:58:19Z"
+    },
+    "latest": {
+      "content": "sha256:067113c3252d48258d5015e43a8d754c5f984f7186b544b6815404ef12436446",
+      "observed": "2026-08-04T01:58:19Z"
+    },
+    "0.63.0_20260804": {
+      "content": "sha256:a9b99992a6dd0107c27bc9fbad3d5da615a318d523be79fa68ddb2f9e73d8e60",
+      "observed": "2026-08-04T01:58:19Z"
+    },
+    "0.63.0": {
+      "content": "sha256:a9b99992a6dd0107c27bc9fbad3d5da615a318d523be79fa68ddb2f9e73d8e60",
+      "observed": "2026-08-04T01:58:19Z"
+    },
+    "0.63": {
+      "content": "sha256:067113c3252d48258d5015e43a8d754c5f984f7186b544b6815404ef12436446",
+      "observed": "2026-08-04T01:58:19Z"
+    },
+    "0.63.1_20260804": {
+      "content": "sha256:067113c3252d48258d5015e43a8d754c5f984f7186b544b6815404ef12436446",
+      "observed": "2026-08-04T01:58:19Z"
+    },
+    "0.63.1": {
+      "content": "sha256:067113c3252d48258d5015e43a8d754c5f984f7186b544b6815404ef12436446",
+      "observed": "2026-08-04T01:58:19Z"
+    }
+  }
 }
