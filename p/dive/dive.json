@@ -10,11 +10,73 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:81236d7502e6b78e6782fddc93e889905d908bb0d017a447920a70b21de83dcb",
+    "title": "dive",
+    "description": "Explore a container image layer by layer \u2014 see what each command added, browse the resulting filesystem, and find the wasted space",
+    "keywords": [
+      "dive",
+      "docker",
+      "oci",
+      "container",
+      "image",
+      "layers",
+      "filesystem",
+      "tui",
+      "terminal",
+      "efficiency",
+      "devops",
+      "ci",
+      "go"
+    ],
+    "readme": "sha256:2208496f742f9634bb20cba6674d6dba294160a13f4cc2c9a8d46c1cf6fc0c23",
+    "logo": "sha256:0913869893a91cd8ed699afee2a1c22de2f3eff89fed4a764c50c9e3ec5b1a69"
+  },
   "upstream": {
     "org": "wagoodman",
     "repository_url": "https://github.com/wagoodman/dive",
     "disclaimer": "Unaffiliated mirror. dive is a project of Alex Goodman; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.12.0_20260804": {
+      "content": "sha256:473d59d2d361d795f87901e18824c4a50146f421a2ea7cc9ae6284a71959a0c2",
+      "observed": "2026-08-04T01:57:21Z"
+    },
+    "0.12.0": {
+      "content": "sha256:473d59d2d361d795f87901e18824c4a50146f421a2ea7cc9ae6284a71959a0c2",
+      "observed": "2026-08-04T01:57:21Z"
+    },
+    "0.12": {
+      "content": "sha256:473d59d2d361d795f87901e18824c4a50146f421a2ea7cc9ae6284a71959a0c2",
+      "observed": "2026-08-04T01:57:21Z"
+    },
+    "0": {
+      "content": "sha256:9393423b83bd7bdd171b7c1070355734ec58e78f3928a947556be1b2286d8e65",
+      "observed": "2026-08-04T01:57:21Z"
+    },
+    "latest": {
+      "content": "sha256:9393423b83bd7bdd171b7c1070355734ec58e78f3928a947556be1b2286d8e65",
+      "observed": "2026-08-04T01:57:21Z"
+    },
+    "0.13.0_20260804": {
+      "content": "sha256:ed2750df31fe3024ce7908e8e9d3b4d496e9a31a1be74f243eca959cc9c43884",
+      "observed": "2026-08-04T01:57:21Z"
+    },
+    "0.13.0": {
+      "content": "sha256:ed2750df31fe3024ce7908e8e9d3b4d496e9a31a1be74f243eca959cc9c43884",
+      "observed": "2026-08-04T01:57:21Z"
+    },
+    "0.13": {
+      "content": "sha256:9393423b83bd7bdd171b7c1070355734ec58e78f3928a947556be1b2286d8e65",
+      "observed": "2026-08-04T01:57:21Z"
+    },
+    "0.13.1_20260804": {
+      "content": "sha256:9393423b83bd7bdd171b7c1070355734ec58e78f3928a947556be1b2286d8e65",
+      "observed": "2026-08-04T01:57:21Z"
+    },
+    "0.13.1": {
+      "content": "sha256:9393423b83bd7bdd171b7c1070355734ec58e78f3928a947556be1b2286d8e65",
+      "observed": "2026-08-04T01:57:21Z"
+    }
+  }
 }
