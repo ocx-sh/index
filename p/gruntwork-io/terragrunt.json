@@ -10,11 +10,66 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:0759315788d7b26364e8f963e2baa05e1f4dd02941dead5ad554c698df4d6692",
+    "title": "terragrunt",
+    "description": "Orchestration for OpenTofu/Terraform at scale \u2014 DRY configuration, dependency-ordered runs across many units, and remote state wiring from one HCL file",
+    "keywords": [
+      "terragrunt",
+      "terraform",
+      "opentofu",
+      "iac",
+      "infrastructure-as-code",
+      "hcl",
+      "orchestration",
+      "devops",
+      "gruntwork",
+      "cli"
+    ],
+    "readme": "sha256:a9b019db9e9ae3fe9ae7d25e4538e5994880e8a42f29fca5140d4fb99fcaa878",
+    "logo": "sha256:5e1d7918dca42d3c705987f9d715eec3ca00001ecd51a78d502569fbc11f673e"
+  },
   "upstream": {
     "org": "gruntwork-io",
     "repository_url": "https://github.com/gruntwork-io/terragrunt",
     "disclaimer": "Unaffiliated mirror. Terragrunt is a project of Gruntwork, LLC; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "1.1.0_20260804": {
+      "content": "sha256:88ccad33f3aef87eeb1288e298290d006e4faf57f64f5a1012daed1637200397",
+      "observed": "2026-08-04T02:36:43Z"
+    },
+    "1.1.0": {
+      "content": "sha256:88ccad33f3aef87eeb1288e298290d006e4faf57f64f5a1012daed1637200397",
+      "observed": "2026-08-04T02:36:43Z"
+    },
+    "1.1": {
+      "content": "sha256:8531e4e227affecc97ddc02986c5aa1d00f067f25c72c0da8c2e1f05b694027b",
+      "observed": "2026-08-04T02:36:43Z"
+    },
+    "1": {
+      "content": "sha256:8531e4e227affecc97ddc02986c5aa1d00f067f25c72c0da8c2e1f05b694027b",
+      "observed": "2026-08-04T02:36:43Z"
+    },
+    "latest": {
+      "content": "sha256:8531e4e227affecc97ddc02986c5aa1d00f067f25c72c0da8c2e1f05b694027b",
+      "observed": "2026-08-04T02:36:43Z"
+    },
+    "1.1.1_20260804": {
+      "content": "sha256:0321ddb22cd9ef9514c155c2f54d108452cf8974c2eb49912b48ce0fe87b227e",
+      "observed": "2026-08-04T02:36:43Z"
+    },
+    "1.1.1": {
+      "content": "sha256:0321ddb22cd9ef9514c155c2f54d108452cf8974c2eb49912b48ce0fe87b227e",
+      "observed": "2026-08-04T02:36:43Z"
+    },
+    "1.1.2_20260804": {
+      "content": "sha256:8531e4e227affecc97ddc02986c5aa1d00f067f25c72c0da8c2e1f05b694027b",
+      "observed": "2026-08-04T02:36:43Z"
+    },
+    "1.1.2": {
+      "content": "sha256:8531e4e227affecc97ddc02986c5aa1d00f067f25c72c0da8c2e1f05b694027b",
+      "observed": "2026-08-04T02:36:43Z"
+    }
+  }
 }
