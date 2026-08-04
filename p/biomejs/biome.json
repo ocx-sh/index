@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/biomejs/biome",
+  "repository": "oci://ghcr.io/ocx-contrib/biomejs/biome",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": null,
+  "upstream": {
+    "org": "biomejs",
+    "repository_url": "https://github.com/biomejs/biome",
+    "disclaimer": "Unaffiliated mirror. Biome is a project of the Biome Developers and Contributors; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
