@@ -10,11 +10,188 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:492d1562a6b1617c17b48dc5c73a065eb2ec26f5a07382a3df75ab58fc726a35",
+    "title": "protoc",
+    "description": "The Protocol Buffers compiler \u2014 turns .proto schema files into generated code for C++, Java, Python, C#, Kotlin, Objective-C, PHP, Ruby and Rust",
+    "keywords": [
+      "protoc",
+      "protobuf",
+      "protocol-buffers",
+      "serialization",
+      "codegen",
+      "grpc",
+      "idl",
+      "schema"
+    ],
+    "readme": "sha256:c20fa27d58bc5b87a9cc6989f6c261b5b206500444668869edb92d3fa8c0391f",
+    "logo": "sha256:8adefc44fe89cf0c4b026c385abe888185c9be290f22d806e75a61927ea3a60c"
+  },
   "upstream": {
     "org": "protocolbuffers",
     "repository_url": "https://github.com/protocolbuffers/protobuf",
     "disclaimer": "Unaffiliated mirror. Protocol Buffers is a project of Google LLC; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "33.0.0_20260804": {
+      "content": "sha256:62fab3f6af2a6861b7f20fb45053ebe15f8ea54c95094fb2445c886a7365fb00",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "33.0.0": {
+      "content": "sha256:62fab3f6af2a6861b7f20fb45053ebe15f8ea54c95094fb2445c886a7365fb00",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "33.0": {
+      "content": "sha256:62fab3f6af2a6861b7f20fb45053ebe15f8ea54c95094fb2445c886a7365fb00",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "33": {
+      "content": "sha256:7abfc968a31a73fea7825f40440c06431e0384a7d7f67852d77b6d0aaffb3251",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "latest": {
+      "content": "sha256:5a0296b95adff5a606acab55bef735f29aa895fce5b60290e77d6e7793c39ebb",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "33.1.0_20260804": {
+      "content": "sha256:f531eac165ed55ef878124448e61a4ff3cbd996dda5104c728a6f26014c0260b",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "33.1.0": {
+      "content": "sha256:f531eac165ed55ef878124448e61a4ff3cbd996dda5104c728a6f26014c0260b",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "33.1": {
+      "content": "sha256:f531eac165ed55ef878124448e61a4ff3cbd996dda5104c728a6f26014c0260b",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "33.2.0_20260804": {
+      "content": "sha256:9b3a9048f25576bd27b452bf4258363dd82021638fbf2e050ef3d69ec264fab7",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "33.2.0": {
+      "content": "sha256:9b3a9048f25576bd27b452bf4258363dd82021638fbf2e050ef3d69ec264fab7",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "33.2": {
+      "content": "sha256:9b3a9048f25576bd27b452bf4258363dd82021638fbf2e050ef3d69ec264fab7",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "33.3.0_20260804": {
+      "content": "sha256:37cab6286837d5f7a24b26884e42255186a98eefb04373c3091a63f21791e067",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "33.3.0": {
+      "content": "sha256:37cab6286837d5f7a24b26884e42255186a98eefb04373c3091a63f21791e067",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "33.3": {
+      "content": "sha256:37cab6286837d5f7a24b26884e42255186a98eefb04373c3091a63f21791e067",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "33.4.0_20260804": {
+      "content": "sha256:0ac83cafc537a9fccb32b654fb79f6ef608c12932fd74b8e4f74bb07002085a9",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "33.4.0": {
+      "content": "sha256:0ac83cafc537a9fccb32b654fb79f6ef608c12932fd74b8e4f74bb07002085a9",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "33.4": {
+      "content": "sha256:0ac83cafc537a9fccb32b654fb79f6ef608c12932fd74b8e4f74bb07002085a9",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "33.5.0_20260804": {
+      "content": "sha256:a998c2c3431082dc98f154befe547f45b0960cb0362a039da4b29ebb37f277ec",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "33.5.0": {
+      "content": "sha256:a998c2c3431082dc98f154befe547f45b0960cb0362a039da4b29ebb37f277ec",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "33.5": {
+      "content": "sha256:a998c2c3431082dc98f154befe547f45b0960cb0362a039da4b29ebb37f277ec",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "33.6.0_20260804": {
+      "content": "sha256:7abfc968a31a73fea7825f40440c06431e0384a7d7f67852d77b6d0aaffb3251",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "33.6.0": {
+      "content": "sha256:7abfc968a31a73fea7825f40440c06431e0384a7d7f67852d77b6d0aaffb3251",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "33.6": {
+      "content": "sha256:7abfc968a31a73fea7825f40440c06431e0384a7d7f67852d77b6d0aaffb3251",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "34.0.0_20260804": {
+      "content": "sha256:9c2e2cbf9ab0e47020433ee120bccf4ea85f99358605ecab41dfc11c870172ef",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "34.0.0": {
+      "content": "sha256:9c2e2cbf9ab0e47020433ee120bccf4ea85f99358605ecab41dfc11c870172ef",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "34.0": {
+      "content": "sha256:9c2e2cbf9ab0e47020433ee120bccf4ea85f99358605ecab41dfc11c870172ef",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "34": {
+      "content": "sha256:54b0f6d84c2841d51beab8b2141911c62d77b1e5aeb84edafd06d996256b4936",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "34.1.0_20260804": {
+      "content": "sha256:cdbd2eb5f44b4ba5500edab58b2923b3e7aee3f6b5b7c03f730d61075eb8afea",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "34.1.0": {
+      "content": "sha256:cdbd2eb5f44b4ba5500edab58b2923b3e7aee3f6b5b7c03f730d61075eb8afea",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "34.1": {
+      "content": "sha256:cdbd2eb5f44b4ba5500edab58b2923b3e7aee3f6b5b7c03f730d61075eb8afea",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "34.2.0_20260804": {
+      "content": "sha256:54b0f6d84c2841d51beab8b2141911c62d77b1e5aeb84edafd06d996256b4936",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "34.2.0": {
+      "content": "sha256:54b0f6d84c2841d51beab8b2141911c62d77b1e5aeb84edafd06d996256b4936",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "34.2": {
+      "content": "sha256:54b0f6d84c2841d51beab8b2141911c62d77b1e5aeb84edafd06d996256b4936",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "35.0.0_20260804": {
+      "content": "sha256:d6e7c08c8f302833f7ec9df30499990615d1538c3b4a5fb650f4fbd34c3d4de7",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "35.0.0": {
+      "content": "sha256:d6e7c08c8f302833f7ec9df30499990615d1538c3b4a5fb650f4fbd34c3d4de7",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "35.0": {
+      "content": "sha256:d6e7c08c8f302833f7ec9df30499990615d1538c3b4a5fb650f4fbd34c3d4de7",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "35": {
+      "content": "sha256:5a0296b95adff5a606acab55bef735f29aa895fce5b60290e77d6e7793c39ebb",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "35.1.0_20260804": {
+      "content": "sha256:5a0296b95adff5a606acab55bef735f29aa895fce5b60290e77d6e7793c39ebb",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "35.1.0": {
+      "content": "sha256:5a0296b95adff5a606acab55bef735f29aa895fce5b60290e77d6e7793c39ebb",
+      "observed": "2026-08-04T07:11:26Z"
+    },
+    "35.1": {
+      "content": "sha256:5a0296b95adff5a606acab55bef735f29aa895fce5b60290e77d6e7793c39ebb",
+      "observed": "2026-08-04T07:11:26Z"
+    }
+  }
 }
