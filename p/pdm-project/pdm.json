@@ -10,11 +10,64 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:2837ab97f74fc53a1c39a0e7f740563552f7fd1124917ea10afbf6901d2ef492",
+    "title": "pdm",
+    "description": "Modern Python package and dependency manager \u2014 PEP 621 metadata, a cross-platform lock file, PEP 582 local packages and a pluggable build backend",
+    "keywords": [
+      "pdm",
+      "python",
+      "package-manager",
+      "dependency-management",
+      "pep-621",
+      "pep-582",
+      "pep-517",
+      "lockfile",
+      "virtualenv",
+      "pyproject",
+      "build-backend",
+      "cli"
+    ],
+    "readme": "sha256:b1b33fdb14d481844bf1c0cfa244f0fee0a8a77f9934a9ca3915379f2d9dd672",
+    "logo": "sha256:4763573d59d408f33dcc73326775c40c53ca458d0e47d99ada1ad1fb397d5f2d"
+  },
   "upstream": {
     "org": "pdm-project",
     "repository_url": "https://github.com/pdm-project/pdm",
     "disclaimer": "Unaffiliated mirror. PDM is a project of Frost Ming; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "2.27.0_20260804": {
+      "content": "sha256:f27cb58587fe6701de1ef6bedbd6eb21b888f933455f6563a3be60de556e6ec9",
+      "observed": "2026-08-04T10:32:28Z"
+    },
+    "2.27.0": {
+      "content": "sha256:f27cb58587fe6701de1ef6bedbd6eb21b888f933455f6563a3be60de556e6ec9",
+      "observed": "2026-08-04T10:32:28Z"
+    },
+    "2.27": {
+      "content": "sha256:f27cb58587fe6701de1ef6bedbd6eb21b888f933455f6563a3be60de556e6ec9",
+      "observed": "2026-08-04T10:32:28Z"
+    },
+    "2": {
+      "content": "sha256:d3d974a48c23e807606dc652e3686ef1248fe5e3b53a1dab8457648809755d58",
+      "observed": "2026-08-04T10:32:28Z"
+    },
+    "latest": {
+      "content": "sha256:d3d974a48c23e807606dc652e3686ef1248fe5e3b53a1dab8457648809755d58",
+      "observed": "2026-08-04T10:32:28Z"
+    },
+    "2.28.0_20260804": {
+      "content": "sha256:d3d974a48c23e807606dc652e3686ef1248fe5e3b53a1dab8457648809755d58",
+      "observed": "2026-08-04T10:32:28Z"
+    },
+    "2.28.0": {
+      "content": "sha256:d3d974a48c23e807606dc652e3686ef1248fe5e3b53a1dab8457648809755d58",
+      "observed": "2026-08-04T10:32:28Z"
+    },
+    "2.28": {
+      "content": "sha256:d3d974a48c23e807606dc652e3686ef1248fe5e3b53a1dab8457648809755d58",
+      "observed": "2026-08-04T10:32:28Z"
+    }
+  }
 }
