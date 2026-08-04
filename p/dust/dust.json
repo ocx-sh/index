@@ -10,11 +10,65 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:fe1325169063c87a672c9968c01752528c4baa4d183b73da2fc475aa01da19ae",
+    "title": "dust",
+    "description": "Like du but more intuitive \u2014 a disk-usage tree that shows you where the space actually went",
+    "keywords": [
+      "dust",
+      "du",
+      "disk-usage",
+      "disk",
+      "storage",
+      "filesystem",
+      "cli",
+      "rust",
+      "tui"
+    ],
+    "readme": "sha256:8fd20979b8c3ee20cc1fb17a3b602cac89fb005cf21112c694974b122aad66f9",
+    "logo": "sha256:bf8a25b53295a3475af61362e67bc0ed303fbda7aa60236371d308116a56bc21"
+  },
   "upstream": {
     "org": "bootandy",
     "repository_url": "https://github.com/bootandy/dust",
     "disclaimer": "Unaffiliated mirror. dust is a project of Andrew Boot; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "1.2.2_20260804": {
+      "content": "sha256:862bccf3a0ce84c3360d228f5a98c1c34dfaab1f0a5dbaa68339e14896cb65fb",
+      "observed": "2026-08-04T00:01:52Z"
+    },
+    "1.2.2": {
+      "content": "sha256:2a63568106e28c94194b52f2dadfc6d6ad73342af57047106f4c785933dc5842",
+      "observed": "2026-08-04T00:01:52Z"
+    },
+    "1.2": {
+      "content": "sha256:dcd9a3515d9329531a95b624a857a1492f0e01af91e5d62d7a26d8a2fe86b77f",
+      "observed": "2026-08-04T00:01:52Z"
+    },
+    "1": {
+      "content": "sha256:dcd9a3515d9329531a95b624a857a1492f0e01af91e5d62d7a26d8a2fe86b77f",
+      "observed": "2026-08-04T00:01:52Z"
+    },
+    "latest": {
+      "content": "sha256:dcd9a3515d9329531a95b624a857a1492f0e01af91e5d62d7a26d8a2fe86b77f",
+      "observed": "2026-08-04T00:01:52Z"
+    },
+    "1.2.3_20260804": {
+      "content": "sha256:139cbb8700b00df8c2a9e6899f1e57957fc6a3df784d0ee1a2ca6e5e2a4caa09",
+      "observed": "2026-08-04T00:01:52Z"
+    },
+    "1.2.3": {
+      "content": "sha256:5ba7129021f9e869ea141ddd326c9969072300bb537cc0ef683c86c52abf133b",
+      "observed": "2026-08-04T00:01:52Z"
+    },
+    "1.2.4_20260804": {
+      "content": "sha256:8c979ee72a97305614d56dd73b6e9b8aaf425512cee83c6ebbe3e007f84e6523",
+      "observed": "2026-08-04T00:01:52Z"
+    },
+    "1.2.4": {
+      "content": "sha256:dcd9a3515d9329531a95b624a857a1492f0e01af91e5d62d7a26d8a2fe86b77f",
+      "observed": "2026-08-04T00:01:52Z"
+    }
+  }
 }
