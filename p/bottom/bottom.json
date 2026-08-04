@@ -10,11 +10,67 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:56e4f21fb5d0a266e71d1569dc83b499766f169d916b16f556209547b3176f39",
+    "title": "bottom",
+    "description": "A customizable cross-platform graphical process/system monitor for the terminal, in the spirit of gtop and gotop",
+    "keywords": [
+      "bottom",
+      "btm",
+      "monitor",
+      "process",
+      "system",
+      "top",
+      "htop",
+      "tui",
+      "terminal",
+      "cli",
+      "rust"
+    ],
+    "readme": "sha256:69fde0297e40aa17cf8344514c339bc72115667a5f79bcd2d950367169a77212",
+    "logo": "sha256:98839723b809349a383c5c3ba70faffcc8edb3f6e2d97b7557b7bc8d664dd149"
+  },
   "upstream": {
     "org": "ClementTsang",
     "repository_url": "https://github.com/ClementTsang/bottom",
     "disclaimer": "Unaffiliated mirror. bottom is a project of Clement Tsang; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.14.5_20260804": {
+      "content": "sha256:56ea8a926fb906d21cbfaad3ad924eeb15cce7f40bd6003e69200653921845df",
+      "observed": "2026-08-04T00:18:06Z"
+    },
+    "0.14.5": {
+      "content": "sha256:56ea8a926fb906d21cbfaad3ad924eeb15cce7f40bd6003e69200653921845df",
+      "observed": "2026-08-04T00:18:06Z"
+    },
+    "0.14": {
+      "content": "sha256:d366edbbca5e9b20489eaad136add5be77cac0fa9b8f5fb4062db485aea8d756",
+      "observed": "2026-08-04T00:18:06Z"
+    },
+    "0": {
+      "content": "sha256:d366edbbca5e9b20489eaad136add5be77cac0fa9b8f5fb4062db485aea8d756",
+      "observed": "2026-08-04T00:18:06Z"
+    },
+    "latest": {
+      "content": "sha256:d366edbbca5e9b20489eaad136add5be77cac0fa9b8f5fb4062db485aea8d756",
+      "observed": "2026-08-04T00:18:06Z"
+    },
+    "0.14.6_20260804": {
+      "content": "sha256:0ce2a84ab65193606c5097be8aa57c7ee2043d0e01aae52a906f6bd7b8d2240e",
+      "observed": "2026-08-04T00:18:06Z"
+    },
+    "0.14.6": {
+      "content": "sha256:0ce2a84ab65193606c5097be8aa57c7ee2043d0e01aae52a906f6bd7b8d2240e",
+      "observed": "2026-08-04T00:18:06Z"
+    },
+    "0.14.7_20260804": {
+      "content": "sha256:d366edbbca5e9b20489eaad136add5be77cac0fa9b8f5fb4062db485aea8d756",
+      "observed": "2026-08-04T00:18:06Z"
+    },
+    "0.14.7": {
+      "content": "sha256:d366edbbca5e9b20489eaad136add5be77cac0fa9b8f5fb4062db485aea8d756",
+      "observed": "2026-08-04T00:18:06Z"
+    }
+  }
 }
