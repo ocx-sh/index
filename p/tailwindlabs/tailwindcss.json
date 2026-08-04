@@ -10,11 +10,81 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:fab9194bef3e2ea741c09ae5fa9f065ca851a2df06c326ce5b633fa49785b3dc",
+    "title": "Tailwind CSS",
+    "description": "Utility-first CSS framework \u2014 the standalone CLI, no Node.js required",
+    "keywords": [
+      "tailwindcss",
+      "css",
+      "frontend",
+      "build-tool",
+      "styling"
+    ],
+    "readme": "sha256:decc7cbf6aed57a1f4cfb44d3f3b56734266a7d27c8fd976d2ac137772f875c3",
+    "logo": "sha256:dd945a6b6c366df037b5dfb10423d3aad8dd42d0f5a216dee3546af8f09d17c1"
+  },
   "upstream": {
     "org": "tailwindlabs",
     "repository_url": "https://github.com/tailwindlabs/tailwindcss",
     "disclaimer": "Unaffiliated mirror. Tailwind CSS is a project of Tailwind Labs, Inc.; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "4.2.4_20260804": {
+      "content": "sha256:e31b4be3ad5f789d34c10fea356b3bf0dd62f68b5ee2951c11eede3d824769f7",
+      "observed": "2026-08-04T07:46:15Z"
+    },
+    "4.2.4": {
+      "content": "sha256:e31b4be3ad5f789d34c10fea356b3bf0dd62f68b5ee2951c11eede3d824769f7",
+      "observed": "2026-08-04T07:46:15Z"
+    },
+    "4.2": {
+      "content": "sha256:e31b4be3ad5f789d34c10fea356b3bf0dd62f68b5ee2951c11eede3d824769f7",
+      "observed": "2026-08-04T07:46:15Z"
+    },
+    "4": {
+      "content": "sha256:70f7f84ecdc5a0e867b643c34a64da32c79de8b23b5e386fb1691caf16fc5828",
+      "observed": "2026-08-04T07:46:15Z"
+    },
+    "latest": {
+      "content": "sha256:70f7f84ecdc5a0e867b643c34a64da32c79de8b23b5e386fb1691caf16fc5828",
+      "observed": "2026-08-04T07:46:15Z"
+    },
+    "4.3.0_20260804": {
+      "content": "sha256:168816bd59e55bf883b86fcae184eef7fdf80194e76c5b323569e059a654e59f",
+      "observed": "2026-08-04T07:46:15Z"
+    },
+    "4.3.0": {
+      "content": "sha256:168816bd59e55bf883b86fcae184eef7fdf80194e76c5b323569e059a654e59f",
+      "observed": "2026-08-04T07:46:15Z"
+    },
+    "4.3": {
+      "content": "sha256:70f7f84ecdc5a0e867b643c34a64da32c79de8b23b5e386fb1691caf16fc5828",
+      "observed": "2026-08-04T07:46:15Z"
+    },
+    "4.3.1_20260804": {
+      "content": "sha256:add3e39e8f444db27caa1b2e4151a43207a551d8f481dbb54ebb83e24aefc358",
+      "observed": "2026-08-04T07:46:15Z"
+    },
+    "4.3.1": {
+      "content": "sha256:add3e39e8f444db27caa1b2e4151a43207a551d8f481dbb54ebb83e24aefc358",
+      "observed": "2026-08-04T07:46:15Z"
+    },
+    "4.3.2_20260804": {
+      "content": "sha256:4727961e0fe410f2476cab59678d500b2649c13adcb76568f081c43db384cb2a",
+      "observed": "2026-08-04T07:46:15Z"
+    },
+    "4.3.2": {
+      "content": "sha256:4727961e0fe410f2476cab59678d500b2649c13adcb76568f081c43db384cb2a",
+      "observed": "2026-08-04T07:46:15Z"
+    },
+    "4.3.3_20260804": {
+      "content": "sha256:70f7f84ecdc5a0e867b643c34a64da32c79de8b23b5e386fb1691caf16fc5828",
+      "observed": "2026-08-04T07:46:15Z"
+    },
+    "4.3.3": {
+      "content": "sha256:70f7f84ecdc5a0e867b643c34a64da32c79de8b23b5e386fb1691caf16fc5828",
+      "observed": "2026-08-04T07:46:15Z"
+    }
+  }
 }
