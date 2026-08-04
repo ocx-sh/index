@@ -10,11 +10,71 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:1af77faca06d123934225a49dd9f8ce2144d3a95046dfdda55d524ae65ad445f",
+    "title": "watchexec",
+    "description": "Executes commands in response to file modifications \u2014 a fast, language-agnostic file watcher for rebuild, reload and re-test loops",
+    "keywords": [
+      "watchexec",
+      "watch",
+      "file-watcher",
+      "filesystem",
+      "rebuild",
+      "reload",
+      "live-reload",
+      "hot-reload",
+      "automation",
+      "cli",
+      "rust"
+    ],
+    "readme": "sha256:5e5fd0ddebe68d8c0bd2811f453cb9850793feaf0e3df86f8cdfdad5879c09c3",
+    "logo": "sha256:69556600fe01d5c78a006edd338976e5b4e30a189bdd3a517af97387e1263032"
+  },
   "upstream": {
     "org": "watchexec",
     "repository_url": "https://github.com/watchexec/watchexec",
     "disclaimer": "Unaffiliated mirror. watchexec is a project of F\u00e9lix Saparelli, Matt Green and the watchexec organization; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "2.4.3_20260804": {
+      "content": "sha256:ffddcfc92ca5213e3a9913657b4ca02835eafd9b34ae9c539dd98c0ad54af02d",
+      "observed": "2026-08-04T07:03:41Z"
+    },
+    "2.4.3": {
+      "content": "sha256:ffddcfc92ca5213e3a9913657b4ca02835eafd9b34ae9c539dd98c0ad54af02d",
+      "observed": "2026-08-04T07:03:41Z"
+    },
+    "2.4": {
+      "content": "sha256:ffddcfc92ca5213e3a9913657b4ca02835eafd9b34ae9c539dd98c0ad54af02d",
+      "observed": "2026-08-04T07:03:41Z"
+    },
+    "2": {
+      "content": "sha256:c1f363ec4fd8580c68ff3488ed001d85e78eb80d1fa4798541d863af00edc330",
+      "observed": "2026-08-04T07:03:41Z"
+    },
+    "latest": {
+      "content": "sha256:c1f363ec4fd8580c68ff3488ed001d85e78eb80d1fa4798541d863af00edc330",
+      "observed": "2026-08-04T07:03:41Z"
+    },
+    "2.5.0_20260804": {
+      "content": "sha256:34ab93a8b54e0d50af46c2552f1eb751dfb4ca39c9ae079d23b49b262cbb34a2",
+      "observed": "2026-08-04T07:03:41Z"
+    },
+    "2.5.0": {
+      "content": "sha256:34ab93a8b54e0d50af46c2552f1eb751dfb4ca39c9ae079d23b49b262cbb34a2",
+      "observed": "2026-08-04T07:03:41Z"
+    },
+    "2.5": {
+      "content": "sha256:c1f363ec4fd8580c68ff3488ed001d85e78eb80d1fa4798541d863af00edc330",
+      "observed": "2026-08-04T07:03:41Z"
+    },
+    "2.5.1_20260804": {
+      "content": "sha256:c1f363ec4fd8580c68ff3488ed001d85e78eb80d1fa4798541d863af00edc330",
+      "observed": "2026-08-04T07:03:41Z"
+    },
+    "2.5.1": {
+      "content": "sha256:c1f363ec4fd8580c68ff3488ed001d85e78eb80d1fa4798541d863af00edc330",
+      "observed": "2026-08-04T07:03:41Z"
+    }
+  }
 }
