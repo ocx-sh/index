@@ -101,16 +101,16 @@
       "observed": "2026-08-04T14:36:30Z"
     },
     "1.11.11_20260804": {
-      "content": "sha256:bb9d0d73ec0b34e0b18b228a8c575fb644da495f819daeeb0a15900abef6e12d",
-      "observed": "2026-08-04T14:36:30Z"
+      "content": "sha256:be878505d1361d0b70961af7ad8fa7cfd78fdb84937f08f47185ebdc165905d3",
+      "observed": "2026-08-04T19:52:15Z"
     },
     "1.11.11": {
-      "content": "sha256:44f8a370c6f1bcc48fb6bf5ba7ad7f4893779202fecdb3d395020d5da0eb7705",
-      "observed": "2026-08-04T14:36:30Z"
+      "content": "sha256:be878505d1361d0b70961af7ad8fa7cfd78fdb84937f08f47185ebdc165905d3",
+      "observed": "2026-08-04T19:52:15Z"
     },
     "1.11.12_20260804": {
-      "content": "sha256:77ef25fbcb24709d9f9b0f6e95abd848edc1bd8d924be71337258a42d67ce49d",
-      "observed": "2026-08-04T14:36:30Z"
+      "content": "sha256:9c958cf67a52fc0982ec8b341ee5e7dd816be59d2d0ddf276113e226a31bf987",
+      "observed": "2026-08-04T19:52:15Z"
     },
     "1.11.13_20260804": {
       "content": "sha256:ec9f665e201afac969792ae1478ea0d3491319d977c62d6bb97544a8f7e7299a",
@@ -127,6 +127,34 @@
     "1.12.0": {
       "content": "sha256:94aa821834fc064c70f915e6284d6aae0dd8eaa16e1800dc198a7fc355efab1d",
       "observed": "2026-08-04T14:36:30Z"
+    },
+    "1.11.7_20260804": {
+      "content": "sha256:99b16d41c0c69fd4e21b2819636ef32f4d2e51205bca552084159b7a42cec93e",
+      "observed": "2026-08-04T19:52:15Z"
+    },
+    "1.11.7": {
+      "content": "sha256:99b16d41c0c69fd4e21b2819636ef32f4d2e51205bca552084159b7a42cec93e",
+      "observed": "2026-08-04T19:52:15Z"
+    },
+    "1.11.8_20260804": {
+      "content": "sha256:33e3d739a48dae73dbfedfc627dc5bcda0bd9aae6875d3048f5499765ba33be7",
+      "observed": "2026-08-04T19:52:15Z"
+    },
+    "1.11.8": {
+      "content": "sha256:33e3d739a48dae73dbfedfc627dc5bcda0bd9aae6875d3048f5499765ba33be7",
+      "observed": "2026-08-04T19:52:15Z"
+    },
+    "1.11.9_20260804": {
+      "content": "sha256:cd10e0fa34f9edd05d8c1d8168a4cbafce3b09fac4145a462d9f5770c7ecba33",
+      "observed": "2026-08-04T19:52:15Z"
+    },
+    "1.11.9": {
+      "content": "sha256:cd10e0fa34f9edd05d8c1d8168a4cbafce3b09fac4145a462d9f5770c7ecba33",
+      "observed": "2026-08-04T19:52:15Z"
+    },
+    "1.11.12": {
+      "content": "sha256:9c958cf67a52fc0982ec8b341ee5e7dd816be59d2d0ddf276113e226a31bf987",
+      "observed": "2026-08-04T19:52:15Z"
     }
   }
 }
