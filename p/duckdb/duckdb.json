@@ -10,11 +10,44 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:96646c3db5b387269df058374edaeb14ac569df82e752770d10a780b93eb204a",
+    "title": "duckdb",
+    "description": "In-process analytical SQL database \u2014 query CSV, JSON and Parquet files directly from a single self-contained CLI, no server and no setup",
+    "keywords": [
+      "duckdb",
+      "sql",
+      "database",
+      "olap",
+      "analytics",
+      "parquet",
+      "csv",
+      "json",
+      "columnar",
+      "embedded",
+      "data-engineering",
+      "cli"
+    ],
+    "readme": "sha256:9ae73a62ee207aee0b81e0058647294409d0e7ccd66f8029dd295be2ed115076",
+    "logo": "sha256:cfaaac52b6ace0a9ba9c671419e09508f6eb838a2455c4a7191bafc06507a6cf"
+  },
   "upstream": {
     "org": "duckdb",
     "repository_url": "https://github.com/duckdb/duckdb",
     "disclaimer": "Unaffiliated mirror. DuckDB is a project of Stichting DuckDB Foundation; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "1.5.3_20260804": {
+      "content": "sha256:2938ae639d69e7685070c6f7870bf76db77d4509711515e926e4ffcc474e56d2",
+      "observed": "2026-08-04T02:45:03Z"
+    },
+    "1.5.4_20260804": {
+      "content": "sha256:b6eb9d9b725b13fec70098e078dab3599a4520a690ab683fa96148272320bce2",
+      "observed": "2026-08-04T02:45:03Z"
+    },
+    "1.5.5_20260804": {
+      "content": "sha256:614eda92058f38d2c7458ae76a44a9b77622151cd35843fb15e0bb3de6b4ce68",
+      "observed": "2026-08-04T02:45:03Z"
+    }
+  }
 }
