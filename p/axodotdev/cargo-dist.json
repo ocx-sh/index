@@ -10,11 +10,75 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:ccf0b5b42a46e182d18f764766cf9e289b9c0c152fc2891279c8d8d226393705",
+    "title": "cargo-dist",
+    "description": "Shippable application packaging \u2014 plans, builds and publishes cross-platform release artifacts and installers",
+    "keywords": [
+      "cargo-dist",
+      "dist",
+      "axo",
+      "packaging",
+      "release",
+      "distribution",
+      "installer",
+      "artifacts",
+      "cross-platform",
+      "ci",
+      "rust"
+    ],
+    "readme": "sha256:c184f4421e4d407bae15542b027292db7228b553e99e6eb076fd6d0f727a131a",
+    "logo": "sha256:b56cbdeef471a725c60975e0ce6a7d679f28894d373cc4bc4bea8b0b856bfb46"
+  },
   "upstream": {
     "org": "axodotdev",
     "repository_url": "https://github.com/axodotdev/cargo-dist",
     "disclaimer": "Unaffiliated mirror. cargo-dist is a project of Axo Developer Co and the axodotdev organization; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.30.4_20260804": {
+      "content": "sha256:1ba86d18266b9007f45656c972f34c7206a12c914f1a98fc1b2d9871ac9619e0",
+      "observed": "2026-08-04T07:04:05Z"
+    },
+    "0.30.4": {
+      "content": "sha256:1ba86d18266b9007f45656c972f34c7206a12c914f1a98fc1b2d9871ac9619e0",
+      "observed": "2026-08-04T07:04:05Z"
+    },
+    "0.30": {
+      "content": "sha256:1ba86d18266b9007f45656c972f34c7206a12c914f1a98fc1b2d9871ac9619e0",
+      "observed": "2026-08-04T07:04:05Z"
+    },
+    "0": {
+      "content": "sha256:368d9f149ef4b2766bb7b53619b8a0bfa4c04149d947808a0c788bcea68dbc90",
+      "observed": "2026-08-04T07:04:05Z"
+    },
+    "latest": {
+      "content": "sha256:368d9f149ef4b2766bb7b53619b8a0bfa4c04149d947808a0c788bcea68dbc90",
+      "observed": "2026-08-04T07:04:05Z"
+    },
+    "0.31.0_20260804": {
+      "content": "sha256:6aada0402f3928e92b614839d0ec047c2204963d116119c9c2afbb3621c3a8c7",
+      "observed": "2026-08-04T07:04:05Z"
+    },
+    "0.31.0": {
+      "content": "sha256:6aada0402f3928e92b614839d0ec047c2204963d116119c9c2afbb3621c3a8c7",
+      "observed": "2026-08-04T07:04:05Z"
+    },
+    "0.31": {
+      "content": "sha256:6aada0402f3928e92b614839d0ec047c2204963d116119c9c2afbb3621c3a8c7",
+      "observed": "2026-08-04T07:04:05Z"
+    },
+    "0.32.0_20260804": {
+      "content": "sha256:368d9f149ef4b2766bb7b53619b8a0bfa4c04149d947808a0c788bcea68dbc90",
+      "observed": "2026-08-04T07:04:05Z"
+    },
+    "0.32.0": {
+      "content": "sha256:368d9f149ef4b2766bb7b53619b8a0bfa4c04149d947808a0c788bcea68dbc90",
+      "observed": "2026-08-04T07:04:05Z"
+    },
+    "0.32": {
+      "content": "sha256:368d9f149ef4b2766bb7b53619b8a0bfa4c04149d947808a0c788bcea68dbc90",
+      "observed": "2026-08-04T07:04:05Z"
+    }
+  }
 }
