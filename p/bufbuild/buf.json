@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/bufbuild/buf",
+  "repository": "oci://ghcr.io/ocx-contrib/bufbuild/buf",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": null,
+  "upstream": {
+    "org": "bufbuild",
+    "repository_url": "https://github.com/bufbuild/buf",
+    "disclaimer": "Unaffiliated mirror. buf is a project of Buf Technologies, Inc.; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
