@@ -10,11 +10,71 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-04",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:220613e6f3ed0e0106a987eb433ef70903ef270d6d200715a504caca97c1f5fd",
+    "title": "cargo-about",
+    "description": "Cargo plugin that generates a license attribution listing for every crate in a Rust dependency graph",
+    "keywords": [
+      "cargo-about",
+      "cargo",
+      "rust",
+      "licenses",
+      "attribution",
+      "spdx",
+      "compliance",
+      "notice",
+      "third-party",
+      "handlebars",
+      "embark"
+    ],
+    "readme": "sha256:b03c7174161be0e6b9d8a0e63cf8ccf7100c642ad311cc816d0f319cebc9e854",
+    "logo": "sha256:45851e4f42c4968db97c77e13ad566cebcd20dc6d020e9b10e8e6d4454d0ecc1"
+  },
   "upstream": {
     "org": "EmbarkStudios",
     "repository_url": "https://github.com/EmbarkStudios/cargo-about",
     "disclaimer": "Unaffiliated mirror. cargo-about is a project of Embark Studios AB; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.8.4_20260804": {
+      "content": "sha256:16385810341ba3af5fff53454a7a77921e49dae353469e17984383e93d235f6a",
+      "observed": "2026-08-04T02:01:06Z"
+    },
+    "0.8.4": {
+      "content": "sha256:16385810341ba3af5fff53454a7a77921e49dae353469e17984383e93d235f6a",
+      "observed": "2026-08-04T02:01:06Z"
+    },
+    "0.8": {
+      "content": "sha256:16385810341ba3af5fff53454a7a77921e49dae353469e17984383e93d235f6a",
+      "observed": "2026-08-04T02:01:06Z"
+    },
+    "0": {
+      "content": "sha256:1392885a2e0ac3ab7d741070d96e106908c3329cebece1a9be67c71eb4058039",
+      "observed": "2026-08-04T02:01:06Z"
+    },
+    "latest": {
+      "content": "sha256:1392885a2e0ac3ab7d741070d96e106908c3329cebece1a9be67c71eb4058039",
+      "observed": "2026-08-04T02:01:06Z"
+    },
+    "0.9.0_20260804": {
+      "content": "sha256:d693f11cb52d4f97ba9d81159ef1d6bd0990ead1e98e993f0dfb4d1be4720aa3",
+      "observed": "2026-08-04T02:01:06Z"
+    },
+    "0.9.0": {
+      "content": "sha256:d693f11cb52d4f97ba9d81159ef1d6bd0990ead1e98e993f0dfb4d1be4720aa3",
+      "observed": "2026-08-04T02:01:06Z"
+    },
+    "0.9": {
+      "content": "sha256:1392885a2e0ac3ab7d741070d96e106908c3329cebece1a9be67c71eb4058039",
+      "observed": "2026-08-04T02:01:06Z"
+    },
+    "0.9.1_20260804": {
+      "content": "sha256:1392885a2e0ac3ab7d741070d96e106908c3329cebece1a9be67c71eb4058039",
+      "observed": "2026-08-04T02:01:06Z"
+    },
+    "0.9.1": {
+      "content": "sha256:1392885a2e0ac3ab7d741070d96e106908c3329cebece1a9be67c71eb4058039",
+      "observed": "2026-08-04T02:01:06Z"
+    }
+  }
 }
