@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:ac373490c6eed98e524d8c7cded982ba3d7623e72d4701e2452f104b46e1be79",
+    "digest": "sha256:ad2665c2e610cbcca241464942c5191564e3469bb7a7028ebe5941eea9f08f8f",
     "title": "typos",
     "description": "A fast source-code spell checker that finds and corrects misspellings in code, comments and filenames",
     "keywords": [
@@ -26,7 +26,7 @@
       "rust",
       "cli"
     ],
-    "readme": "sha256:2200d64cfcec0675afc039a59bcbb49770beb462d8428d234dae7a6722a576a3",
+    "readme": "sha256:38c3cbde154067470823884ad93ea1d67fca47b7ed53569d9110a16bd1b34486",
     "logo": "sha256:dba9556ffc539951de48fd49d2660607b472a2470b9a34a7dc6b7185f4d74f57"
   },
   "upstream": {
