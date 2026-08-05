@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:96646c3db5b387269df058374edaeb14ac569df82e752770d10a780b93eb204a",
+    "digest": "sha256:c1626c0cc2910dcb0f18b27f79f4cebe88fcd034ee6db7037e76ee1b1041a503",
     "title": "duckdb",
     "description": "In-process analytical SQL database \u2014 query CSV, JSON and Parquet files directly from a single self-contained CLI, no server and no setup",
     "keywords": [
@@ -28,7 +28,7 @@
       "data-engineering",
       "cli"
     ],
-    "readme": "sha256:9ae73a62ee207aee0b81e0058647294409d0e7ccd66f8029dd295be2ed115076",
+    "readme": "sha256:d9f5ef2630792006d5608b0ebe565d6dc7ed8d2ff8b28c76c811fa80eb8fd132",
     "logo": "sha256:cfaaac52b6ace0a9ba9c671419e09508f6eb838a2455c4a7191bafc06507a6cf"
   },
   "upstream": {
