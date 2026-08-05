@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:051eaae80eb2e6300507e06717396c621b660fa09de261765e1fbab04854c4be",
+    "digest": "sha256:6c556f2f4c72c1b10d56b67743ea145f1e7401972a687ddaacac84f5917736c0",
     "title": "Cocogitto",
     "description": "The conventional commits toolbox \u2014 verify, log, changelog and version-bump a Git history",
     "keywords": [
@@ -26,7 +26,7 @@
       "rust",
       "cli"
     ],
-    "readme": "sha256:141c8ee92767ade34376ac4c047a3e5046d0776012d9047ed7baf6ed60e6aab3",
+    "readme": "sha256:ea46e7293c57e21065d405dc2e08523b538316dadfd53faea5619e0d79a60152",
     "logo": "sha256:199adcf2e5109d427d1eb63d6dd4598505900cfce04b65058e77ee945232307e"
   },
   "upstream": {
