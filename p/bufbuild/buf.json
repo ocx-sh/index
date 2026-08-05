@@ -1,0 +1,81 @@
+{
+  "name": "ocx.sh/bufbuild/buf",
+  "repository": "oci://ghcr.io/ocx-contrib/bufbuild/buf",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": {
+    "digest": "sha256:648ff3ee6a5be611b0c6bd57523587ed4e109113b3f7e59333e2ab511b40458f",
+    "title": "Buf",
+    "description": "Protobuf toolchain \u2014 lint, detect breaking changes, and build Protocol Buffer schemas",
+    "keywords": [
+      "buf",
+      "protobuf",
+      "protoc",
+      "grpc",
+      "lint",
+      "breaking-change",
+      "schema",
+      "api"
+    ],
+    "readme": "sha256:a7b93ec9714654ea89a97c9d4b26f4c4a2a90e2abd78cec1af25d2ff1f4b7a06",
+    "logo": "sha256:1909027305f974fe55cf8ba75768f9a0bbb274ec6a7b0f7d0161ffed6b89f578"
+  },
+  "upstream": {
+    "org": "bufbuild",
+    "repository_url": "https://github.com/bufbuild/buf",
+    "disclaimer": "Unaffiliated mirror. buf is a project of Buf Technologies, Inc.; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {
+    "1.70.0_20260804": {
+      "content": "sha256:c85ecc51b0ca4d6b93778a2d07b685089ac5387af9cc37b07a25bf6aecbdea7a",
+      "observed": "2026-08-04T02:42:13Z"
+    },
+    "1.70.0": {
+      "content": "sha256:c85ecc51b0ca4d6b93778a2d07b685089ac5387af9cc37b07a25bf6aecbdea7a",
+      "observed": "2026-08-04T02:42:13Z"
+    },
+    "1.70": {
+      "content": "sha256:c85ecc51b0ca4d6b93778a2d07b685089ac5387af9cc37b07a25bf6aecbdea7a",
+      "observed": "2026-08-04T02:42:13Z"
+    },
+    "1": {
+      "content": "sha256:9912884feb738b6bc89a075e0e274126656331dc5d41d2b2a9b05430294da7ba",
+      "observed": "2026-08-04T02:42:13Z"
+    },
+    "latest": {
+      "content": "sha256:9912884feb738b6bc89a075e0e274126656331dc5d41d2b2a9b05430294da7ba",
+      "observed": "2026-08-04T02:42:13Z"
+    },
+    "1.71.0_20260804": {
+      "content": "sha256:dbaecd3a51d01aec7730c42648289e5c50837cf120b89b1b87272765d98dd47c",
+      "observed": "2026-08-04T02:42:13Z"
+    },
+    "1.71.0": {
+      "content": "sha256:dbaecd3a51d01aec7730c42648289e5c50837cf120b89b1b87272765d98dd47c",
+      "observed": "2026-08-04T02:42:13Z"
+    },
+    "1.71": {
+      "content": "sha256:dbaecd3a51d01aec7730c42648289e5c50837cf120b89b1b87272765d98dd47c",
+      "observed": "2026-08-04T02:42:13Z"
+    },
+    "1.72.0_20260804": {
+      "content": "sha256:9912884feb738b6bc89a075e0e274126656331dc5d41d2b2a9b05430294da7ba",
+      "observed": "2026-08-04T02:42:13Z"
+    },
+    "1.72.0": {
+      "content": "sha256:9912884feb738b6bc89a075e0e274126656331dc5d41d2b2a9b05430294da7ba",
+      "observed": "2026-08-04T02:42:13Z"
+    },
+    "1.72": {
+      "content": "sha256:9912884feb738b6bc89a075e0e274126656331dc5d41d2b2a9b05430294da7ba",
+      "observed": "2026-08-04T02:42:13Z"
+    }
+  }
+}

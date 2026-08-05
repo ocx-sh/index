@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { safeHref } from '../../utils/safeHref'
+import ExternalIcon from '../shared/ExternalIcon.vue'
 
 // MANDATORY whenever `upstream.disclaimer` is present — a governance
 // invariant (adr_namespace_policy.md ND-9), never conditionally hidden.
@@ -27,38 +28,54 @@ const safeRepositoryUrl = computed(() => safeHref(props.repositoryUrl))
     <span class="disclaimer-text">
       {{ disclaimer }}
       <template v-if="repositoryUrl">
-        Upstream: <a v-if="safeRepositoryUrl" :href="safeRepositoryUrl" target="_blank" rel="noopener noreferrer">{{ repositoryUrl.replace(/^https?:\/\//, '') }} ↗</a><span v-else>{{ repositoryUrl.replace(/^https?:\/\//, '') }}</span>
+        Upstream: <a v-if="safeRepositoryUrl" :href="safeRepositoryUrl" target="_blank" rel="noopener noreferrer" class="disclaimer-link">{{ repositoryUrl.replace(/^https?:\/\//, '') }}<ExternalIcon /></a><span v-else>{{ repositoryUrl.replace(/^https?:\/\//, '') }}</span>
       </template>
     </span>
   </div>
 </template>
 
 <style scoped>
+/* Compact note, not a boxed alert (owner finding) — warn-colored left bar
+ * keeps it noticeable without dominating the page. ND-9 still holds: always
+ * rendered, just quieter. */
 .disclaimer-banner {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  background: var(--c-warn-bg);
-  border: 1px solid color-mix(in srgb, var(--c-warn) 45%, transparent);
-  border-radius: var(--radius-lg);
-  padding: 10px 14px;
+  gap: 8px;
+  border-left: 2px solid var(--c-warn);
+  padding: 2px 0 2px 12px;
 }
 
 .disclaimer-icon {
   color: var(--c-warn);
   flex-shrink: 0;
-  margin-top: 1px;
+  margin-top: 2px;
+  width: 13px;
+  height: 13px;
 }
 
 .disclaimer-text {
   font-family: var(--font-sans);
-  font-size: var(--text-sm);
+  font-size: var(--text-xs);
   line-height: 1.55;
-  color: var(--c-text-1);
+  color: var(--c-text-2);
 }
 
 .disclaimer-text a {
   color: var(--c-accent);
+}
+
+/* Same external-link glyph as the header's github link (owner spec) —
+ * inline-flex keeps it glued to the URL text, no wrap between them. */
+.disclaimer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+}
+
+.disclaimer-link svg {
+  flex-shrink: 0;
 }
 
 .disclaimer-text a:hover {

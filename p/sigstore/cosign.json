@@ -1,0 +1,86 @@
+{
+  "name": "ocx.sh/sigstore/cosign",
+  "repository": "oci://ghcr.io/ocx-contrib/sigstore/cosign",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": {
+    "digest": "sha256:0f72ebbed12a7eccec7f3ca2e65a671bda1772f1732a0d6be8b1e8bfce1b7570",
+    "title": "cosign",
+    "description": "Sign and verify container images, blobs and attestations \u2014 keyless with Sigstore, or with your own keys",
+    "keywords": [
+      "cosign",
+      "sigstore",
+      "signing",
+      "signature",
+      "verification",
+      "supply-chain",
+      "slsa",
+      "attestation",
+      "sbom",
+      "provenance",
+      "oci",
+      "container",
+      "keyless",
+      "rekor",
+      "fulcio",
+      "go",
+      "cli"
+    ],
+    "readme": "sha256:7ae80155beca40ac09bd44980493039516cc59909247858a38f1d234c5f194b9",
+    "logo": "sha256:ec1ac41c1fe300e8e740af48b331a26f409db404b6202f72929f86aff4d62ab1"
+  },
+  "upstream": {
+    "org": "sigstore",
+    "repository_url": "https://github.com/sigstore/cosign",
+    "disclaimer": "Unaffiliated mirror. cosign is a project of Sigstore, an OpenSSF (Linux Foundation) project; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {
+    "3.0.6_20260804": {
+      "content": "sha256:ec18f82e73fe2f3ac5a47191502b35761e5085745c6238918da6ef4f8ea19af2",
+      "observed": "2026-08-04T07:39:01Z"
+    },
+    "3.0.6": {
+      "content": "sha256:ec18f82e73fe2f3ac5a47191502b35761e5085745c6238918da6ef4f8ea19af2",
+      "observed": "2026-08-04T07:39:01Z"
+    },
+    "3.0": {
+      "content": "sha256:ec18f82e73fe2f3ac5a47191502b35761e5085745c6238918da6ef4f8ea19af2",
+      "observed": "2026-08-04T07:39:01Z"
+    },
+    "3": {
+      "content": "sha256:4cb0de0d4627deac406e4f86560f396a69ee01866ecbf0275c2e8fa4c362986e",
+      "observed": "2026-08-04T07:39:01Z"
+    },
+    "latest": {
+      "content": "sha256:4cb0de0d4627deac406e4f86560f396a69ee01866ecbf0275c2e8fa4c362986e",
+      "observed": "2026-08-04T07:39:01Z"
+    },
+    "3.1.1_20260804": {
+      "content": "sha256:154e48c884728a8f5e5343715aeba29d7db0121ef1afde3e5fec5559dadc9937",
+      "observed": "2026-08-04T07:39:01Z"
+    },
+    "3.1.1": {
+      "content": "sha256:154e48c884728a8f5e5343715aeba29d7db0121ef1afde3e5fec5559dadc9937",
+      "observed": "2026-08-04T07:39:01Z"
+    },
+    "3.1": {
+      "content": "sha256:4cb0de0d4627deac406e4f86560f396a69ee01866ecbf0275c2e8fa4c362986e",
+      "observed": "2026-08-04T07:39:01Z"
+    },
+    "3.1.2_20260804": {
+      "content": "sha256:4cb0de0d4627deac406e4f86560f396a69ee01866ecbf0275c2e8fa4c362986e",
+      "observed": "2026-08-04T07:39:01Z"
+    },
+    "3.1.2": {
+      "content": "sha256:4cb0de0d4627deac406e4f86560f396a69ee01866ecbf0275c2e8fa4c362986e",
+      "observed": "2026-08-04T07:39:01Z"
+    }
+  }
+}

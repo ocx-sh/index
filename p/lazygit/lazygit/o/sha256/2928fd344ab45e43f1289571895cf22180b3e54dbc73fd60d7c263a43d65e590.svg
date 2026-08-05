@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="lazygit">
+  <title>lazygit</title>
+  <rect width="512" height="512" rx="96" fill="#1c2128"/>
+  <rect x="48" y="48" width="416" height="416" rx="56" fill="none" stroke="#2d333b" stroke-width="16"/>
+  <g fill="none" stroke="#3fb950" stroke-width="22" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M168 132 V380"/>
+    <path d="M168 236 H288 a56 56 0 0 1 56 56 V380"/>
+  </g>
+  <g fill="#3fb950">
+    <circle cx="168" cy="132" r="34"/>
+    <circle cx="168" cy="380" r="34"/>
+    <circle cx="344" cy="380" r="34"/>
+  </g>
+</svg>

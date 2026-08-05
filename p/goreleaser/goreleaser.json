@@ -1,0 +1,84 @@
+{
+  "name": "ocx.sh/goreleaser/goreleaser",
+  "repository": "oci://ghcr.io/ocx-contrib/goreleaser/goreleaser",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": {
+    "digest": "sha256:a55fdc69b4ee318558d175aacb086eb0e497988d03d3594fd19a385577c854f8",
+    "title": "goreleaser",
+    "description": "Release automation for Go, Rust, Zig, TypeScript and Python projects \u2014 build, package, sign and publish a cross-platform release from one YAML file",
+    "keywords": [
+      "goreleaser",
+      "release",
+      "automation",
+      "ci",
+      "cd",
+      "packaging",
+      "cross-compile",
+      "changelog",
+      "homebrew",
+      "docker",
+      "sbom",
+      "go",
+      "rust",
+      "zig",
+      "cli"
+    ],
+    "readme": "sha256:f21d68b633987ce71217d5c3819e242992483d0ed5effafdf90941b52d9bc278",
+    "logo": "sha256:5ca71019394be7f7c77c0f5c96f295eabd243f56aeda2dec79a436ef405d50fc"
+  },
+  "upstream": {
+    "org": "goreleaser",
+    "repository_url": "https://github.com/goreleaser/goreleaser",
+    "disclaimer": "Unaffiliated mirror. GoReleaser is a project of Carlos Alexandro Becker; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {
+    "2.16.0_20260804": {
+      "content": "sha256:48ef663e3d972168035c78da12e8326b7c088f163994f84c1ae8fbd1c7ab192f",
+      "observed": "2026-08-04T02:13:44Z"
+    },
+    "2.16.0": {
+      "content": "sha256:48ef663e3d972168035c78da12e8326b7c088f163994f84c1ae8fbd1c7ab192f",
+      "observed": "2026-08-04T02:13:44Z"
+    },
+    "2.16": {
+      "content": "sha256:48ef663e3d972168035c78da12e8326b7c088f163994f84c1ae8fbd1c7ab192f",
+      "observed": "2026-08-04T02:13:44Z"
+    },
+    "2": {
+      "content": "sha256:0ee2ab82ae9792aa7620aa6e53a3d8bdba033d42e5f890ce1b6b044282c9b172",
+      "observed": "2026-08-04T02:13:44Z"
+    },
+    "latest": {
+      "content": "sha256:0ee2ab82ae9792aa7620aa6e53a3d8bdba033d42e5f890ce1b6b044282c9b172",
+      "observed": "2026-08-04T02:13:44Z"
+    },
+    "2.17.0_20260804": {
+      "content": "sha256:ecb3ae5411ac6c833a1f047fc9ce292a5fdfbac4c6e603eb00b9f800051b9a67",
+      "observed": "2026-08-04T02:13:44Z"
+    },
+    "2.17.0": {
+      "content": "sha256:ecb3ae5411ac6c833a1f047fc9ce292a5fdfbac4c6e603eb00b9f800051b9a67",
+      "observed": "2026-08-04T02:13:44Z"
+    },
+    "2.17": {
+      "content": "sha256:0ee2ab82ae9792aa7620aa6e53a3d8bdba033d42e5f890ce1b6b044282c9b172",
+      "observed": "2026-08-04T02:13:44Z"
+    },
+    "2.17.1_20260804": {
+      "content": "sha256:0ee2ab82ae9792aa7620aa6e53a3d8bdba033d42e5f890ce1b6b044282c9b172",
+      "observed": "2026-08-04T02:13:44Z"
+    },
+    "2.17.1": {
+      "content": "sha256:0ee2ab82ae9792aa7620aa6e53a3d8bdba033d42e5f890ce1b6b044282c9b172",
+      "observed": "2026-08-04T02:13:44Z"
+    }
+  }
+}

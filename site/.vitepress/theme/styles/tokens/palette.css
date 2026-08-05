@@ -39,12 +39,14 @@
   --c-kw: #6f5bd0;
   --c-kw-bg: rgba(111, 91, 208, 0.09);
 
-  /* Theme-invariant — deliberately NOT redefined under `.dark` below.
-   * --c-code-bg: mock 1f "code blocks always dark (both themes)" — Shiki
-   * fences stay this exact color regardless of site appearance.
-   * --c-overlay: modal/drawer backdrop scrim (WP-E SearchModal +
-   * DocsMobileNav) — one dim value works over either theme's page content. */
-  --c-code-bg: #14181f;
+  /* Code fences follow the site theme (owner decision 2026-08-05, revising
+   * mock 1f's "code blocks always dark" rule — a black box on a light page
+   * read as a bug). Light pairs with Shiki github-light, dark with
+   * github-dark (config.mts markdown.theme).
+   * --c-overlay stays theme-invariant: modal/drawer backdrop scrim (WP-E
+   * SearchModal + DocsMobileNav) — one dim value works over either theme. */
+  --c-code-bg: #f6f8fa;
+  --c-code-text: #1b2129;
   --c-overlay: rgba(15, 18, 23, 0.55);
 }
 
@@ -66,4 +68,7 @@
   --c-warn-bg: rgba(250, 184, 51, 0.1);
   --c-kw: #c0b3ff;
   --c-kw-bg: rgba(192, 179, 255, 0.1);
+
+  --c-code-bg: #14181f;
+  --c-code-text: #c8d0da;
 }

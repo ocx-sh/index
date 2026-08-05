@@ -1,0 +1,89 @@
+{
+  "name": "ocx.sh/biomejs/biome",
+  "repository": "oci://ghcr.io/ocx-contrib/biomejs/biome",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": {
+    "digest": "sha256:8018b1125031f38545aa21a8d7c05e11d207f0eb58b508236c0632698108e56c",
+    "title": "biome",
+    "description": "One fast Rust toolchain for web projects \u2014 formatter, linter and import sorter for JavaScript, TypeScript, JSX, JSON, CSS and GraphQL",
+    "keywords": [
+      "biome",
+      "biomejs",
+      "formatter",
+      "linter",
+      "javascript",
+      "typescript",
+      "jsx",
+      "tsx",
+      "json",
+      "css",
+      "graphql",
+      "prettier",
+      "eslint",
+      "import-sort",
+      "rust",
+      "cli"
+    ],
+    "readme": "sha256:3a3bb1995be6ec62b46f996617fc0010b9b76e01a9cec981d7021d9ab965af42",
+    "logo": "sha256:c717fb987f250d509fb37b806cfec4cb8c40450dab122eaa22bd137ff0f2e167"
+  },
+  "upstream": {
+    "org": "biomejs",
+    "repository_url": "https://github.com/biomejs/biome",
+    "disclaimer": "Unaffiliated mirror. Biome is a project of the Biome Developers and Contributors; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {
+    "2.5.4_20260804": {
+      "content": "sha256:1b5abb5eb1a6f5944908c4b41f5097a8f258de37fe70541999587653decdee69",
+      "observed": "2026-08-04T07:50:51Z"
+    },
+    "2.5.4": {
+      "content": "sha256:1b5abb5eb1a6f5944908c4b41f5097a8f258de37fe70541999587653decdee69",
+      "observed": "2026-08-04T07:50:51Z"
+    },
+    "2.5": {
+      "content": "sha256:67d3daaf354f0dc35c2bd71da2a1448716d45a7046f89f9c14880810f1842bd3",
+      "observed": "2026-08-04T15:14:30Z"
+    },
+    "2": {
+      "content": "sha256:67d3daaf354f0dc35c2bd71da2a1448716d45a7046f89f9c14880810f1842bd3",
+      "observed": "2026-08-04T15:14:30Z"
+    },
+    "latest": {
+      "content": "sha256:67d3daaf354f0dc35c2bd71da2a1448716d45a7046f89f9c14880810f1842bd3",
+      "observed": "2026-08-04T15:14:30Z"
+    },
+    "2.5.5_20260804": {
+      "content": "sha256:25a8711c8638dde8dda40c0114959d641ac858682c8628cda264adfec7b061ed",
+      "observed": "2026-08-04T07:54:39Z"
+    },
+    "2.5.5": {
+      "content": "sha256:25a8711c8638dde8dda40c0114959d641ac858682c8628cda264adfec7b061ed",
+      "observed": "2026-08-04T07:54:39Z"
+    },
+    "2.5.6_20260804": {
+      "content": "sha256:5dd88ae0b10b4f340ec24758bc4e59cb371a6bb1e8591f3fe07fac989e0520ac",
+      "observed": "2026-08-04T07:54:39Z"
+    },
+    "2.5.6": {
+      "content": "sha256:5dd88ae0b10b4f340ec24758bc4e59cb371a6bb1e8591f3fe07fac989e0520ac",
+      "observed": "2026-08-04T07:54:39Z"
+    },
+    "2.5.7_20260804": {
+      "content": "sha256:67d3daaf354f0dc35c2bd71da2a1448716d45a7046f89f9c14880810f1842bd3",
+      "observed": "2026-08-04T15:14:30Z"
+    },
+    "2.5.7": {
+      "content": "sha256:67d3daaf354f0dc35c2bd71da2a1448716d45a7046f89f9c14880810f1842bd3",
+      "observed": "2026-08-04T15:14:30Z"
+    }
+  }
+}

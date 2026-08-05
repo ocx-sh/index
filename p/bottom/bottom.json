@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:56e4f21fb5d0a266e71d1569dc83b499766f169d916b16f556209547b3176f39",
+    "digest": "sha256:a5e278afb549e353fc06e9d5004ee436a1aded254532b87934ec4be860a1630a",
     "title": "bottom",
     "description": "A customizable cross-platform graphical process/system monitor for the terminal, in the spirit of gtop and gotop",
     "keywords": [
@@ -27,7 +27,7 @@
       "cli",
       "rust"
     ],
-    "readme": "sha256:69fde0297e40aa17cf8344514c339bc72115667a5f79bcd2d950367169a77212",
+    "readme": "sha256:c1261b21d20ee49131fdb63ab2d0f617a2f6a6f100a4c2b5ddaf73cfe5ccc2af",
     "logo": "sha256:98839723b809349a383c5c3ba70faffcc8edb3f6e2d97b7557b7bc8d664dd149"
   },
   "upstream": {

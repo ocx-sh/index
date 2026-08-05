@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:5b7a9e333c69b47a1700cd96e89563694cb943cc01b844eccf803a32fdb4033b",
+    "digest": "sha256:5ae848c792c03fa6e39688c1e49d7b9e7599cca7141df6a5bb361f1084aa8453",
     "title": "dprint",
     "description": "A pluggable and configurable code formatting platform \u2014 one fast binary that formats TypeScript, JSON, Markdown, TOML, Dockerfiles and more through WebAssembly plugins",
     "keywords": [
@@ -30,7 +30,7 @@
       "cli",
       "rust"
     ],
-    "readme": "sha256:59790013f35d782cdda3a6fd171377310e41a2f1e0a559fddfdf0d368d6d1569",
+    "readme": "sha256:74d370d6977eeb15a9fba4c644fe47bc5f6e160a1c4c9d05d53a1a0bf09fffea",
     "logo": "sha256:5ecf2b2279889f7a306de4753ecb9f82d015c80be214ef9d5fc16545ca47ee52"
   },
   "upstream": {

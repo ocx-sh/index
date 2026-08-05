@@ -1,0 +1,77 @@
+{
+  "name": "ocx.sh/duckdb/duckdb",
+  "repository": "oci://ghcr.io/ocx-contrib/duckdb/duckdb",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": {
+    "digest": "sha256:c1626c0cc2910dcb0f18b27f79f4cebe88fcd034ee6db7037e76ee1b1041a503",
+    "title": "duckdb",
+    "description": "In-process analytical SQL database \u2014 query CSV, JSON and Parquet files directly from a single self-contained CLI, no server and no setup",
+    "keywords": [
+      "duckdb",
+      "sql",
+      "database",
+      "olap",
+      "analytics",
+      "parquet",
+      "csv",
+      "json",
+      "columnar",
+      "embedded",
+      "data-engineering",
+      "cli"
+    ],
+    "readme": "sha256:d9f5ef2630792006d5608b0ebe565d6dc7ed8d2ff8b28c76c811fa80eb8fd132",
+    "logo": "sha256:cfaaac52b6ace0a9ba9c671419e09508f6eb838a2455c4a7191bafc06507a6cf"
+  },
+  "upstream": {
+    "org": "duckdb",
+    "repository_url": "https://github.com/duckdb/duckdb",
+    "disclaimer": "Unaffiliated mirror. DuckDB is a project of Stichting DuckDB Foundation; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {
+    "1.5.3_20260804": {
+      "content": "sha256:9ee4cdc1a47e83a14c535290955d3f770e5db10b60ad9f505cf3bb66f9e1e551",
+      "observed": "2026-08-04T05:25:29Z"
+    },
+    "1.5.4_20260804": {
+      "content": "sha256:0cb5040b1934aa4a50e5dbf025acae3d9d9afd752c742ea337307cdc4bb46698",
+      "observed": "2026-08-04T05:25:29Z"
+    },
+    "1.5.5_20260804": {
+      "content": "sha256:4e81242fdc10c8e2748f6dcef47ada2151875ad678a102b2b93a79ebba339e76",
+      "observed": "2026-08-04T05:25:29Z"
+    },
+    "1.5.3": {
+      "content": "sha256:9ee4cdc1a47e83a14c535290955d3f770e5db10b60ad9f505cf3bb66f9e1e551",
+      "observed": "2026-08-04T05:25:29Z"
+    },
+    "1.5": {
+      "content": "sha256:4e81242fdc10c8e2748f6dcef47ada2151875ad678a102b2b93a79ebba339e76",
+      "observed": "2026-08-04T05:25:29Z"
+    },
+    "1": {
+      "content": "sha256:4e81242fdc10c8e2748f6dcef47ada2151875ad678a102b2b93a79ebba339e76",
+      "observed": "2026-08-04T05:25:29Z"
+    },
+    "latest": {
+      "content": "sha256:4e81242fdc10c8e2748f6dcef47ada2151875ad678a102b2b93a79ebba339e76",
+      "observed": "2026-08-04T05:25:29Z"
+    },
+    "1.5.4": {
+      "content": "sha256:0cb5040b1934aa4a50e5dbf025acae3d9d9afd752c742ea337307cdc4bb46698",
+      "observed": "2026-08-04T05:25:29Z"
+    },
+    "1.5.5": {
+      "content": "sha256:4e81242fdc10c8e2748f6dcef47ada2151875ad678a102b2b93a79ebba339e76",
+      "observed": "2026-08-04T05:25:29Z"
+    }
+  }
+}

@@ -6,5 +6,8 @@
 # under src/ that isn't hand-authored.
 .vitepress/cache/
 .vitepress/dist/
+# task site:dev's rendered wire snapshot, served by the ocx-dev-wire
+# dev middleware (config.mts)
+.vitepress/dev-wire/
 
 node_modules/

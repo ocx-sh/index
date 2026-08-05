@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-02",
   "desc": {
-    "digest": "sha256:a3f5ec7b3a7277892dc0a6c76ea0c1a8c0eb7e6a9072c562224fb2d79f4d38b2",
+    "digest": "sha256:380be80b86517816ca71270453cd3a3376dac848bd67a53d41eff7aedc2e167c",
     "title": "just",
     "description": "A handy command runner \u2014 define and run project-specific commands from a justfile",
     "keywords": [
@@ -24,7 +24,7 @@
       "cli",
       "rust"
     ],
-    "readme": "sha256:fc2b57ddc98cc7108c8d75d92e08da33fbf3c60c5ff78512fe7a99825d74fe16",
+    "readme": "sha256:f3a7d718896861a9de093986faa609a21f879b0da10ccda3b798559dd1d7fea9",
     "logo": "sha256:6cf4d23448d14c56c09dc1370b807488789f7ae3a4ec945b63d06fb7da8e8b6e"
   },
   "upstream": {
@@ -46,12 +46,12 @@
       "observed": "2026-08-02T10:10:58Z"
     },
     "1": {
-      "content": "sha256:dcca2021ab0a39f90a5f5bb045f6d3161c7ebc2524d6faa6a6033a502b544c3e",
-      "observed": "2026-08-02T10:10:58Z"
+      "content": "sha256:c1a9b4488bfdf571625dbaa1f6e40cf7713065b8c7738ef86f77f525d0aa1273",
+      "observed": "2026-08-04T02:37:01Z"
     },
     "latest": {
-      "content": "sha256:dcca2021ab0a39f90a5f5bb045f6d3161c7ebc2524d6faa6a6033a502b544c3e",
-      "observed": "2026-08-02T10:10:58Z"
+      "content": "sha256:c1a9b4488bfdf571625dbaa1f6e40cf7713065b8c7738ef86f77f525d0aa1273",
+      "observed": "2026-08-04T02:37:01Z"
     },
     "1.55.0_20260802": {
       "content": "sha256:fab100ba2e5bc4fe1ea00edb6d411d6417d6f4490d27c0280f2f8d050fdc07f5",
@@ -328,6 +328,18 @@
     "1.41": {
       "content": "sha256:80342cb1e252f1a57bf5bd63b1c2e5ae6f09872e1304907b3e003777f1de4141",
       "observed": "2026-08-03T02:53:49Z"
+    },
+    "1.58.0_20260804": {
+      "content": "sha256:c1a9b4488bfdf571625dbaa1f6e40cf7713065b8c7738ef86f77f525d0aa1273",
+      "observed": "2026-08-04T02:37:01Z"
+    },
+    "1.58.0": {
+      "content": "sha256:c1a9b4488bfdf571625dbaa1f6e40cf7713065b8c7738ef86f77f525d0aa1273",
+      "observed": "2026-08-04T02:37:01Z"
+    },
+    "1.58": {
+      "content": "sha256:c1a9b4488bfdf571625dbaa1f6e40cf7713065b8c7738ef86f77f525d0aa1273",
+      "observed": "2026-08-04T02:37:01Z"
     }
   }
 }

@@ -1,0 +1,83 @@
+{
+  "name": "ocx.sh/getsops/sops",
+  "repository": "oci://ghcr.io/ocx-contrib/getsops/sops",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": {
+    "digest": "sha256:b044cba022e9a79ac940eaa335b57335807536210aba5904f63cb1e46495cf2f",
+    "title": "sops",
+    "description": "Editor and CLI for files encrypted with AWS KMS, GCP KMS, Azure Key Vault, HashiCorp Vault, age or PGP \u2014 encrypts the values, leaves the keys readable",
+    "keywords": [
+      "sops",
+      "secrets",
+      "encryption",
+      "age",
+      "pgp",
+      "gpg",
+      "kms",
+      "aws-kms",
+      "gcp-kms",
+      "azure-key-vault",
+      "vault",
+      "yaml",
+      "json",
+      "dotenv",
+      "gitops",
+      "cncf",
+      "go",
+      "cli"
+    ],
+    "readme": "sha256:20adc87f5931d9a7a566d9e58dd67b732fc8c79e966135215c243492f2cd25a7",
+    "logo": "sha256:c66ce7dd7b0c311213090978cdfaafe1041dd7805a5b73bf5b3aca228594d68c"
+  },
+  "upstream": {
+    "org": "getsops",
+    "repository_url": "https://github.com/getsops/sops",
+    "disclaimer": "Unaffiliated mirror. sops is a project of the Cloud Native Computing Foundation; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {
+    "3.13.1_20260804": {
+      "content": "sha256:5b8b41901cd6963e694870f1ab549184e17c25d38b29d0d572d380585abae982",
+      "observed": "2026-08-04T07:38:09Z"
+    },
+    "3.13.1": {
+      "content": "sha256:5b8b41901cd6963e694870f1ab549184e17c25d38b29d0d572d380585abae982",
+      "observed": "2026-08-04T07:38:09Z"
+    },
+    "3.13": {
+      "content": "sha256:1fa51681a001358adc0ff129a193a134b9a09cdbad85750da7b549c1eb1e82a1",
+      "observed": "2026-08-04T07:38:09Z"
+    },
+    "3": {
+      "content": "sha256:1fa51681a001358adc0ff129a193a134b9a09cdbad85750da7b549c1eb1e82a1",
+      "observed": "2026-08-04T07:38:09Z"
+    },
+    "latest": {
+      "content": "sha256:1fa51681a001358adc0ff129a193a134b9a09cdbad85750da7b549c1eb1e82a1",
+      "observed": "2026-08-04T07:38:09Z"
+    },
+    "3.13.2_20260804": {
+      "content": "sha256:5bcdea40e29977c0a6e8399a3e5ad1d0d61ff110e46410d36f7484e1a443d441",
+      "observed": "2026-08-04T07:38:09Z"
+    },
+    "3.13.2": {
+      "content": "sha256:5bcdea40e29977c0a6e8399a3e5ad1d0d61ff110e46410d36f7484e1a443d441",
+      "observed": "2026-08-04T07:38:09Z"
+    },
+    "3.13.3_20260804": {
+      "content": "sha256:1fa51681a001358adc0ff129a193a134b9a09cdbad85750da7b549c1eb1e82a1",
+      "observed": "2026-08-04T07:38:09Z"
+    },
+    "3.13.3": {
+      "content": "sha256:1fa51681a001358adc0ff129a193a134b9a09cdbad85750da7b549c1eb1e82a1",
+      "observed": "2026-08-04T07:38:09Z"
+    }
+  }
+}

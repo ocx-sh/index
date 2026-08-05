@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useCopyState } from '../../composables/useCopyState'
+import { useToast } from '../../composables/useToast'
 import CopyContextMenu, { buildTagCopyActions, type CopyAction } from '../shared/CopyContextMenu.vue'
 import CopyIcon from '../shared/CopyIcon.vue'
 
@@ -83,23 +84,33 @@ function identifier() {
 }
 
 function badgeTitle(): string {
-  if (!props.yanked) return 'Click to copy identifier'
-  return props.yankedReason ? `Yanked — ${props.yankedReason} — click to copy identifier` : 'Yanked — click to copy identifier'
+  if (!props.yanked) return 'Click to copy identifier · right-click for more'
+  return props.yankedReason ? `Yanked — ${props.yankedReason} — click to copy identifier · right-click for more` : 'Yanked — click to copy identifier · right-click for more'
 }
 
+const { toast } = useToast()
+
 async function handleClick() {
+  if (copied.value) return
   await copyText(identifier())
+  toast(`Copied — :${props.tag} identifier`)
 }
 </script>
 
 <template>
   <CopyContextMenu :actions="actions" :copy-text="copyText">
+    <!-- role/tabindex/keydown: a <code> is not natively focusable — Tab +
+         Enter/Space must work like the click (keyboard-reachability pass). -->
     <code
       class="tag-badge"
       :class="[variant, { copied, yanked }]"
       :title="badgeTitle()"
+      role="button"
+      tabindex="0"
       v-bind="$attrs"
       @click="handleClick"
+      @keydown.enter.prevent="handleClick"
+      @keydown.space.prevent="handleClick"
     >
       <span class="tag-text">{{ label ?? tag }}</span>
       <CopyIcon :copied="true" :size="12" check-class="tag-check" />
@@ -123,6 +134,11 @@ async function handleClick() {
   cursor: pointer;
   transition: border-color 0.3s, color 0.3s, background 0.3s;
   user-select: none;
+}
+
+.tag-badge:focus-visible {
+  outline: none;
+  border-color: var(--c-accent);
 }
 
 .tag-badge.rolling {

@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:1c4451111d4d07732ab15a3f015a49c8762cfba41eb8a4df67595ec9c6b4ab50",
+    "digest": "sha256:2027cef711d5141e253913b2faaeb8de07599e3945cc1392736e8e721294938b",
     "title": "lefthook",
     "description": "Fast, parallel git hooks manager for any language \u2014 one lefthook.yml drives every hook in the repository",
     "keywords": [
@@ -27,7 +27,7 @@
       "go",
       "cli"
     ],
-    "readme": "sha256:0629e47f4cd9129fe41df3ad67c30c10ae09440146ebee41d1c361ca246431ff",
+    "readme": "sha256:ffafce8df184c449c5fb80fb7838f5c981c9a1ecea7142b61e0c9618a8bef041",
     "logo": "sha256:578ebe7d118cd904b8d213785cd4a5ba5ce2fa4a509fc1cb808957bf15728ccd"
   },
   "upstream": {

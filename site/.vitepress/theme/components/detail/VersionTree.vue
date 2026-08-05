@@ -13,6 +13,7 @@ import TagBadge from './TagBadge.vue'
 import CopyContextMenu, { buildTagCopyActions } from '../shared/CopyContextMenu.vue'
 import CopyIcon from '../shared/CopyIcon.vue'
 import { useCopyState } from '../../composables/useCopyState'
+import { useToast } from '../../composables/useToast'
 import { minorGroupHasYanked, rowHasHiddenYanked } from '../../utils/version'
 import type { MajorGroup, MinorGroup, VariantRow, VersionTable } from '../../utils/version'
 
@@ -80,8 +81,11 @@ function copyAliasAction(tag: string, text: string) {
   copyAliasText(text)
 }
 
+const { toast } = useToast()
+
 function copyAliasMember(tag: string) {
   copyAliasAction(tag, `${props.qualifiedName}:${tag}`)
+  toast(`Copied — :${tag} identifier`)
 }
 
 // Track open state of minor popovers so we can close on copy
@@ -222,8 +226,7 @@ function onMinorHover(minor: MinorGroup) {
           />
         </span>
 
-        <span v-if="row.aliasChain.length > 1" class="alias-hint">= same digest, one copy target</span>
-        <span v-else-if="row.isDefault && status === 'deprecated'" class="alias-hint">no "latest" tag — deprecated</span>
+        <span v-if="row.aliasChain.length <= 1 && row.isDefault && status === 'deprecated'" class="alias-hint">no "latest" tag — deprecated</span>
 
         <span class="row-spacer" />
 
@@ -401,13 +404,15 @@ function onMinorHover(minor: MinorGroup) {
   border-bottom: none;
 }
 
+/* No wrap — the expand toggle must stay on the row's line even for long
+ * variant names (owner finding); a too-long alias chain scrolls inside
+ * itself instead of pushing the toggle down. */
 .variant-row-header {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   padding: 0.5rem 0;
   min-height: 2.25rem;
-  flex-wrap: wrap;
 }
 
 .variant-label {
@@ -438,6 +443,8 @@ function onMinorHover(minor: MinorGroup) {
   border: 1px solid var(--c-line);
   border-radius: var(--radius-md);
   overflow: hidden;
+  min-width: 0;
+  overflow-x: auto;
 }
 
 .alias-segment {
@@ -460,8 +467,10 @@ function onMinorHover(minor: MinorGroup) {
   border-left: none;
 }
 
-.alias-segment:hover {
+.alias-segment:hover,
+.alias-segment:focus-visible {
   color: var(--c-accent);
+  outline: none;
 }
 
 .alias-segment.latest {
