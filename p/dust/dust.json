@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:fe1325169063c87a672c9968c01752528c4baa4d183b73da2fc475aa01da19ae",
+    "digest": "sha256:a5d0bf8d6d5882e3edef2d470cb5a4976d46cb6e656635bb34c835b9d084d43c",
     "title": "dust",
     "description": "Like du but more intuitive \u2014 a disk-usage tree that shows you where the space actually went",
     "keywords": [
@@ -25,7 +25,7 @@
       "rust",
       "tui"
     ],
-    "readme": "sha256:8fd20979b8c3ee20cc1fb17a3b602cac89fb005cf21112c694974b122aad66f9",
+    "readme": "sha256:218acfb23f62e3ada1c08c42e87bcbdf6650849373d24705172216936d4a5935",
     "logo": "sha256:bf8a25b53295a3475af61362e67bc0ed303fbda7aa60236371d308116a56bc21"
   },
   "upstream": {
