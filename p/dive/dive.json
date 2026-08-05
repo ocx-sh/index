@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:81236d7502e6b78e6782fddc93e889905d908bb0d017a447920a70b21de83dcb",
+    "digest": "sha256:54db5e17b9e7ae321a7debe57a42a3e96239763a9782bc310f3b7f714859615a",
     "title": "dive",
     "description": "Explore a container image layer by layer \u2014 see what each command added, browse the resulting filesystem, and find the wasted space",
     "keywords": [
@@ -29,7 +29,7 @@
       "ci",
       "go"
     ],
-    "readme": "sha256:2208496f742f9634bb20cba6674d6dba294160a13f4cc2c9a8d46c1cf6fc0c23",
+    "readme": "sha256:798a031633121567b69bef69d5f1ce9a93f3ae019805aa945d7334d4f13a9c88",
     "logo": "sha256:0913869893a91cd8ed699afee2a1c22de2f3eff89fed4a764c50c9e3ec5b1a69"
   },
   "upstream": {
