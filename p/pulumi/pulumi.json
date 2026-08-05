@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:2833909b059b12724e859aed4c0fb525cf3bf6f40cf8199944b8a761ff4b25e3",
+    "digest": "sha256:aabc18082ec808f774825495cba058abe49edb2284a0fcfd0c6726394bed37b0",
     "title": "pulumi",
     "description": "Infrastructure as Code in TypeScript, Python, Go, C#, Java or YAML \u2014 define cloud resources in a real programming language and preview, deploy and destroy them",
     "keywords": [
@@ -28,7 +28,7 @@
       "cli",
       "go"
     ],
-    "readme": "sha256:1cc45823bf1f6a9d837c7767d0fe7dc7b3ae6a84b87a08fba8bff8d710587468",
+    "readme": "sha256:f53546d520e9b4d2a92544f3b47e6783d11d4f2e4a601b641eaa405bc3af6a9e",
     "logo": "sha256:1b5b2b58fff08dc0355c926113065b7ef862e389076f2186eafb52af65ab4505"
   },
   "upstream": {
