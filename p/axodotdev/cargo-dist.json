@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:ccf0b5b42a46e182d18f764766cf9e289b9c0c152fc2891279c8d8d226393705",
+    "digest": "sha256:f079930e3dcf170f9529e93678ca8262761d8c4e61b73a2ac7aaf09e523af493",
     "title": "cargo-dist",
     "description": "Shippable application packaging \u2014 plans, builds and publishes cross-platform release artifacts and installers",
     "keywords": [
@@ -27,7 +27,7 @@
       "ci",
       "rust"
     ],
-    "readme": "sha256:c184f4421e4d407bae15542b027292db7228b553e99e6eb076fd6d0f727a131a",
+    "readme": "sha256:aaa779c547ec00ab7a98d6483f3bc8ea1e387bbd833f489c3d010b3532e053a7",
     "logo": "sha256:b56cbdeef471a725c60975e0ce6a7d679f28894d373cc4bc4bea8b0b856bfb46"
   },
   "upstream": {
