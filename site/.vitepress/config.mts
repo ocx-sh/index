@@ -125,6 +125,14 @@ export default defineConfig<ThemeConfig>({
   sitemap: { hostname: SITE_URL },
 
   transformHead({ pageData }) {
+    // Catalog page: start the catalog.json fetch at HTML-parse time —
+    // CatalogPage's onMounted fetch otherwise waterfalls behind JS download
+    // + hydration (the whole perceived initial lag). `crossorigin` (i.e.
+    // anonymous) matches fetch()'s default mode/credentials; without it the
+    // preload and the fetch don't key-match and the browser fetches twice.
+    if (pageData.relativePath === 'index.md') {
+      return [['link', { rel: 'preload', href: '/data/catalog/catalog.json', as: 'fetch', crossorigin: '' }]]
+    }
     const ns = pageData.params?.ns as string | undefined
     const pkg = pageData.params?.pkg as string | undefined
     if (!ns || !pkg) return []

@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useClipboard } from '@vueuse/core'
 import type { CatalogPackage } from '../../composables/useCatalog'
 import { monogramHue, monogramInitials } from '../../utils/monogram'
 import { OS_GLYPHS, osRank } from '../../utils/osGlyphs'
-import MonogramTile from './MonogramTile.vue'
+import LogoTile from './LogoTile.vue'
 import CopyContextMenu, { buildTagCopyActions } from '../shared/CopyContextMenu.vue'
 
 // Concise table view — CatalogPage's cards/table toggle picks between this
@@ -18,13 +17,6 @@ const bare = (p: CatalogPackage) => `${p.namespace}/${p.package}`
 const oses = (p: CatalogPackage) =>
   [...new Set(p.platforms.map(x => x.split('/')[0]))].sort((a, b) => osRank(a) - osRank(b))
 
-// ponytail: no svg->png retry chain here (PackageCard carries it) — any
-// logo error just drops the row to its monogram tile.
-const failedLogos = ref(new Set<string>())
-function onLogoError(name: string) {
-  failedLogos.value = new Set(failedLogos.value).add(name)
-}
-
 // Right-click copy menu per row — same shared action list as the card's
 // install box (InstallRow): `ocx.sh/`-prefixed name + latest version tag.
 const rowActions = (p: CatalogPackage) =>
@@ -36,14 +28,7 @@ const { copy: copyText } = useClipboard()
   <div class="package-table">
     <CopyContextMenu v-for="pkg in packages" :key="pkg.name" :actions="rowActions(pkg)" :copy-text="copyText">
       <a :href="`/${bare(pkg)}`" class="table-row">
-      <img
-        v-if="pkg.logoUrl && !failedLogos.has(pkg.name)"
-        :src="pkg.logoUrl"
-        alt=""
-        class="t-tile"
-        @error="onLogoError(pkg.name)"
-      >
-      <MonogramTile v-else :hue="monogramHue(bare(pkg))" :initials="monogramInitials(pkg.package)" :size="22" />
+      <LogoTile :logo-url="pkg.logoUrl" :hue="monogramHue(bare(pkg))" :initials="monogramInitials(pkg.package)" :size="22" />
       <span class="t-name">
         <span class="t-title" :title="pkg.title">{{ pkg.title }}</span>
         <span class="t-bare" :title="bare(pkg)">{{ bare(pkg) }}</span>
@@ -123,13 +108,6 @@ const { copy: copyText } = useClipboard()
 .table-row:last-child {
   border-bottom-left-radius: var(--radius-lg);
   border-bottom-right-radius: var(--radius-lg);
-}
-
-.t-tile {
-  width: 22px;
-  height: 22px;
-  flex-shrink: 0;
-  object-fit: contain;
 }
 
 .package-table :deep(.monogram-tile) {

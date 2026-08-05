@@ -3,10 +3,9 @@ import { computed } from 'vue'
 import { useClipboard } from '@vueuse/core'
 import type { CatalogPackage } from '../../composables/useCatalog'
 import CopyContextMenu, { buildTagCopyActions } from '../shared/CopyContextMenu.vue'
-import { useImageFallback } from '../../composables/useImageFallback'
 import { monogramHue, monogramInitials } from '../../utils/monogram'
 import { OS_GLYPHS, osRank } from '../../utils/osGlyphs'
-import MonogramTile from './MonogramTile.vue'
+import LogoTile from './LogoTile.vue'
 import InstallRow from './InstallRow.vue'
 
 const props = defineProps<{ pkg: CatalogPackage, keywordRank?: Map<string, number> }>()
@@ -34,23 +33,12 @@ const { copy: menuCopy } = useClipboard()
 const hue = computed(() => monogramHue(bareName.value))
 const initials = computed(() => monogramInitials(props.pkg.package))
 
-// Tile fallback chain: logoUrl -> <img> (svg->png retry once on error) ->
-// monogram -> cube placeholder. The cube branch is a defensive last
-// resort for an empty-initials edge case (never expected in practice —
-// `package` is non-empty per schema) rather than a designed "sometimes"
-// toggle; the mock's own two example tile styles are visual variety in
-// the fixture generator, not two independently-random UI states.
-// `useImageFallback` owns the svg->png retry mechanics (shared with
-// `IdentityBlock`'s logo chain); a non-svg `logoUrl` gets exactly one
-// candidate — retrying the same URL after it already 404'd is pointless.
-const logoCandidates = computed<(string | null)[]>(() => {
-  const url = props.pkg.logoUrl
-  if (!url) return []
-  return url.endsWith('.svg') ? [url, url.replace(/\.svg$/, '.png')] : [url]
-})
-const { src: imgSrc, onError: onImgError } = useImageFallback(logoCandidates)
-
-const showImg = computed(() => !!imgSrc.value)
+// Tile rendering (logo cross-fade over monogram, svg->png retry) lives in
+// the shared `LogoTile`. The cube branch here is a defensive last resort
+// for an empty-initials edge case (never expected in practice — `package`
+// is non-empty per schema) rather than a designed "sometimes" toggle; the
+// mock's own two example tile styles are visual variety in the fixture
+// generator, not two independently-random UI states.
 
 const platforms = computed(() =>
   [...new Set(props.pkg.platforms.map(p => p.split('/')[0]))].sort((a, b) => osRank(a) - osRank(b)),
@@ -61,8 +49,7 @@ const platforms = computed(() =>
   <CopyContextMenu :actions="menuActions" :copy-text="menuCopy">
     <a :href="`/${bareName}`" class="package-card">
     <div class="card-header">
-      <img v-if="showImg" :src="imgSrc!" alt="" class="card-tile-img" @error="onImgError">
-      <MonogramTile v-else-if="initials" :hue="hue" :initials="initials" />
+      <LogoTile v-if="pkg.logoUrl || initials" :logo-url="pkg.logoUrl" :hue="hue" :initials="initials" />
       <div v-else class="card-tile-cube">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
@@ -130,15 +117,6 @@ const platforms = computed(() =>
   display: flex;
   align-items: center;
   gap: var(--space-3);
-}
-
-/* Bare logo — no box, background, or radius (owner finding); the monogram
- * and cube fallbacks keep their tile look, they ARE boxes by design. */
-.card-tile-img {
-  width: 34px;
-  height: 34px;
-  flex-shrink: 0;
-  object-fit: contain;
 }
 
 .card-tile-cube {

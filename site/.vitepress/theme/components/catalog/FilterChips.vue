@@ -47,6 +47,7 @@ const popoverKeywords = computed(() => {
       :key="os"
       type="button"
       class="chip"
+      tabindex="-1"
       :class="{ active: activePlatforms.includes(os) }"
       :aria-pressed="activePlatforms.includes(os)"
       @click="emit('toggle-platform', os)"
@@ -66,6 +67,7 @@ const popoverKeywords = computed(() => {
       :key="kw.keyword"
       type="button"
       class="chip"
+      tabindex="-1"
       :class="{ active: activeKeywords.includes(kw.keyword) }"
       :aria-pressed="activeKeywords.includes(kw.keyword)"
       @click="emit('toggle-keyword', kw.keyword)"
@@ -75,7 +77,7 @@ const popoverKeywords = computed(() => {
     </button>
 
     <PopoverRoot v-if="hiddenKeywordCount > 0">
-      <PopoverTrigger class="chip-more">
+      <PopoverTrigger class="chip-more" tabindex="-1">
         +{{ hiddenKeywordCount }} more
       </PopoverTrigger>
       <PopoverPortal>
@@ -108,6 +110,7 @@ const popoverKeywords = computed(() => {
     <button
       type="button"
       class="chip chip-deprecated"
+      tabindex="-1"
       :class="{ active: deprecatedActive }"
       :aria-pressed="deprecatedActive"
       @click="emit('toggle-deprecated')"

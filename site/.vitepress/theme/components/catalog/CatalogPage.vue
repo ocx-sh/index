@@ -89,12 +89,12 @@ const sorted = computed(() => {
   return sortInverted.value ? [...list].reverse() : list
 })
 
-// Tab order (owner spec 2026-08-05, revising the earlier pulled-out pass):
-// toolbar controls (search, chips, sort, view toggle) and cards/rows are
-// all natural Tab stops. The one remaining pull-out is the card's OWN
-// install box (`InstallRow` keeps `tabindex="-1"`) — the card anchor is
-// that unit's stop, and per-card double-stops would double the walk. Arrow
-// keys remain as a faster grid-shaped movement on top.
+// Tab order (owner spec #44, reaffirmed 2026-08-05 — the UX-overhaul
+// natural-stop pass was a regression): Tab walks search bar → first
+// card/row → next → …. Every toolbar affordance (chips, clear buttons,
+// sort, view toggle) and the card's own install box stays pulled out via
+// `tabindex="-1"` — mouse/"/"-reachable, never a Tab stop. Arrow keys
+// remain as a faster grid-shaped movement on top.
 const ARROW_DELTA: Record<string, number> = { ArrowLeft: -1, ArrowRight: 1 }
 
 function onGridKeydown(event: KeyboardEvent) {
@@ -249,7 +249,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
             @clear-filters="clearFilters"
           />
           <SelectRoot v-model="sortBy">
-            <SelectTrigger class="sort-trigger" aria-label="Sort by">
+            <SelectTrigger class="sort-trigger" aria-label="Sort by" tabindex="-1">
               <!-- Direction toggle lives INSIDE the box (owner spec, grimoire-
                    index style): stop pointerdown/click so toggling never opens
                    the select. Icon = narrow→wide bars for natural, wide→narrow
@@ -279,10 +279,10 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
             </SelectPortal>
           </SelectRoot>
           <span class="view-toggle" role="group" aria-label="Catalog view">
-            <button type="button" title="Card view" :class="{ active: view === 'cards' }" @click="view = 'cards'">
+            <button type="button" title="Card view" tabindex="-1" :class="{ active: view === 'cards' }" @click="view = 'cards'">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /></svg>
             </button>
-            <button type="button" title="Table view" :class="{ active: view === 'table' }" @click="view = 'table'">
+            <button type="button" title="Table view" tabindex="-1" :class="{ active: view === 'table' }" @click="view = 'table'">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
             </button>
           </span>
@@ -385,8 +385,9 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
   transition: border-color 0.15s, color 0.15s;
   /* Reka refocuses the trigger after selection — the UA focus ring then
    * stacks with the hover border ("double bar"). The trigger is already
-   * (site convention: only cards are Tab stops), so the ring
-   * carries no keyboard-nav signal here; hover border is the one cue. */
+   * pulled out of the Tab order (site convention: only cards are Tab
+   * stops), so the ring carries no keyboard-nav signal here; hover border
+   * is the one cue. */
   outline: none;
 }
 

@@ -19,7 +19,7 @@ defineEmits<{ 'clear-filters': [] }>()
     <!-- No placeholder text when unfiltered — the meta row's sort select
          (CatalogPage) states the order now. -->
     <span v-if="activeFilterLabels.length" class="filters">{{ activeFilterLabels.join(' · ') }}</span>
-    <button v-if="activeFilterLabels.length || hasQuery" type="button" class="clear-btn" @click="$emit('clear-filters')">
+    <button v-if="activeFilterLabels.length || hasQuery" type="button" class="clear-btn" tabindex="-1" @click="$emit('clear-filters')">
       clear filters
     </button>
   </div>
