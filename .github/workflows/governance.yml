@@ -36,7 +36,11 @@ name: governance
 #     the raw classify-pr label, which can't see the G-19 ownership result —
 #     and withdraws again the moment a re-run says the PR is no longer
 #     machine-lane. GitHub itself merges once branch protection's required
-#     checks are green — no polling, no second bot.
+#     checks are green — no polling, no second bot. One exception: when every
+#     required check is already green by the time the job runs, GitHub
+#     refuses to arm (CLEAN/UNSTABLE are already-mergeable states), and the
+#     job performs the identical squash merge itself, pinned to the event's
+#     head SHA — never `--admin`, so branch protection binds either way.
 #   deploy-on-merge (checkout-free, `actions: write` and nothing else): the
 #     machine lane's deploy trigger. GitHub performs the armed merge with
 #     GITHUB_TOKEN, whose push starts no workflow run, so `render-deploy`'s
@@ -159,7 +163,8 @@ jobs:
     # to. Pinned by bot/tests/security/test_workflow_split.py.
     permissions:
       # Enabling or withdrawing auto-merge IS a deferred write to the base
-      # branch — GitHub documents its REST sibling
+      # branch — and when GitHub reports the PR already mergeable, this job
+      # performs the squash merge itself — GitHub documents its REST sibling
       # (PUT /repos/{owner}/{repo}/pulls/{n}/merge) as needing Contents:
       # write. Granting it here rather than widening governance-gate is the
       # entire point of the split above.
@@ -168,6 +173,7 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
       PR_NUMBER: ${{ github.event.pull_request.number }}
+      HEAD_SHA: ${{ github.event.pull_request.head.sha }}
       REPO: ${{ github.repository }}
     steps:
       # G-19: arm auto-merge only on governance-check's own `disposition`
@@ -178,13 +184,40 @@ jobs:
         if: needs.governance-gate.outputs.disposition == 'success'
         run: |
           set -euo pipefail
-          gh pr merge "$PR_NUMBER" --repo "$REPO" --auto --squash
+          # Arming is only possible while the merge is still blocked. When
+          # every required check finishes before this job gets here, GitHub
+          # rejects the arm ("clean status" / "unstable status" — required
+          # checks green, PR mergeable right now). Merge directly instead:
+          # same GITHUB_TOKEN, same squash, so the #67 push-trigger silence
+          # and deploy-on-merge dispatch are unchanged. `--match-head-commit`
+          # pins the merge to the head this event delivered; a gate that read
+          # a newer head live, or a `synchronize` racing this step, 409s here
+          # and re-classifies in its own run. Never `--admin` — branch
+          # protection binds on both routes. Any other arm error re-prints
+          # and goes red: the machine lane stalls to manual merge, exactly
+          # the pre-fallback behavior.
+          if ! err="$(gh pr merge "$PR_NUMBER" --repo "$REPO" --auto --squash 2>&1)"; then
+            case "$err" in
+              *"clean status"*|*"unstable status"*)
+                gh pr merge "$PR_NUMBER" --repo "$REPO" --squash --match-head-commit "$HEAD_SHA"
+                echo "::notice title=auto-merge::PR #$PR_NUMBER was already mergeable - squash-merged directly at $HEAD_SHA."
+                ;;
+              *)
+                printf '%s\n' "$err" >&2
+                exit 1
+                ;;
+            esac
+          else
+            printf '%s\n' "$err"
+          fi
 
       # Arming is revocable, and must be: governance-gate re-runs and
       # re-classifies on every `synchronize`, so a PR that armed as
       # machine-lane and then pushed an edit outside the author's owned roots
       # has its arming withdrawn here rather than merging on a stale
-      # evaluation.
+      # evaluation. (The direct-merge fallback above needs no withdrawal —
+      # it fires only when the merge would land immediately anyway, and any
+      # head drift 409s it.)
       - name: Withdraw auto-merge — human lane
         if: needs.governance-gate.outputs.disposition != 'success'
         run: |

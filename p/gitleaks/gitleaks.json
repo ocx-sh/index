@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:d374edb073aa1b379d10baebc83d7c607f06c34d7e1cd2c0f4c875e27e529784",
+    "digest": "sha256:71d1dab7e645b813215fad7891652f7d06b9b95413d0626887fbf7b1fe9d182f",
     "title": "gitleaks",
     "description": "Scan git repositories, directories and stdin for hardcoded secrets \u2014 API keys, tokens and private keys \u2014 past or present",
     "keywords": [
@@ -28,7 +28,7 @@
       "cli",
       "go"
     ],
-    "readme": "sha256:8a3122ce964d9b277bb0aa46847a9f03770d4fcd07a3f1e536552549440230f6",
+    "readme": "sha256:9da6eff524f98737957e8af1524ea027417683422e3a3ad4a70b0fb855ddbeeb",
     "logo": "sha256:043ffb7ef5c747bd50aeebad004d29753dfbc1193b3570a74b630f4971840218"
   },
   "upstream": {

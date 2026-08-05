@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:497a9bec0b7af4d2e478106eb310a018785c4c7d7afe1d06c7afcb889ed3bd6b",
+    "digest": "sha256:afc6409117318b0dd5165650d67903f3e400f284e96c5deb734e301790020bb0",
     "title": "Hugo",
     "description": "The world's fastest static site generator \u2014 builds a whole site from Markdown, templates and assets in milliseconds, with a built-in asset pipeline",
     "keywords": [
@@ -28,7 +28,7 @@
       "go",
       "cli"
     ],
-    "readme": "sha256:6d3dbed4645591615977c563e2bd2581ed519aec6804c5feb381515da90555e3",
+    "readme": "sha256:b77f02f7548c1058469cec5a3059d9a16e896ada91b923a1c4c64df109fa786c",
     "logo": "sha256:4abf7657a4889e044a9cd3e7628d04b91b2e9bf0a879e08c5f44db4f5b39e79b"
   },
   "upstream": {

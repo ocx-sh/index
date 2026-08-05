@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { useClipboard } from '@vueuse/core'
+import { computed, onMounted, ref, watch } from 'vue'
+import { useClipboard, useLocalStorage } from '@vueuse/core'
+import { useToast } from '../../composables/useToast'
 import { safeHref } from '../../utils/safeHref'
 import PlatformMatrix from './PlatformMatrix.vue'
 import CopyIcon from '../shared/CopyIcon.vue'
+import { SelectRoot, SelectTrigger, SelectPortal, SelectContent, SelectViewport, SelectItem, SelectItemText } from 'reka-ui'
 import CopyContextMenu, { buildTagCopyActions, type CopyAction } from '../shared/CopyContextMenu.vue'
+import ExternalIcon from '../shared/ExternalIcon.vue'
+import { parseTag, type VersionTable } from '../../utils/version'
 import type { PackageRoot } from '../../composables/usePackageRoot'
 import type { ImageIndex } from '../../composables/useImageIndex'
 
@@ -19,31 +23,138 @@ const props = defineProps<{
   latestVersionLabel: string | null
   activeImageIndex: ImageIndex | null
   tagCount: number
+  /** Full version table — drives the install card's variant + version
+   * selectors (each variant row carries its own alias chain). */
+  table: VersionTable
 }>()
 
-// Install card: toggle between "latest" (no tag suffix) and "pinned"
-// (`:<primaryTag>`) only when there's a real distinction to toggle between
-// — i.e. `primaryTag === 'latest'` AND a precise version alias exists.
-// Otherwise a single (possibly de-emphasized, for a deprecated package)
-// pinned row, matching design mock 1d.
-const canToggle = computed(() => props.primaryTag === 'latest' && !!props.latestVersionLabel)
-const mode = ref<'latest' | 'pinned'>('latest')
+const emit = defineEmits<{
+  /** Fired when the install card's selection lands on a concrete tag —
+   * DetailPage swaps the Platforms card's image index to match. */
+  'select-tag': [tag: string]
+}>()
+
+// Install card selectors (owner spec): variant combo (only when the
+// package ships variants) + version combo over the ACTIVE variant's alias
+// chain — rolling → major → minor → patch, real tags only. Changing the
+// variant swaps the version options (state dependency), re-applying the
+// persisted granularity preference against the new chain.
+
+// Reka Select needs string values; the default variant is `null` in the
+// table, so it maps to a sentinel.
+const DEFAULT_VARIANT = '__default__'
+const variantValue = ref(DEFAULT_VARIANT)
+const rows = computed(() => props.table.rows)
+const activeRow = computed(
+  () => rows.value.find(r => (r.variant ?? DEFAULT_VARIANT) === variantValue.value) ?? rows.value[0] ?? null,
+)
+
+// Granularity per alias-chain member, derived from the tag itself: depth 0
+// is `latest` (default variant) or the bare variant name (rolling); then
+// major ("3"), minor ("3.31"), patch ("3.31.7"), and a build/prerelease-
+// qualified tag is the fully pinned one. The DEEPEST member of a chain
+// always displays as "pinned" regardless of its depth (owner spec: only
+// when a build tag exists too does the plain patch tag show as "patch" —
+// no duplicate "pinned" labels).
+type PinLevel = 'latest' | 'rolling' | 'major' | 'minor' | 'patch' | 'pinned'
+const LEVEL_RANK: Record<PinLevel, number> = { latest: 0, rolling: 0, major: 1, minor: 2, patch: 3, pinned: 4 }
+
+function depthLevel(tag: string): PinLevel {
+  const parsed = parseTag(tag)
+  if (parsed.kind === 'latest') return 'latest'
+  if (parsed.kind === 'other') return 'rolling'
+  const v = parsed.version
+  if (v.minor === null) return 'major'
+  if (v.patch === null) return 'minor'
+  if (v.prerelease === null && v.build === null) return 'patch'
+  return 'pinned'
+}
+
+interface VersionOption {
+  tag: string
+  /** Real depth rank — preference matching works on this. */
+  rank: number
+  /** Displayed label — the deepest option always reads "pinned". */
+  label: PinLevel
+}
+
+const versionOptions = computed<VersionOption[]>(() => {
+  const opts = (activeRow.value?.aliasChain ?? []).map((m) => {
+    const level = depthLevel(m.tag)
+    return { tag: m.tag, rank: LEVEL_RANK[level], label: level }
+  })
+  if (opts.length) {
+    const deepest = opts.reduce((a, b) => (b.rank >= a.rank ? b : a))
+    deepest.label = 'pinned'
+  }
+  return opts
+})
+
+const selectedTag = ref<string | null>(null)
+
+// Persisted preference stores the LEVEL, not a tag — tags are package-
+// specific. Applied post-mount (SSR and first client render agree), on
+// client-side package navs (component instance is reused), and on variant
+// switches. A chain lacking the preferred level falls back to its own
+// depth-0 entry ('rolling' counts as 'latest' and vice versa — both mean
+// "track the newest").
+const pinPreference = useLocalStorage<PinLevel>('ocx-install-pin', 'latest')
+
+function applyPinPreference() {
+  const opts = versionOptions.value
+  if (!opts.length) {
+    selectedTag.value = activeRow.value?.primaryTag ?? null
+    return
+  }
+  // Most-fitting match by depth rank: nearest to the preferred level, ties
+  // resolved toward the deeper option (a "pinned" preference on a chain
+  // ending at patch still lands on that deepest tag; a "patch" preference
+  // with no patch tag prefers the pinned build over the looser minor).
+  const target = LEVEL_RANK[pinPreference.value]
+  const best = [...opts].sort(
+    (a, b) => Math.abs(a.rank - target) - Math.abs(b.rank - target) || b.rank - a.rank,
+  )[0]!
+  selectedTag.value = best.tag
+}
+
+onMounted(applyPinPreference)
+watch(() => props.qualifiedName, () => {
+  variantValue.value = DEFAULT_VARIANT
+  applyPinPreference()
+})
+watch(variantValue, applyPinPreference)
+
+// User-initiated version pick — the ONLY place the preference is written
+// (the programmatic fallback in applyPinPreference must never overwrite a
+// stored preference with its degraded choice).
+function onVersionPick(tag: unknown) {
+  if (typeof tag !== 'string' || !tag) return
+  selectedTag.value = tag
+  // Store the DISPLAYED label (deepest = 'pinned'), so "always the most
+  // precise" round-trips as intent, not as a package-specific depth.
+  const picked = versionOptions.value.find(o => o.tag === tag)
+  if (picked) pinPreference.value = picked.label
+}
+
+watch(selectedTag, (tag) => {
+  if (tag) emit('select-tag', tag)
+})
+
+const showSelectors = computed(() => versionOptions.value.length > 1 || rows.value.length > 1)
 
 // Context-menu target = the same tag the card currently denotes.
-const effectiveTag = computed(() => {
-  if (canToggle.value) return mode.value === 'pinned' ? props.latestVersionLabel : 'latest'
-  return props.primaryTag
-})
+const effectiveTag = computed(() => selectedTag.value ?? props.primaryTag)
 
 const menuActions = computed<CopyAction[]>(() =>
   effectiveTag.value ? buildTagCopyActions(props.qualifiedName, effectiveTag.value) : [],
 )
 
-// What the install commands operate on: bare qualified name in "latest"
-// mode (matches `ocx add <name>` semantics), `name:tag` otherwise.
+// What the install commands operate on: bare qualified name when tracking
+// `latest` (matches `ocx add <name>` semantics), `name:tag` otherwise.
 const installTarget = computed(() => {
-  if (canToggle.value && mode.value === 'latest') return props.qualifiedName
-  return effectiveTag.value ? `${props.qualifiedName}:${effectiveTag.value}` : null
+  const tag = effectiveTag.value
+  if (!tag) return null
+  return tag === 'latest' ? props.qualifiedName : `${props.qualifiedName}:${tag}`
 })
 
 interface InstallRowDef {
@@ -69,6 +180,7 @@ const installRows = computed<InstallRowDef[]>(() => {
 // Per-row copied feedback — a single shared flag would flash every bar at
 // once, so track which row copied last.
 const { copy: clipboardCopy } = useClipboard()
+const { toast } = useToast()
 const copiedKey = ref<string | null>(null)
 let copiedTimer: ReturnType<typeof setTimeout> | null = null
 
@@ -105,11 +217,50 @@ const safeSourceUrl = computed(() => safeHref(props.root.source))
       </div>
       <div class="rail-card">
         <div v-if="installRows.length" class="install-toggle-wrap">
-          <span v-if="canToggle" class="install-toggle">
-            <button type="button" :class="{ active: mode === 'latest' }" @click="mode = 'latest'">latest</button>
-            <button type="button" :class="{ active: mode === 'pinned' }" @click="mode = 'pinned'">pinned :{{ latestVersionLabel }}</button>
-          </span>
-          <div class="install-grid">
+          <!-- Icon + combo per dimension; labels stay short, each dropdown
+               row shows the real tag dimmed beside its granularity label. -->
+          <div v-if="showSelectors" class="install-selects">
+            <template v-if="rows.length > 1">
+              <span class="install-select-icon" title="Variant">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2" /><polyline points="2 17 12 22 22 17" /><polyline points="2 12 12 17 22 12" /></svg>
+              </span>
+              <SelectRoot :model-value="variantValue" @update:model-value="v => { if (typeof v === 'string') variantValue = v }">
+                <SelectTrigger class="pin-trigger" aria-label="Variant">
+                  <span class="pin-trigger-label">{{ activeRow?.label ?? 'default' }}</span>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                </SelectTrigger>
+                <SelectPortal>
+                  <SelectContent class="pin-dropdown" position="popper" :side-offset="6" align="start">
+                    <SelectViewport>
+                      <SelectItem v-for="row in rows" :key="row.label" :value="row.variant ?? DEFAULT_VARIANT" class="pin-item">
+                        <SelectItemText>{{ row.label }}</SelectItemText>
+                      </SelectItem>
+                    </SelectViewport>
+                  </SelectContent>
+                </SelectPortal>
+              </SelectRoot>
+            </template>
+            <span class="install-select-icon" title="Version">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" /><line x1="7" y1="7" x2="7.01" y2="7" /></svg>
+            </span>
+            <SelectRoot :model-value="selectedTag ?? ''" @update:model-value="onVersionPick">
+              <SelectTrigger class="pin-trigger" aria-label="Version">
+                <span class="pin-trigger-label">{{ versionOptions.find(o => o.tag === selectedTag)?.label ?? selectedTag ?? '—' }}</span>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+              </SelectTrigger>
+              <SelectPortal>
+                <SelectContent class="pin-dropdown" position="popper" :side-offset="6" align="start">
+                  <SelectViewport>
+                    <SelectItem v-for="opt in versionOptions" :key="opt.tag" :value="opt.tag" class="pin-item">
+                      <SelectItemText>{{ opt.label }}</SelectItemText>
+                      <span v-if="opt.tag !== 'latest'" class="pin-item-tag">:{{ opt.tag }}</span>
+                    </SelectItem>
+                  </SelectViewport>
+                </SelectContent>
+              </SelectPortal>
+            </SelectRoot>
+          </div>
+          <div class="install-grid" :class="{ 'with-divider': showSelectors }">
             <template v-for="row in installRows" :key="row.key">
               <span class="install-icon" :title="row.title">
                 <svg v-if="row.icon === 'local'" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" /></svg>
@@ -122,8 +273,8 @@ const safeSourceUrl = computed(() => safeHref(props.root.source))
                   type="button"
                   class="install-command"
                   :class="{ copied: copiedKey === row.key, deemphasized: root.status === 'deprecated' }"
-                  :title="row.title"
-                  @click="copyRow(row.key, row.command)"
+                  :title="`${row.title} — click to copy · right-click for more`"
+                  @click="copyRow(row.key, row.command); toast(`Copied — ${row.title}`)"
                 >
                   <span class="install-prefix">$</span>
                   <span class="install-cmd">{{ row.command }}</span>
@@ -154,11 +305,21 @@ const safeSourceUrl = computed(() => safeHref(props.root.source))
         <div class="metadata-rows">
           <div class="metadata-row">
             <span class="metadata-key">registry</span>
-            <span class="metadata-value truncate">{{ root.repository }}</span>
+            <!-- Physical address (the logical one lives on the name badge) —
+                 click-to-copy like every other identifier on this page.
+                 Copies WITHOUT the wire `oci://` scheme: ocx (and docker/
+                 oras/crane) take bare registry/repo refs; the display keeps
+                 the scheme because that is the verbatim wire field. -->
+            <button
+              type="button"
+              class="metadata-value truncate metadata-copy"
+              title="Click to copy physical registry address (without oci://)"
+              @click="clipboardCopy(root.repository.replace(/^oci:\/\//, '')); toast('Copied — registry address')"
+            >{{ root.repository }}</button>
           </div>
           <div v-if="safeSourceUrl" class="metadata-row">
             <span class="metadata-key" title="Repository whose CI built these artifacts">source</span>
-            <a class="metadata-value truncate link" :href="safeSourceUrl" target="_blank" rel="noopener noreferrer">{{ safeSourceUrl }} ↗</a>
+            <a class="metadata-value truncate link metadata-external" :href="safeSourceUrl" target="_blank" rel="noopener noreferrer">{{ safeSourceUrl }}<ExternalIcon /></a>
           </div>
           <div class="metadata-row">
             <span class="metadata-key">owners</span>
@@ -170,7 +331,7 @@ const safeSourceUrl = computed(() => safeHref(props.root.source))
           </div>
           <div v-if="root.upstream" class="metadata-row">
             <span class="metadata-key">upstream</span>
-            <a v-if="safeUpstreamUrl" class="metadata-value" :href="safeUpstreamUrl" target="_blank" rel="noopener noreferrer">{{ root.upstream.org }} ↗</a>
+            <a v-if="safeUpstreamUrl" class="metadata-value metadata-external" :href="safeUpstreamUrl" target="_blank" rel="noopener noreferrer">{{ root.upstream.org }}<ExternalIcon /></a>
             <span v-else class="metadata-value">{{ root.upstream.org }}</span>
           </div>
           <div v-if="latestVersionLabel" class="metadata-row">
@@ -180,6 +341,18 @@ const safeSourceUrl = computed(() => safeHref(props.root.source))
           <div class="metadata-row">
             <span class="metadata-key">tags</span>
             <span class="metadata-value plain">{{ tagCount }}</span>
+          </div>
+          <div v-if="root.desc?.keywords?.length" class="metadata-row">
+            <span class="metadata-key">keywords</span>
+            <span class="metadata-value plain keyword-chips">
+              <a
+                v-for="kw in root.desc.keywords"
+                :key="kw"
+                class="keyword-chip"
+                :href="`/?q=${encodeURIComponent(kw)}`"
+                :title="`search packages: ${kw}`"
+              >{{ kw }}</a>
+            </span>
           </div>
         </div>
       </div>
@@ -238,38 +411,65 @@ const safeSourceUrl = computed(() => safeHref(props.root.source))
 .install-toggle-wrap {
   display: flex;
   flex-direction: column;
-  /* Matches .rail-card's 14px top padding — toggle sits as far from the
-     grid below as from the card border above. */
-  gap: 14px;
+  gap: 12px;
 }
 
-.install-toggle {
-  display: inline-flex;
-  border: 1px solid var(--c-line);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  width: fit-content;
-  align-self: center;
+/* icon | combo rows — same two-column rhythm as .install-grid below. */
+.install-selects {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 16px;
+  align-items: center;
 }
 
-.install-toggle button {
+.install-select-icon {
+  display: flex;
+  align-items: center;
+  color: var(--c-text-3);
+}
+
+.pin-trigger {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  height: 26px;
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   font-weight: 500;
-  color: var(--c-text-2);
-  background: none;
-  border: none;
-  padding: 4px 10px;
+  line-height: 1;
+  color: var(--c-text-1);
+  background: var(--c-surface-2);
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-md);
+  padding: 0 9px;
   cursor: pointer;
+  transition: border-color 0.15s;
+  outline: none;
 }
 
-.install-toggle button + button {
-  border-left: 1px solid var(--c-line);
+.pin-trigger:hover,
+.pin-trigger:focus-visible {
+  border-color: var(--c-accent);
 }
 
-.install-toggle button.active {
-  color: var(--c-accent);
-  background: color-mix(in srgb, var(--c-accent) 8%, transparent);
+.pin-trigger svg {
+  color: var(--c-text-3);
+  flex-shrink: 0;
+}
+
+.pin-trigger-label {
+  flex: 1;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Owner spec: horizontal rule between the selectors and the command grid. */
+.install-grid.with-divider {
+  border-top: 1px solid var(--c-line);
+  padding-top: 12px;
 }
 
 .install-grid {
@@ -392,5 +592,98 @@ const safeSourceUrl = computed(() => safeHref(props.root.source))
    `registry` row's plain treatment would otherwise override. */
 .metadata-value.truncate.link {
   color: var(--c-accent);
+}
+
+.metadata-copy {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.metadata-copy:hover,
+.metadata-copy:focus-visible {
+  color: var(--c-accent);
+  outline: none;
+}
+
+.metadata-external {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.metadata-external svg {
+  flex-shrink: 0;
+}
+
+/* Full keyword list lives here — cards show only a top-3 cut (PackageCard).
+   Same chip tokens as .card-keyword. */
+.keyword-chips {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.keyword-chip {
+  font-size: var(--text-2xs);
+  font-weight: 500;
+  color: var(--c-kw);
+  background: var(--c-kw-bg);
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  transition: border-color 0.15s;
+}
+
+.keyword-chip:hover {
+  border-color: var(--c-kw);
+}
+</style>
+
+<style>
+/* Unscoped — SelectContent portals to <body> (same reasoning as
+ * .copy-ctx-menu). Own class names rather than reusing CatalogPage's
+ * .sort-dropdown: that unscoped block only ships with the catalog chunk. */
+.pin-dropdown {
+  min-width: 180px;
+  padding: 0.35rem;
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-lg);
+  z-index: 100;
+  animation: copy-ctx-fade-in 0.12s ease-out;
+}
+
+.pin-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.45rem 0.6rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--c-text-2);
+  cursor: pointer;
+  outline: none;
+  transition: background 0.1s, color 0.1s;
+}
+
+.pin-item:hover,
+.pin-item[data-highlighted] {
+  background: var(--c-surface-2);
+  color: var(--c-accent);
+}
+
+.pin-item[data-state='checked'] {
+  color: var(--c-accent);
+}
+
+.pin-item-tag {
+  margin-left: auto;
+  font-size: var(--text-2xs);
+  color: var(--c-text-3);
 }
 </style>

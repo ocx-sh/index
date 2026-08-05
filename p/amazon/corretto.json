@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-01",
   "desc": {
-    "digest": "sha256:531371e967b4fe581de183b0ad5e7f881c2feab14723592f9076b8549949b063",
+    "digest": "sha256:7dbe7a4168ebd89e1b36f2352a55dad0bb0248f1470b485eacb9010ad4cbdf3f",
     "title": "Amazon Corretto",
     "description": "No-cost, production-ready OpenJDK distribution by Amazon",
     "keywords": [
@@ -22,7 +22,7 @@
       "amazon",
       "runtime"
     ],
-    "readme": "sha256:be7e37a2fa5bf8919d43ea3520cdac83896f09b367daa070c927bd317a9efaa0",
+    "readme": "sha256:5afb27b2578d386e59c32e75993187438338fb5ae915f3732b82ae91c8608faf",
     "logo": "sha256:25406fffc6daf0f28542d4585dbd43a79b10d4a9487c861b2d20a8bd6c484f8e"
   },
   "upstream": {

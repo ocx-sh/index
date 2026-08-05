@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:a9080e0a6b56eb12f0503f5310159afab2042ba3d7d5a95942286418b1bc3a3f",
+    "digest": "sha256:5d2962d8982e56b50e3575bf51c15a19e61ed82ddfb9edc4ee86bcbb483fb342",
     "title": "lazygit",
     "description": "Simple terminal UI for git \u2014 stage hunks, rebase interactively, resolve conflicts and browse history without leaving the keyboard",
     "keywords": [
@@ -28,7 +28,7 @@
       "go",
       "cli"
     ],
-    "readme": "sha256:3791fa937c784b505ecf8be2c5b406eff53446b3bbc6c6ff43f3e7670ba5836d",
+    "readme": "sha256:cc9d2dbf860323a0508e4fcb0d2aafcd0d484ca0e3434a970db8ef8fcf9059e5",
     "logo": "sha256:2928fd344ab45e43f1289571895cf22180b3e54dbc73fd60d7c263a43d65e590"
   },
   "upstream": {

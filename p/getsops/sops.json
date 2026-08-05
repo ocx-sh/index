@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:1201826056d3dc0625115f6edda8b561741f0a5ae5dcd0f9e87c84e47032168d",
+    "digest": "sha256:b044cba022e9a79ac940eaa335b57335807536210aba5904f63cb1e46495cf2f",
     "title": "sops",
     "description": "Editor and CLI for files encrypted with AWS KMS, GCP KMS, Azure Key Vault, HashiCorp Vault, age or PGP \u2014 encrypts the values, leaves the keys readable",
     "keywords": [
@@ -34,7 +34,7 @@
       "go",
       "cli"
     ],
-    "readme": "sha256:811e0bab0e8f2972907baa693683553dfaccf7d7d37b37f415b5dd2695b6c7ef",
+    "readme": "sha256:20adc87f5931d9a7a566d9e58dd67b732fc8c79e966135215c243492f2cd25a7",
     "logo": "sha256:c66ce7dd7b0c311213090978cdfaafe1041dd7805a5b73bf5b3aca228594d68c"
   },
   "upstream": {

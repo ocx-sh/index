@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useCopyState } from '../../composables/useCopyState'
+import { useToast } from '../../composables/useToast'
 import { useImageFallback } from '../../composables/useImageFallback'
 import { casUrl, LOGO_EXT_CANDIDATES } from '../../utils/cas'
 import { monogramHue, monogramInitials, MONOGRAM_HUES } from '../../utils/monogram'
 import CopyIcon from '../shared/CopyIcon.vue'
+import CopyContextMenu, { buildTagCopyActions } from '../shared/CopyContextMenu.vue'
 import type { PackageRoot } from '../../composables/usePackageRoot'
 
 const props = defineProps<{
@@ -25,6 +27,12 @@ const keywords = computed(() => props.root.desc?.keywords ?? [])
 const qualifiedDisplayName = computed(() => `ocx.sh/${props.bareName}`)
 
 const { copied, copyText } = useCopyState(1500)
+const { toast } = useToast()
+
+// Same shared action list as every other copy menu (no tag — identifier is
+// the bare qualified name); same copied flag drives the badge checkmark for
+// left click and menu actions alike.
+const menuActions = computed(() => buildTagCopyActions(qualifiedDisplayName.value))
 
 // Logo fallback chain: svg -> png -> monogram tile (see utils/cas.ts's
 // ponytail note on why extension guess-and-retry is needed at all) —
@@ -61,10 +69,12 @@ const monogramStyle = computed(() => ({
     <div class="identity-text">
       <div class="identity-title-row">
         <h1 class="identity-title">{{ title }}</h1>
-        <button type="button" class="identity-name-badge" @click="copyText(qualifiedDisplayName)">
-          <span>{{ qualifiedDisplayName }}</span>
-          <CopyIcon :copied="copied" :size="12" check-class="identity-check" />
-        </button>
+        <CopyContextMenu :actions="menuActions" :copy-text="copyText">
+          <button type="button" class="identity-name-badge" @click="copyText(qualifiedDisplayName); toast('Copied — package name')">
+            <span>{{ qualifiedDisplayName }}</span>
+            <CopyIcon :copied="copied" :size="12" check-class="identity-check" />
+          </button>
+        </CopyContextMenu>
         <span v-if="latestVersionLabel" class="identity-latest">latest {{ latestVersionLabel }}</span>
         <span v-if="root.status === 'deprecated'" class="identity-deprecated">DEPRECATED</span>
       </div>
@@ -72,7 +82,13 @@ const monogramStyle = computed(() => ({
       <p v-if="description" class="identity-desc">{{ description }}</p>
 
       <div v-if="keywords.length" class="identity-keywords">
-        <span v-for="kw in keywords" :key="kw" class="identity-keyword">{{ kw }}</span>
+        <a
+          v-for="kw in keywords"
+          :key="kw"
+          class="identity-keyword"
+          :href="`/?q=${encodeURIComponent(kw)}`"
+          :title="`search packages: ${kw}`"
+        >{{ kw }}</a>
       </div>
     </div>
   </div>
@@ -88,12 +104,14 @@ const monogramStyle = computed(() => ({
 .identity-tile {
   width: 52px;
   height: 52px;
-  border-radius: var(--radius-lg);
   flex-shrink: 0;
   object-fit: contain;
 }
 
+/* Real logos render bare — no box, background, border, or radius (owner
+   finding). The monogram keeps its tile look: it IS a colored box. */
 .identity-monogram {
+  border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -118,7 +136,7 @@ const monogramStyle = computed(() => ({
 
 .identity-title-row {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 12px;
   flex-wrap: wrap;
 }
@@ -198,6 +216,13 @@ const monogramStyle = computed(() => ({
   background: var(--c-kw-bg);
   padding: 2px 8px;
   border-radius: var(--radius-sm);
+  /* Transparent border reserved so the hover border doesn't shift layout. */
+  border: 1px solid transparent;
+  transition: border-color 0.15s;
+}
+
+.identity-keyword:hover {
+  border-color: var(--c-kw);
 }
 
 @media (max-width: 640px) {

@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import { useRoute } from 'vitepress'
-import { DOCS_NAV } from './data/docsNav'
+import { DOCS_NAV, type DocsNavGroup } from './data/docsNav'
 
 const route = useRoute()
 
 function isActive(link: string): boolean {
   return route.path === link
+}
+
+// A group whose header links to the same page as one of its items (LEGAL →
+// Privacy) must not double-highlight — the item is the canonical marker.
+function isGroupActive(group: DocsNavGroup): boolean {
+  return isActive(group.link) && !group.items.some(item => item.link === group.link)
 }
 </script>
 
@@ -15,7 +21,7 @@ function isActive(link: string): boolean {
       <a
         :href="group.link"
         class="docs-nav-label"
-        :class="{ active: isActive(group.link) }"
+        :class="{ active: isGroupActive(group) }"
       >{{ group.label }}</a>
       <a
         v-for="item in group.items"

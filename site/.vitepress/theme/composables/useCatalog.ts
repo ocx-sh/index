@@ -12,6 +12,11 @@ export interface CatalogPackage {
   status: 'active' | 'deprecated' | 'yanked'
   deprecatedMessage: string | null
   supersededBy: string | null
+  /** Root's `created` date — the "newest" sort key. */
+  created: string
+  /** Last tag activity (max `observed`/`yanked.at`), null when tagless —
+   * the "recently updated" sort key. */
+  updated: string | null
   title: string
   description: string
   keywords: string[]

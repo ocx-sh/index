@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:67cac14ca9e15a77f4de6c509b4494aaf3ea6599ad7190a9c057fd7c1c99eefe",
+    "digest": "sha256:fc76660a0a63e4bd92cd711d0efec266404343c71d392eeac0d21964964c8bae",
     "title": "prek",
     "description": "A fast Git hook manager written in Rust \u2014 a drop-in, dependency-free alternative to pre-commit",
     "keywords": [
@@ -26,7 +26,7 @@
       "rust",
       "cli"
     ],
-    "readme": "sha256:92421f9b0b60e975d60260a16da565dfffed6c71d670aba6361b2437528f3adf",
+    "readme": "sha256:bef609f7e7eae5f497d80fe0dda554aa900945366656d19a77063d29a1d1ec09",
     "logo": "sha256:5fb6ce2145bab576b63a5f96cdcb7e7a7d0faaa8c772a920387cc6940de928c2"
   },
   "upstream": {

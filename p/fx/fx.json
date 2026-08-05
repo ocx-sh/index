@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:c05c5af7b9d719cbb83bca30f246984d39c6060279a98508b0c2d902239cd0d1",
+    "digest": "sha256:78fe46ac0912c0ffe0737e047a331bc474655e76a56c6650faa17bf178198341",
     "title": "fx",
     "description": "Terminal JSON viewer and processor \u2014 navigate documents interactively, or transform them non-interactively with JavaScript expressions",
     "keywords": [
@@ -27,7 +27,7 @@
       "cli",
       "terminal"
     ],
-    "readme": "sha256:95d4c69ecb9093e94e94cc9a85998cc8cdbe41c7c2fa63571ff7181b930d8492",
+    "readme": "sha256:6d14b5d937b8fe7e5f04ecb9e07d5bc8ed6fe8d5df98bd41087eb614f5eb14bc",
     "logo": "sha256:77f51b1f148a4a8ea61067d242883f49a99f1f09015a769191111c3d80ec9d07"
   },
   "upstream": {

@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:0759315788d7b26364e8f963e2baa05e1f4dd02941dead5ad554c698df4d6692",
+    "digest": "sha256:62b5a1e0837c8ce60eb88cedafc9fe5ac8db43d66f820d17091f1537f3be0a5b",
     "title": "terragrunt",
     "description": "Orchestration for OpenTofu/Terraform at scale \u2014 DRY configuration, dependency-ordered runs across many units, and remote state wiring from one HCL file",
     "keywords": [
@@ -26,7 +26,7 @@
       "gruntwork",
       "cli"
     ],
-    "readme": "sha256:a9b019db9e9ae3fe9ae7d25e4538e5994880e8a42f29fca5140d4fb99fcaa878",
+    "readme": "sha256:36e29024bd8a345a2a2cdb2a560bf8315ad6d832f9436eb1e759c96eeaa4a54f",
     "logo": "sha256:5e1d7918dca42d3c705987f9d715eec3ca00001ecd51a78d502569fbc11f673e"
   },
   "upstream": {

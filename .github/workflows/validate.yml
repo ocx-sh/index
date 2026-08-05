@@ -101,8 +101,24 @@ jobs:
           # malformed root. Since every announce PR adds a CAS object, that
           # failed this required check on every announce PR. The magic
           # switches on FNM_PATHNAME, where `*` stops at `/`.
+          #
+          # Three-dot (merge-base..HEAD), never two-dot — also load-bearing.
+          # Two-dot compares TREES, so an announce branch cut moments before
+          # another announce merged saw every root main updated since its
+          # branch point as "changed" and re-verified the STALE HEAD COPY of
+          # other packages against registry truth — digest-mismatch on roots
+          # this PR never touched and whose stale bytes a squash merge can
+          # never land (PRs #351/#423/#538). Three-dot selects exactly the
+          # files the PR authored — the same file set the privileged
+          # governance-gate classifies via the GitHub API, so the two halves
+          # judge the same diff.
+          # `--diff-filter=d` (everything but deletes), not an allowlist: a
+          # root swapped for a symlink is status T, which ACMR silently
+          # dropped — zero roots selected, validate skipped, required check
+          # green. There is nothing to validate about a delete; every other
+          # status must reach `indexbot validate`.
           # Pinned by bot/tests/security/test_workflow_pathspec.py.
-          changed="$(git diff --name-only --diff-filter=ACMR "$BASE_SHA" HEAD -- ':(glob)p/*/*.json')"
+          changed="$(git diff --name-only --diff-filter=d "$BASE_SHA...HEAD" -- ':(glob)p/*/*.json')"
           if [ -z "$changed" ]; then
             echo "::notice title=indexbot validate::No p/<namespace>/<package>.json changes in this PR (p/ may not be seeded yet) - skipping indexbot validate."
             echo "has_changes=false" >> "$GITHUB_OUTPUT"

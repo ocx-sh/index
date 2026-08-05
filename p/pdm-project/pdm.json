@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:2837ab97f74fc53a1c39a0e7f740563552f7fd1124917ea10afbf6901d2ef492",
+    "digest": "sha256:3e547dc38d19568d4c9f6a09434ee2dbda0f0d6f2a0d1092889ab7080f3a6ab9",
     "title": "pdm",
     "description": "Modern Python package and dependency manager \u2014 PEP 621 metadata, a cross-platform lock file, PEP 582 local packages and a pluggable build backend",
     "keywords": [
@@ -28,7 +28,7 @@
       "build-backend",
       "cli"
     ],
-    "readme": "sha256:b1b33fdb14d481844bf1c0cfa244f0fee0a8a77f9934a9ca3915379f2d9dd672",
+    "readme": "sha256:13cb1eb5ca354ed3da8a99ded7fc44143487619fe8f6058a40104b6b55718647",
     "logo": "sha256:4763573d59d408f33dcc73326775c40c53ca458d0e47d99ada1ad1fb397d5f2d"
   },
   "upstream": {

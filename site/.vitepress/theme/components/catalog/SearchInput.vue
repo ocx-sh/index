@@ -7,10 +7,34 @@ import { ref } from 'vue'
 // plan_site_redesign.md's frozen "/" decision). This component only
 // exposes `focus()` for CatalogPage's page-scoped "/" handler to call.
 
-defineProps<{ modelValue: string }>()
-defineEmits<{ 'update:modelValue': [value: string] }>()
+const props = defineProps<{ modelValue: string }>()
+const emit = defineEmits<{ 'update:modelValue': [value: string] }>()
+
+// Two-stage Escape (VS Code/Slack pattern): with text, first Esc clears the
+// query and keeps focus for a fresh one; on an empty field, Esc blurs.
+function onEsc(e: KeyboardEvent) {
+  if (props.modelValue) emit('update:modelValue', '')
+  else (e.target as HTMLInputElement).blur()
+}
 
 const inputEl = ref<HTMLInputElement | null>(null)
+
+// Re-entering with existing text selects it all, so typing starts a fresh
+// query. Covers both click and the "/" handler (programmatic focus() fires
+// the focus event too). The mouseup guard stops the browser from collapsing
+// the fresh selection into a caret on click — first mouseup after focus
+// only, so in-field caret/drag selection keeps working afterwards.
+let selectOnMouseup = false
+
+function onFocus(e: FocusEvent) {
+  (e.target as HTMLInputElement).select()
+  selectOnMouseup = true
+}
+
+function onMouseup(e: MouseEvent) {
+  if (selectOnMouseup) e.preventDefault()
+  selectOnMouseup = false
+}
 
 defineExpose({
   focus: () => inputEl.value?.focus(),
@@ -39,8 +63,19 @@ defineExpose({
       placeholder="search packages — name, keyword, description…"
       :value="modelValue"
       @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
+      @focus="onFocus"
+      @mouseup="onMouseup"
+      @keydown.esc="onEsc"
     >
-    <span class="search-kbd">/</span>
+    <button
+      v-if="modelValue"
+      type="button"
+      class="search-kbd search-clear"
+      aria-label="Clear search"
+      tabindex="-1"
+      @click="$emit('update:modelValue', ''); inputEl?.focus()"
+    >×</button>
+    <span v-else class="search-kbd">/</span>
   </div>
 </template>
 
@@ -91,5 +126,19 @@ defineExpose({
   border-radius: var(--radius-sm);
   padding: 2px 6px;
   background: var(--c-surface-2);
+}
+
+/* Same badge slot as "/" — swaps to a clear affordance once there's a query. */
+.search-clear {
+  cursor: pointer;
+  line-height: inherit;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.search-clear:hover,
+.search-clear:focus-visible {
+  color: var(--c-text-1);
+  border-color: var(--c-accent);
+  outline: none;
 }
 </style>

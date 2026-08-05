@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:480694bb8612b6ba6c4da8f2b91ccecce0078f21a5298411fd7ba444df4a1195",
+    "digest": "sha256:8d4ed2faaf4912bbdc226778c6bffe72fea3f35cd0a86931110538bfd6f43532",
     "title": "cargo-cyclonedx",
     "description": "Generates a CycloneDX Software Bill-of-Materials (SBOM) for Cargo-based Rust projects",
     "keywords": [
@@ -27,7 +27,7 @@
       "purl",
       "owasp"
     ],
-    "readme": "sha256:30a5093c50d2ef412b6ec5584534ef0d85379269fa07088272657c6cb1745faa",
+    "readme": "sha256:4c011d1735f989ab03dd866ac3d6b7fef7e33296bbfb1c7dc211defb1403378c",
     "logo": "sha256:493c6832e6392e51d8829f16ed7eab0f32050e6c3b2bf14f8e1dc196eca2bb1e"
   },
   "upstream": {

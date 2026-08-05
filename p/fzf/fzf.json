@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:67154e7720b140dda4fc1606793552a211b47f4df0423807603a65096a267ca5",
+    "digest": "sha256:eed85b1a62bc54ebd1690deb412e142515c7d54e33bd46787af96056744e1e8d",
     "title": "fzf",
     "description": "A command-line fuzzy finder \u2014 interactively filter any list, or use --filter as a fuzzy grep",
     "keywords": [
@@ -25,7 +25,7 @@
       "shell",
       "productivity"
     ],
-    "readme": "sha256:22caa8ea959fc5f67b5f0a7f59d124f1ed143ec7834c35b0b4b3cefb04a6dc9a",
+    "readme": "sha256:0215bd626b76e006d651bb0f1a911b3ae91a5916877e1de68008ce970287d11b",
     "logo": "sha256:8c360fcd8901d546113f0e84dd127814e5680f4c1cb13a1d9703eca4da9c00fb"
   },
   "upstream": {

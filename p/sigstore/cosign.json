@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:6b6b48aae642de259919090914c6ae5909a7ac664fd4a0aab04dbb5697c27cc5",
+    "digest": "sha256:0f72ebbed12a7eccec7f3ca2e65a671bda1772f1732a0d6be8b1e8bfce1b7570",
     "title": "cosign",
     "description": "Sign and verify container images, blobs and attestations \u2014 keyless with Sigstore, or with your own keys",
     "keywords": [
@@ -33,7 +33,7 @@
       "go",
       "cli"
     ],
-    "readme": "sha256:637c04907d82b9e1a7d84e8e9b5421d4877ba108dbb73d283b4c1f3d71405e94",
+    "readme": "sha256:7ae80155beca40ac09bd44980493039516cc59909247858a38f1d234c5f194b9",
     "logo": "sha256:ec1ac41c1fe300e8e740af48b331a26f409db404b6202f72929f86aff4d62ab1"
   },
   "upstream": {

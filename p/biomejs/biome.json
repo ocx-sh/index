@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:b2ca75a7254f5174c9051969f9b53f075024b358011dab93c770ed5f201b278e",
+    "digest": "sha256:8018b1125031f38545aa21a8d7c05e11d207f0eb58b508236c0632698108e56c",
     "title": "biome",
     "description": "One fast Rust toolchain for web projects \u2014 formatter, linter and import sorter for JavaScript, TypeScript, JSX, JSON, CSS and GraphQL",
     "keywords": [
@@ -32,7 +32,7 @@
       "rust",
       "cli"
     ],
-    "readme": "sha256:4dad91843df4c51a5afa604ea1ac117d97ded0d225bd198778eecfcbe8187155",
+    "readme": "sha256:3a3bb1995be6ec62b46f996617fc0010b9b76e01a9cec981d7021d9ab965af42",
     "logo": "sha256:c717fb987f250d509fb37b806cfec4cb8c40450dab122eaa22bd137ff0f2e167"
   },
   "upstream": {

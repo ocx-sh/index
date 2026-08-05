@@ -34,6 +34,13 @@ const tagCount = computed(() => (root.value ? Object.keys(root.value.tags).lengt
 const { imageIndex: activeImageIndex, load: loadImageIndex } = useImageIndex()
 let hoverTimer: ReturnType<typeof setTimeout> | null = null
 
+// Install-card selection (variant/version combos) — immediate, no hover
+// debounce: a deliberate pick should swap the Platforms card right away.
+function onInstallSelect(tag: string) {
+  const digest = root.value?.tags[tag]?.content
+  if (digest) loadImageIndex(ns.value, pkg.value, digest)
+}
+
 function onTagHover(digest: string) {
   if (hoverTimer) clearTimeout(hoverTimer)
   hoverTimer = setTimeout(() => {
@@ -70,11 +77,6 @@ onMounted(() => {
         all packages
       </a>
 
-      <DisclaimerBanner
-        v-if="root.upstream?.disclaimer"
-        :disclaimer="root.upstream.disclaimer"
-        :repository-url="root.upstream.repository_url"
-      />
       <DeprecationBanner
         v-if="root.status === 'deprecated'"
         :message="root.deprecated_message"
@@ -82,6 +84,15 @@ onMounted(() => {
       />
 
       <IdentityBlock :root="root" :bare-name="bareName" :latest-version-label="defaultRow?.preciseAliasTag ?? null" />
+
+      <!-- ND-9: mandatory whenever upstream.disclaimer exists — reduced to a
+           compact note below the identity block (owner finding: the boxed
+           top-of-page banner was too dominant), never hidden. -->
+      <DisclaimerBanner
+        v-if="root.upstream?.disclaimer"
+        :disclaimer="root.upstream.disclaimer"
+        :repository-url="root.upstream.repository_url"
+      />
 
       <div class="detail-columns">
         <div class="versions-section">
@@ -103,6 +114,8 @@ onMounted(() => {
           :latest-version-label="defaultRow?.preciseAliasTag ?? null"
           :active-image-index="activeImageIndex"
           :tag-count="tagCount"
+          :table="table"
+          @select-tag="onInstallSelect"
         />
 
         <ReadmePane class="readme-section" :bare-name="bareName" :digest="root.desc?.readme ?? null" />
@@ -235,6 +248,10 @@ onMounted(() => {
 /* <640px: install-first — the rail (install card first) leads, then
    versions, then readme. */
 @media (max-width: 639px) {
+  .detail-page {
+    padding: var(--space-4) var(--space-4) var(--space-6);
+  }
+
   .detail-columns {
     grid-template-areas: 'rail' 'versions' 'readme';
     grid-template-rows: auto;

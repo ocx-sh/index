@@ -6,6 +6,7 @@ import ThemeToggle from './ThemeToggle.vue'
 // discoverable from every page (not just the catalog's own inline
 // SearchInput, which is WP-C scope).
 import { useCommandPalette } from '../../composables/useCommandPalette'
+import ExternalIcon from '../shared/ExternalIcon.vue'
 
 const { theme } = useData()
 const route = useRoute()
@@ -23,21 +24,30 @@ function isActive(prefix: string): boolean {
       <Logo class="brand-logo" />
       <span class="brand-name">index.ocx.sh</span>
     </a>
-    <span class="header-spacer" />
-    <nav class="site-nav">
-      <a href="/" class="nav-link" :class="{ active: isActive('/') }">catalog</a>
-      <a href="/docs/" class="nav-link" :class="{ active: isActive('/docs/') }">docs</a>
-      <a :href="theme.githubUrl" target="_blank" rel="noopener noreferrer" class="nav-link">github ↗</a>
-    </nav>
-    <span class="nav-divider" />
+    <!-- Search sits centered and reads like a real input (dimmed
+         placeholder + kbd hint) — a bare icon+⌘K in the corner was too
+         easy to miss (owner finding). Still a button: it only opens the
+         ⌘K palette. -->
     <button type="button" class="search-trigger" aria-label="Search (Ctrl+K)" @click="openPalette">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
         <circle cx="11" cy="11" r="7" />
         <line x1="21" y1="21" x2="16.65" y2="16.65" />
       </svg>
+      <span class="search-trigger-text">search packages, docs…</span>
       <span class="search-trigger-kbd">⌘K</span>
     </button>
-    <ThemeToggle />
+    <span class="header-right">
+      <nav class="site-nav">
+        <a href="/" class="nav-link" :class="{ active: isActive('/') }">catalog</a>
+        <a href="/docs/" class="nav-link" :class="{ active: isActive('/docs/') }">docs</a>
+        <a :href="theme.githubUrl" target="_blank" rel="noopener noreferrer" class="nav-link nav-link-external">
+          github
+          <ExternalIcon :size="11" />
+        </a>
+      </nav>
+      <span class="nav-divider" />
+      <ThemeToggle />
+    </span>
   </header>
 </template>
 
@@ -73,8 +83,18 @@ function isActive(prefix: string): boolean {
   color: var(--c-text-1);
 }
 
-.header-spacer {
+/* brand (flex 1) | centered search | right zone (flex 1) — equal wings
+ * keep the search optically centered. */
+.brand {
   flex: 1;
+}
+
+.header-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 24px;
 }
 
 .site-nav {
@@ -90,6 +110,24 @@ function isActive(prefix: string): boolean {
   color: var(--c-text-2);
   padding: 16px 1px 14px;
   border-bottom: 2px solid transparent;
+  white-space: nowrap;
+}
+
+/* Proper external-link glyph instead of the "↗" text char (which also
+ * line-broke away from "github" on narrow widths). */
+.nav-link-external {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-link-external svg {
+  color: var(--c-text-3);
+  flex-shrink: 0;
+}
+
+.nav-link-external:hover svg {
+  color: var(--c-text-1);
 }
 
 .nav-link:hover {
@@ -111,23 +149,41 @@ function isActive(prefix: string): boolean {
 .search-trigger {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  width: clamp(220px, 30vw, 360px);
+  height: 32px;
   color: var(--c-text-3);
   border: 1px solid var(--c-line);
   border-radius: var(--radius-md);
-  padding: 4px 8px;
-  background: none;
+  padding: 0 10px;
+  background: var(--c-surface-2);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
 }
 
 .search-trigger:hover {
   color: var(--c-text-1);
-  border-color: var(--c-text-3);
+  border-color: var(--c-accent);
+}
+
+.search-trigger-text {
+  flex: 1;
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .search-trigger-kbd {
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
   font-weight: 500;
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-sm);
+  padding: 1px 5px;
+  background: var(--c-surface);
 }
 
 @media (max-width: 640px) {
@@ -140,6 +196,18 @@ function isActive(prefix: string): boolean {
     display: none;
   }
 
+  /* Narrow screens: collapse back to a compact icon button, and park it
+   * left beside the brand icon instead of floating centered — the brand
+   * wing stops flexing so only the right wing absorbs the space. */
+  .brand {
+    flex: none;
+  }
+
+  .search-trigger {
+    width: auto;
+  }
+
+  .search-trigger-text,
   .search-trigger-kbd {
     display: none;
   }
