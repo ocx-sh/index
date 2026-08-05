@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:1af77faca06d123934225a49dd9f8ce2144d3a95046dfdda55d524ae65ad445f",
+    "digest": "sha256:b02cda8c851e1810d6d201d49bb26da34511b9a91a29d0f260216e654fa816cc",
     "title": "watchexec",
     "description": "Executes commands in response to file modifications \u2014 a fast, language-agnostic file watcher for rebuild, reload and re-test loops",
     "keywords": [
@@ -27,7 +27,7 @@
       "cli",
       "rust"
     ],
-    "readme": "sha256:5e5fd0ddebe68d8c0bd2811f453cb9850793feaf0e3df86f8cdfdad5879c09c3",
+    "readme": "sha256:e8059a1462002ef5dacc67d8f6049b2249da6011aca2861a68148bf436b97ec1",
     "logo": "sha256:69556600fe01d5c78a006edd338976e5b4e30a189bdd3a517af97387e1263032"
   },
   "upstream": {
