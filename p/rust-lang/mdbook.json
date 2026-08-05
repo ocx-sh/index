@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:ce001bbdcc716c2ab8469e43114066a32ea536e06f0229e91454e3177a55b3ad",
+    "digest": "sha256:6c2d3d07d6552ad297261bb25c2865edae7b804e75bf401f1c3deeb0315efc7a",
     "title": "mdbook",
     "description": "Create modern online books from Markdown files \u2014 the static site generator behind the Rust documentation",
     "keywords": [
@@ -26,7 +26,7 @@
       "gitbook",
       "publishing"
     ],
-    "readme": "sha256:3bfaeef63c193bf6287061ec3bed8ed8b4c908771f77743c9a9a07a297e49fa8",
+    "readme": "sha256:35e8fbde59a2a99d587278951e84e24201548c72b95d824dd674ac7b4f74ec58",
     "logo": "sha256:556f92ae626421cb5b76053eb558d09fd5e68e859a7aeb880c649b9654f779dc"
   },
   "upstream": {
