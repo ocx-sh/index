@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:dc113bdf20e309d93ba3206234a5128ded1fa3908ca038161b13c191a59c043f",
+    "digest": "sha256:467a3ad860884ffc060974c22ae4aad826bf5731dbb575dfe83911786698dcc2",
     "title": "k9s",
     "description": "A terminal UI for Kubernetes \u2014 navigate, observe and manage the resources of a live cluster from a full-screen console",
     "keywords": [
@@ -27,7 +27,7 @@
       "cli",
       "go"
     ],
-    "readme": "sha256:6c336f8f523789be606c259fb96c52c1ab91f125d0bc342ca8a788cd39876ff7",
+    "readme": "sha256:0567f84620f260f6615f5e1966b2d3e1e7d5a9d8e2671b808bdca37cdd6d0960",
     "logo": "sha256:6b5815004a91bc061dfb33a66a9837cdc00a4b4bf403b62a959a51c3b5c348d3"
   },
   "upstream": {
