@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:75d98a22dbc2949bbe1b84fb0f8deadbb947624b039368307ea7c9d2da9e747a",
+    "digest": "sha256:f96a1737e7b08b1cf780c5021afba8d5cb96c2cfceb738335a8d2963f330ee6b",
     "title": "kubeconform",
     "description": "A fast Kubernetes manifest validator that checks resources against JSON Schemas, with Custom Resource support",
     "keywords": [
@@ -27,7 +27,7 @@
       "cli",
       "go"
     ],
-    "readme": "sha256:48c9a0ff305337c69aef9079f711755870d90c70a5bb432e9b1ad2c4889239fd",
+    "readme": "sha256:724d2f8a3498863ed26ed30de054ef1aee00697f3d484b9eadf6645e8309b87f",
     "logo": "sha256:50a34012984fa3ab042963e1864b7be0e7a803cd68882063dce68e5bb0862b95"
   },
   "upstream": {
