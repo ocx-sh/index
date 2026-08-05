@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:0ed8927ca2383f2c1da533af5900e658d61111ff20d53497a76645583548fa26",
+    "digest": "sha256:f2a840ab852e5adc20e51875b75ab06597f916fb26c2271001df21748fb4f13c",
     "title": "superfile",
     "description": "Pretty fancy and modern terminal file manager with Vim-style keybindings, tabs, panels, and built-in file preview",
     "keywords": [
@@ -25,7 +25,7 @@
       "go",
       "cli"
     ],
-    "readme": "sha256:84ed16bdb1e1a5d34132302f051e7df3c396b4b939dd0f19abeb7b7076623d65",
+    "readme": "sha256:bdf9ad2ac5268145bc066983209eb4d19b6c888327912f064725ad771e5b9ec8",
     "logo": "sha256:3985147334424d2a8fb51f9fe03eae1affbe428925d9fbb9599d18f8c2cdf3ea"
   },
   "upstream": {
