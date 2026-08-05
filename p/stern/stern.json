@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:c379459ccc5c9e348fcb8f7e170e370325ec8140577625995e6e935a47c1e858",
+    "digest": "sha256:1bc1addcc0bd4ef671f5201af2bd4434d45ec9edb66a15a284cb5db248705f1c",
     "title": "stern",
     "description": "Tail logs from multiple Kubernetes pods and containers at once, colour-coded per pod, with live pod discovery",
     "keywords": [
@@ -27,7 +27,7 @@
       "cli",
       "go"
     ],
-    "readme": "sha256:30f2032bb6daa9a9d1342a0da0be65b0ff06dc558cfa80d1a0d3523517a90c22",
+    "readme": "sha256:0c7dd1e7cb59f5a42bfa45314ca6ee64f38a12feb44f86fbdc84a7a29abc9506",
     "logo": "sha256:d4aa3dcc2b76494329a4df6972030d90e7481ecd7e84537394fcbe39e71e8e02"
   },
   "upstream": {
