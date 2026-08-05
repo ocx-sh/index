@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:fcc57ec5f3996050a5227b0dc443a6c89d38f541b43a60cfe704a352ff9e11a1",
+    "digest": "sha256:4330a344dd103f8327522ecdc807e1cc6fc61519c5336f435962cc22d067e7ef",
     "title": "ripgrep",
     "description": "A line-oriented search tool that recursively searches directories for a regex pattern, respecting .gitignore",
     "keywords": [
@@ -25,7 +25,7 @@
       "cli",
       "rust"
     ],
-    "readme": "sha256:1ac1b97b6edc736322b9407bb5006083fcb820325aa839f7b2a49b0c98aabaeb",
+    "readme": "sha256:775ce23626c5f4d34adf0a0516bf6a1c4062542422200cca70f0008b8aea4af4",
     "logo": "sha256:3b96f8015fd948499a8faeafc938938609938752a7e79552f9f4d3f8744e6782"
   },
   "upstream": {
