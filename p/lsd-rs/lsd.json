@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:e361ccf009bc7132f4c070c4531bd2b50c1f1d28f26e08f5174cb68fe022afa3",
+    "digest": "sha256:f46569fa04c03eafdccd8d2e514481e2ddddfd14e736d68cc3118a5a6b9ab04c",
     "title": "lsd",
     "description": "An ls command with a lot of pretty colors \u2014 icons, tree view and a colorized listing",
     "keywords": [
@@ -27,7 +27,7 @@
       "cli",
       "rust"
     ],
-    "readme": "sha256:9a0de54fc168f92be78d3b24f828581281186eb2cb8f4dffa94a81979eb61779",
+    "readme": "sha256:469a76cda8ea47692da33f4cfa5def328bcc21fe91c31c1da141a5ff03315045",
     "logo": "sha256:98554ef30bbf92ff9835bf6b7ee206ee0a4736e2230a3cd600658ef8f60e00bb"
   },
   "upstream": {
