@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:6f3c0271fcc3115cf7da2ed19d5643c8fd2627678f2a8bf435f0de7476d8d5cc",
+    "digest": "sha256:dcd48591088318df4663a9aa9e45f8e22f03f79b45783afd799d9aba1602d908",
     "title": "trivy",
     "description": "All-in-one security scanner \u2014 vulnerabilities, misconfigurations, secrets, licenses and SBOMs across containers, filesystems, git repos, Kubernetes and IaC",
     "keywords": [
@@ -31,7 +31,7 @@
       "cli",
       "go"
     ],
-    "readme": "sha256:394529b8ac32c765b4329ca22adc43904bc17ebef4603a8849592249c0056f52",
+    "readme": "sha256:8ff98717a5494b79f46f02165739fd18792f7a98d16694ea7fdb2478090523f6",
     "logo": "sha256:fca3a95008ce5e3827a6318c9017dfb9e571cd944b59f54e669b93b1b7df0191"
   },
   "upstream": {
