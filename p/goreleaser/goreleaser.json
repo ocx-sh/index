@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:8559699a70f299f3fd2df47dd8e6de4fa30a7c5182266270fac39c88122b00e9",
+    "digest": "sha256:a55fdc69b4ee318558d175aacb086eb0e497988d03d3594fd19a385577c854f8",
     "title": "goreleaser",
     "description": "Release automation for Go, Rust, Zig, TypeScript and Python projects \u2014 build, package, sign and publish a cross-platform release from one YAML file",
     "keywords": [
@@ -31,7 +31,7 @@
       "zig",
       "cli"
     ],
-    "readme": "sha256:1ba7f77a8c5d1a164d584bd81355126d1ae8778f1ccb78df6c33b57f571ce0ff",
+    "readme": "sha256:f21d68b633987ce71217d5c3819e242992483d0ed5effafdf90941b52d9bc278",
     "logo": "sha256:5ca71019394be7f7c77c0f5c96f295eabd243f56aeda2dec79a436ef405d50fc"
   },
   "upstream": {
