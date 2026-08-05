@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:ac793054973e777d07a38384b144201b618f62b21b124eb35e241cfa70407e48",
+    "digest": "sha256:aede3570a20dc44e5c9e3b6f1c277b8b4baf27412eb4f8ab33a3590b5f0d108e",
     "title": "age",
     "description": "A simple, modern and secure file encryption tool with small explicit keys, no config options, and UNIX-style composability",
     "keywords": [
@@ -25,7 +25,7 @@
       "cli",
       "go"
     ],
-    "readme": "sha256:41be4b2d07826d72b923cfba3efce8e7a5c1dc73843cfc59accad58de3f4b53b",
+    "readme": "sha256:54c089cd60aa3e3c30315858f0d4fb42e2ca17862a36350d2c2e39484d14d379",
     "logo": "sha256:4ddd008cfb1f8122bf7ee4c81241856cff6ac864dd3cee51a54741d332f5fa85"
   },
   "upstream": {
