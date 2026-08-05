@@ -1,0 +1,75 @@
+{
+  "name": "ocx.sh/rust-lang/mdbook",
+  "repository": "oci://ghcr.io/ocx-contrib/rust-lang/mdbook",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": {
+    "digest": "sha256:6c2d3d07d6552ad297261bb25c2865edae7b804e75bf401f1c3deeb0315efc7a",
+    "title": "mdbook",
+    "description": "Create modern online books from Markdown files \u2014 the static site generator behind the Rust documentation",
+    "keywords": [
+      "mdbook",
+      "mdBook",
+      "markdown",
+      "book",
+      "documentation",
+      "static-site-generator",
+      "docs",
+      "rust",
+      "gitbook",
+      "publishing"
+    ],
+    "readme": "sha256:35e8fbde59a2a99d587278951e84e24201548c72b95d824dd674ac7b4f74ec58",
+    "logo": "sha256:556f92ae626421cb5b76053eb558d09fd5e68e859a7aeb880c649b9654f779dc"
+  },
+  "upstream": {
+    "org": "rust-lang",
+    "repository_url": "https://github.com/rust-lang/mdBook",
+    "disclaimer": "Unaffiliated mirror. mdBook is a project of the Rust Project; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {
+    "0.5.2_20260804": {
+      "content": "sha256:325679d47ecfa6ceee615b0c009047b5e90f349ddbe5c07dcb8611b00acd0a2e",
+      "observed": "2026-08-04T07:07:06Z"
+    },
+    "0.5.2": {
+      "content": "sha256:325679d47ecfa6ceee615b0c009047b5e90f349ddbe5c07dcb8611b00acd0a2e",
+      "observed": "2026-08-04T07:07:06Z"
+    },
+    "0.5": {
+      "content": "sha256:a585c603d1a25b70e56e231b7610387808ea2935af1727ee758b7488b6dd006a",
+      "observed": "2026-08-04T07:07:06Z"
+    },
+    "0": {
+      "content": "sha256:a585c603d1a25b70e56e231b7610387808ea2935af1727ee758b7488b6dd006a",
+      "observed": "2026-08-04T07:07:06Z"
+    },
+    "latest": {
+      "content": "sha256:a585c603d1a25b70e56e231b7610387808ea2935af1727ee758b7488b6dd006a",
+      "observed": "2026-08-04T07:07:06Z"
+    },
+    "0.5.3_20260804": {
+      "content": "sha256:91aaa243fbd3afde07cdd53ed7767c64edbee620de75e0e04b4e27025ecf2f8f",
+      "observed": "2026-08-04T07:07:06Z"
+    },
+    "0.5.3": {
+      "content": "sha256:91aaa243fbd3afde07cdd53ed7767c64edbee620de75e0e04b4e27025ecf2f8f",
+      "observed": "2026-08-04T07:07:06Z"
+    },
+    "0.5.4_20260804": {
+      "content": "sha256:a585c603d1a25b70e56e231b7610387808ea2935af1727ee758b7488b6dd006a",
+      "observed": "2026-08-04T07:07:06Z"
+    },
+    "0.5.4": {
+      "content": "sha256:a585c603d1a25b70e56e231b7610387808ea2935af1727ee758b7488b6dd006a",
+      "observed": "2026-08-04T07:07:06Z"
+    }
+  }
+}

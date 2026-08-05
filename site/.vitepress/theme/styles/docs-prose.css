@@ -109,16 +109,29 @@
 }
 
 /* Shiki fence output — `.shiki`, NOT DefaultTheme's `.vp-code`
- * (alpha.18 gotcha). Always dark, both site themes (design mock 1f).
- * `!important` defeats Shiki's own inline `style="background-color:…"`
- * (single-theme mode still emits one — see config.mts `markdown.theme`). */
+ * (alpha.18 gotcha). Theme-following (owner decision 2026-08-05, revising
+ * mock 1f's always-dark rule): dual-theme Shiki (config.mts) emits
+ * --shiki-light/--shiki-dark vars per span; the rules below switch them on
+ * `.dark`. `!important` defeats Shiki's own inline
+ * `style="background-color:…"` so the token keeps owning the fence bg. */
 .docs-prose :where(.shiki) {
   background: var(--c-code-bg) !important;
+  border: 1px solid var(--c-line);
   border-radius: var(--radius-lg);
   padding: 14px 18px;
   overflow-x: auto;
   font-size: 0.85em;
   line-height: 1.75;
+}
+
+.docs-prose :where(.shiki),
+.docs-prose :where(.shiki span) {
+  color: var(--shiki-light);
+}
+
+.dark .docs-prose :where(.shiki),
+.dark .docs-prose :where(.shiki span) {
+  color: var(--shiki-dark);
 }
 
 .docs-prose :where(.shiki code) {
@@ -130,13 +143,55 @@
 /* VitePress core (`preWrapperPlugin`, independent of theme — DefaultTheme
  * just supplies the CSS) injects a `button.copy` + `span.lang` label
  * before every fence's `.shiki`, and the click-to-copy handler is wired
- * globally too (`app/index.js`), not a DefaultTheme feature. Our blank
- * theme never styled them, so they rendered as raw stacked elements above
- * the code box. Design mock 1f renders fences with zero chrome — hide
- * rather than build an affordance the mock doesn't call for. */
-.docs-prose :where(div[class*='language-'] > .copy),
+ * globally too (`app/index.js`), not a DefaultTheme feature. The lang
+ * label stays hidden (mock 1f: minimal chrome), but the copy button is now
+ * styled in (owner decision 2026-08-05, revising the mock's zero-chrome
+ * rule): ghost icon button, top-right, visible on fence hover. Layout.vue
+ * fires the copy toast for it. */
 .docs-prose :where(div[class*='language-'] > .lang) {
   display: none;
+}
+
+.docs-prose :where(div[class*='language-']) {
+  position: relative;
+}
+
+/* Bare fade-in icon, not a boxed button (owner spec): invisible until the
+ * fence is hovered, muted glyph, accent on direct hover. */
+.docs-prose :where(div[class*='language-'] > .copy) {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.docs-prose :where(div[class*='language-']:hover > .copy),
+.docs-prose :where(div[class*='language-'] > .copy:focus-visible) {
+  opacity: 1;
+}
+
+.docs-prose :where(div[class*='language-'] > .copy)::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  background-color: var(--c-text-3);
+  transition: background-color 0.15s;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='9' y='9' width='13' height='13' rx='2' ry='2'/%3E%3Cpath d='M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.docs-prose :where(div[class*='language-'] > .copy:hover)::before {
+  background-color: var(--c-accent);
+}
+
+.docs-prose :where(div[class*='language-'] > .copy.copied)::before {
+  background-color: var(--c-ok);
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
 }
 
 .docs-prose :where(p > code) {

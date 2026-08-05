@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useCopyState } from '../../composables/useCopyState'
+import { useToast } from '../../composables/useToast'
 import CopyIcon from '../shared/CopyIcon.vue'
-import CopyContextMenu, { buildTagCopyActions } from '../shared/CopyContextMenu.vue'
 
 const props = defineProps<{
   /** Bare `<ns>/<pkg>` — this component builds the full `ocx add
@@ -10,22 +10,12 @@ const props = defineProps<{
    * carries the `ocx.sh/` prefix — see `usePackageRoot`'s CAS-gotcha
    * docblock for the same trap on CAS URLs). */
   name: string
-  /** Catalog's `latestVersion`, if known — the right-click menu's
-   * tag-scoped actions (Copy tag / Add to project / Add globally / Inspect
-   * / Exec, mirroring `TagBadge.vue`'s per-tag menu) qualify against this
-   * tag when present, falling back to the bare identifier otherwise — same
-   * as the box's own left-click command below, which never pins a tag. */
-  latestVersion?: string | null
 }>()
 
 const { copied, copyText } = useCopyState(1500)
 
 const qualifiedName = computed(() => `ocx.sh/${props.name}`)
 const command = computed(() => `ocx add ${qualifiedName.value}`)
-
-// Shared action builder — never hand-roll the list here (a local copy is
-// how this menu once drifted behind the detail page's).
-const actions = computed(() => buildTagCopyActions(qualifiedName.value, props.latestVersion))
 
 // The card wraps this component in `<a href>` (catalog grid navigates to
 // the detail page on click) — the box is a copy-only shorthand precisely so
@@ -35,21 +25,25 @@ const actions = computed(() => buildTagCopyActions(qualifiedName.value, props.la
 // kept bubbling. Both belong here, on the element that owns the click,
 // rather than bolted on as `@click.stop` at whichever call site happens to
 // wrap this component in an anchor.
+const { toast } = useToast()
+
 function onClick(event: MouseEvent) {
   event.preventDefault()
   event.stopPropagation()
   copyText(command.value)
+  toast('Copied — install command')
 }
 </script>
 
 <template>
-  <CopyContextMenu :actions="actions" :copy-text="copyText">
-    <button type="button" class="install-row" tabindex="-1" :class="{ copied }" @click="onClick">
-      <span class="install-prefix">$</span>
-      <span class="install-cmd">{{ command }}</span>
-      <CopyIcon :copied="copied" class="install-icon" check-class="install-icon-check" />
-    </button>
-  </CopyContextMenu>
+  <!-- No own context menu — the whole card carries one (PackageCard wraps
+       its root anchor in CopyContextMenu); a second nested menu here would
+       double-open on right-click over the box. -->
+  <button type="button" class="install-row" tabindex="-1" title="Click to copy install command · right-click for more" :class="{ copied }" @click="onClick">
+    <span class="install-prefix">$</span>
+    <span class="install-cmd">{{ command }}</span>
+    <CopyIcon :copied="copied" class="install-icon" check-class="install-icon-check" />
+  </button>
 </template>
 
 <style scoped>

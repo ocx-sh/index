@@ -8,7 +8,7 @@
 export interface CopyAction {
   label: string
   command: string
-  icon: 'identifier' | 'tag' | 'project' | 'global' | 'install' | 'inspect' | 'exec'
+  icon: 'identifier' | 'tag' | 'link' | 'project' | 'global' | 'install' | 'inspect' | 'exec'
 }
 
 /**
@@ -27,6 +27,13 @@ export function buildTagCopyActions(qualifiedName: string, tag?: string | null):
     { label: 'Copy identifier', command: identifier, icon: 'identifier' },
   ]
   if (tag) list.push({ label: 'Copy tag', command: tag, icon: 'tag' })
+  // Detail-page URL — qualifiedName is `ocx.sh/<ns>/<pkg>`, the path after
+  // the prefix IS the route. SSR guard: this runs in consumers' computeds
+  // during the SSG build, where there is no origin to resolve against.
+  if (typeof window !== 'undefined') {
+    const path = qualifiedName.replace(/^ocx\.sh\//, '')
+    list.push({ label: 'Copy link', command: `${window.location.origin}/${path}`, icon: 'link' })
+  }
   list.push(
     { label: 'Add to project', command: `ocx add ${identifier}`, icon: 'project' },
     { label: 'Add globally', command: `ocx --global add ${identifier}`, icon: 'global' },
@@ -47,6 +54,7 @@ import {
   ContextMenuItem,
 } from 'reka-ui'
 import CopyIcon from './CopyIcon.vue'
+import { useToast } from '../../composables/useToast'
 
 // Right-click copy menu — originally factored out of
 // `components/detail/TagBadge.vue`'s inline context menu so a second
@@ -82,6 +90,16 @@ defineProps<{
   actions: CopyAction[]
   copyText: (text: string) => void | Promise<void>
 }>()
+
+// Every menu selection confirms via the global toast — semantic label, not
+// payload ("Copy identifier" → "Copied — identifier"). Direct left-click
+// copies toast at their own call sites; this covers all context menus.
+const { toast } = useToast()
+
+function onSelect(action: CopyAction, copyText: (text: string) => void | Promise<void>) {
+  copyText(action.command)
+  toast(`Copied — ${action.label.replace(/^Copy /, '')}`)
+}
 </script>
 
 <template>
@@ -96,12 +114,16 @@ defineProps<{
           v-for="action in actions"
           :key="action.label"
           class="copy-ctx-item"
-          @select="copyText(action.command)"
+          @select="onSelect(action, copyText)"
         >
           <CopyIcon v-if="action.icon === 'identifier'" :copied="false" :size="14" />
           <svg v-else-if="action.icon === 'tag'" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
             <line x1="7" y1="7" x2="7.01" y2="7" />
+          </svg>
+          <svg v-else-if="action.icon === 'link'" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
           </svg>
           <!-- Project = folder (used consistently with the install grid's
                row icons in MetaRail.vue); the former download-tray glyph

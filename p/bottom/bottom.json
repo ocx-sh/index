@@ -1,0 +1,76 @@
+{
+  "name": "ocx.sh/bottom/bottom",
+  "repository": "oci://ghcr.io/ocx-contrib/bottom/bottom",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": {
+    "digest": "sha256:a5e278afb549e353fc06e9d5004ee436a1aded254532b87934ec4be860a1630a",
+    "title": "bottom",
+    "description": "A customizable cross-platform graphical process/system monitor for the terminal, in the spirit of gtop and gotop",
+    "keywords": [
+      "bottom",
+      "btm",
+      "monitor",
+      "process",
+      "system",
+      "top",
+      "htop",
+      "tui",
+      "terminal",
+      "cli",
+      "rust"
+    ],
+    "readme": "sha256:c1261b21d20ee49131fdb63ab2d0f617a2f6a6f100a4c2b5ddaf73cfe5ccc2af",
+    "logo": "sha256:98839723b809349a383c5c3ba70faffcc8edb3f6e2d97b7557b7bc8d664dd149"
+  },
+  "upstream": {
+    "org": "ClementTsang",
+    "repository_url": "https://github.com/ClementTsang/bottom",
+    "disclaimer": "Unaffiliated mirror. bottom is a project of Clement Tsang; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {
+    "0.14.5_20260804": {
+      "content": "sha256:59a57293a26516e5e8682538cf7ef9ec645d85fc9197adba1363d377ea21c401",
+      "observed": "2026-08-04T00:29:57Z"
+    },
+    "0.14.5": {
+      "content": "sha256:59a57293a26516e5e8682538cf7ef9ec645d85fc9197adba1363d377ea21c401",
+      "observed": "2026-08-04T00:29:57Z"
+    },
+    "0.14": {
+      "content": "sha256:79fade4379922a6c61a61d8c7714829a60353c4019457950efe27064194f8937",
+      "observed": "2026-08-04T00:29:57Z"
+    },
+    "0": {
+      "content": "sha256:79fade4379922a6c61a61d8c7714829a60353c4019457950efe27064194f8937",
+      "observed": "2026-08-04T00:29:57Z"
+    },
+    "latest": {
+      "content": "sha256:79fade4379922a6c61a61d8c7714829a60353c4019457950efe27064194f8937",
+      "observed": "2026-08-04T00:29:57Z"
+    },
+    "0.14.6_20260804": {
+      "content": "sha256:8e5bcc5ba73ccb8d30ca3f71257d54a98e1b4edcd0ea473e416f8f55008fbe97",
+      "observed": "2026-08-04T00:29:57Z"
+    },
+    "0.14.6": {
+      "content": "sha256:8e5bcc5ba73ccb8d30ca3f71257d54a98e1b4edcd0ea473e416f8f55008fbe97",
+      "observed": "2026-08-04T00:29:57Z"
+    },
+    "0.14.7_20260804": {
+      "content": "sha256:79fade4379922a6c61a61d8c7714829a60353c4019457950efe27064194f8937",
+      "observed": "2026-08-04T00:29:57Z"
+    },
+    "0.14.7": {
+      "content": "sha256:79fade4379922a6c61a61d8c7714829a60353c4019457950efe27064194f8937",
+      "observed": "2026-08-04T00:29:57Z"
+    }
+  }
+}

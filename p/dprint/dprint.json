@@ -1,0 +1,79 @@
+{
+  "name": "ocx.sh/dprint/dprint",
+  "repository": "oci://ghcr.io/ocx-contrib/dprint/dprint",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": {
+    "digest": "sha256:5ae848c792c03fa6e39688c1e49d7b9e7599cca7141df6a5bb361f1084aa8453",
+    "title": "dprint",
+    "description": "A pluggable and configurable code formatting platform \u2014 one fast binary that formats TypeScript, JSON, Markdown, TOML, Dockerfiles and more through WebAssembly plugins",
+    "keywords": [
+      "dprint",
+      "formatter",
+      "format",
+      "fmt",
+      "prettier",
+      "typescript",
+      "javascript",
+      "json",
+      "markdown",
+      "toml",
+      "wasm",
+      "code-style",
+      "cli",
+      "rust"
+    ],
+    "readme": "sha256:74d370d6977eeb15a9fba4c644fe47bc5f6e160a1c4c9d05d53a1a0bf09fffea",
+    "logo": "sha256:5ecf2b2279889f7a306de4753ecb9f82d015c80be214ef9d5fc16545ca47ee52"
+  },
+  "upstream": {
+    "org": "dprint",
+    "repository_url": "https://github.com/dprint/dprint",
+    "disclaimer": "Unaffiliated mirror. dprint is a project of David Sherret; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {
+    "0.55.0_20260804": {
+      "content": "sha256:563f5e5800a8bd6ee7b5b049d1b148c870c19bd9eda4c18f66c25c9d4180c83d",
+      "observed": "2026-08-04T01:34:48Z"
+    },
+    "0.55.0": {
+      "content": "sha256:563f5e5800a8bd6ee7b5b049d1b148c870c19bd9eda4c18f66c25c9d4180c83d",
+      "observed": "2026-08-04T01:34:48Z"
+    },
+    "0.55": {
+      "content": "sha256:845a6326d85c2b80e92ff2d2deb5e2500101359f53902a04de6f8a227315a98b",
+      "observed": "2026-08-04T01:34:48Z"
+    },
+    "0": {
+      "content": "sha256:845a6326d85c2b80e92ff2d2deb5e2500101359f53902a04de6f8a227315a98b",
+      "observed": "2026-08-04T01:34:48Z"
+    },
+    "latest": {
+      "content": "sha256:845a6326d85c2b80e92ff2d2deb5e2500101359f53902a04de6f8a227315a98b",
+      "observed": "2026-08-04T01:34:48Z"
+    },
+    "0.55.1_20260804": {
+      "content": "sha256:0c526dc95182a967f97b3d4e413d514577e71cd4843f1dfbf74a889376e26dcf",
+      "observed": "2026-08-04T01:34:48Z"
+    },
+    "0.55.1": {
+      "content": "sha256:0c526dc95182a967f97b3d4e413d514577e71cd4843f1dfbf74a889376e26dcf",
+      "observed": "2026-08-04T01:34:48Z"
+    },
+    "0.55.2_20260804": {
+      "content": "sha256:845a6326d85c2b80e92ff2d2deb5e2500101359f53902a04de6f8a227315a98b",
+      "observed": "2026-08-04T01:34:48Z"
+    },
+    "0.55.2": {
+      "content": "sha256:845a6326d85c2b80e92ff2d2deb5e2500101359f53902a04de6f8a227315a98b",
+      "observed": "2026-08-04T01:34:48Z"
+    }
+  }
+}

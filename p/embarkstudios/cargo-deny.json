@@ -1,0 +1,80 @@
+{
+  "name": "ocx.sh/embarkstudios/cargo-deny",
+  "repository": "oci://ghcr.io/ocx-contrib/embarkstudios/cargo-deny",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": {
+    "digest": "sha256:2e90ac3f96fb28e34802637e83f47fb3cce22742c5eb834ccce8211d96f29b87",
+    "title": "cargo-deny",
+    "description": "Cargo plugin that lints a Rust dependency graph for license, advisory, ban and source-registry violations",
+    "keywords": [
+      "cargo-deny",
+      "cargo",
+      "rust",
+      "licenses",
+      "advisories",
+      "rustsec",
+      "supply-chain",
+      "sbom",
+      "dependencies",
+      "bans",
+      "embark"
+    ],
+    "readme": "sha256:956636ede60d38a8be454bd705a70c84c378116ef36554e5be66f80950f01c27",
+    "logo": "sha256:126052e127f0b449f021f8a84c283bbdb1a59643db4450dc9572227398f00222"
+  },
+  "upstream": {
+    "org": "EmbarkStudios",
+    "repository_url": "https://github.com/EmbarkStudios/cargo-deny",
+    "disclaimer": "Unaffiliated mirror. cargo-deny is a project of Embark Studios AB; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {
+    "0.19.8_20260804": {
+      "content": "sha256:e43da105f90669a1aed0d778bfe89b7213a40ffcce0589920a3b98597bd364e2",
+      "observed": "2026-08-04T01:44:48Z"
+    },
+    "0.19.8": {
+      "content": "sha256:e43da105f90669a1aed0d778bfe89b7213a40ffcce0589920a3b98597bd364e2",
+      "observed": "2026-08-04T01:44:48Z"
+    },
+    "0.19": {
+      "content": "sha256:db41f8018356e4d971bfbf7136cd3807a561f89387135800c6d358758ed4d83d",
+      "observed": "2026-08-04T01:44:48Z"
+    },
+    "0": {
+      "content": "sha256:3fe1aa0e83d8bcb6cbd31b8ef1d6b53e68fc1ba263f50b0c7f0028cf28c3bedb",
+      "observed": "2026-08-04T01:44:48Z"
+    },
+    "latest": {
+      "content": "sha256:3fe1aa0e83d8bcb6cbd31b8ef1d6b53e68fc1ba263f50b0c7f0028cf28c3bedb",
+      "observed": "2026-08-04T01:44:48Z"
+    },
+    "0.19.9_20260804": {
+      "content": "sha256:db41f8018356e4d971bfbf7136cd3807a561f89387135800c6d358758ed4d83d",
+      "observed": "2026-08-04T01:44:48Z"
+    },
+    "0.19.9": {
+      "content": "sha256:db41f8018356e4d971bfbf7136cd3807a561f89387135800c6d358758ed4d83d",
+      "observed": "2026-08-04T01:44:48Z"
+    },
+    "0.20.2_20260804": {
+      "content": "sha256:3fe1aa0e83d8bcb6cbd31b8ef1d6b53e68fc1ba263f50b0c7f0028cf28c3bedb",
+      "observed": "2026-08-04T01:44:48Z"
+    },
+    "0.20.2": {
+      "content": "sha256:3fe1aa0e83d8bcb6cbd31b8ef1d6b53e68fc1ba263f50b0c7f0028cf28c3bedb",
+      "observed": "2026-08-04T01:44:48Z"
+    },
+    "0.20": {
+      "content": "sha256:3fe1aa0e83d8bcb6cbd31b8ef1d6b53e68fc1ba263f50b0c7f0028cf28c3bedb",
+      "observed": "2026-08-04T01:44:48Z"
+    }
+  }
+}

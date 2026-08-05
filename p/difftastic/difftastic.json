@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:5dfbc4bd98281d1bd4f4bb06a7cce66e7541cae31185a2a669480a7e0ed4870e",
+    "digest": "sha256:d8f59989d416ff771750bf394c6997b1c4d7d216f253e9dd206cbd2001d3d7ca",
     "title": "difftastic",
     "description": "A structural diff that understands syntax \u2014 compares syntax trees, not lines",
     "keywords": [
@@ -26,7 +26,7 @@
       "cli",
       "rust"
     ],
-    "readme": "sha256:4e8d664135ccd9af9909782238555b5f98fb2c40f1592f58bcaf14a5b0274a2d",
+    "readme": "sha256:5c6d0212585dedc6cd432312579a10d03d52c6d881079b9c1d7c7c34bcbe84ad",
     "logo": "sha256:154568627ba465baf9250a528dd69477d4e540467965673b4d4508f5872a0033"
   },
   "upstream": {

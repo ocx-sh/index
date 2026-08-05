@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:18602e439ddcd0196580f3e5a9499d2444d4d741378047dec32dfc132a51aeb6",
+    "digest": "sha256:635cfc7ce3e47dc33e144a5be020277e7d317bafe35f74c8eaecf9abc0a7b4fb",
     "title": "starship",
     "description": "The minimal, blazing-fast and infinitely customizable prompt for any shell",
     "keywords": [
@@ -28,7 +28,7 @@
       "terminal",
       "ps1"
     ],
-    "readme": "sha256:7cae9abf9f6d88b0c47b7c7512fbb95ca3663e0790fa1cf1bdab4f6ae4d43846",
+    "readme": "sha256:0561b1245ed40c652a2cffed21241761fc8595d98da7bbae6cbf54960591d998",
     "logo": "sha256:5d6a0c4b91ce00cd54c6e58d613e67fb926375fcaf46a739c7788ed6adea8bc9"
   },
   "upstream": {

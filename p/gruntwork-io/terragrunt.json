@@ -1,0 +1,75 @@
+{
+  "name": "ocx.sh/gruntwork-io/terragrunt",
+  "repository": "oci://ghcr.io/ocx-contrib/gruntwork-io/terragrunt",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": {
+    "digest": "sha256:62b5a1e0837c8ce60eb88cedafc9fe5ac8db43d66f820d17091f1537f3be0a5b",
+    "title": "terragrunt",
+    "description": "Orchestration for OpenTofu/Terraform at scale \u2014 DRY configuration, dependency-ordered runs across many units, and remote state wiring from one HCL file",
+    "keywords": [
+      "terragrunt",
+      "terraform",
+      "opentofu",
+      "iac",
+      "infrastructure-as-code",
+      "hcl",
+      "orchestration",
+      "devops",
+      "gruntwork",
+      "cli"
+    ],
+    "readme": "sha256:36e29024bd8a345a2a2cdb2a560bf8315ad6d832f9436eb1e759c96eeaa4a54f",
+    "logo": "sha256:5e1d7918dca42d3c705987f9d715eec3ca00001ecd51a78d502569fbc11f673e"
+  },
+  "upstream": {
+    "org": "gruntwork-io",
+    "repository_url": "https://github.com/gruntwork-io/terragrunt",
+    "disclaimer": "Unaffiliated mirror. Terragrunt is a project of Gruntwork, LLC; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {
+    "1.1.0_20260804": {
+      "content": "sha256:8991c746a30fe80ff0f33aedd1eb4111d2023bbc84caac7cc06ae5eaf875d230",
+      "observed": "2026-08-04T02:39:31Z"
+    },
+    "1.1.0": {
+      "content": "sha256:8991c746a30fe80ff0f33aedd1eb4111d2023bbc84caac7cc06ae5eaf875d230",
+      "observed": "2026-08-04T02:39:31Z"
+    },
+    "1.1": {
+      "content": "sha256:e9c309a9aebdcf344661bd55661f53753971dc3f8621818e6ef45cac03646b9e",
+      "observed": "2026-08-04T02:39:31Z"
+    },
+    "1": {
+      "content": "sha256:e9c309a9aebdcf344661bd55661f53753971dc3f8621818e6ef45cac03646b9e",
+      "observed": "2026-08-04T02:39:31Z"
+    },
+    "latest": {
+      "content": "sha256:e9c309a9aebdcf344661bd55661f53753971dc3f8621818e6ef45cac03646b9e",
+      "observed": "2026-08-04T02:39:31Z"
+    },
+    "1.1.1_20260804": {
+      "content": "sha256:0edd125f51bd577d78b7062ffa438ccded5538cec5e398348850ff08db160250",
+      "observed": "2026-08-04T02:39:31Z"
+    },
+    "1.1.1": {
+      "content": "sha256:0edd125f51bd577d78b7062ffa438ccded5538cec5e398348850ff08db160250",
+      "observed": "2026-08-04T02:39:31Z"
+    },
+    "1.1.2_20260804": {
+      "content": "sha256:e9c309a9aebdcf344661bd55661f53753971dc3f8621818e6ef45cac03646b9e",
+      "observed": "2026-08-04T02:39:31Z"
+    },
+    "1.1.2": {
+      "content": "sha256:e9c309a9aebdcf344661bd55661f53753971dc3f8621818e6ef45cac03646b9e",
+      "observed": "2026-08-04T02:39:31Z"
+    }
+  }
+}

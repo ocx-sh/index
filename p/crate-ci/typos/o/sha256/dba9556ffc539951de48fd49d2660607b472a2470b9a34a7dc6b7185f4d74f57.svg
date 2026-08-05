@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="typos">
+  <title>typos</title>
+  <!-- Original mark authored for the OCX mirror; upstream publishes no logo.
+       A block of source lines with the middle one carrying the universal
+       red spell-check squiggle. -->
+  <rect width="512" height="512" rx="104" fill="#2b3040"/>
+  <g fill="#8b93a7">
+    <rect x="112" y="136" width="208" height="30" rx="15"/>
+    <rect x="112" y="346" width="160" height="30" rx="15"/>
+  </g>
+  <rect x="112" y="232" width="288" height="30" rx="15" fill="#f2f5fb"/>
+  <path d="M112 300 q12 -20 24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0"
+        fill="none" stroke="#e5484d" stroke-width="15" stroke-linecap="round"/>
+</svg>

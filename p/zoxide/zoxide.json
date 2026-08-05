@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:53b27f823835d2b18b5cfb616b247d7b6461f90fe94ba6913cde809f0284dce2",
+    "digest": "sha256:5cb1f57d5e9e057e50b1fa53d4520ea4787916229fbc2ce839b60daa846e3f1d",
     "title": "zoxide",
     "description": "A smarter cd command \u2014 jump to any directory by a fragment of its name, ranked by how often and how recently you visit it",
     "keywords": [
@@ -26,7 +26,7 @@
       "cli",
       "rust"
     ],
-    "readme": "sha256:9f841a7568198ea615aaea0054d81ca194bc1e9850ebef98c2deefed759a4f00",
+    "readme": "sha256:dcc3043be429238541c6c7fcaf49631dd3c95197a7011464b7a3b1f6d8dddac9",
     "logo": "sha256:c9866d993dc40f94ec224e671f2fda7d41f583765145a3c6b0d41448db3390dd"
   },
   "upstream": {

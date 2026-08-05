@@ -1,0 +1,83 @@
+{
+  "name": "ocx.sh/kubernetes-sigs/kind",
+  "repository": "oci://ghcr.io/ocx-contrib/kubernetes-sigs/kind",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": {
+    "digest": "sha256:54e7c71db9d4bc8bd73d03599cb9a3993f4847570ce59b1e61a3f9cd0ea48a92",
+    "title": "kind",
+    "description": "Run local Kubernetes clusters using Docker or Podman containers as nodes",
+    "keywords": [
+      "kind",
+      "kubernetes",
+      "k8s",
+      "cluster",
+      "docker",
+      "podman",
+      "local",
+      "testing",
+      "ci",
+      "kubernetes-sigs"
+    ],
+    "readme": "sha256:c81e1c5cc329fa337225314b9d8648a1f74be239697c3598a3ebdd3faf418135",
+    "logo": "sha256:09c21e3114167cadc5a7eb40895d3262c1d2c369ba858b973b5e4455c04888b3"
+  },
+  "upstream": {
+    "org": "kubernetes-sigs",
+    "repository_url": "https://github.com/kubernetes-sigs/kind",
+    "disclaimer": "Unaffiliated mirror. kind is a project of The Kubernetes Authors; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {
+    "0.30.0_20260804": {
+      "content": "sha256:b639d2b577e5316412b2f3c60fdd6a8dc66056853e619f0b65c170fc78824805",
+      "observed": "2026-08-04T01:56:50Z"
+    },
+    "0.30.0": {
+      "content": "sha256:b639d2b577e5316412b2f3c60fdd6a8dc66056853e619f0b65c170fc78824805",
+      "observed": "2026-08-04T01:56:50Z"
+    },
+    "0.30": {
+      "content": "sha256:b639d2b577e5316412b2f3c60fdd6a8dc66056853e619f0b65c170fc78824805",
+      "observed": "2026-08-04T01:56:50Z"
+    },
+    "0": {
+      "content": "sha256:55e3c5f9e22623d15f67f7862a291d98f123bb6b44edb922877a0eec0fff1895",
+      "observed": "2026-08-04T01:56:50Z"
+    },
+    "latest": {
+      "content": "sha256:55e3c5f9e22623d15f67f7862a291d98f123bb6b44edb922877a0eec0fff1895",
+      "observed": "2026-08-04T01:56:50Z"
+    },
+    "0.31.0_20260804": {
+      "content": "sha256:06f1d7d4c8ebee077a9d2f9d1d5978a2555d2a26bfe989fd23faf9c45d490d18",
+      "observed": "2026-08-04T01:56:50Z"
+    },
+    "0.31.0": {
+      "content": "sha256:06f1d7d4c8ebee077a9d2f9d1d5978a2555d2a26bfe989fd23faf9c45d490d18",
+      "observed": "2026-08-04T01:56:50Z"
+    },
+    "0.31": {
+      "content": "sha256:06f1d7d4c8ebee077a9d2f9d1d5978a2555d2a26bfe989fd23faf9c45d490d18",
+      "observed": "2026-08-04T01:56:50Z"
+    },
+    "0.32.0_20260804": {
+      "content": "sha256:55e3c5f9e22623d15f67f7862a291d98f123bb6b44edb922877a0eec0fff1895",
+      "observed": "2026-08-04T01:56:50Z"
+    },
+    "0.32.0": {
+      "content": "sha256:55e3c5f9e22623d15f67f7862a291d98f123bb6b44edb922877a0eec0fff1895",
+      "observed": "2026-08-04T01:56:50Z"
+    },
+    "0.32": {
+      "content": "sha256:55e3c5f9e22623d15f67f7862a291d98f123bb6b44edb922877a0eec0fff1895",
+      "observed": "2026-08-04T01:56:50Z"
+    }
+  }
+}

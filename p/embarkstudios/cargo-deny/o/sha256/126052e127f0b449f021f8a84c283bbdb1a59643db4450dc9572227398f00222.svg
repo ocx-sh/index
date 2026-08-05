@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="cargo-deny">
+  <title>cargo-deny</title>
+  <!-- Original mark authored for this OCX mirror. Upstream ships no logo file;
+       its README heading uses the emoji ❌, echoed here as the deny cross over a
+       crate. Embark's badge violet (#8A2BE2) is the only borrowed element. -->
+  <rect width="512" height="512" rx="96" fill="#1B1B22"/>
+  <!-- crate: an isometric-ish box outline, the dependency being linted -->
+  <g fill="none" stroke="#8A2BE2" stroke-width="22" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M256 96 L408 176 L408 336 L256 416 L104 336 L104 176 Z"/>
+    <path d="M104 176 L256 256 L408 176"/>
+    <path d="M256 256 L256 416"/>
+  </g>
+  <!-- deny cross -->
+  <g stroke="#FF4D6A" stroke-width="42" stroke-linecap="round">
+    <path d="M180 180 L332 332"/>
+    <path d="M332 180 L180 332"/>
+  </g>
+</svg>

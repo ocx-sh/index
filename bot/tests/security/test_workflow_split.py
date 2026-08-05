@@ -221,7 +221,11 @@ def test_arm_auto_merge_job_never_checks_out() -> None:
     (so no checkout and no `setup-bot`) and no secret. It arms off
     `governance-gate`'s ownership-checked `disposition`, and the same output
     drives a `--disable-auto` branch, because arming a PR whose head later
-    moves outside its author's owned roots must be revocable."""
+    moves outside its author's owned roots must be revocable. When GitHub
+    refuses to arm because required checks already finished (CLEAN/UNSTABLE),
+    the job merges directly — that route must stay pinned to the evaluated
+    head (`--match-head-commit`) and must never bypass branch protection
+    (`--admin` may appear nowhere in the file)."""
     text = _GOVERNANCE.read_text(encoding="utf-8")
     arm = _job_block(text, "arm-auto-merge")
     assert _grant(arm, "contents: write")
@@ -232,6 +236,8 @@ def test_arm_auto_merge_job_never_checks_out() -> None:
     assert re.search(r"(?m)^\s+if:.*disposition != 'success'", arm)
     assert _runs(arm, r"pr merge .*--auto --squash")
     assert _runs(arm, r"pr merge .*--disable-auto")
+    assert _runs(arm, r'pr merge .*--squash --match-head-commit "\$HEAD_SHA"')
+    assert not re.search(r"(?m)^(?!\s*#).*\bgh pr merge[^\n]*--admin", text)
 
 
 def test_arm_auto_merge_withdrawal_is_fail_closed() -> None:
@@ -378,6 +384,11 @@ def test_base_ref_bytes_are_materialized_outside_the_workspace() -> None:
     assert 'git cat-file -e "$BASE_SHA:$file" 2>/dev/null || continue' in job
     assert 'git show "$BASE_SHA:$file" > "$base_dir/$file"' in job
     assert "BASE_DIR: ${{ steps.base.outputs.dir }}" in job
+    # The changed-files step's three-dot diff needs the MERGE-BASE commit in
+    # the clone, not just the two endpoints — a shallow "optimization" here
+    # fails the required check on every PR whose branch point scrolled out
+    # of the fetch window.
+    assert "fetch-depth: 0" in job
 
 
 def test_reserved_namespace_gate_lives_in_the_zero_secret_job() -> None:

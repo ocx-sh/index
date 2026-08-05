@@ -1,0 +1,75 @@
+{
+  "name": "ocx.sh/prek/prek",
+  "repository": "oci://ghcr.io/ocx-contrib/prek/prek",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": {
+    "digest": "sha256:fc76660a0a63e4bd92cd711d0efec266404343c71d392eeac0d21964964c8bae",
+    "title": "prek",
+    "description": "A fast Git hook manager written in Rust \u2014 a drop-in, dependency-free alternative to pre-commit",
+    "keywords": [
+      "prek",
+      "pre-commit",
+      "git",
+      "git-hooks",
+      "hooks",
+      "lint",
+      "formatter",
+      "ci",
+      "rust",
+      "cli"
+    ],
+    "readme": "sha256:bef609f7e7eae5f497d80fe0dda554aa900945366656d19a77063d29a1d1ec09",
+    "logo": "sha256:5fb6ce2145bab576b63a5f96cdcb7e7a7d0faaa8c772a920387cc6940de928c2"
+  },
+  "upstream": {
+    "org": "j178",
+    "repository_url": "https://github.com/j178/prek",
+    "disclaimer": "Unaffiliated mirror. prek is a project of j178; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {
+    "0.4.10_20260804": {
+      "content": "sha256:004be9383ffcda5d51a6ffb71344b082ddcbe7d2ef8b96f0b24c6019577c1971",
+      "observed": "2026-08-04T01:02:01Z"
+    },
+    "0.4.10": {
+      "content": "sha256:004be9383ffcda5d51a6ffb71344b082ddcbe7d2ef8b96f0b24c6019577c1971",
+      "observed": "2026-08-04T01:02:01Z"
+    },
+    "0.4": {
+      "content": "sha256:2402c3245f487d3332a324f01ebc3ea43a531c50d784fd7e2e169909936822e7",
+      "observed": "2026-08-04T01:02:01Z"
+    },
+    "0": {
+      "content": "sha256:2402c3245f487d3332a324f01ebc3ea43a531c50d784fd7e2e169909936822e7",
+      "observed": "2026-08-04T01:02:01Z"
+    },
+    "latest": {
+      "content": "sha256:2402c3245f487d3332a324f01ebc3ea43a531c50d784fd7e2e169909936822e7",
+      "observed": "2026-08-04T01:02:01Z"
+    },
+    "0.4.11_20260804": {
+      "content": "sha256:c678f212261b482b0413ee95662058bcd7a89265d8f9eff03b4bc7565d5af6f5",
+      "observed": "2026-08-04T01:02:01Z"
+    },
+    "0.4.11": {
+      "content": "sha256:c678f212261b482b0413ee95662058bcd7a89265d8f9eff03b4bc7565d5af6f5",
+      "observed": "2026-08-04T01:02:01Z"
+    },
+    "0.4.12_20260804": {
+      "content": "sha256:2402c3245f487d3332a324f01ebc3ea43a531c50d784fd7e2e169909936822e7",
+      "observed": "2026-08-04T01:02:01Z"
+    },
+    "0.4.12": {
+      "content": "sha256:2402c3245f487d3332a324f01ebc3ea43a531c50d784fd7e2e169909936822e7",
+      "observed": "2026-08-04T01:02:01Z"
+    }
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "name": "ocx.sh/miniserve/miniserve",
+  "repository": "oci://ghcr.io/ocx-contrib/miniserve/miniserve",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": {
+    "digest": "sha256:c3f1d9a33a1de1c52ec13205b3683bf68d7262247c42f9896bf14939bfad958c",
+    "title": "miniserve",
+    "description": "Single-binary CLI that serves a file or directory over HTTP right now, with uploads, auth, TLS, archives and WebDAV",
+    "keywords": [
+      "miniserve",
+      "http",
+      "http-server",
+      "file-server",
+      "static-server",
+      "webdav",
+      "upload",
+      "cli",
+      "rust"
+    ],
+    "readme": "sha256:e4145892899c3af9d767294d717e76b15887bb26ecc5bba66a0461f3d79593ce",
+    "logo": "sha256:eb3af8aee136828d57ca55fb7dd8c833f8800c8d53eef8859e47b2175e6d1ef7"
+  },
+  "upstream": {
+    "org": "svenstaro",
+    "repository_url": "https://github.com/svenstaro/miniserve",
+    "disclaimer": "Unaffiliated mirror. miniserve is a project of Sven-Hendrik Haase; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {
+    "0.33.0_20260804": {
+      "content": "sha256:839ce4b53b180b0a2dd9956ad6da0af4ed980f4b8e3cb717daa8bd612c31d7b3",
+      "observed": "2026-08-04T01:02:12Z"
+    },
+    "0.33.0": {
+      "content": "sha256:839ce4b53b180b0a2dd9956ad6da0af4ed980f4b8e3cb717daa8bd612c31d7b3",
+      "observed": "2026-08-04T01:02:12Z"
+    },
+    "0.33": {
+      "content": "sha256:839ce4b53b180b0a2dd9956ad6da0af4ed980f4b8e3cb717daa8bd612c31d7b3",
+      "observed": "2026-08-04T01:02:12Z"
+    },
+    "0": {
+      "content": "sha256:04a57a74e3225ef72d55f64db16731acc81e8216ae8f8de41c12729b1c4113eb",
+      "observed": "2026-08-04T01:02:12Z"
+    },
+    "latest": {
+      "content": "sha256:04a57a74e3225ef72d55f64db16731acc81e8216ae8f8de41c12729b1c4113eb",
+      "observed": "2026-08-04T01:02:12Z"
+    },
+    "0.34.0_20260804": {
+      "content": "sha256:ff695492936a1f3000ebafa712588a097553c6748d9f64f3babfb95a4dd71042",
+      "observed": "2026-08-04T01:02:12Z"
+    },
+    "0.34.0": {
+      "content": "sha256:ff695492936a1f3000ebafa712588a097553c6748d9f64f3babfb95a4dd71042",
+      "observed": "2026-08-04T01:02:12Z"
+    },
+    "0.34": {
+      "content": "sha256:ff695492936a1f3000ebafa712588a097553c6748d9f64f3babfb95a4dd71042",
+      "observed": "2026-08-04T01:02:12Z"
+    },
+    "0.35.0_20260804": {
+      "content": "sha256:04a57a74e3225ef72d55f64db16731acc81e8216ae8f8de41c12729b1c4113eb",
+      "observed": "2026-08-04T01:02:12Z"
+    },
+    "0.35.0": {
+      "content": "sha256:04a57a74e3225ef72d55f64db16731acc81e8216ae8f8de41c12729b1c4113eb",
+      "observed": "2026-08-04T01:02:12Z"
+    },
+    "0.35": {
+      "content": "sha256:04a57a74e3225ef72d55f64db16731acc81e8216ae8f8de41c12729b1c4113eb",
+      "observed": "2026-08-04T01:02:12Z"
+    }
+  }
+}

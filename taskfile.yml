@@ -215,6 +215,23 @@ tasks:
     cmds:
       - scripts/smoke-test.sh {{.CLI_ARGS}}
 
+  site:dev:
+    desc: >-
+      HMR dev server for UI iteration — `vitepress dev` auto-reloads on
+      theme/component edits (site:serve is a static preview of a full
+      production build, no reload). Wire files (/config.json, /p/**,
+      /c/index.json, /data/catalog/**) don't exist on the dev server, so
+      this first renders them once into site/.vitepress/dev-wire
+      (gitignored), served by the dev-only `ocx-dev-wire` middleware in
+      .vitepress/config.mts. Wire data is a SNAPSHOT — re-run this task
+      after changing p/ (UI edits need no re-run). Demo tree instead of
+      real p/: `task demo:seed` then `task site:dev RENDER_INDEX_DIR=demo`.
+      Serves on the Vite default port (5173), not site:preview's 4173.
+    cmds:
+      - rm -rf site/.vitepress/dev-wire
+      - uv run --project bot -- indexbot render --index-dir "{{.RENDER_INDEX_DIR}}" --out site/.vitepress/dev-wire
+      - cd site && OCX_RENDER_INDEX_DIR="{{.RENDER_INDEX_DIR}}" bun run dev
+
   site:preview:
     desc: >-
       `bun run preview` in site/ — serves an already-built {{.RENDER_OUT}}

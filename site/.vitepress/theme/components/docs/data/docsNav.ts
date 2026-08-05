@@ -64,4 +64,15 @@ export const DOCS_NAV: DocsNavGroup[] = [
       { text: 'Architecture', link: '/docs/explanation/architecture' },
     ],
   },
+  // Post-mock addition (owner-requested): the privacy notice lives in the
+  // docs chrome and gets its own group — deliberately labeled LEGAL, not
+  // "Impressum": the page is a GDPR privacy notice, and the site
+  // intentionally carries no Impressum (see src/docs/privacy.md).
+  {
+    label: 'LEGAL',
+    link: '/docs/privacy',
+    items: [
+      { text: 'Privacy', link: '/docs/privacy' },
+    ],
+  },
 ]

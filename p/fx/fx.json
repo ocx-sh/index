@@ -1,0 +1,84 @@
+{
+  "name": "ocx.sh/fx/fx",
+  "repository": "oci://ghcr.io/ocx-contrib/fx/fx",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": {
+    "digest": "sha256:78fe46ac0912c0ffe0737e047a331bc474655e76a56c6650faa17bf178198341",
+    "title": "fx",
+    "description": "Terminal JSON viewer and processor \u2014 navigate documents interactively, or transform them non-interactively with JavaScript expressions",
+    "keywords": [
+      "fx",
+      "json",
+      "jq",
+      "viewer",
+      "tui",
+      "processor",
+      "javascript",
+      "yaml",
+      "toml",
+      "cli",
+      "terminal"
+    ],
+    "readme": "sha256:6d14b5d937b8fe7e5f04ecb9e07d5bc8ed6fe8d5df98bd41087eb614f5eb14bc",
+    "logo": "sha256:77f51b1f148a4a8ea61067d242883f49a99f1f09015a769191111c3d80ec9d07"
+  },
+  "upstream": {
+    "org": "antonmedv",
+    "repository_url": "https://github.com/antonmedv/fx",
+    "disclaimer": "Unaffiliated mirror. fx is a project of Anton Medvedev; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {
+    "39.0.4_20260804": {
+      "content": "sha256:f0ff7caad972fcb788724c18ca076e5a1433dc22f4e3e369ce3fe343a6a1a9b2",
+      "observed": "2026-08-04T00:29:29Z"
+    },
+    "39.0.4": {
+      "content": "sha256:f0ff7caad972fcb788724c18ca076e5a1433dc22f4e3e369ce3fe343a6a1a9b2",
+      "observed": "2026-08-04T00:29:29Z"
+    },
+    "39.0": {
+      "content": "sha256:f0ff7caad972fcb788724c18ca076e5a1433dc22f4e3e369ce3fe343a6a1a9b2",
+      "observed": "2026-08-04T00:29:29Z"
+    },
+    "39": {
+      "content": "sha256:ef4db3dd05bef828cc686fdd21eb269759432f5dc45ede654bf8486b5400f50b",
+      "observed": "2026-08-04T00:29:29Z"
+    },
+    "latest": {
+      "content": "sha256:ef4db3dd05bef828cc686fdd21eb269759432f5dc45ede654bf8486b5400f50b",
+      "observed": "2026-08-04T00:29:29Z"
+    },
+    "39.1.0_20260804": {
+      "content": "sha256:a8142db423e87145a8017bd4d074dade5c9c01fa8bcf9f8f899afc16caf2aaf3",
+      "observed": "2026-08-04T00:29:29Z"
+    },
+    "39.1.0": {
+      "content": "sha256:a8142db423e87145a8017bd4d074dade5c9c01fa8bcf9f8f899afc16caf2aaf3",
+      "observed": "2026-08-04T00:29:29Z"
+    },
+    "39.1": {
+      "content": "sha256:a8142db423e87145a8017bd4d074dade5c9c01fa8bcf9f8f899afc16caf2aaf3",
+      "observed": "2026-08-04T00:29:29Z"
+    },
+    "39.2.0_20260804": {
+      "content": "sha256:ef4db3dd05bef828cc686fdd21eb269759432f5dc45ede654bf8486b5400f50b",
+      "observed": "2026-08-04T00:29:29Z"
+    },
+    "39.2.0": {
+      "content": "sha256:ef4db3dd05bef828cc686fdd21eb269759432f5dc45ede654bf8486b5400f50b",
+      "observed": "2026-08-04T00:29:29Z"
+    },
+    "39.2": {
+      "content": "sha256:ef4db3dd05bef828cc686fdd21eb269759432f5dc45ede654bf8486b5400f50b",
+      "observed": "2026-08-04T00:29:29Z"
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "name": "ocx.sh/evilmartians/lefthook",
+  "repository": "oci://ghcr.io/ocx-contrib/evilmartians/lefthook",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": {
+    "digest": "sha256:2027cef711d5141e253913b2faaeb8de07599e3945cc1392736e8e721294938b",
+    "title": "lefthook",
+    "description": "Fast, parallel git hooks manager for any language \u2014 one lefthook.yml drives every hook in the repository",
+    "keywords": [
+      "lefthook",
+      "git",
+      "git-hooks",
+      "pre-commit",
+      "pre-push",
+      "hooks",
+      "linter",
+      "formatter",
+      "monorepo",
+      "go",
+      "cli"
+    ],
+    "readme": "sha256:ffafce8df184c449c5fb80fb7838f5c981c9a1ecea7142b61e0c9618a8bef041",
+    "logo": "sha256:578ebe7d118cd904b8d213785cd4a5ba5ce2fa4a509fc1cb808957bf15728ccd"
+  },
+  "upstream": {
+    "org": "evilmartians",
+    "repository_url": "https://github.com/evilmartians/lefthook",
+    "disclaimer": "Unaffiliated mirror. lefthook is a project of Evil Martians; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {
+    "2.1.8_20260804": {
+      "content": "sha256:e4a5ee6573c9d783febdcc7b2f5d5ea592b657c35c8ece5665b682c9a7c4932e",
+      "observed": "2026-08-04T01:34:18Z"
+    },
+    "2.1.8": {
+      "content": "sha256:e4a5ee6573c9d783febdcc7b2f5d5ea592b657c35c8ece5665b682c9a7c4932e",
+      "observed": "2026-08-04T01:34:18Z"
+    },
+    "2.1": {
+      "content": "sha256:8423214f74e9e8385f6527007fd027f88937b529bba766b9e006e4f6a117fed0",
+      "observed": "2026-08-04T01:34:18Z"
+    },
+    "2": {
+      "content": "sha256:8423214f74e9e8385f6527007fd027f88937b529bba766b9e006e4f6a117fed0",
+      "observed": "2026-08-04T01:34:18Z"
+    },
+    "latest": {
+      "content": "sha256:8423214f74e9e8385f6527007fd027f88937b529bba766b9e006e4f6a117fed0",
+      "observed": "2026-08-04T01:34:18Z"
+    },
+    "2.1.9_20260804": {
+      "content": "sha256:4c53bb937ab3da68138cd7e6f75060736f271d3cd687c2d72e5b3a6c75a56831",
+      "observed": "2026-08-04T01:34:18Z"
+    },
+    "2.1.9": {
+      "content": "sha256:4c53bb937ab3da68138cd7e6f75060736f271d3cd687c2d72e5b3a6c75a56831",
+      "observed": "2026-08-04T01:34:18Z"
+    },
+    "2.1.10_20260804": {
+      "content": "sha256:8423214f74e9e8385f6527007fd027f88937b529bba766b9e006e4f6a117fed0",
+      "observed": "2026-08-04T01:34:18Z"
+    },
+    "2.1.10": {
+      "content": "sha256:8423214f74e9e8385f6527007fd027f88937b529bba766b9e006e4f6a117fed0",
+      "observed": "2026-08-04T01:34:18Z"
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "name": "ocx.sh/kubeconform/kubeconform",
+  "repository": "oci://ghcr.io/ocx-contrib/kubeconform/kubeconform",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": {
+    "digest": "sha256:f96a1737e7b08b1cf780c5021afba8d5cb96c2cfceb738335a8d2963f330ee6b",
+    "title": "kubeconform",
+    "description": "A fast Kubernetes manifest validator that checks resources against JSON Schemas, with Custom Resource support",
+    "keywords": [
+      "kubeconform",
+      "kubernetes",
+      "k8s",
+      "manifest",
+      "validation",
+      "json-schema",
+      "crd",
+      "yaml",
+      "lint",
+      "cli",
+      "go"
+    ],
+    "readme": "sha256:724d2f8a3498863ed26ed30de054ef1aee00697f3d484b9eadf6645e8309b87f",
+    "logo": "sha256:50a34012984fa3ab042963e1864b7be0e7a803cd68882063dce68e5bb0862b95"
+  },
+  "upstream": {
+    "org": "yannh",
+    "repository_url": "https://github.com/yannh/kubeconform",
+    "disclaimer": "Unaffiliated mirror. kubeconform is a project of Yann Hamon; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {
+    "0.7.0_20260804": {
+      "content": "sha256:977d3eb9baf4ddb1a1bfef14c1a9099328a9d42f14d8a09273abb272b1204d2b",
+      "observed": "2026-08-04T00:28:08Z"
+    },
+    "0.7.0": {
+      "content": "sha256:977d3eb9baf4ddb1a1bfef14c1a9099328a9d42f14d8a09273abb272b1204d2b",
+      "observed": "2026-08-04T00:28:08Z"
+    },
+    "0.7": {
+      "content": "sha256:977d3eb9baf4ddb1a1bfef14c1a9099328a9d42f14d8a09273abb272b1204d2b",
+      "observed": "2026-08-04T00:28:08Z"
+    },
+    "0": {
+      "content": "sha256:e2524a37a7a1033c0ffa4b00aa6011c4c35bea6442cc5eeb28f7ec5a29658475",
+      "observed": "2026-08-04T00:28:08Z"
+    },
+    "latest": {
+      "content": "sha256:e2524a37a7a1033c0ffa4b00aa6011c4c35bea6442cc5eeb28f7ec5a29658475",
+      "observed": "2026-08-04T00:28:08Z"
+    },
+    "0.8.0_20260804": {
+      "content": "sha256:e2524a37a7a1033c0ffa4b00aa6011c4c35bea6442cc5eeb28f7ec5a29658475",
+      "observed": "2026-08-04T00:28:08Z"
+    },
+    "0.8.0": {
+      "content": "sha256:e2524a37a7a1033c0ffa4b00aa6011c4c35bea6442cc5eeb28f7ec5a29658475",
+      "observed": "2026-08-04T00:28:08Z"
+    },
+    "0.8": {
+      "content": "sha256:e2524a37a7a1033c0ffa4b00aa6011c4c35bea6442cc5eeb28f7ec5a29658475",
+      "observed": "2026-08-04T00:28:08Z"
+    }
+  }
+}

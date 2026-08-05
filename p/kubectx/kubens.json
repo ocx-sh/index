@@ -1,0 +1,78 @@
+{
+  "name": "ocx.sh/kubectx/kubens",
+  "repository": "oci://ghcr.io/ocx-contrib/kubectx/kubens",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": {
+    "digest": "sha256:e27dc8222d23b826fe17fc513ce1a6cfbdb0631287e715c73b23c2861d27cd67",
+    "title": "kubens",
+    "description": "Switch the active Kubernetes namespace of the current kubectl context, and jump back to the previous one",
+    "keywords": [
+      "kubens",
+      "kubectl",
+      "kubernetes",
+      "k8s",
+      "namespace",
+      "context",
+      "kubeconfig",
+      "cli",
+      "devops"
+    ],
+    "readme": "sha256:6a3aa248b60f091df3a1322c238073b010d76ff47d828bbaa78065551bc1baca",
+    "logo": "sha256:cc56b4fb32d75daf45e44c65beb28fb8ff56a4ff5a54ee782ed802379ac2d3aa"
+  },
+  "upstream": {
+    "org": "ahmetb",
+    "repository_url": "https://github.com/ahmetb/kubectx",
+    "disclaimer": "Unaffiliated mirror. kubens is a project of Ahmet Alp Balkan, copyright Google LLC; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {
+    "0.10.0_20260804": {
+      "content": "sha256:0eda661ae085bb29bd2fdea84aac19ac5025641e77c3d75b76668968921398b6",
+      "observed": "2026-08-04T02:00:01Z"
+    },
+    "0.10.0": {
+      "content": "sha256:0eda661ae085bb29bd2fdea84aac19ac5025641e77c3d75b76668968921398b6",
+      "observed": "2026-08-04T02:00:01Z"
+    },
+    "0.10": {
+      "content": "sha256:850187f98e46eab65ccca5657e827baa79574cb6fca38f1ce550f5e62296a135",
+      "observed": "2026-08-04T02:00:01Z"
+    },
+    "0": {
+      "content": "sha256:754281fd8ee1b729729d14ee5f0db83156b3efb49a8670a4684810161ca18fe6",
+      "observed": "2026-08-04T02:00:01Z"
+    },
+    "latest": {
+      "content": "sha256:754281fd8ee1b729729d14ee5f0db83156b3efb49a8670a4684810161ca18fe6",
+      "observed": "2026-08-04T02:00:01Z"
+    },
+    "0.10.2_20260804": {
+      "content": "sha256:850187f98e46eab65ccca5657e827baa79574cb6fca38f1ce550f5e62296a135",
+      "observed": "2026-08-04T02:00:01Z"
+    },
+    "0.10.2": {
+      "content": "sha256:850187f98e46eab65ccca5657e827baa79574cb6fca38f1ce550f5e62296a135",
+      "observed": "2026-08-04T02:00:01Z"
+    },
+    "0.11.0_20260804": {
+      "content": "sha256:754281fd8ee1b729729d14ee5f0db83156b3efb49a8670a4684810161ca18fe6",
+      "observed": "2026-08-04T02:00:01Z"
+    },
+    "0.11.0": {
+      "content": "sha256:754281fd8ee1b729729d14ee5f0db83156b3efb49a8670a4684810161ca18fe6",
+      "observed": "2026-08-04T02:00:01Z"
+    },
+    "0.11": {
+      "content": "sha256:754281fd8ee1b729729d14ee5f0db83156b3efb49a8670a4684810161ca18fe6",
+      "observed": "2026-08-04T02:00:01Z"
+    }
+  }
+}

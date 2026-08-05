@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-08-04",
   "desc": {
-    "digest": "sha256:52dcec39ce0488ceaec09eedb905b4e7ab9c3cd1d526404df15967f5afb2bc30",
+    "digest": "sha256:f42e043232fe5b83e807e13850aa6b0ed55236a405a24e1d5162239cb127418d",
     "title": "delta",
     "description": "A syntax-highlighting pager for git, diff, grep and blame output",
     "keywords": [
@@ -27,7 +27,7 @@
       "cli",
       "rust"
     ],
-    "readme": "sha256:8dcb38d827ab2784756e084388c066f683194df49a85b3fbfeaf39dbcc6bf565",
+    "readme": "sha256:07499fd926a3a92c325a352abf8108cd19f7f5e051eed27f596bac3cc3a1f267",
     "logo": "sha256:441a565f26aa17a0e6f5316a7e51447c705fc6c1156c00823a0bbc1308744431"
   },
   "upstream": {
@@ -41,28 +41,36 @@
       "observed": "2026-08-04T00:00:59Z"
     },
     "0.19.1": {
-      "content": "sha256:0fb12bc62f0e685d83a96c00e9f84881a2f2d934d2600f23918b225e3246aeef",
-      "observed": "2026-08-04T00:00:59Z"
+      "content": "sha256:eb6a74160e340d61330c606897eb6bb10cf3ac1a79c644d3b1fd3c09d236b289",
+      "observed": "2026-08-04T00:02:35Z"
     },
     "0.19": {
-      "content": "sha256:76c69233b205ba4fe2d843f7ab0417e362d9076f176ebb48f2b557dc9f319136",
-      "observed": "2026-08-04T00:00:59Z"
+      "content": "sha256:447f2b289e8204c3120662519c72c7abcf81dab096c39d5a9735d76b677613b3",
+      "observed": "2026-08-04T00:02:35Z"
     },
     "0": {
-      "content": "sha256:76c69233b205ba4fe2d843f7ab0417e362d9076f176ebb48f2b557dc9f319136",
-      "observed": "2026-08-04T00:00:59Z"
+      "content": "sha256:447f2b289e8204c3120662519c72c7abcf81dab096c39d5a9735d76b677613b3",
+      "observed": "2026-08-04T00:02:35Z"
     },
     "latest": {
-      "content": "sha256:76c69233b205ba4fe2d843f7ab0417e362d9076f176ebb48f2b557dc9f319136",
-      "observed": "2026-08-04T00:00:59Z"
+      "content": "sha256:447f2b289e8204c3120662519c72c7abcf81dab096c39d5a9735d76b677613b3",
+      "observed": "2026-08-04T00:02:35Z"
     },
     "0.19.2_20260803": {
       "content": "sha256:76c69233b205ba4fe2d843f7ab0417e362d9076f176ebb48f2b557dc9f319136",
       "observed": "2026-08-04T00:00:59Z"
     },
     "0.19.2": {
-      "content": "sha256:76c69233b205ba4fe2d843f7ab0417e362d9076f176ebb48f2b557dc9f319136",
-      "observed": "2026-08-04T00:00:59Z"
+      "content": "sha256:447f2b289e8204c3120662519c72c7abcf81dab096c39d5a9735d76b677613b3",
+      "observed": "2026-08-04T00:02:35Z"
+    },
+    "0.19.1_20260804": {
+      "content": "sha256:245ccd0ac57a33bf55200847efb2c6098c1e54dc683121917448a14fad7ef288",
+      "observed": "2026-08-04T00:02:35Z"
+    },
+    "0.19.2_20260804": {
+      "content": "sha256:c01b6dfcad2c9f9d2cf86f380de85bcbadacc268102b0a960ffec9d279018349",
+      "observed": "2026-08-04T00:02:35Z"
     }
   }
 }

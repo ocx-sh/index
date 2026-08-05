@@ -1,0 +1,78 @@
+{
+  "name": "ocx.sh/anchore/grype",
+  "repository": "oci://ghcr.io/ocx-contrib/anchore/grype",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": {
+    "digest": "sha256:0b540bf5a1d069a0c01c398139e76069d713c20d39e756c77c722faf366bec87",
+    "title": "Grype",
+    "description": "Vulnerability scanner for container images, filesystems and SBOMs",
+    "keywords": [
+      "grype",
+      "vulnerability",
+      "cve",
+      "scanner",
+      "sbom",
+      "security",
+      "sca",
+      "supply-chain",
+      "anchore"
+    ],
+    "readme": "sha256:7ec2ed91da07e08b2cf3909afd822598a957f89adc840b6027af2c9f66b56e88",
+    "logo": "sha256:a32796d98b17f272b1ca9c97b3607a39ef1838365f653ee091d7e72fedb06c59"
+  },
+  "upstream": {
+    "org": "anchore",
+    "repository_url": "https://github.com/anchore/grype",
+    "disclaimer": "Unaffiliated mirror. Grype is a project of Anchore, Inc.; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {
+    "0.115.0_20260804": {
+      "content": "sha256:e554b497e29edc96154706e77fa5cdf46324347ffbabf787d293ec3018ba8676",
+      "observed": "2026-08-04T02:05:33Z"
+    },
+    "0.115.0": {
+      "content": "sha256:e554b497e29edc96154706e77fa5cdf46324347ffbabf787d293ec3018ba8676",
+      "observed": "2026-08-04T02:05:33Z"
+    },
+    "0.115": {
+      "content": "sha256:e554b497e29edc96154706e77fa5cdf46324347ffbabf787d293ec3018ba8676",
+      "observed": "2026-08-04T02:05:33Z"
+    },
+    "0": {
+      "content": "sha256:852ed3d17cc04189c828e7dc397d08730323f1ce8c112a5d6b6c2575680327a3",
+      "observed": "2026-08-04T02:05:33Z"
+    },
+    "latest": {
+      "content": "sha256:852ed3d17cc04189c828e7dc397d08730323f1ce8c112a5d6b6c2575680327a3",
+      "observed": "2026-08-04T02:05:33Z"
+    },
+    "0.116.0_20260804": {
+      "content": "sha256:4c23d94791cb26e42213afa378a879da71381c00b6220bcff25b568a69ee186c",
+      "observed": "2026-08-04T02:05:33Z"
+    },
+    "0.116.0": {
+      "content": "sha256:4c23d94791cb26e42213afa378a879da71381c00b6220bcff25b568a69ee186c",
+      "observed": "2026-08-04T02:05:33Z"
+    },
+    "0.116": {
+      "content": "sha256:852ed3d17cc04189c828e7dc397d08730323f1ce8c112a5d6b6c2575680327a3",
+      "observed": "2026-08-04T02:05:33Z"
+    },
+    "0.116.1_20260804": {
+      "content": "sha256:852ed3d17cc04189c828e7dc397d08730323f1ce8c112a5d6b6c2575680327a3",
+      "observed": "2026-08-04T02:05:33Z"
+    },
+    "0.116.1": {
+      "content": "sha256:852ed3d17cc04189c828e7dc397d08730323f1ce8c112a5d6b6c2575680327a3",
+      "observed": "2026-08-04T02:05:33Z"
+    }
+  }
+}

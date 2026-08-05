@@ -1,0 +1,80 @@
+{
+  "name": "ocx.sh/k9s/k9s",
+  "repository": "oci://ghcr.io/ocx-contrib/k9s/k9s",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": {
+    "digest": "sha256:467a3ad860884ffc060974c22ae4aad826bf5731dbb575dfe83911786698dcc2",
+    "title": "k9s",
+    "description": "A terminal UI for Kubernetes \u2014 navigate, observe and manage the resources of a live cluster from a full-screen console",
+    "keywords": [
+      "k9s",
+      "kubernetes",
+      "k8s",
+      "tui",
+      "terminal",
+      "cluster",
+      "kubectl",
+      "devops",
+      "sre",
+      "cli",
+      "go"
+    ],
+    "readme": "sha256:0567f84620f260f6615f5e1966b2d3e1e7d5a9d8e2671b808bdca37cdd6d0960",
+    "logo": "sha256:6b5815004a91bc061dfb33a66a9837cdc00a4b4bf403b62a959a51c3b5c348d3"
+  },
+  "upstream": {
+    "org": "derailed",
+    "repository_url": "https://github.com/derailed/k9s",
+    "disclaimer": "Unaffiliated mirror. k9s is a project of Imhotep Software LLC; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {
+    "0.50.17_20260804": {
+      "content": "sha256:95b74b3dff191c6e20503481e9ade698926f06c6ead198523574d391f5572b38",
+      "observed": "2026-08-04T01:34:37Z"
+    },
+    "0.50.17": {
+      "content": "sha256:95b74b3dff191c6e20503481e9ade698926f06c6ead198523574d391f5572b38",
+      "observed": "2026-08-04T01:34:37Z"
+    },
+    "0.50": {
+      "content": "sha256:06fafaa87b4a87c136e1d2f9caa8d49241e1a38b3d7c0011a74e6e869a9c266b",
+      "observed": "2026-08-04T01:34:37Z"
+    },
+    "0": {
+      "content": "sha256:de312af879346672d6686403aae38d83db5976fa7cc17441e06eb9b6d9e12532",
+      "observed": "2026-08-04T01:34:37Z"
+    },
+    "latest": {
+      "content": "sha256:de312af879346672d6686403aae38d83db5976fa7cc17441e06eb9b6d9e12532",
+      "observed": "2026-08-04T01:34:37Z"
+    },
+    "0.50.18_20260804": {
+      "content": "sha256:06fafaa87b4a87c136e1d2f9caa8d49241e1a38b3d7c0011a74e6e869a9c266b",
+      "observed": "2026-08-04T01:34:37Z"
+    },
+    "0.50.18": {
+      "content": "sha256:06fafaa87b4a87c136e1d2f9caa8d49241e1a38b3d7c0011a74e6e869a9c266b",
+      "observed": "2026-08-04T01:34:37Z"
+    },
+    "0.51.0_20260804": {
+      "content": "sha256:de312af879346672d6686403aae38d83db5976fa7cc17441e06eb9b6d9e12532",
+      "observed": "2026-08-04T01:34:37Z"
+    },
+    "0.51.0": {
+      "content": "sha256:de312af879346672d6686403aae38d83db5976fa7cc17441e06eb9b6d9e12532",
+      "observed": "2026-08-04T01:34:37Z"
+    },
+    "0.51": {
+      "content": "sha256:de312af879346672d6686403aae38d83db5976fa7cc17441e06eb9b6d9e12532",
+      "observed": "2026-08-04T01:34:37Z"
+    }
+  }
+}

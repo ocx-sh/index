@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-
-const props = defineProps<{
+defineProps<{
   total: number
   filtered: number
   /** Active FILTER CHIP labels only (platforms/keywords/deprecated). */
@@ -9,42 +7,21 @@ const props = defineProps<{
   /** Free-text query active — the clear button covers it too ("clear all
    * filters"), it just isn't echoed in the labels line. */
   hasQuery: boolean
-  /** `catalog.generated` — lexicographic-max ISO timestamp, or null. */
-  generated: string | null
 }>()
 
 defineEmits<{ 'clear-filters': [] }>()
 
-// Relative-time math reads `Date.now()` — computed post-mount only so SSR
-// output and the first client render agree (no hydration mismatch).
-const updatedLabel = ref<string | null>(null)
-
-onMounted(() => {
-  if (!props.generated) return
-  const then = new Date(props.generated).getTime()
-  if (Number.isNaN(then)) return
-  const minutes = Math.max(0, Math.floor((Date.now() - then) / 60_000))
-  if (minutes < 1) {
-    updatedLabel.value = 'just now'
-  } else if (minutes < 60) {
-    updatedLabel.value = `${minutes}m ago`
-  } else if (minutes < 60 * 24) {
-    updatedLabel.value = `${Math.floor(minutes / 60)}h ago`
-  } else {
-    updatedLabel.value = `${Math.floor(minutes / (60 * 24))}d ago`
-  }
-})
-</script>
+// "updated Xm ago" moved to SiteFooter (owner finding: off-place here).</script>
 
 <template>
   <div class="result-meta">
     <span class="count">{{ filtered === total ? `${total} packages` : `${filtered} of ${total} packages` }}</span>
-    <span class="filters">{{ activeFilterLabels.length ? activeFilterLabels.join(' · ') : 'sorted by name' }}</span>
+    <!-- No placeholder text when unfiltered — the meta row's sort select
+         (CatalogPage) states the order now. -->
+    <span v-if="activeFilterLabels.length" class="filters">{{ activeFilterLabels.join(' · ') }}</span>
     <button v-if="activeFilterLabels.length || hasQuery" type="button" class="clear-btn" tabindex="-1" @click="$emit('clear-filters')">
       clear filters
     </button>
-    <span class="spacer" />
-    <span v-if="updatedLabel" class="updated">updated {{ updatedLabel }}</span>
   </div>
 </template>
 
@@ -63,8 +40,7 @@ onMounted(() => {
   color: var(--c-text-1);
 }
 
-.filters,
-.updated {
+.filters {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--c-text-3);
@@ -81,11 +57,10 @@ onMounted(() => {
   cursor: pointer;
 }
 
-.clear-btn:hover {
+.clear-btn:hover,
+.clear-btn:focus-visible {
   color: var(--c-accent-hover);
-}
-
-.spacer {
-  flex: 1;
+  outline: none;
+  text-decoration: underline;
 }
 </style>

@@ -1,0 +1,82 @@
+{
+  "name": "ocx.sh/dive/dive",
+  "repository": "oci://ghcr.io/ocx-contrib/dive/dive",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-04",
+  "desc": {
+    "digest": "sha256:54db5e17b9e7ae321a7debe57a42a3e96239763a9782bc310f3b7f714859615a",
+    "title": "dive",
+    "description": "Explore a container image layer by layer \u2014 see what each command added, browse the resulting filesystem, and find the wasted space",
+    "keywords": [
+      "dive",
+      "docker",
+      "oci",
+      "container",
+      "image",
+      "layers",
+      "filesystem",
+      "tui",
+      "terminal",
+      "efficiency",
+      "devops",
+      "ci",
+      "go"
+    ],
+    "readme": "sha256:798a031633121567b69bef69d5f1ce9a93f3ae019805aa945d7334d4f13a9c88",
+    "logo": "sha256:0913869893a91cd8ed699afee2a1c22de2f3eff89fed4a764c50c9e3ec5b1a69"
+  },
+  "upstream": {
+    "org": "wagoodman",
+    "repository_url": "https://github.com/wagoodman/dive",
+    "disclaimer": "Unaffiliated mirror. dive is a project of Alex Goodman; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {
+    "0.12.0_20260804": {
+      "content": "sha256:de3fdc899ad85c6eb43d71278206c37191398d8a81bd4f1406c01ee17f427179",
+      "observed": "2026-08-04T02:01:21Z"
+    },
+    "0.12.0": {
+      "content": "sha256:de3fdc899ad85c6eb43d71278206c37191398d8a81bd4f1406c01ee17f427179",
+      "observed": "2026-08-04T02:01:21Z"
+    },
+    "0.12": {
+      "content": "sha256:de3fdc899ad85c6eb43d71278206c37191398d8a81bd4f1406c01ee17f427179",
+      "observed": "2026-08-04T02:01:21Z"
+    },
+    "0": {
+      "content": "sha256:9c687905b1605f78c851c3876b391a68c7508efb76b7e5d7aec83a2d2c3c2ad7",
+      "observed": "2026-08-04T02:01:21Z"
+    },
+    "latest": {
+      "content": "sha256:9c687905b1605f78c851c3876b391a68c7508efb76b7e5d7aec83a2d2c3c2ad7",
+      "observed": "2026-08-04T02:01:21Z"
+    },
+    "0.13.0_20260804": {
+      "content": "sha256:f6d91611fa61091ce884691035ef13b786d5c9084045c83a5ccb5fe7c7f9a755",
+      "observed": "2026-08-04T02:01:21Z"
+    },
+    "0.13.0": {
+      "content": "sha256:f6d91611fa61091ce884691035ef13b786d5c9084045c83a5ccb5fe7c7f9a755",
+      "observed": "2026-08-04T02:01:21Z"
+    },
+    "0.13": {
+      "content": "sha256:9c687905b1605f78c851c3876b391a68c7508efb76b7e5d7aec83a2d2c3c2ad7",
+      "observed": "2026-08-04T02:01:21Z"
+    },
+    "0.13.1_20260804": {
+      "content": "sha256:9c687905b1605f78c851c3876b391a68c7508efb76b7e5d7aec83a2d2c3c2ad7",
+      "observed": "2026-08-04T02:01:21Z"
+    },
+    "0.13.1": {
+      "content": "sha256:9c687905b1605f78c851c3876b391a68c7508efb76b7e5d7aec83a2d2c3c2ad7",
+      "observed": "2026-08-04T02:01:21Z"
+    }
+  }
+}
