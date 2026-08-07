@@ -92,8 +92,14 @@ interface FlatResult {
   sublabel: string
 }
 
+/** Bare `<ns>/<pkg>` — the route path. Never `pkg.name`, which carries the
+ * `ocx.sh/` prefix (same trap documented in `PackageCard`/`usePackageRoot`). */
+function pkgHref(pkg: { namespace: string, package: string }) {
+  return `/${pkg.namespace}/${pkg.package}`
+}
+
 const flatResults = computed<FlatResult[]>(() => [
-  ...packageResults.value.map(pkg => ({ href: `/${pkg.name}`, label: pkg.title, sublabel: pkg.name })),
+  ...packageResults.value.map(pkg => ({ href: pkgHref(pkg), label: pkg.title, sublabel: pkg.name })),
   ...docResults.value.map(hit => ({ href: hit.id, label: hit.title, sublabel: hit.titles.join(' › ') || hit.id })),
 ])
 
@@ -177,10 +183,10 @@ function onContentKeydown(e: KeyboardEvent) {
             <a
               v-for="(pkg, i) in packageResults"
               :key="pkg.name"
-              :href="`/${pkg.name}`"
+              :href="pkgHref(pkg)"
               class="palette-result"
               :class="{ active: selectedIndex === i }"
-              @click.prevent="go(`/${pkg.name}`)"
+              @click.prevent="go(pkgHref(pkg))"
               @mouseenter="selectedIndex = i"
             >
               <span class="palette-result-title">{{ pkg.title }}</span>
