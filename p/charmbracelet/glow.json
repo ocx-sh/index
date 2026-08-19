@@ -10,11 +10,84 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-19",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:c1c58f9d04080478567f7e9f96e430d2272f8fcf9ea0fe2a4fceb16daa9f5388",
+    "title": "glow",
+    "description": "Render markdown on the CLI with pizzazz \u2014 a terminal markdown reader with styled output, a file browser TUI and a built-in pager",
+    "keywords": [
+      "glow",
+      "charm",
+      "markdown",
+      "render",
+      "reader",
+      "terminal",
+      "tui",
+      "pager",
+      "readme",
+      "docs",
+      "cli",
+      "go"
+    ],
+    "readme": "sha256:955afdb6953855e1a894ae45b61f6c46768499e57f1eff951979cd8db94abf2d",
+    "logo": "sha256:3bb0183822d60fc7193e332912be6ca46ffb66b3aa10185be1122df15e03f75e"
+  },
   "upstream": {
     "org": "charmbracelet",
     "repository_url": "https://github.com/charmbracelet/glow",
     "disclaimer": "Unaffiliated mirror. glow is a project of Charm (charmbracelet); this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "2.1.0_20260819": {
+      "content": "sha256:7efc24f5f429a2a3ee009342e9fad1090ffa656216f2359a8e6bb8b27ee4ee4b",
+      "observed": "2026-08-19T18:25:52Z"
+    },
+    "2.1.0": {
+      "content": "sha256:7efc24f5f429a2a3ee009342e9fad1090ffa656216f2359a8e6bb8b27ee4ee4b",
+      "observed": "2026-08-19T18:25:52Z"
+    },
+    "2.1": {
+      "content": "sha256:961f0933f02bb0d9d781038808f70533e418931fa9ff35edb701e2cccaa6afcc",
+      "observed": "2026-08-19T18:25:52Z"
+    },
+    "2": {
+      "content": "sha256:961f0933f02bb0d9d781038808f70533e418931fa9ff35edb701e2cccaa6afcc",
+      "observed": "2026-08-19T18:25:52Z"
+    },
+    "latest": {
+      "content": "sha256:1c5ec44d3471bb1a2bf7c8e78b92e2da12fbfc9c319bd6ff06ef87b19f66aa7d",
+      "observed": "2026-08-19T18:25:52Z"
+    },
+    "2.1.1_20260819": {
+      "content": "sha256:0ab8cb4cffd9d08c8927c375e1575dde686daf2f7008c5de2e012c130e8e6be5",
+      "observed": "2026-08-19T18:25:52Z"
+    },
+    "2.1.1": {
+      "content": "sha256:0ab8cb4cffd9d08c8927c375e1575dde686daf2f7008c5de2e012c130e8e6be5",
+      "observed": "2026-08-19T18:25:52Z"
+    },
+    "2.1.2_20260819": {
+      "content": "sha256:961f0933f02bb0d9d781038808f70533e418931fa9ff35edb701e2cccaa6afcc",
+      "observed": "2026-08-19T18:25:52Z"
+    },
+    "2.1.2": {
+      "content": "sha256:961f0933f02bb0d9d781038808f70533e418931fa9ff35edb701e2cccaa6afcc",
+      "observed": "2026-08-19T18:25:52Z"
+    },
+    "3.0.0_20260819": {
+      "content": "sha256:1c5ec44d3471bb1a2bf7c8e78b92e2da12fbfc9c319bd6ff06ef87b19f66aa7d",
+      "observed": "2026-08-19T18:25:52Z"
+    },
+    "3.0.0": {
+      "content": "sha256:1c5ec44d3471bb1a2bf7c8e78b92e2da12fbfc9c319bd6ff06ef87b19f66aa7d",
+      "observed": "2026-08-19T18:25:52Z"
+    },
+    "3.0": {
+      "content": "sha256:1c5ec44d3471bb1a2bf7c8e78b92e2da12fbfc9c319bd6ff06ef87b19f66aa7d",
+      "observed": "2026-08-19T18:25:52Z"
+    },
+    "3": {
+      "content": "sha256:1c5ec44d3471bb1a2bf7c8e78b92e2da12fbfc9c319bd6ff06ef87b19f66aa7d",
+      "observed": "2026-08-19T18:25:52Z"
+    }
+  }
 }
