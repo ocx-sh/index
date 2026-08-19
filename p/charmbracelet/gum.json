@@ -10,11 +10,85 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-08-19",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:57afa503074fe1d6ecca85f9ac718e17cb30725e65f12594b0febb62a0ea6666",
+    "title": "gum",
+    "description": "A tool for glamorous shell scripts \u2014 interactive prompts, styled text and spinners as ordinary shell commands",
+    "keywords": [
+      "gum",
+      "charm",
+      "shell",
+      "tui",
+      "prompt",
+      "bash",
+      "zsh",
+      "script",
+      "input",
+      "choose",
+      "filter",
+      "confirm",
+      "spinner",
+      "style",
+      "markdown",
+      "go",
+      "cli"
+    ],
+    "readme": "sha256:4f1df492fd4edd8f696dc2af18ce5ef463b067bb0decb067197cd68859800b49",
+    "logo": "sha256:fac89798c03f566a757e68271a951486d844f3efa4d97724a4082586103248a8"
+  },
   "upstream": {
     "org": "charmbracelet",
     "repository_url": "https://github.com/charmbracelet/gum",
     "disclaimer": "Unaffiliated mirror. gum is a project of Charm (charmbracelet); this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.16.0_20260819": {
+      "content": "sha256:4b25b20fcacb125a2f42df949c3e685f5a5b12ed082793c1a0708b1a427ed82a",
+      "observed": "2026-08-19T18:25:57Z"
+    },
+    "0.16.0": {
+      "content": "sha256:4b25b20fcacb125a2f42df949c3e685f5a5b12ed082793c1a0708b1a427ed82a",
+      "observed": "2026-08-19T18:25:57Z"
+    },
+    "0.16": {
+      "content": "sha256:b1e65fcfc8a6edcb077798416e1014b00f4fbc3ff268f772a3519e998ca2d60c",
+      "observed": "2026-08-19T18:25:57Z"
+    },
+    "0": {
+      "content": "sha256:38d55656e49ec58996ada5a4fd04ae2534977d24785dfee789f805cd13694c36",
+      "observed": "2026-08-19T18:25:57Z"
+    },
+    "latest": {
+      "content": "sha256:38d55656e49ec58996ada5a4fd04ae2534977d24785dfee789f805cd13694c36",
+      "observed": "2026-08-19T18:25:57Z"
+    },
+    "0.16.1_20260819": {
+      "content": "sha256:4974447306cf875e23d8d53bf6d5e96bec3eb2862a2ab9326c9779e131f62c00",
+      "observed": "2026-08-19T18:25:57Z"
+    },
+    "0.16.1": {
+      "content": "sha256:4974447306cf875e23d8d53bf6d5e96bec3eb2862a2ab9326c9779e131f62c00",
+      "observed": "2026-08-19T18:25:57Z"
+    },
+    "0.16.2_20260819": {
+      "content": "sha256:b1e65fcfc8a6edcb077798416e1014b00f4fbc3ff268f772a3519e998ca2d60c",
+      "observed": "2026-08-19T18:25:57Z"
+    },
+    "0.16.2": {
+      "content": "sha256:b1e65fcfc8a6edcb077798416e1014b00f4fbc3ff268f772a3519e998ca2d60c",
+      "observed": "2026-08-19T18:25:57Z"
+    },
+    "0.17.0_20260819": {
+      "content": "sha256:38d55656e49ec58996ada5a4fd04ae2534977d24785dfee789f805cd13694c36",
+      "observed": "2026-08-19T18:25:57Z"
+    },
+    "0.17.0": {
+      "content": "sha256:38d55656e49ec58996ada5a4fd04ae2534977d24785dfee789f805cd13694c36",
+      "observed": "2026-08-19T18:25:57Z"
+    },
+    "0.17": {
+      "content": "sha256:38d55656e49ec58996ada5a4fd04ae2534977d24785dfee789f805cd13694c36",
+      "observed": "2026-08-19T18:25:57Z"
+    }
+  }
 }
