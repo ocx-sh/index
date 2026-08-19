@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/charmbracelet/gum",
+  "repository": "oci://ghcr.io/ocx-contrib/charmbracelet/gum",
+  "owners": [
+    {
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-19",
+  "desc": null,
+  "upstream": {
+    "org": "charmbracelet",
+    "repository_url": "https://github.com/charmbracelet/gum",
+    "disclaimer": "Unaffiliated mirror. gum is a project of Charm (charmbracelet); this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
