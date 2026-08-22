@@ -1,13 +1,13 @@
 # golden-baseline manifest -- sha256 of every file in the normalized
 # site/.vitepress/dist tree. Regenerate with: scripts/golden-baseline.sh generate --update
-# site tree: 4f12313db2831872aabd65fad2a51634e19889d2
-# commit: 5a4cd36a8494aa38d59fb9e8d1f6225f7f395e81
-# @ocx-sh/catalog: 0.1.0 (file:../ocx-catalog @ 79a32583898715ec1578b81e2fdcf2afdc82a91f)
-e78ea0c034b13fc4c2edd29219b111d00cfa290e8fbb7fa57fbc0d4ccaf87d9a  site/.vitepress/dist/404.html
+# site tree: f9956d75df3e86643e5199dda80c0f739a587b1b
+# commit: 2ce16df48f14210be71c6694c63ea1cb8da87781
+# @ocx-sh/catalog: 0.1.0 (^0.1.0)
+6875cb49cc89b67281963c8cd80f0e7e98983d4bcf868ec46e3f5e468624e213  site/.vitepress/dist/404.html
 c1fa4bbee46de74c89a1cd62d7106a13e6ccada4a63d4d35afd26a66c7411ab7  site/.vitepress/dist/_headers
 77db2ab61f2968722c88b59357b74c72d5d7728ad1630924631893e6e58ce503  site/.vitepress/dist/assets/404.md.Dj_g9HqN.js
 77db2ab61f2968722c88b59357b74c72d5d7728ad1630924631893e6e58ce503  site/.vitepress/dist/assets/404.md.Dj_g9HqN.lean.js
-0505c3dbacae0beaa6ae9e103a7b5e30a6cd16d9abcd519c572fa9695a67b067  site/.vitepress/dist/assets/app.9IXWflXX.js
+2496b962d6d91b8396cf6a00323b2a148d15f3600e676b8c185e5833f0ced788  site/.vitepress/dist/assets/app.BZpO-AVJ.js
 8ba86e7b3944ecadff47634406aafd44eed5a739a8613d153c306024f2715c8f  site/.vitepress/dist/assets/astral-sh_uv.md.BGtWHz1E.js
 8ba86e7b3944ecadff47634406aafd44eed5a739a8613d153c306024f2715c8f  site/.vitepress/dist/assets/astral-sh_uv.md.BGtWHz1E.lean.js
 8cf7a02766fb28ed97151165e856dbed35a41414ff18149496ea92977d61280c  site/.vitepress/dist/assets/chunks/@localSearchIndex.BHVkR4lp.js
@@ -17,7 +17,7 @@ c1fa4bbee46de74c89a1cd62d7106a13e6ccada4a63d4d35afd26a66c7411ab7  site/.vitepres
 8e6128ca36c9a920d573d75ffa87efaf5cc5a64e7b1f988a469818387b09ccc6  site/.vitepress/dist/assets/chunks/markdown-it.CaoETvD6.js
 2f61c1fe2ca791455035ced7fc88b3825abc160794a6ba6960af920b7a5cf572  site/.vitepress/dist/assets/chunks/metadata.2f61c1fe.js
 580ad8c58061a4dde99bde0a56905e382f0568516ee2f5b84dbfb52085709021  site/.vitepress/dist/assets/chunks/rolldown-runtime.hePW80VL.js
-b2164e6504276a5bce02d5494d8e24d94a06891cfccb96984a53ffe7c6caece8  site/.vitepress/dist/assets/chunks/theme.D1tt1lm5.js
+c3e190a58622cf6eb87c53b56c85716fc940d1cc918e359d835b2d28e587e7d2  site/.vitepress/dist/assets/chunks/theme.CyQIK6Ni.js
 31f8098753d1cd96b0a6a770bb4681106daf18d1e7762e575f6c15b520211da4  site/.vitepress/dist/assets/docs_explanation_architecture.md.DyPDJogM.js
 b5b5e22cdc659b0fe7497d50938003cec9d0d5614bdc96bbb2e38f7e5df3bd1f  site/.vitepress/dist/assets/docs_explanation_architecture.md.DyPDJogM.lean.js
 b3230a3515e6b4e7d5ff79ba45c6e69b4d108f3f8154d40431a745a823e9a54a  site/.vitepress/dist/assets/docs_explanation_index.md.B1k_S1kQ.js
@@ -150,40 +150,40 @@ b79d0c4b68b850071e071d7e496144a30d7f91651efdc1079ca9779079d648ba  site/.vitepres
 167b0da999234345587f4c1526c496caf13aaa2f59c9fcc41e03d62b84f06c0c  site/.vitepress/dist/assets/regclient_regsync.md.CRF7Os44.lean.js
 1d03eb515af3c4df7b5e775ae03a4ea8ba48c8f4cbfa37cec9a2e26f3f55daa5  site/.vitepress/dist/assets/sigstore_cosign.md.BJwTjzau.js
 1d03eb515af3c4df7b5e775ae03a4ea8ba48c8f4cbfa37cec9a2e26f3f55daa5  site/.vitepress/dist/assets/sigstore_cosign.md.BJwTjzau.lean.js
-ad2e20aef93c69610c2d1632660676657aac96383cece9d9758e0f7e02fb3ebc  site/.vitepress/dist/assets/style.CZqXzbXx.css
+3302a8833b02b0c594c7d6369b75585fe1e63d0d8a5f67e48711193f3193c967  site/.vitepress/dist/assets/style.DjxHimMM.css
 c9ee9c0f7759567a991d25f691854ab3718a77d45092ffba79e7f6fbd8ec02fb  site/.vitepress/dist/assets/ziglang_zig.md.AvjJu4W0.js
 c9ee9c0f7759567a991d25f691854ab3718a77d45092ffba79e7f6fbd8ec02fb  site/.vitepress/dist/assets/ziglang_zig.md.AvjJu4W0.lean.js
-f0003190a2878250a38ec898246cad2638ef2666e99abfd8b0ac87a694be0250  site/.vitepress/dist/astral-sh/uv.html
+5d20e7bd8cb91541c8baccf933b1fefecd847c7511ee4e2fea0cf52c8dc76d13  site/.vitepress/dist/astral-sh/uv.html
 3c0c512f58648e605b542fd2a7119cc12d8c397cf28a716c0420100fd821af88  site/.vitepress/dist/c/index.json
 150c9edb7627506dc8bfbb739997e362f889e0c56cc68ffc025551b4124e2a4c  site/.vitepress/dist/config.json
 212f8899de85fa2925712fe094e3398a2d429cc789e13fd9dd7806c690f032d6  site/.vitepress/dist/data/catalog/catalog.json
-ac9acc10af46b86f7cbc81284a391c9879e1600e0e714026b511fe3d2b2bd4ff  site/.vitepress/dist/docs/explanation/architecture.html
-61f1845d362e9155e01605e45238eb1e8d8d0de3fd919cf13367883e758f1ed2  site/.vitepress/dist/docs/explanation/index.html
-75c7e4a41639b771dae657cc7a798b81b6d5d480a9f3b7aa8056b5931a1a1601  site/.vitepress/dist/docs/how-to/announce-a-package.html
-9a3443447b9f2a480e2390092bfa09434caabebaf2d4860762f3215813bf61d0  site/.vitepress/dist/docs/how-to/claim-a-namespace.html
-34a7834c56bc435da709bf9eebe92afbb1ab0879ccb97315908658fe27d9a310  site/.vitepress/dist/docs/how-to/index.html
-650ca5157f9f71fde4b250ef54b9898f71d6aa39f009ebce3f5331579a909462  site/.vitepress/dist/docs/how-to/yank-a-version.html
-fb4b4ec5ee235afc3375c996ac93a17e1864863839471fbe2b25f63789e9d9b6  site/.vitepress/dist/docs/index.html
-468391ac912e54906eb33d13ea73659764dea4fc35befcf510096366ea33905f  site/.vitepress/dist/docs/ops/index.html
-c3e6941371ea6afbf1a363f6d554caf7243b1e1e4edd36807d04c3e0a6c6616a  site/.vitepress/dist/docs/ops/m1-flip.html
-c9d8c57a9abb8f7ca882b242d18e88e696214960383aedbb829b53afa7d40373  site/.vitepress/dist/docs/ops/run-reconcile-dry-run.html
-efd45aeb46b6ae7576cb4027c0cf83e7510eea69b9d0317e3d75a936444734a7  site/.vitepress/dist/docs/privacy.html
-abe723736a0ee2b7da4ea428764f4d6d9374d9cac1b4e7ed5179c741343ca2e2  site/.vitepress/dist/docs/reference/changelog.html
-c9ecbc5c47226a14a404362aa92ed048daa73a593f9ac5ed02079fd6e952648b  site/.vitepress/dist/docs/reference/entry-schema.html
-08b532c915a09c691f3b28e411b44232d73001e5eab8f4136adb8b107bdf5dde  site/.vitepress/dist/docs/reference/governance-contracts.html
-8a15e79839592eb7f33b450993825b70762d4cb15eec5e9df662f4fd17534e3f  site/.vitepress/dist/docs/reference/index.html
-e5e26e42a65deff99e9538d5f67939baf9a8f6761f9a4b1226e82159718e1a3d  site/.vitepress/dist/docs/reference/namespace-policy.html
-0dfc298fdf168c1a0de70a62a202506b1c96706d5491eb4dd28220e5d9a0261b  site/.vitepress/dist/docs/reference/wire-format.html
+3378e8db4fd6a394a4affe7bab94486c639ccb4953f83ec9273f8473b8133bea  site/.vitepress/dist/docs/explanation/architecture.html
+569ffe98fe786ea4c7b6ab798042f06260cfffd31dd3c31b28ed7b9df29fa48a  site/.vitepress/dist/docs/explanation/index.html
+c18d751b741369c54f616d8bfdd36990285ce5db7079500be39b6cf1f7ff148a  site/.vitepress/dist/docs/how-to/announce-a-package.html
+f6b1a648a71dbca0c93df96e19a9b5a709b51048ad10bc0d7080cec3e920aac2  site/.vitepress/dist/docs/how-to/claim-a-namespace.html
+7da93a97703147df13ac056cc73ee8cf86956dfed7e9d0eadcefb6125c7d22bc  site/.vitepress/dist/docs/how-to/index.html
+2e92ce62de2bf8355c4f0c13eae0a0d9eb496a3fa78959a875393e73fe7e018f  site/.vitepress/dist/docs/how-to/yank-a-version.html
+1f260e97c0f9861e0461d1fa343b64c1bd596929c98fe0a0361b05c6fe8caee1  site/.vitepress/dist/docs/index.html
+772eef6124c8bed8d479e4910be5cce799046dcb37c4ad2552d502928d1556df  site/.vitepress/dist/docs/ops/index.html
+13d912f733d785f707dfccfc3b2ec566906148548807a6a690f9dfb51b0f3e02  site/.vitepress/dist/docs/ops/m1-flip.html
+c6330a188e2b3679eab9ef3b1b86b0987fa1bd1859ee97d06b05225dc1c03134  site/.vitepress/dist/docs/ops/run-reconcile-dry-run.html
+ebe5d11dfb9c9f6d199d55a0d8ab84e8d121ca2661236f7205e4d52cd464b5b4  site/.vitepress/dist/docs/privacy.html
+94133e26e7e1bf70b7587ef0636b1934306fdd614223ed4e5a070d0c6ec9c773  site/.vitepress/dist/docs/reference/changelog.html
+4dde06e6cbfd863a1bbee66c84dd54ab45b3a8aaacbf341a9e7a3d0cb0bba743  site/.vitepress/dist/docs/reference/entry-schema.html
+5c0def1ca1b3451d49ae344d907f9d8db42040d7a9d3ea1e7ef98c9dfdfbb6f1  site/.vitepress/dist/docs/reference/governance-contracts.html
+0504574ff955c00f1d3ee73d67a184560797122e856928b4d8338ea9410a9b6f  site/.vitepress/dist/docs/reference/index.html
+b55702fde25e49e62350111a2654d094104e1efbeed3aa3e10f7a91dcd70a3c8  site/.vitepress/dist/docs/reference/namespace-policy.html
+afe07a3f0778f44172e7cd92dc4975e6ed697f35d159fbc75da080850d7a2864  site/.vitepress/dist/docs/reference/wire-format.html
 09d28d606a5dd85476d55d05f23c7c36defb021451a6a086c5f999254b55bc0c  site/.vitepress/dist/favicon.svg
-d096c8a53708db279d51928787201b4f504077de104cd79f8691277e5ab046b9  site/.vitepress/dist/gitlab-org/glab.html
-4afa3e9f0d31915525392f82db5f2008dad9c4c6ec2dc31c32f3ab0de995b285  site/.vitepress/dist/hashicorp/terraform.html
+a0c40dd4ae0249d40ae91f1891045eee9513ad1eb844bfec58e9869405d227c1  site/.vitepress/dist/gitlab-org/glab.html
+a84fb6841471d8b1787c6dd3c9a8e8da01cdb8e1d4d7acf6103cc1bdff55ceed  site/.vitepress/dist/hashicorp/terraform.html
 d22621ebbd7149b8d524110351512d23235607a5c7b8fd958c25467ffbc9bfc2  site/.vitepress/dist/hashmap.json
-776dd2e73769ebb978c156a666a52ca22b56e424f2a5e3419cb36baddd35f4e6  site/.vitepress/dist/index.html
-98075f7ec5b6e6c6330af7f3b2294505c3e13e81d04571624b5440461892e317  site/.vitepress/dist/kitware/cmake.html
-f9179a46445a6392f9a2c432fb9137fbf23401bd8bad0b17738b23e2bcbf808e  site/.vitepress/dist/mitchellh/packer.html
-b3a0131e7095abf4dafd4dd7b24d8e3908bb1ddaf21287a85bbc74521bcfe1b6  site/.vitepress/dist/mvdan/shfmt.html
-f4b31eec29aedd2bb2a6af54d0a05b9500a1234b851dde0bbbebf2409c1a551f  site/.vitepress/dist/nginxinc/nginx.html
-99dd50a2be9f1803173ff0a4a98f1591ec8a730022d952ad2fdf700258384787  site/.vitepress/dist/oven-sh/bun.html
+70f97e44f2ed627e08445617f00d721d7503f650e04f0c019719a1a903623294  site/.vitepress/dist/index.html
+9921468fcfa3e8946a73bf98e29ab425836ed9db29b500a299295c5f7e56c9ff  site/.vitepress/dist/kitware/cmake.html
+9586a596b4bae6782e201d18b026a3a02b38002ca5633174432df11831da5825  site/.vitepress/dist/mitchellh/packer.html
+79ac87b7896a3cb9558879410220dd6ee5c84fa82c4fadddf565d62149035fe1  site/.vitepress/dist/mvdan/shfmt.html
+2c96f9050f1d4e7984b8fcf438283d7bf7156427f6e3e24d118cc2753aa28605  site/.vitepress/dist/nginxinc/nginx.html
+4e9ec588192ef6f4c705397f457b3ca5cc5cff1ea45f289fefe792607a724cdd  site/.vitepress/dist/oven-sh/bun.html
 56ab77db7b3fc5dab0c012feeecf57839ef0f1d199e9aed637d7f392ba4725e0  site/.vitepress/dist/p/astral-sh/uv.json
 0d9c362afa11d80b8af2341368ac3de3d2579e52ba545532acf6fe82e59cc151  site/.vitepress/dist/p/astral-sh/uv/o/sha256/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.json
 ea6deced7ffee5820a71b4cc612ee70f1ec14421ef802fd2ee1f9bc86d6f76e4  site/.vitepress/dist/p/gitlab-org/glab.json
@@ -218,8 +218,8 @@ e640e0446b1c353394aa1c5454caea1936b6eea510864deeae06e1e564f91897  site/.vitepres
 d3bc8360f4989858f2a02b7fcc620b0de69d47f2f0e82fc35c3335643cb7d8a2  site/.vitepress/dist/p/sigstore/cosign/o/sha256/tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.json
 44c05a5d5f3d002dacb15f4eeff7fc6d7c98af4a1a0174c4e9bd67a5b36a900b  site/.vitepress/dist/p/ziglang/zig.json
 4e56eb14cf7e922cf2ce2daa750edbdc3bd9f498659077d7eb3cc75f1d94f517  site/.vitepress/dist/p/ziglang/zig/o/sha256/zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz.json
-3cbc7bf75c5e4f32c0800946f6dc386520ce0eb75fbeaf89fe564bb490519c6b  site/.vitepress/dist/regclient/regsync.html
-e5a56adcf7eb61a5a355b0d00cf76c18210ec65eb0e14aed3734f6db7b7e11cd  site/.vitepress/dist/sigstore/cosign.html
+cb2c2d82cdaa537e1f4264a64c78d257d1908f0339b5be99622e8da5a25792c5  site/.vitepress/dist/regclient/regsync.html
+25d28a3c0abe546f9eee9e16143e7b92534f6e27eb144260850d1f2782cfd745  site/.vitepress/dist/sigstore/cosign.html
 f05491c554191a7eebbb2381a13c4d731e0e5d5eb617c0414af6d76f4beaf640  site/.vitepress/dist/sitemap.xml
 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  site/.vitepress/dist/vp-icons.css
-c98b7ae100f90a466be1c10c9158f1eaf67246c10a392d8197d7929c3667f013  site/.vitepress/dist/ziglang/zig.html
+482d6e40d303fc57797283e9a1a492871b87a1ecbac3d51a15d5cd72e29d6dda  site/.vitepress/dist/ziglang/zig.html
