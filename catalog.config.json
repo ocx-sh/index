@@ -22,6 +22,7 @@
   "docs": "./site/src/docs",
   "publicDir": "./site/src/public",
   "ci": {
-    "forge": "github"
+    "forge": "github",
+    "packageManager": "bun"
   }
 }

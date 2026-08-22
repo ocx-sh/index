@@ -1,9 +1,12 @@
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
 #
-# Repo gate contract. `verify` == the exact CI job set in
+# Repo gate contract. `verify` == the CI job set across BOTH workflows:
 # .github/workflows/ci.yml (schema-validate, bot-lint, bot-test, bot-audit,
-# workflows-lint, site-build, render-check). No drift between this file and
-# ci.yml — see .claude/state/plans/plan_index_v1.md WP1-C/WP3-A and
+# workflows-lint, render-check; golden-baseline is CI-only — see `verify`)
+# and .github/workflows/catalog-ci.yml (build, verify-catalog-ci), which is
+# RENDERED by `ocx-catalog ci` from catalog.config.json's `ci` block and must
+# never be hand-edited. No drift between this file and either workflow — see
+# .claude/state/plans/plan_index_v1.md WP1-C/WP3-A and
 # .claude/artifacts/adr_index_bot_and_workflow_security.md.
 
 version: '3'
@@ -133,8 +136,10 @@ tasks:
   site:build:
     desc: >-
       Catalog site build via the extracted @ocx-sh/catalog package
-      (plan_catalog_extraction WP-11 -- exactly ci.yml's site-build job;
-      replaces the retired in-repo VitePress build). Root catalog.config.json
+      (plan_catalog_extraction WP-11 -- the local stand-in for the RENDERED
+      catalog-ci.yml `build` job, which runs the bare `ocx-catalog build`
+      this task wraps; replaces the retired in-repo VitePress build). Root
+      catalog.config.json
       configures one `root: true` source at `.`, the committed `p/**` tree
       -- `ocx-catalog build` resolves it, synthesizes routes, renders the
       VitePress site, and mirrors every wire file it found under that
@@ -341,14 +346,36 @@ tasks:
           RENDER_INDEX_DIR: demo
       - task: site:preview
 
+  cat:ci:check:
+    desc: >-
+      Drift gate for the RENDERED .github/workflows/catalog-ci.yml — exactly
+      catalog-ci.yml's own verify-catalog-ci job. That workflow is generated
+      by `ocx-catalog ci` from catalog.config.json's `ci` block, so a
+      hand-edit to it (or a config change left un-rendered) is drift; this
+      re-renders in memory and compares, writing nothing. Re-render with
+      `./node_modules/.bin/ocx-catalog ci` and commit the result.
+    deps: [cat:build]
+    cmds:
+      - bun install --frozen-lockfile
+      - ./node_modules/.bin/ocx-catalog ci --check
+
   verify:
-    desc: Full gate — exactly the CI job set (schema-validate, bot-lint, bot-test, bot-audit, workflows-lint, site-build, render-check)
+    desc: >-
+      Full gate — the CI job set across both workflows: ci.yml
+      (schema-validate, bot-lint, bot-test, bot-audit, workflows-lint,
+      render-check) and the rendered catalog-ci.yml (build via site:build,
+      verify-catalog-ci via cat:ci:check). ci.yml's golden-baseline job is
+      deliberately NOT here: it refuses to run against a dirty working tree
+      (its manifest header records HEAD while the pipeline builds the
+      working tree), so it would break `task verify` mid-edit — run
+      `bash scripts/golden-baseline.sh generate` yourself before pushing.
     cmds:
       - task: schema:validate
       - task: bot:lint
       - task: bot:test
       - task: bot:audit
       - task: workflows:lint
+      - task: cat:ci:check
       - task: site:build
       - task: render:build
       - task: schema:validate:rendered
