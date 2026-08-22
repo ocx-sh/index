@@ -10,8 +10,9 @@ IFS=$'\n\t'
 #   --allow-empty   Exit 0 when no /p/ root is discoverable (pre-seed state,
 #                    before Phase 4's 44 seeds land). Scoped ONLY to the
 #                    digest-chain section — all other checks (including
-#                    data/catalog/catalog.json, which render always emits,
-#                    even pre-seed as "packages": []) always run and always
+#                    data/catalog/catalog.json, which @ocx-sh/catalog's
+#                    view-model emitter always emits at build time, even
+#                    pre-seed as "packages": []) always run and always
 #                    contribute to the exit code, --allow-empty or not.
 #   --root NS/PKG   Explicit sample package id to digest-chain-verify
 #                    (default: auto-discovered from the local p/ tree)
@@ -21,9 +22,10 @@ IFS=$'\n\t'
 # (200, ETag) with its own conditional GET (If-None-Match -> 304), a sample
 # root's digest chain (root tags[].content -> image index object ->
 # recomputed sha256), data/catalog/catalog.json (200, valid JSON, has a
-# "packages" key — render always emits this tree, even pre-seed as
-# "packages": [], so a non-200/invalid-shape here is always a real failure,
-# never tolerated by --allow-empty), catalog "/" (200, text/html), "/docs/"
+# "packages" key — @ocx-sh/catalog's view-model emitter always emits this
+# tree at build time, even pre-seed as "packages": [], so a non-200/
+# invalid-shape here is always a real failure, never tolerated by
+# --allow-empty), catalog "/" (200, text/html), "/docs/"
 # (200). Every fetch is wrapped in a bounded retry (3 attempts, 5s apart) to
 # absorb CDN warm-up, plus a run-wide ~2 min window in which a 404 is retried
 # as "deploy not propagated to the edge yet" rather than "asset absent".

@@ -121,15 +121,22 @@ jobs:
 
       # ADR (adr_catalog_docs_colocation.md) "Build pipeline order" -- fixed,
       # non-reorderable sequence (reshaped by plan_site_redesign WP-bot/
-      # WP-ci: dynamic routes replaced the bot-generated wrapper pages this
-      # comment used to describe as a first step): `bun run build` (VitePress
-      # `emptyOutDir: true` wipes site/.vitepress/dist clean, compiling
-      # site/src/[ns]/[pkg].paths.ts's dynamic routes straight from the
-      # committed p/*/*.json tree) -> `indexbot render --out` (config.json +
-      # /p/** + /c/index.json + /data/catalog/catalog.json, written INTO the
-      # same freshly-emptied tree). Swapping the two steps silently deletes
-      # the wire JSON on the next deploy -- see taskfile.yml's render:build
-      # target, which encodes this order, not this workflow directly.
+      # WP-ci, then by plan_catalog_extraction WP-11): `ocx-catalog build`
+      # (via site:build) renders site/.vitepress/dist from the configured
+      # source(s) (root catalog.config.json), mirroring every wire file it
+      # found verbatim -- but `config.json`/`c/index.json` are optional per
+      # source and absent from the raw committed tree, so this pass alone
+      # cannot produce them -> `indexbot render --out` (config.json +
+      # /p/** + /c/index.json, written into the SAME tree afterward).
+      # Swapping the two steps silently deletes those files on the next
+      # deploy -- see taskfile.yml's render:build target, which encodes
+      # this order, not this workflow directly.
+      #
+      # KNOWN GAP (plan_catalog_extraction WP-11): `site:build` needs
+      # `@ocx-sh/catalog` built from a SIBLING checkout this job does not
+      # have (see taskfile.yml's CATALOG_PKG_DIR doc) -- this step is RED
+      # until the package publishes to npm (plan WP-12) or gets a real
+      # remote. Left wired to the real command so it recovers automatically.
       - name: task render:build
         run: task render:build
       - name: task schema:validate:rendered

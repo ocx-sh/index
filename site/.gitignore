@@ -1,13 +1,7 @@
-# Build/cache artifacts (VitePress build output is the render-deploy.yml
-# deploy artifact — never committed; see WP3-A). Per-package pages are now
-# a dynamic route (src/[ns]/[pkg].md + [ns]/[pkg].paths.ts, committed
-# source, globbing p/*/*.json at build) rather than bot-generated wrapper
-# Markdown, so the old src/* allowlist is gone — there is nothing left
-# under src/ that isn't hand-authored.
-.vitepress/cache/
+# `site/` no longer builds on its own (plan_catalog_extraction WP-11) —
+# `ocx-catalog build`/`dev` (invoked from the repo root, root
+# `catalog.config.json`) is what produces this tree. Kept here because
+# `taskfile.yml`'s render:build/render-deploy.yml still write and deploy
+# this exact path (RENDER_OUT).
 .vitepress/dist/
-# task site:dev's rendered wire snapshot, served by the ocx-dev-wire
-# dev middleware (config.mts)
-.vitepress/dev-wire/
-
 node_modules/

@@ -52,17 +52,47 @@ placeholder and `deploy.yml`. Self-activating custom domains (`index.ocx.sh`
 canonical, `index.ocx.rs` legacy bootstrap) carried over verbatim into the
 new workflow.
 
-The `plan_site_redesign` subplan has also landed (Waves 1–2, PRs #21–#26):
-`site/` is a blank custom VitePress theme (no `DefaultTheme`) built against
-the committed design mock
-([`design_mock_site_redesign/`](./.claude/artifacts/design_mock_site_redesign/)),
-with per-package detail pages as dynamic routes
-(`site/src/[ns]/[pkg].paths.ts`, globbing `p/*/*.json` at build — bot-
-generated wrapper pages retired, see
-[`adr_catalog_docs_colocation.md`](./.claude/artifacts/adr_catalog_docs_colocation.md)
-Amendment A1) and a render-emitted `/data/catalog/catalog.json` view-model
-feeding the catalog grid. `task site:serve` / `task demo:seed` give a local
-production-shaped preview for design review.
+The `plan_site_redesign` subplan landed (Waves 1–2, PRs #21–#26), and was
+then **superseded** by `plan_catalog_extraction` WP-11 (dogfood switchover):
+the catalog/docs theme that plan built (blank custom VitePress theme,
+dynamic per-package routes, bot-emitted `/data/catalog/catalog.json`
+view-model) has been extracted into the standalone
+[`@ocx-sh/catalog`](https://github.com/ocx-sh/catalog) npm package
+(currently a **local-only sibling checkout**, `~/dev/ocx-catalog`, no
+GitHub remote — pre-publish), and this repo now renders through it instead
+of its own in-tree theme. `site/` shrank to consumer-facing content only:
+`docs/` (hand-authored Markdown) and `public/` (favicon), plus the root
+`catalog.config.json` (`sources: [{path: ".", root: true}]`, brand/nav/
+install/docs/publicDir/siteUrl config) and root `package.json`
+(`@ocx-sh/catalog: file:../ocx-catalog`). `task site:build` now runs
+`task cat:build` (builds the package from that sibling checkout — `file:`
+deps run no lifecycle scripts, so this is an explicit step, never `prepare`)
+then `ocx-catalog build`; `render:build` keeps the same two-pass order as
+before (catalog-package build first, `indexbot render --out` second, into
+the same tree) because `config.json`/`c/index.json` are optional-per-source
+and absent from the raw committed `p/**` tree the package reads, so only
+the bot's pass produces them. The bot no longer emits
+`/data/catalog/catalog.json` at all — the package's own view-model emitter
+does, from the same wire tree.
+
+**Known gaps, both upstream of this repo, not fixable here:** (1) the
+package's build engine (`cat/src/build/engine.ts`) does not yet wire its
+source-reading layer into the build pipeline — `ocx-catalog build`
+currently always renders zero packages regardless of `catalog.config.json`
+(confirmed by a real local run: an 11-package demo catalog rendered with
+zero detail pages and no `/data/catalog/catalog.json`), so the golden
+identity gate (`scripts/golden-baseline.sh`) cannot pass yet — a fix is in
+flight upstream as of this writing. (2) CI
+(`ci.yml` `site-build`/`golden-baseline`, `render-deploy.yml`) checks out
+only this repo, so `task cat:build`'s sibling-checkout dependency has
+nothing to build against there — expected, per owner instruction: this repo
+stays release-ready except for the npm flip. **The one edit that releases
+it**: once `@ocx-sh/catalog@0.1.0` is published, change root
+`package.json`'s `"@ocx-sh/catalog": "file:../ocx-catalog"` to
+`"@ocx-sh/catalog": "^0.1.0"`, `bun install` to refresh `bun.lock`, drop
+`taskfile.yml`'s `cat:build` step from `site:build`/`site:dev` (no more
+sibling checkout to build first) — both CI jobs go green with no other
+change needed. Until then, both stay red for this reason alone.
 
 `p/` is still empty — seed data (Phase 4, 42+ entries) has not landed, so
 the deployed tree currently renders `config.json` and an empty catalog.
@@ -77,7 +107,9 @@ the deployed tree currently renders `config.json` and an empty catalog.
 |---|---|
 | `schema/` | JSON Schemas for the wire contract (`config`, `root`, `image-index`) |
 | `bot/` | `indexbot` — `announce \| reconcile \| validate \| render \| seed-import` |
-| `site/` | VitePress 2 catalog + docs, served at `index.ocx.sh` |
+| `catalog.config.json` | `@ocx-sh/catalog` config — sources, brand, nav, install commands, docs/publicDir mounts, siteUrl (plan_catalog_extraction WP-11) |
+| `package.json` | `@ocx-sh/catalog: file:../ocx-catalog` + its `vitepress`/`vue` peers — the sibling checkout `task cat:build` builds first |
+| `site/` | Consumer content only — `docs/` (hand-authored Markdown, mounted via `catalog.config.json`'s `docs`) and `public/` (favicon, via `publicDir`); the catalog/docs theme itself now lives in `@ocx-sh/catalog` |
 | `p/` | Package roots (`p/<ns>/<pkg>.json`) + package-local CAS OCI image indices (`p/<ns>/<pkg>/o/sha256/<hex>.json`) — empty until Phase 4 seed data lands |
 | `.github/workflows/render-deploy.yml` | Renders `p/` via `task render:build`, deploys `site/.vitepress/dist` to Pages + domain/DNS self-activation (replaces retired `deploy.yml`) |
 | `.claude/artifacts/` | Handover, ADR, design spec, research (ported from ocx + Phase-0 additions) |

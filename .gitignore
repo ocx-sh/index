@@ -2,6 +2,10 @@
 .task/
 /demo/
 /.golden-baseline/
+/node_modules/
+# Generated per-build source-path override (RENDER_INDEX_DIR demo switch —
+# see taskfile.yml site:build/site:dev).
+/.catalog.config.render.json
 
 # Ephemeral agent worktrees — never tracked, keep `git status` clean.
 .agents/worktrees/

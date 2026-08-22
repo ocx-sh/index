@@ -16,6 +16,15 @@ includes:
 vars:
   RENDER_OUT: site/.vitepress/dist
   RENDER_INDEX_DIR: ""
+  # Sibling checkout the root package.json's `file:../ocx-catalog`
+  # dependency resolves against (plan_catalog_extraction WP-01: local
+  # `git init`, no GitHub remote yet -- see CLAUDE.md "Current State").
+  # KNOWN GAP: this only exists on a machine that has that sibling checked
+  # out next to this repo -- CI checks out only this repo, so `site:build`/
+  # `render:build` do not yet run there. Resolves once `@ocx-sh/catalog`
+  # publishes to npm (plan WP-12) and this dependency becomes a real
+  # version range instead of a `file:` path.
+  CATALOG_PKG_DIR: ../ocx-catalog
 
 tasks:
   default:
@@ -106,58 +115,86 @@ tasks:
     cmds:
       - uvx zizmor --min-severity medium .github/
 
+  cat:build:
+    desc: >-
+      Builds the @ocx-sh/catalog package (tsc -> dist/) from its sibling
+      checkout ({{.CATALOG_PKG_DIR}}) BEFORE this repo installs or builds
+      against it. `file:` dependencies run NO lifecycle scripts under bun
+      or npm -- neither `prepare` nor `prepack` fires on `bun install` --
+      so nothing else triggers this build; every task that needs the
+      package runs this one first, explicitly. `npm ci` (not `install`),
+      matching the package's own toolchain (npm, plan_catalog_extraction
+      open question #1) regardless of what this repo uses.
+    dir: '{{.CATALOG_PKG_DIR}}'
+    cmds:
+      - npm ci
+      - npm run build
+
   site:build:
     desc: >-
-      VitePress catalog+docs site build (exactly ci.yml's site-build job).
-      Dynamic routes (site/src/[ns]/[pkg].paths.ts) read the committed
-      p/*/*.json tree directly at build time -- no bot-generated wrapper
-      Markdown involved -- and degrade to zero package detail pages when p/
-      is empty. Runs before render:build ever writes
-      /data/catalog/catalog.json, so the catalog/search UI has no runtime
-      /data/catalog to read yet either; both must render a degraded/empty
-      state, never fail the build, when that data is absent (see
-      site/README.md). Forwards RENDER_INDEX_DIR (default "") to
-      OCX_RENDER_INDEX_DIR in bun's environment -- the paths.ts loader's
-      demo/real switch (site/README.md "Local design review"); default
-      leaves this task byte-identical to before that switch existed.
-    dir: site
-    env:
-      OCX_RENDER_INDEX_DIR: '{{.RENDER_INDEX_DIR}}'
+      Catalog site build via the extracted @ocx-sh/catalog package
+      (plan_catalog_extraction WP-11 -- exactly ci.yml's site-build job;
+      replaces the retired in-repo VitePress build). Root catalog.config.json
+      configures one `root: true` source at `.`, the committed `p/**` tree
+      -- `ocx-catalog build` resolves it, synthesizes routes, renders the
+      VitePress site, and mirrors every wire file it found under that
+      source verbatim into the output tree. `config.json`/`c/index.json`
+      are OPTIONAL per source and absent from the raw committed tree (they
+      are bot-rendered artifacts, never committed) -- `render:build`'s
+      second step, `indexbot render --out`, adds them into this same
+      output tree afterward, same two-step order as before this package
+      existed (see that task's own doc). RENDER_INDEX_DIR (default "")
+      swaps the configured source's `path` from `.` to `demo` via a
+      generated, gitignored `.catalog.config.render.json` -- the dynamic-
+      route loader this used to drive (site/src/[ns]/[pkg].paths.ts) is
+      retired along with the rest of the old theme, so this is the new
+      demo/real switch (see demo:* tasks, site/README.md).
     cmds:
+      - task: cat:build
       - bun install --frozen-lockfile
-      - bun run build
+      - >-
+        jq --arg path '{{if .RENDER_INDEX_DIR}}{{.RENDER_INDEX_DIR}}{{else}}.{{end}}'
+        '.sources[0].path = $path' catalog.config.json
+        > .catalog.config.render.json
+      - ./node_modules/.bin/ocx-catalog build --config .catalog.config.render.json --out {{.RENDER_OUT}}
 
   render:build:
     desc: >-
       Full render pipeline against the committed p/ source tree, sandwiching
-      the VitePress build per the fixed build order (ADR
+      the catalog-package build per the fixed build order (ADR
       adr_catalog_docs_colocation.md "Build pipeline order", plan Phase 3
-      WP3-A, reshaped by plan_site_redesign WP-bot/WP-ci): (1) `bun run
-      build` (via site:build) compiles {{.RENDER_OUT}}, wiping it clean
-      (`emptyOutDir: true`) — dynamic routes (`site/src/[ns]/[pkg].paths.ts`)
-      glob the committed `p/*/*.json` tree directly at build time (or
-      `demo/p/*/*.json` when RENDER_INDEX_DIR=demo, see demo:* tasks), so no
-      bot-generated wrapper-page pre-emission step is needed any more; (2) `indexbot
-      render --out` emits config.json + the /p/** wire mirror +
-      /c/index.json + /data/catalog/catalog.json directly into
-      {{.RENDER_OUT}}, only AFTER step 1 — reversing the two steps silently
-      deletes the wire JSON on the next deploy. With no p/ tree yet
-      (pre-seed), step 2 still emits config.json + an empty
-      /data/catalog/catalog.json (`{"generated": null, "packages": []}`) —
-      no separate p/-absent code path needed. RENDER_INDEX_DIR (top-level
-      var, default "") overrides indexbot's own `--index-dir` -- a prefix
-      BEFORE the literal `p/` component (`cli/render.py`'s `_p_prefix`), not
-      a replacement for it, so "demo" (not "demo/p") reads `demo/p/**`.
-      demo:serve is the one caller that overrides it, to "demo". Forwards its
-      own resolved RENDER_INDEX_DIR to the site:build sub-task call
+      WP3-A, reshaped by plan_site_redesign WP-bot/WP-ci, then by
+      plan_catalog_extraction WP-11): (1) `site:build` (`ocx-catalog build`)
+      resolves the configured source(s) — the committed `p/*/*.json` tree
+      (or `demo/p/*/*.json` when RENDER_INDEX_DIR=demo, see demo:* tasks) —
+      synthesizes routes, renders {{.RENDER_OUT}}, and mirrors every wire
+      file it found under each source verbatim, but `config.json`/
+      `c/index.json` are OPTIONAL per source and absent from the raw
+      committed tree (bot-rendered artifacts, never committed), so this
+      pass alone does not yet produce them; (2) `indexbot render --out`
+      emits config.json + the /p/** wire mirror + /c/index.json directly
+      into {{.RENDER_OUT}}, only AFTER step 1 — reversing the two steps
+      silently deletes those files on the next deploy (the package's own
+      build has no `emptyOutDir` reason to run after it, but the ORDER
+      itself is still load-bearing: step 2 is what supplies the two files
+      step 1's mirror cannot). `/data/catalog/catalog.json` is no longer
+      one of this step's outputs at all — `ocx-catalog build` (step 1)
+      renders that view-model itself, from the same wire tree, with no bot
+      involvement (plan_catalog_extraction WP-11; CONTRACTS.md §8). With no
+      p/ tree yet (pre-seed), step 2 still emits config.json + an empty
+      c/index.json (`{"format_version": 1, "packages": {}}`) — no separate
+      p/-absent code path needed. RENDER_INDEX_DIR (top-level var, default
+      "") overrides indexbot's own `--index-dir` -- a prefix BEFORE the
+      literal `p/` component (`cli/render.py`'s `_p_prefix`), not a
+      replacement for it, so "demo" (not "demo/p") reads `demo/p/**`.
+      demo:serve is the one caller that overrides it, to "demo". Forwards
+      its own resolved RENDER_INDEX_DIR to the site:build sub-task call
       explicitly -- Task does NOT propagate a var override through a nested
       `task:` call unless it's passed via that call's own `vars:` block, so
-      without this, site:build always saw its unoverridden global default
-      (""), OCX_RENDER_INDEX_DIR was never "demo" in the VitePress build, and
-      site/src/[ns]/[pkg].paths.ts silently discovered zero routes even
-      under `task demo:serve` (every detail page 404s) while step 2 below
-      still rendered demo/p/** correctly, since it references
-      {{.RENDER_INDEX_DIR}} directly in its own scope.
+      without this, site:build would always see its unoverridden global
+      default ("") and render the real `p/` tree even under `task
+      demo:serve`, while step 2 below still rendered demo/p/** correctly,
+      since it references {{.RENDER_INDEX_DIR}} directly in its own scope.
     cmds:
       - task: site:build
         vars:
@@ -217,32 +254,35 @@ tasks:
 
   site:dev:
     desc: >-
-      HMR dev server for UI iteration — `vitepress dev` auto-reloads on
-      theme/component edits (site:serve is a static preview of a full
-      production build, no reload). Wire files (/config.json, /p/**,
-      /c/index.json, /data/catalog/**) don't exist on the dev server, so
-      this first renders them once into site/.vitepress/dev-wire
-      (gitignored), served by the dev-only `ocx-dev-wire` middleware in
-      .vitepress/config.mts. Wire data is a SNAPSHOT — re-run this task
-      after changing p/ (UI edits need no re-run). Demo tree instead of
-      real p/: `task demo:seed` then `task site:dev RENDER_INDEX_DIR=demo`.
-      Serves on the Vite default port (5173), not site:preview's 4173.
+      HMR dev server via `ocx-catalog dev` (plan_catalog_extraction WP-11)
+      — serves LIVE wire data straight from the configured source, no
+      pre-rendered snapshot step needed any more: the package's own
+      dev/dev-worker mechanism (S-003) replaces the old ocx-dev-wire Vite
+      plugin + site:dev's `indexbot render --out dev-wire` pre-pass
+      entirely. Demo tree instead of real p/: `task demo:seed` then `task
+      site:dev RENDER_INDEX_DIR=demo`. Serves on the package's own default
+      port (see `ocx-catalog dev --help`), not site:preview's 4173.
     cmds:
-      - rm -rf site/.vitepress/dev-wire
-      - uv run --project bot -- indexbot render --index-dir "{{.RENDER_INDEX_DIR}}" --out site/.vitepress/dev-wire
-      - cd site && OCX_RENDER_INDEX_DIR="{{.RENDER_INDEX_DIR}}" bun run dev
+      - task: cat:build
+      - bun install --frozen-lockfile
+      - >-
+        jq --arg path '{{if .RENDER_INDEX_DIR}}{{.RENDER_INDEX_DIR}}{{else}}.{{end}}'
+        '.sources[0].path = $path' catalog.config.json
+        > .catalog.config.render.json
+      - ./node_modules/.bin/ocx-catalog dev --config .catalog.config.render.json
 
   site:preview:
     desc: >-
-      `bun run preview` in site/ — serves an already-built {{.RENDER_OUT}}
-      tree as-is (no rebuild). Run `task render:build` (or `task
+      `vitepress preview` against an already-built {{.RENDER_OUT}} tree
+      as-is (no rebuild) — VitePress's own default outDir convention
+      (`<root>/.vitepress/dist`) makes `site` the right root arg with no
+      `--outDir` override needed. Run `task render:build` (or `task
       site:serve`, which chains both) first. Pre-kills any process already
       bound to the preview port (4173) so re-running after a not-yet-exited
       prior server doesn't fail with EADDRINUSE.
-    dir: site
     cmds:
       - lsof -t -i:4173 | xargs -r kill
-      - bun run preview
+      - ./node_modules/.bin/vitepress preview site --port 4173
 
   site:serve:
     desc: >-

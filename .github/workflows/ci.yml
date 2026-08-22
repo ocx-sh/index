@@ -88,6 +88,18 @@ jobs:
       - name: task workflows:lint
         run: task workflows:lint
 
+  # KNOWN GAP (plan_catalog_extraction WP-11): `site:build` depends on
+  # `cat:build`, which builds `@ocx-sh/catalog` from a SIBLING checkout
+  # (`../ocx-catalog`, taskfile.yml's CATALOG_PKG_DIR) — that repo is local-
+  # only (no GitHub remote yet, plan_catalog_extraction WP-01) and this job
+  # checks out only `index`, so this job is RED until `@ocx-sh/catalog`
+  # either publishes to npm (plan WP-12, at which point the root
+  # package.json's `file:../ocx-catalog` becomes a real registry version
+  # and needs no sibling checkout) or gets a real remote this job can
+  # `actions/checkout` alongside `index`. Left wired to the real `task
+  # site:build` command (not skipped/stubbed) so it goes green automatically
+  # the moment either fix lands — never silently paper over the gap by
+  # weakening what this job asserts.
   site-build:
     name: site-build
     if: github.event_name != 'schedule'
@@ -111,9 +123,34 @@ jobs:
       # website deploy workflow (`.github/workflows/deploy-website.yml`)
       # already pins for the same tag.
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6  # v2.2.0
+      # `npm` (for `task cat:build`'s `npm ci && npm run build`) ships
+      # pre-installed on the `ubuntu-latest` GitHub-hosted runner image, at
+      # a version already satisfying `@ocx-sh/catalog`'s own `engines.node`
+      # (>=20.19) — no separate setup-node action needed, one less
+      # SHA-pinned dependency to carry.
       - name: task site:build
         run: task site:build
 
+  # Same KNOWN GAP as site-build above — golden-baseline.sh's pipeline
+  # (task demo:seed / render:build RENDER_INDEX_DIR=demo) runs through
+  # site:build too.
+  golden-baseline:
+    name: golden-baseline
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4.3.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-bot
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6  # v2.2.0
+      - name: golden-baseline generate
+        run: bash scripts/golden-baseline.sh generate
+
+  # Same KNOWN GAP as site-build above -- `task render:build` runs
+  # `site:build` (-> `cat:build`, sibling-checkout dependency) first.
   render-check:
     name: render-check
     if: github.event_name != 'schedule'
