@@ -75,14 +75,7 @@ the bot's pass produces them. The bot no longer emits
 `/data/catalog/catalog.json` at all — the package's own view-model emitter
 does, from the same wire tree.
 
-**Known gaps, both upstream of this repo, not fixable here:** (1) the
-package's build engine (`cat/src/build/engine.ts`) does not yet wire its
-source-reading layer into the build pipeline — `ocx-catalog build`
-currently always renders zero packages regardless of `catalog.config.json`
-(confirmed by a real local run: an 11-package demo catalog rendered with
-zero detail pages and no `/data/catalog/catalog.json`), so the golden
-identity gate (`scripts/golden-baseline.sh`) cannot pass yet — a fix is in
-flight upstream as of this writing. (2) CI
+**Known gap — one, and it is the npm publish, not the code.** CI
 (`ci.yml` `site-build`/`golden-baseline`, `render-deploy.yml`) checks out
 only this repo, so `task cat:build`'s sibling-checkout dependency has
 nothing to build against there — expected, per owner instruction: this repo
@@ -94,8 +87,10 @@ it**: once `@ocx-sh/catalog@0.1.0` is published, change root
 sibling checkout to build first) — both CI jobs go green with no other
 change needed. Until then, both stay red for this reason alone.
 
-`p/` is still empty — seed data (Phase 4, 42+ entries) has not landed, so
-the deployed tree currently renders `config.json` and an empty catalog.
+`p/` carries real seed data (~1.8k package roots plus their CAS objects),
+so the deployed tree renders a populated catalog. `demo/` is the gitignored
+throwaway tree `task demo:seed` builds for the identity gate — never
+confuse the two when reasoning about what ships.
 
 ## Rule Catalog
 
