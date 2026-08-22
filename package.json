@@ -4,7 +4,7 @@
   "type": "module",
   "dependencies": {
     "@ocx-sh/catalog": "file:../ocx-catalog",
-    "vitepress": "^2.0.0-alpha.18",
-    "vue": "^3.5.27"
+    "vitepress": "2.0.0-alpha.18",
+    "vue": "3.5.40"
   }
 }
