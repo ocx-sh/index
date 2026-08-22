@@ -25,16 +25,24 @@ IFS=$'\n\t'
 #
 # plan_catalog_extraction WP-11 (dogfood switchover): `generate`'s
 # comparison is NOT plain string equality any more -- see
-# `compare_manifests`/`is_expected_extra_path` below. Every committed
+# `compare_manifests`/`is_index_mirror_path` below. Every committed
 # manifest path is still required exactly (missing or content-differing
 # is always a failure); a build path absent from the manifest is tolerated
 # ONLY under "${DIST_LABEL}/index/<label>/" for a label this repo's own
 # catalog.config.json sources actually produce -- the per-source wire
 # mirror `@ocx-sh/catalog` writes (C-006), verified separately (byte-copy
-# of its own source) rather than by this check -- or the exact path
-# "${DIST_LABEL}/_headers" -- Cloudflare Pages headers, also new C-006
-# output, owner-authorized narrow exemption. This is deliberately not a
+# of its own source) rather than by this check. This is deliberately not a
 # subset check in the other direction.
+#
+# "${DIST_LABEL}/_headers" -- the Cloudflare Pages CSP/sandbox headers file,
+# also new C-006 output -- is a plain committed manifest path like any
+# other, NOT tolerated as an extra: it is a pure function of
+# catalog.config.json's sources, so it belongs on the exact-match side of
+# this gate. Security review W3 (post-WP-11): an earlier version of this
+# script exempted it the same way as the index-mirror tree, which meant its
+# disappearance from a build -- silently dropping the `/p/*`
+# Content-Security-Policy: sandbox` header -- produced no failure here. Never
+# reintroduce that exemption.
 #
 # Normalization rules (normalize_tree(), below): NONE are applied. Three
 # consecutive from-scratch builds of the demo fixture tree (`task
@@ -137,7 +145,11 @@ compute_expected_index_labels() {
 # separately (byte-copy of its own source) rather than by this check.
 is_index_mirror_path() {
   local path="$1" label
-  for label in "${EXPECTED_INDEX_LABELS[@]}"; do
+  # S3: ${arr[@]+"${arr[@]}"} (not bare "${arr[@]}") -- a zero-element array
+  # expands to nothing here instead of an "unbound variable" error under
+  # set -u on bash 3.2 (macOS system bash; fixed in bash 4.4, which is what
+  # this repo's CI runners ship).
+  for label in "${EXPECTED_INDEX_LABELS[@]+"${EXPECTED_INDEX_LABELS[@]}"}"; do
     case "$path" in
       "${DIST_LABEL}/index/${label}/"*) return 0 ;;
     esac
@@ -145,19 +157,12 @@ is_index_mirror_path() {
   return 1
 }
 
-# True iff $1 is exactly "${DIST_LABEL}/_headers" -- the Cloudflare Pages
-# headers file (CSP/sandbox headers), intentional new output from C-006 that
-# postdates the frozen baseline (owner-authorized narrow exemption, WP-11
-# security review). Exact path only -- never widen this to a prefix/pattern,
-# it must not be able to swallow anything else.
-is_headers_path() {
-  [[ "$1" == "${DIST_LABEL}/_headers" ]]
-}
-
 # Every additive-output check compare_manifests/generate_cmd's --update
-# filter tolerate an unmatched build path for.
+# filter tolerate an unmatched build path for. Currently just the
+# index-mirror tree -- see is_index_mirror_path's doc for why "${DIST_LABEL}/_headers"
+# is deliberately NOT here (W3).
 is_expected_extra_path() {
-  is_index_mirror_path "$1" || is_headers_path "$1"
+  is_index_mirror_path "$1"
 }
 
 # Sorted "sha256  site/.vitepress/dist/<relpath>" lines for every file
@@ -289,7 +294,7 @@ compare_manifests() {
     printf '    %s\n' "${changed[@]}" >&2
   fi
   if ((${#unexpected[@]})); then
-    echo "  unexpected extra files (not in the manifest, not under a declared ${DIST_LABEL}/index/<label>/, not ${DIST_LABEL}/_headers):" >&2
+    echo "  unexpected extra files (not in the manifest, not under a declared ${DIST_LABEL}/index/<label>/):" >&2
     printf '    %s\n' "${unexpected[@]}" | LC_ALL=C sort >&2
   fi
   return 1
@@ -333,13 +338,13 @@ generate_cmd() {
   file_count=$(printf '%s\n' "$body" | wc -l)
 
   if ((update)); then
-    # Index-mirror and _headers lines never enter the committed manifest --
-    # expected additive output (`is_expected_extra_path`'s own doc), not
-    # baseline state; writing them here would make a later run compare it
-    # back against itself and mask a real regression in either instead of
-    # verifying it (the mirror tree is a byte-copy of its own source,
-    # _headers is owner-authorized new C-006 output -- both a different
-    # guarantee than this identity check).
+    # Index-mirror lines never enter the committed manifest -- expected
+    # additive output (`is_index_mirror_path`'s own doc), not baseline
+    # state; writing them here would make a later run compare the mirror
+    # tree back against itself and mask a real regression in it instead of
+    # verifying it (it's a byte-copy of its own source, a different
+    # guarantee than this identity check). "${DIST_LABEL}/_headers" is NOT
+    # filtered out here -- it belongs in the committed manifest (W3).
     local body_for_manifest="" manifest_file_count line path
     while IFS= read -r line; do
       [[ -z "$line" ]] && continue

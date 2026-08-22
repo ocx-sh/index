@@ -21,7 +21,12 @@ IFS=$'\n\t'
 # format_version), conditional GET (If-None-Match -> 304), c/index.json
 # (200, ETag) with its own conditional GET (If-None-Match -> 304), a sample
 # root's digest chain (root tags[].content -> image index object ->
-# recomputed sha256), data/catalog/catalog.json (200, valid JSON, has a
+# recomputed sha256) plus its /p/** response carrying
+# Content-Security-Policy: sandbox (W3 — the only thing standing between a
+# mirrored hostile o/sha256/<hex>.svg and stored XSS on this origin; same
+# pre-seed gating as the rest of the digest-chain section, since there is no
+# /p/ URL to probe before Phase 4 seeds land), data/catalog/catalog.json
+# (200, valid JSON, has a
 # "packages" key — @ocx-sh/catalog's view-model emitter always emits this
 # tree at build time, even pre-seed as "packages": [], so a non-200/
 # invalid-shape here is always a real failure, never tolerated by
@@ -353,6 +358,18 @@ check_digest_chain() {
     return
   fi
   pass "sample root (${ROOT_PKG})" "HTTP 200"
+
+  # W3: /p/${ROOT_PKG}.json is itself a /p/** response — reuse its already-
+  # fetched headers rather than a second request. `_headers`'s block is
+  # exact-value "sandbox" (mirror.ts renderHeaders), not a prefix a browser
+  # would still honor as sandboxing if truncated, so this is an exact match.
+  local csp
+  csp=$(header_value "$headers" "content-security-policy")
+  if [[ "$csp" == "sandbox" ]]; then
+    pass "sample root (${ROOT_PKG}) CSP" "Content-Security-Policy: sandbox"
+  else
+    fail "sample root (${ROOT_PKG}) CSP" "expected Content-Security-Policy: sandbox on /p/**, got: ${csp:-<absent>}" "$EXIT_HTTP"
+  fi
 
   if ! jq -e . "$body" >/dev/null 2>&1; then
     fail "sample root (${ROOT_PKG}) parse" "invalid JSON" "$EXIT_SCHEMA"
