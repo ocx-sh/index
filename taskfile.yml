@@ -11,6 +11,10 @@
 
 version: '3'
 
+# Gitignored per-machine defaults for the renderer switch, e.g.
+# `echo CATALOG_DEV=1 > .env.local`. CLI vars still win.
+dotenv: ['.env.local']
+
 includes:
   bot:
     taskfile: ./bot/taskfile.yml
@@ -19,20 +23,14 @@ includes:
 vars:
   RENDER_OUT: site/.vitepress/dist
   RENDER_INDEX_DIR: ""
-  # Renderer switch (iterative dev vs deployment): every ocx-catalog
-  # invocation goes through CATALOG_BIN. Default = the RELEASED npm package
-  # from node_modules -- what CI and deploys use, always. Pass CATALOG_DEV=1
-  # (e.g. `task render:build CATALOG_DEV=1`) to run the sibling checkout's
-  # CLI instead, for iterating on @ocx-sh/catalog itself against this repo's
-  # real data -- package.json/bun.lock are never touched, so there is no
-  # mode to forget to switch back from. The sibling must be built first
-  # (`npm run build` there); `task cat:dev` does build + full render in one
-  # shot. Pass CATALOG_DEV on the task CLI, never via a nested `task:`
-  # call's vars block -- CLI vars are global so CATALOG_BIN re-resolves in
-  # every task, while call-level vars do not propagate through nested calls
-  # (same trap render:build documents for RENDER_INDEX_DIR).
-  CATALOG_PKG_DIR: ../ocx-catalog
-  CATALOG_DEV: ""
+  # Renderer switch: released npm package (default -- CI/deploys, always)
+  # or the sibling checkout via CATALOG_DEV=1 (task CLI or .env.local; the
+  # self-default pattern lets the env value through, a plain literal would
+  # shadow it). package.json/bun.lock stay untouched. Set it on the task
+  # CLI, never via nested `task:` vars -- those don't propagate (see
+  # render:build's RENDER_INDEX_DIR note).
+  CATALOG_PKG_DIR: '{{.CATALOG_PKG_DIR | default "../ocx-catalog"}}'
+  CATALOG_DEV: '{{.CATALOG_DEV | default ""}}'
   CATALOG_BIN: '{{if .CATALOG_DEV}}node {{.CATALOG_PKG_DIR}}/dist/cli/index.js{{else}}./node_modules/.bin/ocx-catalog{{end}}'
 
 tasks:
@@ -337,18 +335,16 @@ tasks:
 
   cat:dev:
     desc: >-
-      One-shot iterative-dev loop for @ocx-sh/catalog: build the sibling
-      checkout ({{.CATALOG_PKG_DIR}} -- npm ci + npm run build), then run
-      the full render pipeline through ITS CLI (CATALOG_DEV=1, see the
-      CATALOG_BIN var doc) against this repo's real data. Deployment and CI
-      never come through here -- their default CATALOG_BIN is the released
-      npm renderer. The inner `task` invocation is a real CLI call, not a
-      `task:` ref, so CATALOG_DEV lands as a global var and reaches every
+      Iterate on @ocx-sh/catalog: build {{.CATALOG_PKG_DIR}}, render
+      through ITS CLI (CATALOG_DEV=1), serve the production-shaped result
+      on :4173. HMR variant: `task site:dev CATALOG_DEV=1` (no bot pass).
+      The inner `task` call is CLI-style so CATALOG_DEV reaches every
       nested task.
     cmds:
       - npm --prefix {{.CATALOG_PKG_DIR}} ci
       - npm --prefix {{.CATALOG_PKG_DIR}} run build
       - task render:build CATALOG_DEV=1
+      - task: site:preview
 
   cat:ci:check:
     desc: >-

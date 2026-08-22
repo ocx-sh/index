@@ -87,7 +87,9 @@ EOF
 run_pipeline() {
   task demo:clean
   task demo:seed
-  task render:build RENDER_INDEX_DIR=demo
+  # CATALOG_DEV= (CLI beats .env.local) pins the released renderer -- the
+  # committed manifest must never record a sibling build.
+  task render:build RENDER_INDEX_DIR=demo CATALOG_DEV=
 }
 
 # Copies the just-built dist tree into $1, applying normalization rules.

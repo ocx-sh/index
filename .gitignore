@@ -9,6 +9,8 @@
 # Generated per-build source-path override (RENDER_INDEX_DIR demo switch —
 # see taskfile.yml site:build/site:dev).
 /.catalog.config.render.json
+# Per-machine renderer-switch defaults (see taskfile.yml).
+/.env.local
 
 # Ephemeral agent worktrees — never tracked, keep `git status` clean.
 .agents/worktrees/

@@ -41,8 +41,8 @@ task site:build   # `ocx-catalog build --config catalog.config.json --out site/.
 task render:build # site:build, then `indexbot render --out` (adds config.json/c/index.json —
                    #   optional per source, absent from the raw committed p/** tree the package reads)
 task site:dev      # `ocx-catalog dev` — live wire data from the same config, HMR
-task cat:dev       # iterate on @ocx-sh/catalog itself: build ../ocx-catalog, render through ITS CLI
-                   #   (any task also takes CATALOG_DEV=1 to use the sibling instead of the npm release)
+task cat:dev       # iterate on @ocx-sh/catalog: build ../ocx-catalog, render via its CLI, serve :4173
+                   #   CATALOG_DEV=1 (any task's CLI, or a gitignored .env.local) switches to the sibling
 ```
 
 `docs` and `publicDir` in `catalog.config.json` point at `./site/src/docs`
