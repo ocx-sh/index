@@ -1,8 +1,8 @@
 # golden-baseline manifest -- sha256 of every file in the normalized
 # site/.vitepress/dist tree. Regenerate with: scripts/golden-baseline.sh generate --update
 # site tree: 4f12313db2831872aabd65fad2a51634e19889d2
-# commit: 43b7cb2cdcf1c00233a388b861409de2221ac289
-# @ocx-sh/catalog: 0.1.0 (/home/mherwig/dev/index/../ocx-catalog @ 33325c3970372861a9479ede314e3190f045d3b1)
+# commit: a801f5c4983f4b8debb35c8d2731a368139ca334
+# @ocx-sh/catalog: 0.1.0 (/home/mherwig/dev/index/../ocx-catalog @ 79a32583898715ec1578b81e2fdcf2afdc82a91f)
 e78ea0c034b13fc4c2edd29219b111d00cfa290e8fbb7fa57fbc0d4ccaf87d9a  site/.vitepress/dist/404.html
 c1fa4bbee46de74c89a1cd62d7106a13e6ccada4a63d4d35afd26a66c7411ab7  site/.vitepress/dist/_headers
 77db2ab61f2968722c88b59357b74c72d5d7728ad1630924631893e6e58ce503  site/.vitepress/dist/assets/404.md.Dj_g9HqN.js
