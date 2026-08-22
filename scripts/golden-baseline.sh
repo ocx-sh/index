@@ -25,14 +25,16 @@ IFS=$'\n\t'
 #
 # plan_catalog_extraction WP-11 (dogfood switchover): `generate`'s
 # comparison is NOT plain string equality any more -- see
-# `compare_manifests`/`is_index_mirror_path` below. Every committed
+# `compare_manifests`/`is_expected_extra_path` below. Every committed
 # manifest path is still required exactly (missing or content-differing
 # is always a failure); a build path absent from the manifest is tolerated
-# ONLY under "${DIST_LABEL}/index/" -- the per-source wire mirror
-# `@ocx-sh/catalog` writes for non-root/labeled sources (C-006), expected
-# additive output this baseline's own root-only config does not produce,
-# verified separately (byte-copy of its own source) rather than by this
-# check. This is deliberately not a subset check in the other direction.
+# ONLY under "${DIST_LABEL}/index/<label>/" for a label this repo's own
+# catalog.config.json sources actually produce -- the per-source wire
+# mirror `@ocx-sh/catalog` writes (C-006), verified separately (byte-copy
+# of its own source) rather than by this check -- or the exact path
+# "${DIST_LABEL}/_headers" -- Cloudflare Pages headers, also new C-006
+# output, owner-authorized narrow exemption. This is deliberately not a
+# subset check in the other direction.
 #
 # Normalization rules (normalize_tree(), below): NONE are applied. Three
 # consecutive from-scratch builds of the demo fixture tree (`task
@@ -62,9 +64,11 @@ readonly EXIT_DIFF=65
 # Same sibling path taskfile.yml's CATALOG_PKG_DIR default builds against.
 readonly CATALOG_PKG_DIR="${REPO_ROOT}/../ocx-catalog"
 
-# Populated by compute_expected_index_labels() once demo/p/** exists (inside
-# build_and_normalize_manifest, after run_pipeline) -- is_index_mirror_path()
-# reads this, so nothing may call it beforehand.
+# Populated by compute_expected_index_labels(), called from generate_cmd
+# (NOT from inside build_and_normalize_manifest -- that runs in a `$(...)`
+# subshell via its callers, and appends made there never survive back to
+# this shell) once demo/p/** exists on disk. is_index_mirror_path() reads
+# this, so nothing may call it beforehand.
 EXPECTED_INDEX_LABELS=()
 
 usage() {
@@ -141,6 +145,21 @@ is_index_mirror_path() {
   return 1
 }
 
+# True iff $1 is exactly "${DIST_LABEL}/_headers" -- the Cloudflare Pages
+# headers file (CSP/sandbox headers), intentional new output from C-006 that
+# postdates the frozen baseline (owner-authorized narrow exemption, WP-11
+# security review). Exact path only -- never widen this to a prefix/pattern,
+# it must not be able to swallow anything else.
+is_headers_path() {
+  [[ "$1" == "${DIST_LABEL}/_headers" ]]
+}
+
+# Every additive-output check compare_manifests/generate_cmd's --update
+# filter tolerate an unmatched build path for.
+is_expected_extra_path() {
+  is_index_mirror_path "$1" || is_headers_path "$1"
+}
+
 # Sorted "sha256  site/.vitepress/dist/<relpath>" lines for every file
 # under $1 (the normalized copy).
 compute_manifest() {
@@ -212,7 +231,7 @@ check_site_clean() {
 # mirror lines included). Every line in $1 must appear byte-identically in
 # $2 -- a missing or content-differing baseline path is always a failure.
 # A line present in $2 but absent from $1 is tolerated ONLY when
-# `is_index_mirror_path` accepts it; anything else is an unexpected extra
+# `is_expected_extra_path` accepts it; anything else is an unexpected extra
 # file and still fails. This is deliberately NOT a subset check: every
 # baseline path is still required exactly, only the direction that would
 # hide a real regression (missing/changed) is strict, while the one
@@ -250,7 +269,7 @@ compare_manifests() {
 
   local -a unexpected=()
   for path in "${!new_by_path[@]}"; do
-    if ! is_index_mirror_path "$path"; then
+    if ! is_expected_extra_path "$path"; then
       unexpected+=("${new_by_path[$path]}")
       ok=0
     fi
@@ -270,7 +289,7 @@ compare_manifests() {
     printf '    %s\n' "${changed[@]}" >&2
   fi
   if ((${#unexpected[@]})); then
-    echo "  unexpected extra files (not in the manifest, not under a declared ${DIST_LABEL}/index/<label>/):" >&2
+    echo "  unexpected extra files (not in the manifest, not under a declared ${DIST_LABEL}/index/<label>/, not ${DIST_LABEL}/_headers):" >&2
     printf '    %s\n' "${unexpected[@]}" | LC_ALL=C sort >&2
   fi
   return 1
@@ -282,7 +301,6 @@ compare_manifests() {
 build_and_normalize_manifest() {
   local dest_dir="$1"
   run_pipeline 1>&2
-  compute_expected_index_labels
   normalize_tree "$dest_dir"
   compute_manifest "$dest_dir"
 }
@@ -303,20 +321,30 @@ generate_cmd() {
 
   local body file_count
   body=$(build_and_normalize_manifest "${GOLDEN_DIR}/normalized")
+  # Bash bug fix (found running this for real): body=$(...) runs
+  # build_and_normalize_manifest in a SUBSHELL -- calling
+  # compute_expected_index_labels() from inside it (as this used to) throws
+  # away every append the moment the subshell exits, leaving
+  # EXPECTED_INDEX_LABELS permanently empty here and is_index_mirror_path
+  # unable to exempt anything. demo/p/** is a real file on disk by now
+  # (run_pipeline already wrote it), so computing labels here, in THIS
+  # (parent) shell, is both correct and sufficient.
+  compute_expected_index_labels
   file_count=$(printf '%s\n' "$body" | wc -l)
 
   if ((update)); then
-    # Index-mirror lines never enter the committed manifest -- expected
-    # additive output (`is_index_mirror_path`'s own doc), not baseline
-    # state; writing them here would make a later run compare it back
-    # against itself and mask a real mirror-content regression instead of
-    # verifying it (that tree is byte-copied straight from its own source,
-    # a different guarantee than this identity check).
+    # Index-mirror and _headers lines never enter the committed manifest --
+    # expected additive output (`is_expected_extra_path`'s own doc), not
+    # baseline state; writing them here would make a later run compare it
+    # back against itself and mask a real regression in either instead of
+    # verifying it (the mirror tree is a byte-copy of its own source,
+    # _headers is owner-authorized new C-006 output -- both a different
+    # guarantee than this identity check).
     local body_for_manifest="" manifest_file_count line path
     while IFS= read -r line; do
       [[ -z "$line" ]] && continue
       path="${line#*  }"
-      is_index_mirror_path "$path" && continue
+      is_expected_extra_path "$path" && continue
       body_for_manifest+="${line}"$'\n'
     done <<<"$body"
     if [[ -z "$body_for_manifest" ]]; then
