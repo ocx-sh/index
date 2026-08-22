@@ -3,6 +3,9 @@
 /demo/
 /.golden-baseline/
 /node_modules/
+# Stray `ocx-catalog build` output when run without --out (the real build
+# goes to site/.vitepress/dist -- see taskfile.yml RENDER_OUT).
+/dist/
 # Generated per-build source-path override (RENDER_INDEX_DIR demo switch —
 # see taskfile.yml site:build/site:dev).
 /.catalog.config.render.json

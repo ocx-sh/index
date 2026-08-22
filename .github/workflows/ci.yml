@@ -91,26 +91,13 @@ jobs:
   # The plain catalog-package build that used to live here as `site-build`
   # is now the `build` job of the RENDERED .github/workflows/catalog-ci.yml
   # (`ocx-catalog ci`, driven by catalog.config.json's `ci` block —
-  # plan_catalog_extraction WP-11 dogfooding). Once `@ocx-sh/catalog`
-  # publishes to npm, `task site:build` collapses to exactly the
-  # `ocx-catalog build` that rendered job runs, so keeping both here would
-  # be duplicate CI minutes for one assertion. The parts of `task
-  # site:build` the rendered job does NOT cover — the jq/RENDER_INDEX_DIR
-  # plumbing and `--out` — stay covered by `render-check` below, which
-  # calls `site:build` as its first step.
-  #
-  # KNOWN GAP (plan_catalog_extraction WP-11), applying to every job below
-  # AND to the rendered catalog-ci.yml: `site:build` depends on `cat:build`,
-  # which builds `@ocx-sh/catalog` from a SIBLING checkout (`../ocx-catalog`,
-  # taskfile.yml's CATALOG_PKG_DIR) — that repo is local-only (no GitHub
-  # remote yet, plan_catalog_extraction WP-01) and these jobs check out only
-  # `index`, so they are RED until `@ocx-sh/catalog` either publishes to npm
-  # (plan WP-12, at which point the root package.json's
-  # `file:../ocx-catalog` becomes a real registry version and needs no
-  # sibling checkout) or gets a real remote a job can `actions/checkout`
-  # alongside `index`. Left wired to the real commands (not skipped or
-  # stubbed) so they go green automatically the moment either fix lands —
-  # never silently paper over the gap by weakening what they assert.
+  # plan_catalog_extraction WP-11 dogfooding). `task site:build` collapses
+  # to exactly the `ocx-catalog build` that rendered job runs (the package
+  # comes from npm since @ocx-sh/catalog@0.1.0 published), so keeping both
+  # here would be duplicate CI minutes for one assertion. The parts of
+  # `task site:build` the rendered job does NOT cover — the
+  # jq/RENDER_INDEX_DIR plumbing and `--out` — stay covered by
+  # `render-check` below, which calls `site:build` as its first step.
   golden-baseline:
     name: golden-baseline
     if: github.event_name != 'schedule'
@@ -126,10 +113,9 @@ jobs:
       - name: golden-baseline generate
         run: bash scripts/golden-baseline.sh generate
 
-  # Same KNOWN GAP as above -- `task render:build` runs `site:build`
-  # (-> `cat:build`, sibling-checkout dependency) first. Also the only job
-  # left covering `site:build`'s jq/RENDER_INDEX_DIR + `--out` plumbing,
-  # which the rendered catalog-ci.yml `build` job does not exercise.
+  # The only job covering `site:build`'s jq/RENDER_INDEX_DIR + `--out`
+  # plumbing, which the rendered catalog-ci.yml `build` job does not
+  # exercise.
   render-check:
     name: render-check
     if: github.event_name != 'schedule'

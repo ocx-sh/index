@@ -131,12 +131,6 @@ jobs:
       # Swapping the two steps silently deletes those files on the next
       # deploy -- see taskfile.yml's render:build target, which encodes
       # this order, not this workflow directly.
-      #
-      # KNOWN GAP (plan_catalog_extraction WP-11): `site:build` needs
-      # `@ocx-sh/catalog` built from a SIBLING checkout this job does not
-      # have (see taskfile.yml's CATALOG_PKG_DIR doc) -- this step is RED
-      # until the package publishes to npm (plan WP-12) or gets a real
-      # remote. Left wired to the real command so it recovers automatically.
       - name: task render:build
         run: task render:build
       - name: task schema:validate:rendered

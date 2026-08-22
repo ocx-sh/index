@@ -34,13 +34,10 @@ target `site/.vitepress/dist` exactly as before, so neither needed to change.
 The repo root carries `catalog.config.json` (the package's config file —
 `sources: [{path: ".", root: true}]`, so the package reads the committed
 `p/**` tree as its own self-mirrored index) and `package.json`
-(`@ocx-sh/catalog: file:../ocx-catalog`, a local sibling checkout — see
-CLAUDE.md "Current State" for the publish-pending caveat this implies for
-CI). From the repo root:
+(`@ocx-sh/catalog: ^0.1.0`, from npm). From the repo root:
 
 ```sh
-task cat:build    # builds @ocx-sh/catalog itself (tsc) from its sibling checkout
-task site:build   # cat:build, then `ocx-catalog build --config catalog.config.json --out site/.vitepress/dist`
+task site:build   # `ocx-catalog build --config catalog.config.json --out site/.vitepress/dist`
 task render:build # site:build, then `indexbot render --out` (adds config.json/c/index.json —
                    #   optional per source, absent from the raw committed p/** tree the package reads)
 task site:dev      # `ocx-catalog dev` — live wire data from the same config, HMR

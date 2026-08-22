@@ -19,15 +19,6 @@ includes:
 vars:
   RENDER_OUT: site/.vitepress/dist
   RENDER_INDEX_DIR: ""
-  # Sibling checkout the root package.json's `file:../ocx-catalog`
-  # dependency resolves against (plan_catalog_extraction WP-01: local
-  # `git init`, no GitHub remote yet -- see CLAUDE.md "Current State").
-  # KNOWN GAP: this only exists on a machine that has that sibling checked
-  # out next to this repo -- CI checks out only this repo, so `site:build`/
-  # `render:build` do not yet run there. Resolves once `@ocx-sh/catalog`
-  # publishes to npm (plan WP-12) and this dependency becomes a real
-  # version range instead of a `file:` path.
-  CATALOG_PKG_DIR: ../ocx-catalog
 
 tasks:
   default:
@@ -118,21 +109,6 @@ tasks:
     cmds:
       - uvx zizmor --min-severity medium .github/
 
-  cat:build:
-    desc: >-
-      Builds the @ocx-sh/catalog package (tsc -> dist/) from its sibling
-      checkout ({{.CATALOG_PKG_DIR}}) BEFORE this repo installs or builds
-      against it. `file:` dependencies run NO lifecycle scripts under bun
-      or npm -- neither `prepare` nor `prepack` fires on `bun install` --
-      so nothing else triggers this build; every task that needs the
-      package runs this one first, explicitly. `npm ci` (not `install`),
-      matching the package's own toolchain (npm, plan_catalog_extraction
-      open question #1) regardless of what this repo uses.
-    dir: '{{.CATALOG_PKG_DIR}}'
-    cmds:
-      - npm ci
-      - npm run build
-
   site:build:
     desc: >-
       Catalog site build via the extracted @ocx-sh/catalog package
@@ -155,7 +131,6 @@ tasks:
       retired along with the rest of the old theme, so this is the new
       demo/real switch (see demo:* tasks, site/README.md).
     cmds:
-      - task: cat:build
       - bun install --frozen-lockfile
       - >-
         jq --arg path '{{if .RENDER_INDEX_DIR}}{{.RENDER_INDEX_DIR}}{{else}}.{{end}}'
@@ -268,7 +243,6 @@ tasks:
       site:dev RENDER_INDEX_DIR=demo`. Serves on the package's own default
       port (see `ocx-catalog dev --help`), not site:preview's 4173.
     cmds:
-      - task: cat:build
       - bun install --frozen-lockfile
       - >-
         jq --arg path '{{if .RENDER_INDEX_DIR}}{{.RENDER_INDEX_DIR}}{{else}}.{{end}}'
@@ -354,7 +328,6 @@ tasks:
       hand-edit to it (or a config change left un-rendered) is drift; this
       re-renders in memory and compares, writing nothing. Re-render with
       `./node_modules/.bin/ocx-catalog ci` and commit the result.
-    deps: [cat:build]
     cmds:
       - bun install --frozen-lockfile
       - ./node_modules/.bin/ocx-catalog ci --check
