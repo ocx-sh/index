@@ -13,7 +13,6 @@
   "siteUrl": "https://index.ocx.sh",
   "description": "Package catalog and wire-format docs for the OCX public index (index.ocx.sh).",
   "favicon": "/favicon.svg",
-  "packageDescription": "Install ocx.sh/{name} from the OCX public package index.",
   "nav": [
     {
       "text": "github",
@@ -22,24 +21,6 @@
   ],
   "docs": "./site/src/docs",
   "publicDir": "./site/src/public",
-  "install": [
-    {
-      "label": "Add to project",
-      "command": "ocx add {name}"
-    },
-    {
-      "label": "Add globally",
-      "command": "ocx --global add {name}"
-    },
-    {
-      "label": "Run without installing",
-      "command": "ocx package exec {name}"
-    },
-    {
-      "label": "Install package",
-      "command": "ocx package install {name}"
-    }
-  ],
   "ci": {
     "forge": "github"
   }
