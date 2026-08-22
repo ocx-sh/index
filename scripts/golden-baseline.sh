@@ -191,7 +191,7 @@ compute_manifest() {
 # manifest was current" from "the manifest was rebaselined over a real
 # diff" without it).
 manifest_header() {
-  local site_tree commit_sha catalog_version catalog_sha
+  local site_tree commit_sha catalog_version catalog_sha catalog_spec
   site_tree=$(git rev-parse HEAD:site)
   commit_sha=$(git rev-parse HEAD)
   # W-2: the dist tree is just as much a function of WHICH @ocx-sh/catalog
@@ -201,12 +201,19 @@ manifest_header() {
   # "the package changed" the way an unrecorded upgrade currently would.
   catalog_version=$(jq -r '.version' "${CATALOG_PKG_DIR}/package.json")
   catalog_sha=$(git -C "$CATALOG_PKG_DIR" rev-parse HEAD)
+  # The committed dependency SPEC, never ${CATALOG_PKG_DIR} itself: that is
+  # an absolute path built from ${REPO_ROOT}, so printing it bakes whoever
+  # last ran --update's home directory into a committed file and makes the
+  # header differ per machine for an otherwise identical build. The spec
+  # (`file:../ocx-catalog` now, a real range once the package publishes)
+  # says the same thing and stays reproducible.
+  catalog_spec=$(jq -r '.dependencies["@ocx-sh/catalog"]' package.json)
   cat <<EOF
 # golden-baseline manifest -- sha256 of every file in the normalized
 # ${DIST_LABEL} tree. Regenerate with: scripts/golden-baseline.sh generate --update
 # site tree: ${site_tree}
 # commit: ${commit_sha}
-# @ocx-sh/catalog: ${catalog_version} (${CATALOG_PKG_DIR} @ ${catalog_sha})
+# @ocx-sh/catalog: ${catalog_version} (${catalog_spec} @ ${catalog_sha})
 EOF
 }
 
