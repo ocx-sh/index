@@ -79,6 +79,10 @@
     "2.6.1_20260822": {
       "content": "sha256:e8c55f9c06dda21c292dc1cea7afbde3da698c7640f3a50fb730fd2fa65bfb8a",
       "observed": "2026-08-22T16:46:10Z"
+    },
+    "2.6.1_20260823": {
+      "content": "sha256:e8c55f9c06dda21c292dc1cea7afbde3da698c7640f3a50fb730fd2fa65bfb8a",
+      "observed": "2026-08-23T04:57:40Z"
     }
   }
 }
