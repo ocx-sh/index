@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
 #
 # Repo gate contract. `verify` == the CI job set across BOTH workflows:
-# .github/workflows/ci.yml (schema-validate, bot-lint, bot-test, bot-audit,
+# .github/workflows/ci.yml (schema-validate, bot-test, bot-workflows, bot-audit,
 # workflows-lint, render-check; golden-baseline is CI-only — see `verify`)
 # and .github/workflows/catalog-ci.yml (build, verify-catalog-ci), which is
 # RENDERED by `ocx-catalog ci` from catalog.config.json's `ci` block and must
@@ -17,8 +17,8 @@ dotenv: ['.env.local']
 
 includes:
   bot:
-    taskfile: ./bot/taskfile.yml
-    dir: ./bot
+    taskfile: ./bot-tools/taskfile.yml
+    dir: ./bot-tools
 
 vars:
   RENDER_OUT: site/.vitepress/dist
@@ -192,7 +192,7 @@ tasks:
       - task: site:build
         vars:
           RENDER_INDEX_DIR: '{{.RENDER_INDEX_DIR}}'
-      - uv run --project bot -- indexbot render --index-dir "{{.RENDER_INDEX_DIR}}" --out {{.RENDER_OUT}}
+      - uv run --project bot-tools -- indexbot render --index-dir "{{.RENDER_INDEX_DIR}}" --out {{.RENDER_OUT}}
 
   schema:validate:rendered:
     desc: >-
@@ -294,7 +294,8 @@ tasks:
       Populate the gitignored demo/p/ tree (never the real p/) with
       throwaway demo packages via scripts/demo-seed.sh, for `task
       demo:serve` local design review (plan_site_redesign.md "Verification"
-      item 3). Sources: the 7 bot/tests/golden/render/ golden-fixture cases
+      item 3). Sources: the golden render cases under
+      scripts/demo-fixtures/render-cases/
       plus scripts/demo-fixtures/ (deprecation, multi-platform, alias-chain/
       variant-tag coverage the golden fixtures don't have, plus a real SVG/
       PNG logo and README so cards and detail pages have something to
@@ -361,7 +362,7 @@ tasks:
   verify:
     desc: >-
       Full gate — the CI job set across both workflows: ci.yml
-      (schema-validate, bot-lint, bot-test, bot-audit, workflows-lint,
+      (schema-validate, bot-test, bot-workflows, bot-audit, workflows-lint,
       render-check) and the rendered catalog-ci.yml (build via site:build,
       verify-catalog-ci via cat:ci:check). ci.yml's golden-baseline job is
       deliberately NOT here: it refuses to run against a dirty working tree
@@ -370,8 +371,8 @@ tasks:
       `bash scripts/golden-baseline.sh generate` yourself before pushing.
     cmds:
       - task: schema:validate
-      - task: bot:lint
       - task: bot:test
+      - task: bot:workflows
       - task: bot:audit
       - task: workflows:lint
       - task: cat:ci:check

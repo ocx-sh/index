@@ -1,7 +1,9 @@
 name: setup-bot
 description: >-
   Install the pinned uv + Task toolchain shared by every indexbot CI job
-  (schema-validate, bot-lint, bot-test, bot-audit, workflows-lint, mutmut).
+  (schema-validate, bot-test, bot-workflows, bot-audit, workflows-lint,
+  render-check, golden-baseline). uv resolves `bot-tools/uv.lock`, which
+  pins the released ocx-indexbot the jobs actually run.
 
 runs:
   using: composite

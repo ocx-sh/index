@@ -1,0 +1,24 @@
+# The index bot is a released package (https://pypi.org/p/ocx-indexbot); this
+# project exists only to PIN it. `uv.lock` beside this file hashes the whole
+# transitive set, and `uv sync --frozen` is what every CI job resolves, so the
+# version running in the privileged governance job changes only through a
+# reviewed pull request — the same control that governs
+# `.github/index-policy.json`.
+#
+# `dev` additionally carries pytest for `tests/security/`: the deployment-
+# specific half of the governance suite, which asserts on THIS repository's
+# committed workflows and policy and therefore could not travel with the
+# package (see ocx-sh/indexbot's docs/reference/workflow-invariants.md).
+[project]
+name = "index-bot-tools"
+version = "0"
+description = "Pinned indexbot toolchain + this deployment's own security suite."
+requires-python = ">=3.12"
+dependencies = ["ocx-indexbot==0.1.0"]
+
+[dependency-groups]
+dev = ["pytest>=8.3", "pip-audit>=2.7"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers"
+testpaths = ["tests"]

@@ -84,6 +84,20 @@ collapses to exactly the `ocx-catalog build` it runs, so both would be one
 assertion billed twice; `render-check` still covers the jq/`RENDER_INDEX_DIR`
 and `--out` plumbing the rendered job does not.
 
+The **bot** left too, on 2026-08-24: `bot/` is now
+[`ocx-indexbot`](https://pypi.org/p/ocx-indexbot) 0.1.0 on PyPI (repo
+[ocx-sh/indexbot](https://github.com/ocx-sh/indexbot), import `ocx_indexbot`,
+console script still `indexbot`). This repo consumes it through `bot-tools/`,
+a project whose only job is to pin it: `ocx-indexbot==0.1.0` plus a hash-locked
+`uv.lock`, so the version running in the privileged governance job changes only
+by reviewed PR. `task bot:lint` retired with the source; `task bot:test` now
+runs `bot-tools/tests/security/` — the deployment-specific governance
+assertions that could not travel with the package (workflow split, `validate.yml`'s
+pathspec, the shipped registry policy, retired-surface absences) — and
+`task bot:workflows` runs the package's own `indexbot workflows-check`
+(WF-01..WF-07) over this repo's workflow tree. `mutmut.yml` went with the
+source.
+
 No known release gaps: `@ocx-sh/catalog@0.1.0` is on npm and this repo
 consumes it as a real registry dependency — no sibling checkout, no
 `cat:build`, every CI job self-contained on this repo's checkout. The
@@ -104,7 +118,7 @@ confuse the two when reasoning about what ships.
 | Path | Purpose |
 |---|---|
 | `schema/` | JSON Schemas for the wire contract (`config`, `root`, `image-index`) |
-| `bot/` | `indexbot` — `announce \| reconcile \| validate \| render \| seed-import` |
+| `bot-tools/` | Pins the released [`ocx-indexbot`](https://pypi.org/p/ocx-indexbot) (`bot-tools/uv.lock`, hash-locked) + `tests/security/` — this deployment's own governance assertions, the half that could not travel with the package. `task bot:test \| bot:workflows \| bot:audit` |
 | `catalog.config.json` | `@ocx-sh/catalog` config — sources, brand, nav, docs/publicDir mounts, siteUrl, and the `ci` block that renders `catalog-ci.yml` (plan_catalog_extraction WP-11). Install-command strings are NOT config: the `ocx` subcommand names are fixed, so they live in the package as `DEFAULT_INSTALL_FLAVORS` |
 | `package.json` | `@ocx-sh/catalog: ^0.1.0` (npm) + its `vitepress`/`vue` peers |
 | `site/` | Consumer content only — `docs/` (hand-authored Markdown, mounted via `catalog.config.json`'s `docs`) and `public/` (favicon, via `publicDir`); the catalog/docs theme itself now lives in `@ocx-sh/catalog` |

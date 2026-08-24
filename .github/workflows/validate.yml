@@ -22,7 +22,7 @@ name: validate
 # Since ND-4's `--allow-reserved-namespace` is withheld from fork PRs (below),
 # that context is the only thing stopping a fork claiming `p/ocx/**`.
 # Trigger-disjoint workflows make the collision structurally impossible.
-# Pinned by bot/tests/security/test_workflow_split.py.
+# Pinned by bot-tools/tests/security/test_workflow_split.py.
 #
 #   schema-validate-pr (zero secrets, checks out PR head — safe, GitHub strips
 #     secrets for this trigger): schema/fixture check + indexbot validate
@@ -117,7 +117,7 @@ jobs:
           # dropped — zero roots selected, validate skipped, required check
           # green. There is nothing to validate about a delete; every other
           # status must reach `indexbot validate`.
-          # Pinned by bot/tests/security/test_workflow_pathspec.py.
+          # Pinned by bot-tools/tests/security/test_workflow_pathspec.py.
           changed="$(git diff --name-only --diff-filter=d "$BASE_SHA...HEAD" -- ':(glob)p/*/*.json')"
           if [ -z "$changed" ]; then
             echo "::notice title=indexbot validate::No p/<namespace>/<package>.json changes in this PR (p/ may not be seeded yet) - skipping indexbot validate."
@@ -195,7 +195,7 @@ jobs:
           # nothing but fork PRs — is admitted by `--base-dir` below without
           # the flag, and only while the change stays announce-shaped
           # (`core/diff.classify_change` == "refresh"). Pinned by
-          # bot/tests/security/test_workflow_split.py.
+          # bot-tools/tests/security/test_workflow_split.py.
           SAME_REPO_PR: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
           BASE_DIR: ${{ steps.base.outputs.dir }}
         run: |
@@ -211,7 +211,7 @@ jobs:
           # ::error annotation the checks UI surfaces AND captures the reason
           # even when the CLI dies on a non-IndexBotError traceback (which
           # main() deliberately does not swallow, so it writes no summary).
-          if uv run --project bot -- indexbot validate --base-dir "$BASE_DIR" "${reserved[@]}" "${files[@]}" 2>&1 | tee indexbot-validate.log; then
+          if uv run --project bot-tools -- indexbot validate --base-dir "$BASE_DIR" "${reserved[@]}" "${files[@]}" 2>&1 | tee indexbot-validate.log; then
             ec=0
           else
             ec=$?

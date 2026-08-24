@@ -80,9 +80,13 @@ Heavier controls (fork-run approval gating for first-time contributors, an
 allowlist) are additive if real abuse shows up; they aren't built ahead of
 evidence.
 
-## Contributing to the Bot/Site/Schema Code
+## Contributing to the Site/Schema Code
 
-Changes to `bot/`, `site/`, or `schema/` follow the dev workflow documented
+The bot itself lives in [ocx-sh/indexbot](https://github.com/ocx-sh/indexbot)
+and is consumed here as a pinned PyPI release — a bot change belongs in that
+repository, and reaches this one as a version bump in `bot-tools/`.
+
+Changes to `bot-tools/`, `site/`, or `schema/` follow the dev workflow documented
 in [`CLAUDE.md`](CLAUDE.md) — run `task verify` before opening a PR. Commit
 messages follow [Conventional Commits](https://www.conventionalcommits.org/).
 

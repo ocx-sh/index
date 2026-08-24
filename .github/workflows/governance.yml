@@ -22,7 +22,7 @@ name: governance
 # bearer of the context). Two trigger-disjoint workflows make the collision
 # structurally impossible: nothing here is named `schema-validate-pr`, and no
 # job in either file is skipped for trigger reasons.
-# Pinned by bot/tests/security/test_workflow_split.py.
+# Pinned by bot-tools/tests/security/test_workflow_split.py.
 #
 #   governance-gate (GITHUB_TOKEN only, NEVER checks out PR head): classifies
 #     the diff via the GitHub API only, labels the PR, sets the
@@ -99,7 +99,7 @@ jobs:
     outputs:
       disposition: ${{ steps.governance_check.outputs.disposition }}
     permissions:
-      contents: read # checkout base ref only, to run bot/'s source
+      contents: read # checkout base ref only; runs the pinned indexbot, never PR-head code
       pull-requests: write # classify-pr's add_labels + G-20 reviewer assignment
       statuses: write # governance-check's set_commit_status (governance/review-required); a separate scope from pull-requests
       issues: write # governance-check's create_comment (G-20) posts via the Issues API even for a PR — pull-requests: write alone 403s it
@@ -120,7 +120,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          uv run --project bot -- indexbot classify-pr --pr-number "$PR_NUMBER"
+          uv run --project bot-tools -- indexbot classify-pr --pr-number "$PR_NUMBER"
 
       - name: indexbot governance-check
         id: governance_check
@@ -129,7 +129,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          uv run --project bot -- indexbot governance-check --pr-number "$PR_NUMBER"
+          uv run --project bot-tools -- indexbot governance-check --pr-number "$PR_NUMBER"
 
   arm-auto-merge:
     name: arm-auto-merge
@@ -160,7 +160,7 @@ jobs:
     # base-authored YAML, so the contents: write it must hold to arm a
     # deferred merge is never in scope for PR-controlled code, `uv`
     # resolution, or the third-party action setup-bot forwards github.token
-    # to. Pinned by bot/tests/security/test_workflow_split.py.
+    # to. Pinned by bot-tools/tests/security/test_workflow_split.py.
     permissions:
       # Enabling or withdrawing auto-merge IS a deferred write to the base
       # branch — and when GitHub reports the PR already mergeable, this job
@@ -255,7 +255,7 @@ jobs:
       cancel-in-progress: true
     # No checkout, no `uses:`, no secret, and deliberately NOT contents:
     # write - this job only observes the PR and pushes a button. Pinned by
-    # bot/tests/security/test_workflow_split.py.
+    # bot-tools/tests/security/test_workflow_split.py.
     permissions:
       actions: write # gh workflow run render-deploy.yml (workflow_dispatch)
       pull-requests: read # gh pr view

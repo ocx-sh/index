@@ -9,20 +9,22 @@ IFS=$'\n\t'
 # Sources, both already shaped as a `p/<ns>/<pkg>.json` (+ optional CAS
 # `o/sha256/**`) tree, copied byte-for-byte via seed_case():
 #
-#   1. bot/tests/golden/render/<case>/expected/dist/p/** — the 7 golden
-#      render-pipeline test cases (active/no-desc/yanked-tag/multi-platform/
-#      shared-digest/png-logo/nested-namespace coverage, see
-#      bot/tests/core/test_render.py). `core/render.py` copies a package's
-#      root JSON and reachable CAS objects into dist/p/** byte-for-byte
-#      (`_package_dist_files`), so each case's `expected/dist/p/<ns>/<pkg>*`
-#      subtree already IS a valid `p/` source tree.
+#   1. scripts/demo-fixtures/render-cases/<case>/p/** — the golden
+#      render-pipeline cases (active/no-desc/yanked-tag/multi-platform/
+#      shared-digest/png-logo/nested-namespace coverage), copied out of
+#      `bot/tests/golden/render/<case>/expected/dist/p/` when the bot was
+#      extracted to `ocx-sh/indexbot`. The renderer copies a package's root
+#      JSON and reachable CAS objects into dist/p/** byte-for-byte, so each
+#      case subtree already IS a valid `p/` source tree. They are demo DATA
+#      here, not fixtures: the package owns its own copies, and these move
+#      only when someone wants different demo packages.
 #   2. scripts/demo-fixtures/p/** — hand-authored packages covering surfaces
 #      no golden fixture exercises: status=deprecated + superseded_by, a
 #      readme with headings/code-fence/GFM-table, 4-platform image indices
 #      differing across tags, variant tags + a full
 #      latest/major/minor/patch alias chain sharing one digest, and a real
 #      SVG (packer) / PNG (nginx) logo + real README (packer). Not bot
-#      golden fixtures (no assertions in bot/tests/ depend on them) — kept
+#      golden fixtures (nothing under bot-tools/tests/ depends on them) — kept
 #      separate so extending demo coverage never touches the bot's 100%
 #      branch-coverage test suite. Unlike the golden cases, every CAS
 #      digest here (blob filename, tags[*].content, desc.logo, desc.readme,
@@ -49,7 +51,7 @@ REPO_ROOT=$(cd "${SCRIPT_DIR}/.." && pwd)
 readonly SCRIPT_DIR REPO_ROOT
 
 readonly P_DIR="${REPO_ROOT}/demo/p"
-readonly GOLDEN_DIR="${REPO_ROOT}/bot/tests/golden/render"
+readonly RENDER_CASES_DIR="${REPO_ROOT}/scripts/demo-fixtures/render-cases"
 readonly FIXTURES_DIR="${REPO_ROOT}/scripts/demo-fixtures/p"
 
 # Copies one source's `p/<ns>/<pkg>.json` (+ optional CAS `o/sha256/**`)
@@ -80,8 +82,8 @@ seed_case() {
 
 main() {
   local case_dir dist_p
-  for case_dir in "$GOLDEN_DIR"/*/; do
-    dist_p="${case_dir}expected/dist/p"
+  for case_dir in "$RENDER_CASES_DIR"/*/; do
+    dist_p="${case_dir}p"
     if [[ -d "$dist_p" ]]; then
       seed_case "$dist_p"
     fi

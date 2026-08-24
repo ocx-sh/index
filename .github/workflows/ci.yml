@@ -4,7 +4,7 @@ on:
   pull_request:
   push:
     branches: [main]
-  # Nightly, independent of `bot/**` PR activity — pip-audit's vulnerability
+  # Nightly, independent of `bot-tools/**` PR activity — pip-audit's vulnerability
   # database moves even when no code changes (ADR-4 BD-7: "pip-audit | Every
   # PR + nightly"). `bot-audit` has no `if:` guard so it runs on every
   # trigger; the other four jobs skip the schedule trigger to avoid a
@@ -29,20 +29,6 @@ jobs:
       - name: task schema:validate
         run: task schema:validate
 
-  bot-lint:
-    name: bot-lint
-    if: github.event_name != 'schedule'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4.3.1
-        with:
-          persist-credentials: false
-      - uses: ./.github/actions/setup-bot
-      - name: task bot:lint
-        run: task bot:lint
-
   bot-test:
     name: bot-test
     if: github.event_name != 'schedule'
@@ -56,6 +42,20 @@ jobs:
       - uses: ./.github/actions/setup-bot
       - name: task bot:test
         run: task bot:test
+
+  bot-workflows:
+    name: bot-workflows
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4.3.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-bot
+      - name: task bot:workflows
+        run: task bot:workflows
 
   bot-audit:
     name: bot-audit

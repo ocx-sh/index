@@ -50,7 +50,7 @@ IFS=$'\n\t'
 # byte-identical dist trees across all 218 files, including:
 #   - data/catalog/catalog.json's `generated` field: NOT wall-clock -- it's
 #     a lexicographic max() over source tag timestamps
-#     (bot/src/indexbot/core/render.py `_generated_timestamp`; that module
+#     (ocx-indexbot's core/render.py `_generated_timestamp`; that module
 #     imports no `datetime` by design, precisely so render stays
 #     idempotent) -- so no strip/canonicalize step is needed.
 #   - Vite content-hashed asset filenames (vite#13071 candidate): did not

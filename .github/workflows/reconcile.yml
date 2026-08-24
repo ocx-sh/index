@@ -59,12 +59,17 @@ jobs:
 
       - name: Run indexbot reconcile
         id: reconcile
-        working-directory: bot
+        # No `working-directory:` any more. It used to be `bot`, so the bot ran
+        # with a cwd one level below the `p/` tree it reads and relied on
+        # `$GITHUB_WORKSPACE` to route around its own cwd — an open question
+        # its wiring carried in a comment. With the source extracted there is
+        # no `bot/` to sit in: the run happens at the checkout root, where the
+        # index data actually is.
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          if uv run indexbot reconcile 2>&1 | tee reconcile.log; then
+          if uv run --project bot-tools -- indexbot reconcile 2>&1 | tee reconcile.log; then
             ec=0
           else
             ec=$?

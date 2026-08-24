@@ -1,0 +1,44 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+#
+# Included by the root taskfile under the `bot:` namespace (`task bot:test`,
+# `task bot:audit`, `task bot:workflows`) — exactly what ci.yml's bot-test and
+# bot-audit jobs run. Frozen contract with ci.yml and the root taskfile; keep
+# in lockstep.
+#
+# `bot:lint` is gone with the source: linting and unit-testing the bot is
+# ocx-sh/indexbot's own gate now. What remains here is what only this
+# deployment can assert.
+#
+# Default working directory for every task below is this file's directory
+# (bot-tools/) — Task's include default, not overridden.
+
+version: '3'
+
+tasks:
+  sync:
+    desc: uv sync against the pinned, hash-locked ocx-indexbot
+    internal: true
+    cmds:
+      - uv sync --frozen
+
+  test:
+    desc: This deployment's own governance suite (workflow split, pathspec, shipped policy)
+    deps: [sync]
+    cmds:
+      - uv run pytest
+
+  workflows:
+    desc: The package's workflow invariants (WF-01..WF-07) over this repo's tree
+    deps: [sync]
+    # Runs from the checkout root, like every other indexbot call site here:
+    # the CLI resolves `--dir` inside the repository root and refuses a `..`
+    # escape, so it has to be invoked from the root rather than pointed at it.
+    dir: ..
+    cmds:
+      - uv run --project bot-tools -- indexbot workflows-check --dir .github/workflows --owner ocx-sh
+
+  audit:
+    desc: pip-audit against the pinned indexbot dependency set
+    deps: [sync]
+    cmds:
+      - uv run pip-audit
