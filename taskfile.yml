@@ -1,8 +1,9 @@
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
 #
 # Repo gate contract. `verify` == the CI job set across BOTH workflows:
-# .github/workflows/ci.yml (schema-validate, bot-test, bot-workflows, bot-audit,
-# workflows-lint, render-check; golden-baseline is CI-only — see `verify`)
+# .github/workflows/ci.yml (schema-validate, bot-test, bot-workflows,
+# verify-indexbot-ci, bot-audit, workflows-lint, render-check;
+# golden-baseline is CI-only — see `verify`)
 # and .github/workflows/catalog-ci.yml (build, verify-catalog-ci), which is
 # RENDERED by `ocx-catalog ci` from catalog.config.json's `ci` block and must
 # never be hand-edited. No drift between this file and either workflow — see
@@ -362,8 +363,8 @@ tasks:
   verify:
     desc: >-
       Full gate — the CI job set across both workflows: ci.yml
-      (schema-validate, bot-test, bot-workflows, bot-audit, workflows-lint,
-      render-check) and the rendered catalog-ci.yml (build via site:build,
+      (schema-validate, bot-test, bot-workflows, verify-indexbot-ci,
+      bot-audit, workflows-lint, render-check) and the rendered catalog-ci.yml (build via site:build,
       verify-catalog-ci via cat:ci:check). ci.yml's golden-baseline job is
       deliberately NOT here: it refuses to run against a dirty working tree
       (its manifest header records HEAD while the pipeline builds the
@@ -373,6 +374,7 @@ tasks:
       - task: schema:validate
       - task: bot:test
       - task: bot:workflows
+      - task: bot:ci:check
       - task: bot:audit
       - task: workflows:lint
       - task: cat:ci:check

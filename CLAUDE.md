@@ -85,12 +85,27 @@ assertion billed twice; `render-check` still covers the jq/`RENDER_INDEX_DIR`
 and `--out` plumbing the rendered job does not.
 
 The **bot** left too, on 2026-08-24: `bot/` is now
-[`ocx-indexbot`](https://pypi.org/p/ocx-indexbot) 0.1.0 on PyPI (repo
+[`ocx-indexbot`](https://pypi.org/p/ocx-indexbot) on PyPI (repo
 [ocx-sh/indexbot](https://github.com/ocx-sh/indexbot), import `ocx_indexbot`,
 console script still `indexbot`). This repo consumes it through `bot-tools/`,
-a project whose only job is to pin it: `ocx-indexbot==0.1.0` plus a hash-locked
-`uv.lock`, so the version running in the privileged governance job changes only
-by reviewed PR. `task bot:lint` retired with the source; `task bot:test` now
+a project whose only job is to pin it, so the version running in the
+privileged governance job changes only by reviewed PR.
+
+**Temporarily a git pin.** `bot-tools/pyproject.toml` points at
+`ocx-sh/indexbot` `main` via `[tool.uv.sources]` while this repo dogfoods the
+unreleased 0.2.0 — the release that moves an index's identity (`name`,
+`name_segments`), its forge and its pipeline files out of the package and into
+`.github/index-policy.json`. `uv.lock` records the resolved commit and
+`--frozen` enforces it. It goes back to `ocx-indexbot==0.2.0` the moment that
+release lands; see
+[quality-indexbot-security.md](./.claude/rules/quality-indexbot-security.md).
+
+The five governance workflows are now **generated**: `validate.yml`,
+`governance.yml`, `reconcile.yml`, `pr-checks-label.yml` and `stale.yml` come
+from `indexbot ci`, rendered from `.github/index-policy.json`'s `ci` block plus
+`name_segments`. `ci.yml`'s `verify-indexbot-ci` job (`task bot:ci:check`) is
+the drift gate, mirroring `verify-catalog-ci` for the other generator. Never
+hand-edit one. `task bot:lint` retired with the source; `task bot:test` now
 runs `bot-tools/tests/security/` — the deployment-specific governance
 assertions that could not travel with the package (workflow split, `validate.yml`'s
 pathspec, the shipped registry policy, retired-surface absences) — and
@@ -119,12 +134,14 @@ confuse the two when reasoning about what ships.
 |---|---|
 | `schema/` | JSON Schemas for the wire contract (`config`, `root`, `image-index`) |
 | `bot-tools/` | Pins the released [`ocx-indexbot`](https://pypi.org/p/ocx-indexbot) (`bot-tools/uv.lock`, hash-locked) + `tests/security/` — this deployment's own governance assertions, the half that could not travel with the package. `task bot:test \| bot:workflows \| bot:audit` |
+| `.github/index-policy.json` | This deployment's own identity and policy — `name`, `name_segments`, the G-03 registry allowlist, `reserved_namespaces`, `governance.auto_merge`, and the `ci` block `indexbot ci` renders workflows from. A committed file, never a settings-page variable |
 | `catalog.config.json` | `@ocx-sh/catalog` config — sources, brand, nav, docs/publicDir mounts, siteUrl, and the `ci` block that renders `catalog-ci.yml` (plan_catalog_extraction WP-11). Install-command strings are NOT config: the `ocx` subcommand names are fixed, so they live in the package as `DEFAULT_INSTALL_FLAVORS` |
 | `package.json` | `@ocx-sh/catalog: ^0.1.0` (npm) + its `vitepress`/`vue` peers |
 | `site/` | Consumer content only — `docs/` (hand-authored Markdown, mounted via `catalog.config.json`'s `docs`) and `public/` (favicon, via `publicDir`); the catalog/docs theme itself now lives in `@ocx-sh/catalog` |
 | `p/` | Package roots (`p/<ns>/<pkg>.json`) + package-local CAS OCI image indices (`p/<ns>/<pkg>/o/sha256/<hex>.json`) — empty until Phase 4 seed data lands |
 | `.github/workflows/render-deploy.yml` | Renders `p/` via `task render:build`, deploys `site/.vitepress/dist` to Pages + domain/DNS self-activation (replaces retired `deploy.yml`) |
 | `.github/workflows/catalog-ci.yml` | **Generated** by `ocx-catalog ci` from `catalog.config.json`'s `ci` block — never hand-edit; its `verify-catalog-ci` job is the drift gate |
+| `.github/workflows/{validate,governance,reconcile,pr-checks-label,stale}.yml` | **Generated** by `indexbot ci` from `.github/index-policy.json` — never hand-edit; `ci.yml`'s `verify-indexbot-ci` job (`task bot:ci:check`) is the drift gate |
 | `.claude/artifacts/` | Handover, ADR, design spec, research (ported from ocx + Phase-0 additions) |
 | `.claude/state/plans/` | Plans (gitignored) — Plan Status Protocol applies |
 

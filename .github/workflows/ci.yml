@@ -57,6 +57,28 @@ jobs:
       - name: task bot:workflows
         run: task bot:workflows
 
+  verify-indexbot-ci:
+    name: verify-indexbot-ci
+    # Drift gate for the five GENERATED governance workflows. They are
+    # rendered by `indexbot ci` from .github/index-policy.json, and they carry
+    # a security argument nobody re-derives per PR: one trigger per file (a
+    # `github.event_name`-skipped job still publishes a green-equivalent
+    # impostor of the required context), no PR-head checkout in the privileged
+    # job, and the cron-upstream-only guard. A hand-edit that survives is that
+    # argument silently replaced by an opinion — so this is the mirror of
+    # catalog-ci.yml's verify-catalog-ci, for the other generator.
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4.3.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-bot
+      - name: task bot:ci:check
+        run: task bot:ci:check
+
   bot-audit:
     name: bot-audit
     # The only job here a `schedule` can reach, so the only one needing the

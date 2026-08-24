@@ -1,3 +1,15 @@
 {
-  "registry_hosts": ["ghcr.io", "ocx.sh"]
+  "$schema": "https://ocx-sh.github.io/indexbot/schema/index-policy-v1.schema.json",
+  "name": "ocx.sh",
+  "name_segments": 2,
+  "registry_hosts": ["ghcr.io", "ocx.sh"],
+  "reserved_namespaces": ["ocx", "ocx-sh", "ocx-contrib", "ocx-rs"],
+  "governance": { "auto_merge": "owners" },
+  "ci": {
+    "forge": "github",
+    "owner": "ocx-sh",
+    "run": "uv run --project bot-tools -- indexbot",
+    "setup": "./.github/actions/setup-bot",
+    "deploy_workflow": "render-deploy.yml"
+  }
 }

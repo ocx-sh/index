@@ -5,6 +5,17 @@
 # reviewed pull request — the same control that governs
 # `.github/index-policy.json`.
 #
+# TEMPORARILY a git source, not a PyPI version. 0.2.0 — the release that makes
+# an index's identity, forge and pipelines configurable — is not cut yet, and
+# this repository is its dogfood: it renders its own workflows with
+# `indexbot ci` and runs the governance lane on the same code the GitLab e2e
+# does. The control is unchanged in kind: `uv.lock` records the exact resolved
+# commit and `uv sync --frozen` enforces it, so "bump = reviewed lockfile diff"
+# still holds. What is genuinely weaker is provenance — a git commit carries no
+# Trusted Publishing attestation, and a force-push to indexbot `main` would
+# move what a re-lock resolves to. Both are why this is time-boxed: the source
+# goes back to `ocx-indexbot==0.2.0` the moment that release lands.
+#
 # `dev` additionally carries pytest for `tests/security/`: the deployment-
 # specific half of the governance suite, which asserts on THIS repository's
 # committed workflows and policy and therefore could not travel with the
@@ -14,7 +25,10 @@ name = "index-bot-tools"
 version = "0"
 description = "Pinned indexbot toolchain + this deployment's own security suite."
 requires-python = ">=3.12"
-dependencies = ["ocx-indexbot==0.1.0"]
+dependencies = ["ocx-indexbot"]
+
+[tool.uv.sources]
+ocx-indexbot = { git = "https://github.com/ocx-sh/indexbot.git", branch = "main" }
 
 [dependency-groups]
 dev = ["pytest>=8.3", "pip-audit>=2.7"]

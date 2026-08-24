@@ -17,6 +17,8 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+from ocx_indexbot.ci.render import parse_header_version
+
 _REPO_ROOT = Path(__file__).resolve().parents[3]
 _WORKFLOWS_DIR = _REPO_ROOT / ".github" / "workflows"
 _VALIDATE = _WORKFLOWS_DIR / "validate.yml"
@@ -441,3 +443,42 @@ def test_the_upstream_guard_binds_the_owner_not_the_repository() -> None:
             assert "github.repository ==" not in line, (
                 f"{workflow.name}: guard binds github.repository, not the owner"
             )
+
+
+# --- the split is now GENERATED, and the gate is what keeps it -------------
+
+_GENERATED = ("validate.yml", "governance.yml", "reconcile.yml", "pr-checks-label.yml", "stale.yml")
+
+
+def test_every_governance_workflow_is_generated_and_says_so() -> None:
+    """0.2.0 moved these five out of hand-authorship: `indexbot ci` renders
+    them from `.github/index-policy.json`, and ci.yml's `verify-indexbot-ci`
+    job fails on any hand-edit.
+
+    Every assertion above this line is still the real check — a generator is
+    not evidence, it is just where the bytes came from. What this test adds is
+    that the bytes really do come from there, because the moment one of these
+    files loses its header it also silently leaves the drift gate's scope:
+    `indexbot ci --check` would rewrite it without complaint and no one would
+    learn that the argument had been edited.
+    """
+    for name in _GENERATED:
+        first_line = (_WORKFLOWS_DIR / name).read_text(encoding="utf-8").split("\n", 1)[0]
+        assert parse_header_version(first_line) is not None, (
+            f"{name} has no `indexbot ci` header — it is outside the drift gate"
+        )
+
+
+def test_the_hand_written_workflows_are_not_claimed_by_the_generator() -> None:
+    """The converse, and the reason the header is per-file rather than a list
+    somewhere: `ci.yml`, `render-deploy.yml` and `dependency-review.yml` are
+    this deployment's own, and `catalog-ci.yml` belongs to the *other*
+    generator. A header appearing on one of them would mean `indexbot ci`
+    had started overwriting a file nobody asked it to own."""
+    for workflow in _workflow_files():
+        if workflow.name in _GENERATED:
+            continue
+        first_line = workflow.read_text(encoding="utf-8").split("\n", 1)[0]
+        assert parse_header_version(first_line) is None, (
+            f"{workflow.name} claims to be rendered by indexbot ci"
+        )

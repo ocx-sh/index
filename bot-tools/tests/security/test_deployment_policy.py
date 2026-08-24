@@ -21,13 +21,13 @@ from __future__ import annotations
 from pathlib import Path
 
 from ocx_indexbot.cli import _wiring
-from ocx_indexbot.core.policy import INDEX_POLICY_PATH, parse_index_policy
+from ocx_indexbot.core.policy import INDEX_POLICY_PATH, IndexPolicy, parse_index_policy
 
 _REPO_ROOT = Path(__file__).resolve().parents[3]
 _WORKFLOWS_DIR = _REPO_ROOT / ".github" / "workflows"
 
 
-def _shipped_registry_hosts() -> frozenset[str]:
+def _shipped_policy() -> IndexPolicy:
     """This repo's committed `.github/index-policy.json`, parsed by the same
     code the bot runs — never a second implementation of the grammar."""
     return parse_index_policy((_REPO_ROOT / INDEX_POLICY_PATH).read_bytes())
@@ -51,7 +51,7 @@ def test_g03_shipped_policy_is_exactly_the_two_ocx_operated_hosts() -> None:
     Any pull request that widens the committed file fails here, which is the
     reviewed-diff half of "extend only via reviewed PR" made mechanical.
     """
-    assert _shipped_registry_hosts() == frozenset({"ghcr.io", "ocx.sh"})
+    assert _shipped_policy().registry_hosts == frozenset({"ghcr.io", "ocx.sh"})
 
 
 def test_g03_shipped_policy_is_servable_by_an_adapter() -> None:
@@ -59,7 +59,46 @@ def test_g03_shipped_policy_is_servable_by_an_adapter() -> None:
     fabricated one: every host this index allowlists has a `RegistryPort` that
     can actually fetch its bytes. Allowlisting what cannot be served produces
     roots that validate and then fail every download."""
-    assert _shipped_registry_hosts() <= _wiring.REGISTRY_ADAPTER_HOSTS
+    assert _shipped_policy().registry_hosts <= _wiring.REGISTRY_ADAPTER_HOSTS
+
+
+# --- the deployment's own identity -----------------------------------------
+
+
+def test_this_index_declares_the_ocx_identity_it_publishes_under() -> None:
+    """0.2.0 moved the prefix and the depth out of the package and into this
+    file. Nothing in the bot defaults to `ocx.sh` any more, so this repository
+    is the only remaining place that says the public index publishes
+    `ocx.sh/<namespace>/<package>` — and every rendered `config.json`, every
+    `root.name` check and every `p/**` path shape follows from it."""
+    policy = _shipped_policy()
+    assert policy.name == "ocx.sh"
+    assert policy.name_segments == 2
+
+
+def test_the_ocx_brand_segments_stay_reserved() -> None:
+    """These four moved out of the package with everything else deployment-
+    specific, which means an edit deleting them here would silently open
+    `p/ocx/**` to any fork PR — the claim `validate.yml` withholds
+    `--allow-reserved-namespace` from fork PRs precisely to prevent."""
+    assert _shipped_policy().reserved_namespaces == frozenset(
+        {"ocx", "ocx-sh", "ocx-contrib", "ocx-rs"}
+    )
+
+
+def test_this_deployment_keeps_the_owners_merge_policy() -> None:
+    """`always` would drop G-19 — the author-owns-every-touched-root check —
+    on a public index anyone may open a PR against. `never` would strand the
+    announce lane behind a human forever. Neither is a change to make without
+    the diff being read."""
+    assert _shipped_policy().auto_merge == "owners"
+
+
+def test_the_generated_workflows_are_pinned_to_this_repositorys_own_owner() -> None:
+    """Every generated schedule guards on `ci.owner`, and a fork inherits
+    every schedule in a workflow file. A wrong value here silently disables
+    the guard upstream and enables it in every fork."""
+    assert _shipped_policy().ci.owner == "ocx-sh"
 
 
 # --- G-08 / G-17 (RETIRED — absence tests) ---------------------------------

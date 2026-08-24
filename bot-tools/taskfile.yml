@@ -37,6 +37,22 @@ tasks:
     cmds:
       - uv run --project bot-tools -- indexbot workflows-check --dir .github/workflows --owner ocx-sh
 
+  ci:check:
+    desc: >-
+      Drift gate for the GENERATED .github/workflows/{validate,governance,
+      reconcile,pr-checks-label,stale}.yml — exactly ci.yml's own
+      verify-indexbot-ci job. Those five are rendered by `indexbot ci` from
+      .github/index-policy.json's `ci` block plus `name_segments`, so a
+      hand-edit to one (or a policy change left un-rendered) is drift. This
+      re-renders in memory and compares, writing nothing. Re-render with
+      `uv run --project bot-tools -- indexbot ci` and commit the result.
+      An action SHA bump is deliberately NOT drift: the gate normalizes
+      `uses:` refs away, and the next render carries the bump forward.
+    deps: [sync]
+    dir: ..
+    cmds:
+      - uv run --project bot-tools -- indexbot ci --check
+
   audit:
     desc: pip-audit against the pinned indexbot dependency set
     deps: [sync]
