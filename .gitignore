@@ -1,5 +1,18 @@
 .claude/state/
 .task/
+
+# Python artifacts. These patterns used to live in `bot/.gitignore`, which
+# went with the extracted bot — `bot-tools/` is now the repo's only Python
+# tree, and without them a `git add -A` sweeps compiled bytecode into the
+# index (it did, in the switchover commit).
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+.hypothesis/
+.coverage
+.coverage.*
 /demo/
 /.golden-baseline/
 /node_modules/
