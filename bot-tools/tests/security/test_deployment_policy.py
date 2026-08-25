@@ -62,8 +62,28 @@ def test_g03_shipped_policy_is_servable_by_an_adapter() -> None:
     """The other half of the same guard, against the real file rather than a
     fabricated one: every host this index allowlists has a `RegistryPort` that
     can actually fetch its bytes. Allowlisting what cannot be served produces
-    roots that validate and then fail every download."""
-    assert _shipped_policy().registry_hosts <= _wiring.REGISTRY_ADAPTER_HOSTS
+    roots that validate and then fail every download.
+
+    0.6.0 made that true by construction — an allowlist entry IS a registry
+    client's configuration, so there is no compiled-in servable set left to
+    compare against. Asserted anyway, and against the built router rather
+    than a list: this repo is what would notice if the construction stopped
+    holding."""
+    policy = _shipped_policy()
+    router = _wiring._registry(policy, credentialed=True)  # noqa: SLF001
+    assert set(router.by_host) == policy.registry_hosts
+
+
+def test_g03_shipped_policy_needs_no_registry_credential() -> None:
+    """The public index's registries are both anonymous, so every lane —
+    including the fork-PR gate — verifies registry truth for real. An entry
+    that grew a `credentials_env` would silently move that verification to
+    `reconcile` alone, so it is a reviewed diff, not a quiet one."""
+    assert not [
+        config.credentials_env
+        for config in _shipped_policy().registries.values()
+        if config.credentials_env
+    ]
 
 
 # --- the deployment's own identity -----------------------------------------
