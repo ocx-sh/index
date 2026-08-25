@@ -1,0 +1,22 @@
+{
+  "name": "ocx.sh/oxc-project/oxfmt",
+  "repository": "oci://ghcr.io/ocx-contrib/oxc-project/oxfmt",
+  "owners": [
+    {
+      "login": "ocx-bot",
+      "id": 309019509,
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-08-25",
+  "desc": null,
+  "upstream": {
+    "org": "oxc-project",
+    "repository_url": "https://github.com/oxc-project/oxc",
+    "disclaimer": "Unaffiliated mirror. Oxfmt is a project of VoidZero Inc. and the Oxc contributors; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
