@@ -286,7 +286,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "ocx-indexbot", specifier = "==0.2.1" }]
+requires-dist = [{ name = "ocx-indexbot", specifier = "==0.2.2" }]
 
 [package.metadata.requires-dev]
 dev = [
@@ -390,14 +390,14 @@ wheels = [
 
 [[package]]
 name = "ocx-indexbot"
-version = "0.2.1"
+version = "0.2.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "httpx" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a9/e8/8973d222d1ad50491d567b3840affa809e215752b5b6333b577ad3d4b68e/ocx_indexbot-0.2.1.tar.gz", hash = "sha256:dce425499efc456f7f999e73a765dd4ec5822c064aeff0a145c568322ef9404b", size = 642427, upload-time = "2026-08-25T02:36:01.753Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/32/44/02bb0d3661ffee1ea8148d17c297fb753facbc2789edd3a289612c9b47eb/ocx_indexbot-0.2.2.tar.gz", hash = "sha256:ab1a46fc4bd4c307e30ab9ac01992b6bbadf62409bd699db1c446f043246c048", size = 644382, upload-time = "2026-08-25T02:48:46.772Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c8/fb/9e703a8b6c2d755ce8e8ea033b6b37981accadd342e0406b125a10c58eb8/ocx_indexbot-0.2.1-py3-none-any.whl", hash = "sha256:96bb37905cb5618b9da1d07d41c2a20fe23141a96c1af388ebe74dc111767c4c", size = 237081, upload-time = "2026-08-25T02:36:00.325Z" },
+    { url = "https://files.pythonhosted.org/packages/fa/4c/7e23a001e1733522abe79859acd81da924d586c91411ffd40ebe8eff3dbf/ocx_indexbot-0.2.2-py3-none-any.whl", hash = "sha256:840069f55e48b0bda76fa48b6c8b1f2434a30de73564c677cb84bc40fcde9c76", size = 238051, upload-time = "2026-08-25T02:48:45.095Z" },
 ]
 
 [[package]]
