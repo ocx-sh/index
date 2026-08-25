@@ -19,6 +19,18 @@
       "link": "https://github.com/ocx-sh/index"
     }
   ],
+  "footer": {
+    "links": [
+      {
+        "text": "privacy",
+        "link": "/docs/privacy"
+      },
+      {
+        "text": "github",
+        "link": "https://github.com/ocx-sh/index"
+      }
+    ]
+  },
   "docs": "./site/src/docs",
   "publicDir": "./site/src/public",
   "ci": {

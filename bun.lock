@@ -5,7 +5,7 @@
     "": {
       "name": "ocx-index",
       "dependencies": {
-        "@ocx-sh/catalog": "^0.1.0",
+        "@ocx-sh/catalog": "^0.5.0",
         "vitepress": "2.0.0-alpha.19",
         "vue": "3.5.41",
       },
@@ -100,7 +100,7 @@
 
     "@jridgewell/sourcemap-codec": ["@jridgewell/sourcemap-codec@1.5.5", "", {}, "sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og=="],
 
-    "@ocx-sh/catalog": ["@ocx-sh/catalog@0.1.0", "", { "dependencies": { "@fontsource/ibm-plex-mono": "^5.2.7", "@fontsource/ibm-plex-sans": "^5.2.8", "@vueuse/core": "^14.3.0", "commander": "^14.0.2", "dompurify": "^3.4.14", "highlight.js": "^11.12.0", "markdown-it": "^14.3.0", "minisearch": "7.2.0", "reka-ui": "^2.10.1" }, "peerDependencies": { "vitepress": "^2.0.0-alpha.18", "vue": "^3.5.27" }, "bin": { "ocx-catalog": "dist/cli/index.js" } }, "sha512-o8GRoGMWslhjugxeIkYgbgbM438O5egx08FhytXxLx9yTJWmrZcZk20OuN3vbAXhadFlMoEPXl7vU2yfhVQp+w=="],
+    "@ocx-sh/catalog": ["@ocx-sh/catalog@0.5.0", "", { "dependencies": { "@fontsource/ibm-plex-mono": "^5.2.7", "@fontsource/ibm-plex-sans": "^5.2.8", "@vueuse/core": "^14.3.0", "commander": "^14.0.2", "dompurify": "^3.4.14", "highlight.js": "^11.12.0", "markdown-it": "^14.3.0", "minisearch": "7.2.0", "reka-ui": "^2.10.1" }, "peerDependencies": { "vitepress": "^2.0.0-alpha.18", "vue": "^3.5.27" }, "bin": { "ocx-catalog": "dist/cli/index.js" } }, "sha512-JscL3Q1avHfoh/RcQD9ex2Ua4XbSJvTxSlvoriXqYurweAQd4pgW2AB1nAtRoe6EB6gxKDLX30DA4FncTWRDrg=="],
 
     "@oxc-project/types": ["@oxc-project/types@0.146.0", "", {}, "sha512-XC0QsnnhVe7sLIWmYmdPw7x5P0h4W8vUU3Nv1ySgWXtvCz8NizoAEpGXA0sOYoJQV2Rl13LgURAHQ5cI5ILCSA=="],
 
