@@ -4,11 +4,29 @@ name: stale
 # ADR-6 (adr_fork_pr_announce.md) FP-8 spam posture, second half: fork PRs
 # `pr-checks-label.yml` already labeled `checks-failed` get stale-closed on
 # the ordinary open-source triage schedule — "no CAPTCHA, no allowlist, no
-# first-contributor approval wall in v1", just label + stale-close. Scoped
-# strictly to `checks-failed` PRs (`only-labels`); issue staling is disabled
-# entirely (`days-before-issue-stale: -1`) — this workflow owns PR triage
-# only, never touches the anomaly-tracking issues `reconcile`/`validate`
-# file.
+# first-contributor approval wall in v1", just label + stale-close.
+#
+# `actions/stale` used to do this, and no longer does. Not because the action
+# is bad — it is the reason the thresholds and messages below read the way
+# they do — but because it is GitHub-only, and this lane has to exist
+# identically on GitLab, where there is no equivalent action at all. One
+# implementation in `cli/stale.py` is the only way both forges can be the same
+# lane rather than two lanes that resemble each other. It also drops a
+# third-party action from a job that holds `pull-requests: write`.
+#
+# Its configuration travelled with it, verbatim and as package constants
+# rather than deployment policy: `only-labels: checks-failed` (the trigger
+# label), 14 days to stale, 7 more to close, `checks-failed-stale` as the
+# stale marker, both messages word for word. None of them was ever rendered
+# from policy in this template — every one was already the same literal for
+# every deployment, so `.github/index-policy.json` gains no keys for them
+# either.
+#
+# Issue staling stays off, as `days-before-issue-stale: -1` used to say
+# structurally: `indexbot stale` sweeps pull requests and nothing else, so the
+# anomaly-tracking issues `reconcile`/`validate` file — a different lane with
+# a different owner — are untouchable from here by construction rather than by
+# configuration.
 on:
   schedule:
     - cron: "0 5 * * *" # ci.schedules.stale
@@ -28,22 +46,20 @@ jobs:
     if: github.repository_owner == 'ocx-sh'
     runs-on: ubuntu-latest
     permissions:
-      pull-requests: write # actions/stale labels + closes stale PRs
-      issues: write # actions/stale's own required scope even in PR-only mode (label/comment API is shared with issues)
+      contents: read # checkout only, to run the pinned indexbot
+      pull-requests: write # indexbot stale labels and closes stale PRs
+      issues: write # its stale/close comments post via the Issues API even for a PR — pull-requests: write alone 403s them
     steps:
-      - name: Close stale failed-check fork PRs
-        uses: actions/stale@1e223db275d687790206a7acac4d1a11bd6fe629 # v10.4.0
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4.3.1
         with:
-          only-labels: checks-failed
-          days-before-stale: 14
-          days-before-close: 7
-          stale-pr-label: checks-failed-stale
-          stale-pr-message: >-
-            This pull request has failing checks (ADR-6 FP-8 spam posture) and
-            has had no activity for 14 days. It will be closed in 7 days
-            unless updated.
-          close-pr-message: >-
-            Closing this pull request: failing checks with no activity for 21
-            days (ADR-6 FP-8).
-          days-before-issue-stale: -1
-          days-before-issue-close: -1
+          persist-credentials: false
+      - uses: ./.github/actions/setup-indexbot
+
+      # Comments are posted idempotently against a hidden HTML marker, so a
+      # re-run — or a `workflow_dispatch` fired by hand — updates the existing
+      # notice rather than adding another one to a PR that is already being
+      # closed for lack of activity.
+      - name: indexbot stale
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: uv run --frozen --project bot-tools -- indexbot stale

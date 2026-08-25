@@ -13,17 +13,30 @@ name: reconcile
 # gets harden-runner (audit mode, BD-6) and a `concurrency` group that never
 # cancels a run mid-sweep.
 #
-# Exit-code contract (ADR-4 BD-2, reused verbatim):
+# Exit-code contract (ADR-4 BD-2), and where each case is now handled:
 #   exit 0  -> OK. Nothing further to do.
-#   exit 65 -> ANOMALY. Never auto-healed (G-13/FP-3). `indexbot reconcile`
-#              itself already filed/updated the tracking issue before
-#              exiting — this workflow only annotates a `::warning::`
-#              pointing at it and stays GREEN. The filed issue is the human
-#              signal (FP-3); failing the nightly build on top of it would
-#              just be alarm fatigue for a already-actioned condition.
-#   exit 75 -> TRANSIENT. Backoff exhausted (G-10). Fail the job; the nightly
-#              cron itself is the retry.
-#   anything else -> treated as a hard failure, never silently passed.
+#   exit 65 -> ANOMALY. Never auto-healed (G-13/FP-3). `--anomaly-ok` below is
+#              this translation, folded into the command: `indexbot reconcile`
+#              has already filed/updated the tracking issue by the time it
+#              would exit 65, so it writes the same notice to the job summary
+#              and returns 0 instead. The job stays GREEN on purpose — the
+#              filed issue is the human signal (FP-3), and failing the nightly
+#              build on top of an already-actioned condition is alarm fatigue.
+#              Drop the flag and the raw 65 comes back, for a pipeline that
+#              wants to branch on it itself.
+#   exit 75 -> TRANSIENT. Backoff exhausted (G-10). `--anomaly-ok` deliberately
+#              does not touch this: a transient failure is never "ok", the job
+#              goes red, and the nightly cron itself is the retry.
+#   anything else -> a non-zero exit fails the job, which is what "never
+#              silently passed" now means with nothing left to mis-transcribe.
+#
+# The three shell steps that used to do that translation — one per exit code,
+# each re-deriving the same `::error`/`::warning`/summary block — are gone.
+# They were the observability floor (BCR #176) written in the least testable
+# place available; `cli/reconcile.py` writes the same blocks through
+# `_common.write_ci_summary`, with the anomaly findings inside a fenced block
+# rather than an annotation title, because a finding can carry a
+# registry-observed tag name (ADR-4 BD-4).
 on:
   schedule:
     - cron: "17 3 * * *" # ci.schedules.reconcile — off-peak, off the top of the hour
@@ -45,7 +58,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read # checkout only — verify-only reconcile never writes to p/
-      issues: write # indexbot reconcile itself opens/updates the anomaly-tracking issue (exit 65) via GitHubPort
+      issues: write # indexbot reconcile itself opens/updates the anomaly-tracking issue via GitHubPort
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920 # v2.20.0
@@ -56,68 +69,14 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: ./.github/actions/setup-bot
+      - uses: ./.github/actions/setup-indexbot
 
-      - name: Run indexbot reconcile
-        id: reconcile
-        # No `working-directory:` any more. It used to be `bot`, so the bot ran
-        # with a cwd one level below the `p/` tree it reads and relied on
-        # `$GITHUB_WORKSPACE` to route around its own cwd — an open question
-        # its wiring carried in a comment. With the source extracted there is
-        # no `bot/` to sit in: the run happens at the checkout root, where the
-        # index data actually is.
+      # No `working-directory:`. It used to be `bot`, so the bot ran with a cwd
+      # one level below the `p/` tree it reads and relied on
+      # `$GITHUB_WORKSPACE` to route around its own cwd. With the source
+      # extracted there is no `bot/` to sit in: the run happens at the checkout
+      # root, where the index data actually is.
+      - name: indexbot reconcile
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: |
-          set -euo pipefail
-          if uv run --project bot-tools -- indexbot reconcile 2>&1 | tee reconcile.log; then
-            ec=0
-          else
-            ec=$?
-          fi
-          echo "exit_code=$ec" >>"$GITHUB_OUTPUT"
-
-      - name: Fail on transient backoff exhaustion
-        if: steps.reconcile.outputs.exit_code == '75'
-        run: |
-          set -euo pipefail
-          # Observability floor (BCR #176): surface a structured reason on the
-          # job summary as well as the ::error annotation and stderr line — no
-          # publisher-visible failure exits bare.
-          reason="indexbot reconcile hit a transient failure (backoff exhausted, exit 75) - the nightly cron is the retry."
-          echo "::error title=indexbot reconcile: transient failure::$reason" >&2
-          printf '## indexbot reconcile: transient failure\n\n%s\n' "$reason" >> "$GITHUB_STEP_SUMMARY"
-          exit 1
-
-      - name: Anomaly detected — CLI already filed the issue, stay green
-        if: steps.reconcile.outputs.exit_code == '65'
-        env:
-          REPO: ${{ github.repository }}
-        run: |
-          set -euo pipefail
-          # Static, non-interpolated search query for indexbot reconcile's
-          # own fixed issue title (CONTRACTS.md §12) — a deep link, not an
-          # extra API call, so this step needs no additional token scope.
-          issues_url="$GITHUB_SERVER_URL/$REPO/issues?q=is%3Aissue+is%3Aopen+in%3Atitle+%22indexbot+reconcile%3A+anomalies+detected%22"
-          echo "::warning title=indexbot reconcile: anomaly detected::indexbot reconcile detected an integrity anomaly and already filed/updated the tracking issue itself (never auto-healed, ADR-6 FP-3) - see $issues_url. This stays green on purpose: the filed issue is the human signal, a red nightly build on top of it is just alarm fatigue."
-          # Observability floor (BCR #176, register §4): mirror a one-liner to
-          # the job summary (the filed issue body carries the full detail). The
-          # CLI's own main() already lands its "## indexbot reconcile failed"
-          # block above; this adds the deep link to the tracking issue.
-          printf '## indexbot reconcile: anomaly detected\n\nAn integrity anomaly was detected; the tracking issue is already filed/updated (never auto-healed, ADR-6 FP-3). See %s\n' "$issues_url" >> "$GITHUB_STEP_SUMMARY"
-
-      - name: Fail on unrecognized exit code
-        if: |
-          steps.reconcile.outputs.exit_code != '0' &&
-          steps.reconcile.outputs.exit_code != '65' &&
-          steps.reconcile.outputs.exit_code != '75'
-        env:
-          EXIT_CODE: ${{ steps.reconcile.outputs.exit_code }}
-        run: |
-          set -euo pipefail
-          # Observability floor (BCR #176): structured reason to the job summary
-          # alongside the ::error annotation and stderr line.
-          reason="indexbot reconcile exited with an unrecognized code ($EXIT_CODE) - treating as a hard failure rather than silently passing."
-          echo "::error title=indexbot reconcile: unrecognized exit code::$reason" >&2
-          printf '## indexbot reconcile: unrecognized exit code\n\n%s\n' "$reason" >> "$GITHUB_STEP_SUMMARY"
-          exit 1
+        run: uv run --frozen --project bot-tools -- indexbot reconcile --anomaly-ok

@@ -8,8 +8,8 @@
   "ci": {
     "forge": "github",
     "owner": "ocx-sh",
-    "run": "uv run --project bot-tools -- indexbot",
-    "setup": "./.github/actions/setup-bot",
+    "run": "uv run --frozen --project bot-tools -- indexbot",
+    "setup": "./.github/actions/setup-indexbot",
     "deploy_workflow": "render-deploy.yml"
   }
 }

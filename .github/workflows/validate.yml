@@ -20,18 +20,17 @@ name: validate
 # context green with nothing validated — and a first-time fork contributor's
 # `pull_request` run, held in `action_required`, materialises no job-level
 # check runs at all, leaving the skipped one as the context's ONLY bearer.
-# Since ND-4's `--allow-reserved-namespace` is withheld from fork PRs (below),
+# Since ND-4's reserved-namespace carve-out is withheld from fork PRs (below),
 # that context is the only thing stopping a fork claiming a reserved segment.
 # Trigger-disjoint workflows make the collision structurally impossible.
 # Pinned by the index deployment's own workflow-split tests.
 #
 #   schema-validate-pr (zero secrets, checks out PR head — safe, GitHub strips
-#     secrets for this trigger): indexbot validate against this PR's changed
-#     package roots. `indexbot validate` also
-#     byte-verifies every CAS file under each changed root's `o/sha256/` tree
-#     and re-derives every claimed tag/desc-blob digest from registry truth
-#     (ADR-6 FP-1/FP-4) — no extra file-listing step needed here, the CLI
-#     walks the CAS tree itself from the root path it's given.
+#     secrets for this trigger): `indexbot validate-pr` against this PR's own
+#     changed package roots. It also byte-verifies every CAS file under each
+#     changed root's `o/sha256/` tree and re-derives every claimed tag/desc-blob
+#     digest from registry truth (ADR-6 FP-1/FP-4) — the CLI walks the CAS tree
+#     itself from each root path it selects.
 #
 # The job is named "schema-validate-pr", not ADR-4's literal
 # "schema-validate", because ci.yml already owns that name for a different,
@@ -52,156 +51,65 @@ jobs:
       group: schema-validate-pr-${{ github.event.pull_request.number }}
       cancel-in-progress: true
     permissions:
-      contents: read # checkout PR head + local git diff only, no write ever needed
+      contents: read # checkout PR head, then read the local history — no write ever needed
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4.3.1
         with:
           ref: ${{ github.event.pull_request.head.sha }}
+          # Load-bearing, not caution: `validate-pr` diffs three-dot against
+          # `origin/$GITHUB_BASE_REF`, and a shallow clone has no merge base
+          # to find.
           fetch-depth: 0
           persist-credentials: false
-      - uses: ./.github/actions/setup-bot
-      - name: Determine changed p/<namespace>/<package>.json files
-        id: changed
-        env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
-        run: |
-          set -euo pipefail
-          # Exactly two path segments under p/ — a package root, never a CAS
-          # object (p/<ns>/<pkg>/o/sha256/<hex>.json) or anything else.
-          # `:(glob)` is load-bearing — do NOT "simplify" it back to a plain
-          # pathspec. A git pathspec is not a shell glob: its `*` matches `/`
-          # too, so bare 'p/*/*.json' also selects every CAS object a PR adds
-          # and hands it to `indexbot validate`, which rejects it as a
-          # malformed root. Since every announce PR adds a CAS object, that
-          # failed this required check on every announce PR. The magic
-          # switches on FNM_PATHNAME, where `*` stops at `/`.
-          #
-          # Three-dot (merge-base..HEAD), never two-dot — also load-bearing.
-          # Two-dot compares TREES, so an announce branch cut moments before
-          # another announce merged saw every root main updated since its
-          # branch point as "changed" and re-verified the STALE HEAD COPY of
-          # other packages against registry truth — digest-mismatch on roots
-          # this PR never touched and whose stale bytes a squash merge can
-          # never land (PRs #351/#423/#538). Three-dot selects exactly the
-          # files the PR authored — the same file set the privileged
-          # governance-gate classifies via the GitHub API, so the two halves
-          # judge the same diff.
-          # `--diff-filter=d` (everything but deletes), not an allowlist: a
-          # root swapped for a symlink is status T, which ACMR silently
-          # dropped — zero roots selected, validate skipped, required check
-          # green. There is nothing to validate about a delete; every other
-          # status must reach `indexbot validate`.
-          # Pinned by the index deployment's own pathspec test.
-          changed="$(git diff --name-only --diff-filter=d "$BASE_SHA...HEAD" -- ':(glob)p/*/*.json')"
-          if [ -z "$changed" ]; then
-            echo "::notice title=indexbot validate::No p/<namespace>/<package>.json changes in this PR (p/ may not be seeded yet) - skipping indexbot validate."
-            echo "has_changes=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          # ponytail: random-ish delimiter, not attacker-input-hardened crypto
-          # — these are repo-tree filenames from an already-checked-out PR
-          # diff, not a client_payload field. Collision just self-corrupts
-          # this unprivileged, secret-less job's own output parsing.
-          delim="INDEXBOT_CHANGED_FILES_$(date +%s%N)"
-          if grep -qxF "$delim" <<<"$changed"; then
-            reason="changed-file list collided with the output delimiter - retry the run (astronomically unlikely; a timestamped delimiter matched a literal filename)."
-            echo "::error title=indexbot validate: changed-file detection failed::$reason"
-            printf '## indexbot validate: changed-file detection failed\n\n%s\n' "$reason" >> "$GITHUB_STEP_SUMMARY"
-            echo "$reason" >&2
-            exit 1
-          fi
-          echo "has_changes=true" >> "$GITHUB_OUTPUT"
-          {
-            echo "files<<$delim"
-            printf '%s\n' "$changed"
-            echo "$delim"
-          } >> "$GITHUB_OUTPUT"
-
-      - name: Materialize each changed root's base-ref bytes
-        id: base
-        if: steps.changed.outputs.has_changes == 'true'
-        env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          CHANGED_FILES: ${{ steps.changed.outputs.files }}
-        run: |
-          set -euo pipefail
-          # ADR-2 ND-4 gates CLAIMING a reserved segment, not UPDATING a root
-          # already committed under one — `indexbot validate` needs the
-          # BASE-ref bytes of each changed root to tell those apart, and to
-          # bound the exemption to an announce-shaped change (its
-          # `--base-dir`). Written OUTSIDE the workspace: the PR-head tree is
-          # what `validate` byte-compares against its own canonical
-          # serialization, and must stay exactly as checked out. A root that
-          # does not exist at the base ref is simply not written, so `validate`
-          # sees no base bytes and treats it as a new claim (fail-closed).
-          base_dir="$RUNNER_TEMP/indexbot-base"
-          rm -rf "$base_dir"
-          while IFS= read -r file; do
-            [ -n "$file" ] || continue
-            git cat-file -e "$BASE_SHA:$file" 2>/dev/null || continue
-            mkdir -p "$base_dir/$(dirname "$file")"
-            git show "$BASE_SHA:$file" > "$base_dir/$file"
-          done <<< "$CHANGED_FILES"
-          echo "dir=$base_dir" >> "$GITHUB_OUTPUT"
-
-      - name: indexbot validate
-        if: steps.changed.outputs.has_changes == 'true'
-        env:
-          CHANGED_FILES: ${{ steps.changed.outputs.files }}
-          # ND-4's reserved-brand carve-out (`--allow-reserved-namespace`),
-          # gated on PR provenance. A segment this index reserves for itself
-          # (`ci`-adjacent policy: `reserved_namespaces` in
-          # .github/index-policy.json) cannot host the operator's own
-          # first-party roots without this flag — but passing it
-          # unconditionally would hand every fork PR the right to claim those
-          # segments, i.e. to publish under the index's own brand and be
-          # believed by any client that resolves through this index. A fork PR's head
-          # repository is never this repository, so the flag is withheld there
-          # and `check_namespace_not_reserved` rejects the claim exactly as it
-          # does today. A null `head.repo` (deleted fork) compares unequal too
-          # — fail closed. Branch-internal PRs still land in the human lane:
-          # a brand-new root classifies `new-package` (G-04) and carries the
-          # `governance/review-required` status nothing auto-resolves, so a
-          # person merges it.
-          #
-          # The flag governs CLAIMING only. A fork PR that merely UPDATES a
-          # root already committed under a reserved segment — the
-          # `ocx package announce --fork` re-announce lane, which can open
-          # nothing but fork PRs — is admitted by `--base-dir` below without
-          # the flag, and only while the change stays announce-shaped
-          # (`core/diff.classify_change` == "refresh"). Pinned by
-          # the index deployment's own workflow-split tests.
-          SAME_REPO_PR: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
-          BASE_DIR: ${{ steps.base.outputs.dir }}
-        run: |
-          set -euo pipefail
-          mapfile -t files <<< "$CHANGED_FILES"
-          reserved=()
-          if [ "$SAME_REPO_PR" = "true" ]; then
-            reserved+=(--allow-reserved-namespace)
-          fi
-          # `indexbot`'s own main() already lands a structured reason on the
-          # job summary for any IndexBotError it maps (register §5 chokepoint).
-          # This workflow wrapper is the belt to that suspenders: it emits the
-          # ::error annotation the checks UI surfaces AND captures the reason
-          # even when the CLI dies on a non-IndexBotError traceback (which
-          # main() deliberately does not swallow, so it writes no summary).
-          if uv run --project bot-tools -- indexbot validate --base-dir "$BASE_DIR" "${reserved[@]}" "${files[@]}" 2>&1 | tee indexbot-validate.log; then
-            ec=0
-          else
-            ec=$?
-          fi
-          if [ "$ec" -ne 0 ]; then
-            reason="indexbot validate rejected this PR's package roots (exit $ec). See the log tail below and the CLI's own summary block above."
-            echo "::error title=indexbot validate failed::$reason"
-            {
-              echo "## indexbot validate failed"
-              echo ""
-              echo "$reason"
-              echo ""
-              echo '```'
-              tail -n 20 indexbot-validate.log
-              echo '```'
-            } >> "$GITHUB_STEP_SUMMARY"
-          fi
-          exit "$ec"
+      - uses: ./.github/actions/setup-indexbot
+      # This step used to be three, and every line of shell in them was a
+      # security control that a well-meaning edit could soften silently. They
+      # now live in `cli/validate_pr.py` and `core/policy.py` with named tests,
+      # because YAML is not testable and each of these HAS gone wrong:
+      #
+      #   * the changed-root pathspec, `:(glob)`-quoted so `*` stops at `/`.
+      #     A plain `p/*/*.json` also selects the CAS objects every announce
+      #     PR adds, which `validate` then rejects as malformed roots — this
+      #     required check failed on every announce PR until the magic
+      #     pathspec went in. It is now derived from the deployment's own
+      #     `name_segments` at run time rather than baked in at render time,
+      #     so an index that is not two segments deep is correct without a
+      #     re-render.
+      #   * three-dot (merge-base...HEAD), never two-dot. Two-dot compares
+      #     TREES, so a branch cut moments before another announce merged
+      #     re-verified STALE copies of roots it never touched against
+      #     registry truth (PRs #351/#423/#538).
+      #   * `--diff-filter=d` (everything but deletes), not an ACMR allowlist:
+      #     a root swapped for a symlink is status T, which ACMR dropped —
+      #     zero roots selected, validate skipped, required check green.
+      #   * each changed root's BASE-ref bytes, materialized OUTSIDE the
+      #     workspace. ADR-2 ND-4 gates CLAIMING a reserved segment, not
+      #     UPDATING a root already committed under one, and telling those
+      #     apart needs both versions — while the head tree must stay exactly
+      #     as checked out, since `validate` byte-compares it against its own
+      #     canonical serialization. A root absent at the base ref is simply
+      #     not written, so it reads as a new claim: fail closed.
+      #   * ND-4's reserved-brand carve-out, gated on PR provenance. A segment
+      #     this index reserves for itself cannot host the operator's own
+      #     first-party roots without it, but granting it unconditionally
+      #     would let any fork PR publish under the index's own brand and be
+      #     believed by every client resolving through this index. The command
+      #     reads `pull_request.head.repo.full_name` from `$GITHUB_EVENT_PATH`
+      #     against `$GITHUB_REPOSITORY` — both written by the runner, never by
+      #     the PR author — and a null `head.repo` (a deleted fork) or an
+      #     unrecognised environment reads as "fork": fail closed.
+      #     `--same-repo-pr`/`--fork-pr` override that only for a pipeline this
+      #     bot did not generate, which is why neither appears here.
+      #
+      # Nothing above is passed on the command line, deliberately: every one
+      # of them was a `${{ }}` expression or a hand-written pathspec, and the
+      # command sniffing its own provenance and its own base commit is what
+      # makes that class of edit impossible to make in this file at all.
+      #
+      # Failure reporting moved with them. `validate-pr` writes the ::error
+      # annotation the checks UI surfaces and puts every failing root's message
+      # inside a fenced block on the job summary — fenced because those
+      # messages are derived from PR content and must never reach a `::error`
+      # title or any other command-evaluated position (ADR-4 BD-4).
+      - name: indexbot validate-pr
+        run: uv run --frozen --project bot-tools -- indexbot validate-pr

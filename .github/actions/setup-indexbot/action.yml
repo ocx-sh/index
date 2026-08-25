@@ -1,0 +1,22 @@
+name: setup-indexbot
+description: >-
+  Install the pinned uv the GENERATED index-operations workflows use
+  (validate, governance, reconcile, pr-checks-label, stale). uv resolves
+  `bot-tools/uv.lock`, which pins the released ocx-indexbot those jobs run.
+
+  Deliberately NOT `setup-bot`: that one also installs Task and forwards the
+  caller's workflow token to it as a repo-token input. `arm-auto-merge` in
+  `governance.yml` runs under `pull_request_target` with `contents: write`,
+  and a composite action cannot downscope the token its caller holds — so
+  using `setup-bot` there would hand a third-party action a credential that
+  can move the base branch and merge a pull request. None of the generated
+  jobs invoke Task, so the fix is to not install it rather than to argue
+  about the grant. Pinned by the deployment's own workflow-split tests,
+  which assert this file names no token at all.
+runs:
+  using: composite
+  steps:
+    - name: Install uv
+      uses: astral-sh/setup-uv@11f9893b081a58869d3b5fccaea48c9e9e46f990  # v8.3.2
+      with:
+        version: "0.11.15"

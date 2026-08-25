@@ -391,7 +391,7 @@ wheels = [
 [[package]]
 name = "ocx-indexbot"
 version = "0.1.0"
-source = { git = "https://github.com/ocx-sh/indexbot.git?branch=main#32d1e90e5370ec290bcc0d5b2a8f9601e9418915" }
+source = { git = "https://github.com/ocx-sh/indexbot.git?branch=main#07587e13a2c43f6de7cf88e97fbf30527e206705" }
 dependencies = [
     { name = "httpx" },
 ]
