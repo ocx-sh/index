@@ -3,6 +3,8 @@
   "repository": "oci://ghcr.io/ocx-contrib/jfrog/jfrog-cli",
   "owners": [
     {
+      "login": "ocx-bot",
+      "id": 309019509,
       "github": "ocx-bot",
       "github_id": 309019509
     }

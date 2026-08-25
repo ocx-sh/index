@@ -1,3 +1,12 @@
+# Reviewers requested on human-lane pull requests (G-20).
+#
+# `login` is a forge USERNAME, never a display name: the bot hands it to the
+# forge API to resolve a user id. `id` is that numeric id, and it — not the
+# login — is what an approval is matched on, because a login can be renamed
+# and, once released, recycled.
+#
+# The pre-0.5.0 spelling (`github:` / `github_id:`) still parses; see
+# ocx-sh/indexbot's adr_forge_neutral_owners.md.
 maintainers:
-  - github: michael-herwig
-    github_id: 3511590
+  - login: michael-herwig
+    id: 3511590

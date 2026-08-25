@@ -18,10 +18,13 @@ would pass while the real thing disagreed.
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 from ocx_indexbot.cli import _wiring
+from ocx_indexbot.core.maintainers import parse_maintainers
 from ocx_indexbot.core.policy import INDEX_POLICY_PATH, IndexPolicy, parse_index_policy
+from ocx_indexbot.core.validate_entry import parse_package_root, serialize_package_root
 from ocx_indexbot.core.workflow_invariants import resolves_at_runtime
 
 _REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -140,3 +143,53 @@ def test_g17_no_announce_pat_surface() -> None:
         assert "secrets.ANNOUNCE" not in text
     assert (_WORKFLOWS_DIR / "pr-checks-label.yml").exists()  # FP-8 failed-check label path
     assert (_WORKFLOWS_DIR / "stale.yml").exists()  # FP-8 stale-close path
+
+
+# --- the migrated owners[] tree --------------------------------------------
+
+
+def test_every_committed_root_carries_the_canonical_owner_spelling() -> None:
+    """This deployment finished the 0.5.0 `owners[]` migration
+    (`adr_forge_neutral_owners.md` D1/D2), and the committed tree is where
+    that is true or not.
+
+    Two claims per root, both against the shipped codec rather than a
+    restatement of it: it parses (so the two spellings, which the parser
+    refuses to let disagree, agree), and re-serializing it reproduces the
+    committed bytes exactly. The second is what a hand-edit trips — the
+    `validate` lane makes the same byte comparison, but only over a pull
+    request's own changed roots, so nothing else looks at the whole tree.
+    """
+    roots = sorted(_REPO_ROOT.glob("p/*/*.json"))
+    assert roots, "no package roots found — the glob or the tree moved"
+
+    for path in roots:
+        raw = path.read_bytes()
+        root = parse_package_root(raw)
+        assert serialize_package_root(root) == raw, path
+        assert root.owners, path
+        # `login`/`id` are what `model.Owner` carries; the derived legacy pair
+        # is asserted on the wire bytes, since the dataclass cannot hold it.
+        assert all(owner.login and owner.id > 0 for owner in root.owners), path
+        for entry in json.loads(raw)["owners"]:
+            assert entry["login"] == entry["github"], path
+            assert entry["id"] == entry["github_id"], path
+
+
+def test_the_committed_maintainers_file_parses_and_names_a_reviewer() -> None:
+    """G-20's input, in this deployment's own spelling. `parse_maintainers`
+    accepts either, so a file left on the pre-0.5.0 keys would pass a
+    "does it parse" check while this repo's own migration was half-done."""
+    raw = (_REPO_ROOT / ".github" / "maintainers.yml").read_bytes()
+
+    maintainers = parse_maintainers(raw)
+
+    assert maintainers, "no maintainers — the human lane would request nobody"
+    assert all(m.login and m.id > 0 for m in maintainers)
+    entries = [
+        line.strip()
+        for line in raw.decode("utf-8").splitlines()
+        if line.strip() and not line.strip().startswith("#")
+    ][1:]
+    assert entries, "no entries below the `maintainers:` key"
+    assert not [line for line in entries if line.startswith(("- github:", "github_id:"))], entries

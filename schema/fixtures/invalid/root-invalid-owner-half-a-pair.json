@@ -3,8 +3,7 @@
   "repository": "oci://ghcr.io/ocx-contrib/cmake",
   "owners": [
     {
-      "github": "a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a",
-      "github_id": 123456
+      "login": "alice"
     }
   ],
   "status": "active",

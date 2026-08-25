@@ -110,19 +110,33 @@
     },
     "owner": {
       "type": "object",
+      "description": "One namespace owner. `login`/`id` are canonical since ocx-indexbot 0.5.0; `github`/`github_id` are the pre-0.5.0 spelling, still accepted on read and emitted derived from the canonical pair. Either pair alone satisfies this schema (an index published before 0.5.0 carries only the legacy one); a root this bot writes carries both. See adr_forge_neutral_owners.md.",
       "properties": {
+        "login": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,254}$",
+          "description": "The owner's forge USERNAME — the handle a forge API resolves to a user id — never a display name. `ForgePort.request_reviewers` hands this exact string to the forge; on GitLab that is `GET /users?username=<login>`, whose `name` field is a different thing (the human's full name), and requesting review by display name resolves to nobody. Deliberately wider than GitHub's own login grammar: this index's roots may name a GitLab account, and GitLab usernames admit `.` and `_` (`project_85719502_bot_…`). Display and review-request only — not the ownership key."
+        },
+        "id": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "The owner's numeric forge user id, and THE ownership key: G-19 matches a pull request author against this and never against `login`. Mandatory because it survives a forge username rename or recycling, which the login string does not."
+        },
         "github": {
           "type": "string",
-          "pattern": "^[a-zA-Z\\d](?:[a-zA-Z\\d]|-(?=[a-zA-Z\\d])){0,38}$",
-          "description": "GitHub login, human-readable display only — not the ownership key."
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,254}$",
+          "description": "Pre-0.5.0 spelling of `login`. Derived from it on write, never independently settable; `parse_package_root` refuses a root where the two disagree."
         },
         "github_id": {
           "type": "integer",
           "minimum": 1,
-          "description": "Numeric GitHub user id. Mandatory: survives GitHub username rename/recycling, unlike the login string."
+          "description": "Pre-0.5.0 spelling of `id`. Derived from it on write, never independently settable; `parse_package_root` refuses a root where the two disagree."
         }
       },
-      "required": ["github", "github_id"],
+      "anyOf": [
+        { "required": ["login", "id"] },
+        { "required": ["github", "github_id"] }
+      ],
       "additionalProperties": false
     },
     "upstream": {

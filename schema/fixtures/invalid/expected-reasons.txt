@@ -28,7 +28,8 @@ image-index-invalid-platform-missing-os.json|$.manifests[0].platform: 'os' is a 
 
 root-invalid-bad-digest.json|$.desc.digest: 'sha256:not-a-valid-hex-digest' does not match
 root-invalid-bad-tag-name.json|$.tags: '.28.1' does not match '^[a-zA-Z0-9_][a-zA-Z0-9._-]{0,127}$'
-root-invalid-github-login-too-long.json|$.owners[0].github: 'a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a' does not match
+root-invalid-owner-login-too-long.json|does not match
+root-invalid-owner-half-a-pair.json|is not valid under any of the given schemas
 root-invalid-missing-required.json|$: 'status' is a required property
 root-invalid-namespace-too-long.json|$.name: 'ocx.sh/a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a/x' does not match
 root-invalid-source-not-https.json|$.source: 'javascript:alert(document.domain)' does not match
