@@ -110,7 +110,7 @@ runs `bot-tools/tests/security/` — the deployment-specific governance
 assertions that could not travel with the package (workflow split, `validate.yml`'s
 pathspec, the shipped registry policy, retired-surface absences) — and
 `task bot:workflows` runs the package's own `indexbot workflows-check`
-(WF-01..WF-07) over this repo's workflow tree. `mutmut.yml` went with the
+(WF-01..WF-08) over this repo's workflow tree. `mutmut.yml` went with the
 source.
 
 No known release gaps: `@ocx-sh/catalog@0.1.0` is on npm and this repo

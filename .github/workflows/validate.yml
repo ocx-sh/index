@@ -21,7 +21,13 @@ name: validate
 # `pull_request` run, held in `action_required`, materialises no job-level
 # check runs at all, leaving the skipped one as the context's ONLY bearer.
 # Since ND-4's reserved-namespace carve-out is withheld from fork PRs (below),
-# that context is the only thing stopping a fork claiming a reserved segment.
+# this is the only automated check that reads a fork PR's roots at all:
+# `governance.yml`'s gate decides whether the MACHINE lane may merge, and it
+# decides that from base-ref data without ever inspecting a root's content. So
+# a falsely-green context is what auto-merge waits on for an announce-shaped
+# fork PR, and what a human reads before merging anything else. The context is
+# not itself the enforcement — that is `cli/validate_pr.py`, running under the
+# BASE ref's policy — but it is the whole of what reports it.
 # Trigger-disjoint workflows make the collision structurally impossible.
 # Pinned by the index deployment's own workflow-split tests.
 #
@@ -89,6 +95,19 @@ jobs:
       #     as checked out, since `validate` byte-compares it against its own
       #     canonical serialization. A root absent at the base ref is simply
       #     not written, so it reads as a new claim: fail closed.
+      #   * the deployment policy this gate obeys, taken from the BASE ref.
+      #     This job checks out `pull_request.head.sha` — it is the half that
+      #     reads PR-head content — so `.github/index-policy.json` under that
+      #     root is the PULL REQUEST's copy, and every field in it steers this
+      #     check: `name_segments` builds the pathspec above, and a fork
+      #     declaring `"name_segments": 3` leaves its own two-segment
+      #     `p/<reserved>/pkg.json` matching nothing, so this required context
+      #     goes green having validated nothing at all. `reserved_namespaces`
+      #     emptied is the shorter spelling. The command byte-compares the
+      #     head's copy against the base ref's before it diffs anything and
+      #     refuses when they differ — or when the base ref has no policy at
+      #     all. That file is deployment policy: it lands on the default
+      #     branch, never through a pull request the same file governs.
       #   * ND-4's reserved-brand carve-out, gated on PR provenance. A segment
       #     this index reserves for itself cannot host the operator's own
       #     first-party roots without it, but granting it unconditionally

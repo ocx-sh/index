@@ -76,7 +76,7 @@ A1) in `.claude/artifacts/`.
   (`test_deployment_policy.py`). Changing a governance workflow means updating
   its named test in the same change.
 - `task bot:workflows` — `indexbot workflows-check`, the package's
-  deployment-independent invariants (WF-01..WF-07) over this repo's tree.
+  deployment-independent invariants (WF-01..WF-08) over this repo's tree.
   Both are CI jobs; neither is optional.
 - A bot-side rule change (a G-05 key, a lane decision, an anomaly predicate)
   belongs in `ocx-sh/indexbot` with its own named test, and arrives here as a

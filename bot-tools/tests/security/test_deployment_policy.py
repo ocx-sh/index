@@ -22,6 +22,7 @@ from pathlib import Path
 
 from ocx_indexbot.cli import _wiring
 from ocx_indexbot.core.policy import INDEX_POLICY_PATH, IndexPolicy, parse_index_policy
+from ocx_indexbot.core.workflow_invariants import resolves_at_runtime
 
 _REPO_ROOT = Path(__file__).resolve().parents[3]
 _WORKFLOWS_DIR = _REPO_ROOT / ".github" / "workflows"
@@ -102,6 +103,25 @@ def test_the_generated_workflows_are_pinned_to_this_repositorys_own_owner() -> N
 
 
 # --- G-08 / G-17 (RETIRED — absence tests) ---------------------------------
+
+
+def test_this_deployment_pins_the_bot_its_privileged_job_runs() -> None:
+    """`ci.run` is the command every generated job invokes, `arm-auto-merge`
+    under `pull_request_target` with `contents: write` included. Without
+    `--frozen`, `uv run` re-locks against `pyproject.toml` before running —
+    and re-locking a git source moves the commit — so the version executing
+    with a token that can merge a pull request would be chosen at job start
+    rather than by a reviewed lockfile diff.
+
+    `indexbot ci` refuses to render a floating `ci.run` (WF-08's render-time
+    twin), so this is belt-and-braces against the render being bypassed. It
+    is pinned HERE, next to the registry allowlist, for the same reason that
+    one is: which bot this deployment runs is this deployment's policy, and
+    the package can only refuse the shapes it recognises.
+    """
+    run = _shipped_policy().ci.run
+    assert "--frozen" in run.split() or "--locked" in run.split(), run
+    assert not resolves_at_runtime(run), run
 
 
 def test_g08_no_repository_dispatch_announce_workflow() -> None:
