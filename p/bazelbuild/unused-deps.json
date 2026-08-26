@@ -29,8 +29,8 @@
     "logo": "sha256:65302b813427f5c3363762f84f8d47bb4770ee6b983494f5dc18a406e6ff04b4"
   },
   "upstream": {
-    "org": "bazelbuild",
-    "repository_url": "https://github.com/bazelbuild/buildtools/tree/master/unused_deps",
+    "org": "bazel-contrib",
+    "repository_url": "https://github.com/bazel-contrib/buildtools/tree/main/unused_deps",
     "disclaimer": "Unaffiliated mirror. unused_deps is a project of the Bazel authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
   "tags": {

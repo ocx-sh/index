@@ -29,9 +29,9 @@
     "logo": "sha256:b1176559a5748400dff26b93af0e5e738ae218b9e6775b4f7568df8698ede2a5"
   },
   "upstream": {
-    "org": "korandoru",
-    "repository_url": "https://github.com/korandoru/hawkeye",
-    "disclaimer": "Unaffiliated mirror. HawkEye is a project of the Korandoru authors; this OCX package republishes upstream release binaries and is not endorsed by them."
+    "org": "fast",
+    "repository_url": "https://github.com/fast/hawkeye",
+    "disclaimer": "Unaffiliated mirror. HawkEye is a project of the FastLabs authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
   "tags": {
     "6.3.0_20260802": {

@@ -33,9 +33,9 @@
     "logo": "sha256:98ffe9a6c3b209d639ea2c5a29adabd9468f66d538ffd0ec56a978fe96f6b754"
   },
   "upstream": {
-    "org": "google",
-    "repository_url": "https://github.com/google/ko",
-    "disclaimer": "Unaffiliated mirror. ko is a project of Google LLC; this OCX package republishes upstream release binaries and is not endorsed by them."
+    "org": "ko-build",
+    "repository_url": "https://github.com/ko-build/ko",
+    "disclaimer": "Unaffiliated mirror. ko is a project of the ko-build authors; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
   "tags": {
     "0.18.1_20260803": {
