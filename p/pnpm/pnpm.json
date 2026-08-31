@@ -203,12 +203,12 @@
       "observed": "2026-08-03T14:32:17Z"
     },
     "11": {
-      "content": "sha256:f100ee4be5d456633131c22f6012c439e778c29593dba4bbf9e9120875f30a42",
-      "observed": "2026-08-24T23:01:32Z"
+      "content": "sha256:089c976e4e8e92547eaed1e6d335c8da9b8a44d197f815a1c4be2f45c3d0240e",
+      "observed": "2026-08-31T02:12:51Z"
     },
     "latest": {
-      "content": "sha256:f100ee4be5d456633131c22f6012c439e778c29593dba4bbf9e9120875f30a42",
-      "observed": "2026-08-24T23:01:32Z"
+      "content": "sha256:00e6b7b785a34e78ff0b014791ec7c3c124a342da0cf87f563ace01be267c2cc",
+      "observed": "2026-08-31T02:12:51Z"
     },
     "11.21.0": {
       "content": "sha256:282066b96bca0805dcb1ce1695d92c92b503020ef41f669e2c0acac0626b99ac",
@@ -241,6 +241,34 @@
     "11.24": {
       "content": "sha256:f100ee4be5d456633131c22f6012c439e778c29593dba4bbf9e9120875f30a42",
       "observed": "2026-08-24T23:01:32Z"
+    },
+    "11.25.0": {
+      "content": "sha256:089c976e4e8e92547eaed1e6d335c8da9b8a44d197f815a1c4be2f45c3d0240e",
+      "observed": "2026-08-31T02:12:51Z"
+    },
+    "11.25": {
+      "content": "sha256:089c976e4e8e92547eaed1e6d335c8da9b8a44d197f815a1c4be2f45c3d0240e",
+      "observed": "2026-08-31T02:12:51Z"
+    },
+    "12.0.0": {
+      "content": "sha256:775103091aca6b45e18042baabd533fece6065a0ce84111b84558efa42fbfffa",
+      "observed": "2026-08-31T02:12:51Z"
+    },
+    "12.0": {
+      "content": "sha256:775103091aca6b45e18042baabd533fece6065a0ce84111b84558efa42fbfffa",
+      "observed": "2026-08-31T02:12:51Z"
+    },
+    "12": {
+      "content": "sha256:00e6b7b785a34e78ff0b014791ec7c3c124a342da0cf87f563ace01be267c2cc",
+      "observed": "2026-08-31T02:12:51Z"
+    },
+    "12.1.0": {
+      "content": "sha256:00e6b7b785a34e78ff0b014791ec7c3c124a342da0cf87f563ace01be267c2cc",
+      "observed": "2026-08-31T02:12:51Z"
+    },
+    "12.1": {
+      "content": "sha256:00e6b7b785a34e78ff0b014791ec7c3c124a342da0cf87f563ace01be267c2cc",
+      "observed": "2026-08-31T02:12:51Z"
     }
   }
 }
