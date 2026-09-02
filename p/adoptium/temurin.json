@@ -12,11 +12,91 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-09-02",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:dbabd735b9b0f48fbd80b6a28e153c05bdc84ec342f8d5832db3715c80fe670d",
+    "title": "Eclipse Temurin",
+    "description": "Free, TCK-tested OpenJDK builds from the Eclipse Adoptium project",
+    "keywords": [
+      "java",
+      "jdk",
+      "jre",
+      "openjdk",
+      "temurin",
+      "adoptium",
+      "runtime"
+    ],
+    "readme": "sha256:fcbaaca6b1a46a0f72dc0d989f727ab566fc71952f97ebfa113f68cd404a2480",
+    "logo": "sha256:29883c0cadddd81cb891da2789a0db57b992645db1de28fe963e2a6a16e6f059"
+  },
   "upstream": {
     "org": "adoptium",
     "repository_url": "https://github.com/adoptium/temurin21-binaries",
     "disclaimer": "Unaffiliated mirror. Eclipse Temurin is the OpenJDK distribution built by the Eclipse Adoptium Working Group; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "jre-26.0.1_00008": {
+      "content": "sha256:5415e7e97634114b3f2e067a8bc613a4a30ea0df5f447fdaf899b8e39773ba97",
+      "observed": "2026-09-02T21:01:59Z"
+    },
+    "jre-26.0.1": {
+      "content": "sha256:5415e7e97634114b3f2e067a8bc613a4a30ea0df5f447fdaf899b8e39773ba97",
+      "observed": "2026-09-02T21:01:59Z"
+    },
+    "jre-26.0": {
+      "content": "sha256:6dd07a22f2612f7f0e752af8837998870efc5628ae01d569e461548b800e9f2e",
+      "observed": "2026-09-02T21:01:59Z"
+    },
+    "jre-26": {
+      "content": "sha256:6dd07a22f2612f7f0e752af8837998870efc5628ae01d569e461548b800e9f2e",
+      "observed": "2026-09-02T21:01:59Z"
+    },
+    "jre": {
+      "content": "sha256:6dd07a22f2612f7f0e752af8837998870efc5628ae01d569e461548b800e9f2e",
+      "observed": "2026-09-02T21:01:59Z"
+    },
+    "jre-26.0.2_00010": {
+      "content": "sha256:55b8457673d18904e3c7119c17c07feb91fcfa5e80498a8207963ef1484b45d5",
+      "observed": "2026-09-02T21:01:59Z"
+    },
+    "jre-26.0.2": {
+      "content": "sha256:6dd07a22f2612f7f0e752af8837998870efc5628ae01d569e461548b800e9f2e",
+      "observed": "2026-09-02T21:01:59Z"
+    },
+    "jre-26.0.2_01001": {
+      "content": "sha256:6dd07a22f2612f7f0e752af8837998870efc5628ae01d569e461548b800e9f2e",
+      "observed": "2026-09-02T21:01:59Z"
+    },
+    "26.0.1_00008": {
+      "content": "sha256:f22426e3579734629c1080ecb9ab0e1644ac4bfdff1fdf8dd79ff6601945090e",
+      "observed": "2026-09-02T21:01:59Z"
+    },
+    "26.0.1": {
+      "content": "sha256:f22426e3579734629c1080ecb9ab0e1644ac4bfdff1fdf8dd79ff6601945090e",
+      "observed": "2026-09-02T21:01:59Z"
+    },
+    "26.0": {
+      "content": "sha256:71b462933374cfb391febeda44a4381215412b116b681579d77b5954e58a11d0",
+      "observed": "2026-09-02T21:01:59Z"
+    },
+    "26": {
+      "content": "sha256:71b462933374cfb391febeda44a4381215412b116b681579d77b5954e58a11d0",
+      "observed": "2026-09-02T21:01:59Z"
+    },
+    "latest": {
+      "content": "sha256:71b462933374cfb391febeda44a4381215412b116b681579d77b5954e58a11d0",
+      "observed": "2026-09-02T21:01:59Z"
+    },
+    "26.0.2_00010": {
+      "content": "sha256:3ee8b46880ebe039bbe5b2e3778e97a3c72363d5b0ab1f74fb54d0a65c8447f6",
+      "observed": "2026-09-02T21:01:59Z"
+    },
+    "26.0.2": {
+      "content": "sha256:71b462933374cfb391febeda44a4381215412b116b681579d77b5954e58a11d0",
+      "observed": "2026-09-02T21:01:59Z"
+    },
+    "26.0.2_01001": {
+      "content": "sha256:71b462933374cfb391febeda44a4381215412b116b681579d77b5954e58a11d0",
+      "observed": "2026-09-02T21:01:59Z"
+    }
+  }
 }
