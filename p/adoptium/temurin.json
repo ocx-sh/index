@@ -1,0 +1,22 @@
+{
+  "name": "ocx.sh/adoptium/temurin",
+  "repository": "oci://ghcr.io/ocx-contrib/adoptium/temurin",
+  "owners": [
+    {
+      "login": "ocx-bot",
+      "id": 309019509,
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-09-02",
+  "desc": null,
+  "upstream": {
+    "org": "adoptium",
+    "repository_url": "https://github.com/adoptium/temurin21-binaries",
+    "disclaimer": "Unaffiliated mirror. Eclipse Temurin is the OpenJDK distribution built by the Eclipse Adoptium Working Group; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
