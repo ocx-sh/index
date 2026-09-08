@@ -29,8 +29,8 @@
   },
   "tags": {
     "0": {
-      "content": "sha256:8f3a77fb3c89f7d457b3a72ef50669af18c147fa2b0c6f7fed610b4a61a48e03",
-      "observed": "2026-08-30T23:26:35Z"
+      "content": "sha256:d5303d6c95b9f1edf87b7dabe4487d09e213d3b26626781a6d8bda0d80048f8c",
+      "observed": "2026-09-08T13:18:59Z"
     },
     "0.5": {
       "content": "sha256:f8615313f840b6ed89f60d8dbe9b74eced464f1a4b808af0fe78e800e95b629d",
@@ -45,8 +45,8 @@
       "observed": "2026-07-31T17:02:16Z"
     },
     "latest": {
-      "content": "sha256:8f3a77fb3c89f7d457b3a72ef50669af18c147fa2b0c6f7fed610b4a61a48e03",
-      "observed": "2026-08-30T23:26:35Z"
+      "content": "sha256:d5303d6c95b9f1edf87b7dabe4487d09e213d3b26626781a6d8bda0d80048f8c",
+      "observed": "2026-09-08T13:18:59Z"
     },
     "0.5.1_20260801230755": {
       "content": "sha256:edba09383d217a1aea7291f34931a229beaab27d384082313ff98cccc5df0873",
@@ -121,8 +121,16 @@
       "observed": "2026-08-30T23:26:35Z"
     },
     "0.6": {
-      "content": "sha256:8f3a77fb3c89f7d457b3a72ef50669af18c147fa2b0c6f7fed610b4a61a48e03",
-      "observed": "2026-08-30T23:26:35Z"
+      "content": "sha256:d5303d6c95b9f1edf87b7dabe4487d09e213d3b26626781a6d8bda0d80048f8c",
+      "observed": "2026-09-08T13:18:59Z"
+    },
+    "0.6.1_20260908131746": {
+      "content": "sha256:d5303d6c95b9f1edf87b7dabe4487d09e213d3b26626781a6d8bda0d80048f8c",
+      "observed": "2026-09-08T13:18:59Z"
+    },
+    "0.6.1": {
+      "content": "sha256:d5303d6c95b9f1edf87b7dabe4487d09e213d3b26626781a6d8bda0d80048f8c",
+      "observed": "2026-09-08T13:18:59Z"
     }
   }
 }
