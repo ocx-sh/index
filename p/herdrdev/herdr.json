@@ -1,0 +1,22 @@
+{
+  "name": "ocx.sh/herdrdev/herdr",
+  "repository": "oci://ghcr.io/ocx-contrib/herdrdev/herdr",
+  "owners": [
+    {
+      "login": "ocx-bot",
+      "id": 309019509,
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-09-10",
+  "desc": null,
+  "upstream": {
+    "org": "herdrdev",
+    "repository_url": "https://github.com/herdrdev/herdr",
+    "disclaimer": "Unaffiliated mirror. Herdr is a project of the herdr authors; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
