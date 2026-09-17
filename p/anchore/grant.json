@@ -1,0 +1,22 @@
+{
+  "name": "ocx.sh/anchore/grant",
+  "repository": "oci://ghcr.io/ocx-contrib/anchore/grant",
+  "owners": [
+    {
+      "login": "ocx-bot",
+      "id": 309019509,
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-09-17",
+  "desc": null,
+  "upstream": {
+    "org": "anchore",
+    "repository_url": "https://github.com/anchore/grant",
+    "disclaimer": "Unaffiliated mirror. Grant is a project of Anchore, Inc.; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
