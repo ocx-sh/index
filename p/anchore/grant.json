@@ -12,11 +12,81 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-09-17",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:4dfdc708364e0b1d7ec28db248b7363b6441d2427f227dbe5c1e807ac4322a1d",
+    "title": "Grant",
+    "description": "License compliance scanner for container images, SBOMs and filesystems",
+    "keywords": [
+      "grant",
+      "license",
+      "compliance",
+      "spdx",
+      "sbom",
+      "legal",
+      "supply-chain",
+      "anchore",
+      "policy"
+    ],
+    "readme": "sha256:0a61dd22dd0cabce750964b5d7a479414d337d577a7c42b9a9f454a77dba9771",
+    "logo": "sha256:db741beb3585657068ce587f80284b249c7057f0c7d310070833782c10f2bd77"
+  },
   "upstream": {
     "org": "anchore",
     "repository_url": "https://github.com/anchore/grant",
     "disclaimer": "Unaffiliated mirror. Grant is a project of Anchore, Inc.; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.6.3_20260917": {
+      "content": "sha256:4c1ac5c145e4f0a0a5067c29bef68e48a8939006605d2cb0e0bf230bae1812e1",
+      "observed": "2026-09-17T18:32:26Z"
+    },
+    "0.6.3": {
+      "content": "sha256:4c1ac5c145e4f0a0a5067c29bef68e48a8939006605d2cb0e0bf230bae1812e1",
+      "observed": "2026-09-17T18:32:26Z"
+    },
+    "0.6": {
+      "content": "sha256:c35b77f5daa52b4b4c1061ddb25eedcb58a3b8ab1d50f486becafb8c654798a3",
+      "observed": "2026-09-17T18:32:26Z"
+    },
+    "0": {
+      "content": "sha256:c35b77f5daa52b4b4c1061ddb25eedcb58a3b8ab1d50f486becafb8c654798a3",
+      "observed": "2026-09-17T18:32:26Z"
+    },
+    "latest": {
+      "content": "sha256:c35b77f5daa52b4b4c1061ddb25eedcb58a3b8ab1d50f486becafb8c654798a3",
+      "observed": "2026-09-17T18:32:26Z"
+    },
+    "0.6.4_20260917": {
+      "content": "sha256:854ea16bf9d975c0f81ffff3cb303885524ee420976a67dde00d1481c3c05bbe",
+      "observed": "2026-09-17T18:32:26Z"
+    },
+    "0.6.4": {
+      "content": "sha256:854ea16bf9d975c0f81ffff3cb303885524ee420976a67dde00d1481c3c05bbe",
+      "observed": "2026-09-17T18:32:26Z"
+    },
+    "0.6.6_20260917": {
+      "content": "sha256:ff0a7b23b65a2523c3703b641be74a25ac8506e3c8d75bfd4db707b559a47163",
+      "observed": "2026-09-17T18:32:26Z"
+    },
+    "0.6.6": {
+      "content": "sha256:ff0a7b23b65a2523c3703b641be74a25ac8506e3c8d75bfd4db707b559a47163",
+      "observed": "2026-09-17T18:32:26Z"
+    },
+    "0.6.7_20260917": {
+      "content": "sha256:b20e878370e77205153b265d19dbd9fad2b7fbf9dc7592506597536fc5e57c50",
+      "observed": "2026-09-17T18:32:26Z"
+    },
+    "0.6.7": {
+      "content": "sha256:b20e878370e77205153b265d19dbd9fad2b7fbf9dc7592506597536fc5e57c50",
+      "observed": "2026-09-17T18:32:26Z"
+    },
+    "0.6.8_20260917": {
+      "content": "sha256:c35b77f5daa52b4b4c1061ddb25eedcb58a3b8ab1d50f486becafb8c654798a3",
+      "observed": "2026-09-17T18:32:26Z"
+    },
+    "0.6.8": {
+      "content": "sha256:c35b77f5daa52b4b4c1061ddb25eedcb58a3b8ab1d50f486becafb8c654798a3",
+      "observed": "2026-09-17T18:32:26Z"
+    }
+  }
 }
