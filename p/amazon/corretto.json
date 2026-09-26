@@ -444,6 +444,10 @@
     "25.0.4_10001": {
       "content": "sha256:b9bab37532cd68072c49feac3218aaf43017cd46d22f9dabda174a54643d3277",
       "observed": "2026-09-26T04:06:27Z"
+    },
+    "11.0.32_12001": {
+      "content": "sha256:ef486b96aaaf7533015b1c67eda73b2b83e15d91c441caf7a284f5a7df8dbc6b",
+      "observed": "2026-09-26T11:03:02Z"
     }
   }
 }
