@@ -1,0 +1,22 @@
+{
+  "name": "ocx.sh/project-zot/zot",
+  "repository": "oci://ghcr.io/ocx-contrib/project-zot/zot",
+  "owners": [
+    {
+      "login": "ocx-bot",
+      "id": 309019509,
+      "github": "ocx-bot",
+      "github_id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-09-27",
+  "desc": null,
+  "upstream": {
+    "org": "project-zot",
+    "repository_url": "https://github.com/project-zot/zot",
+    "disclaimer": "Unaffiliated mirror. zot is a CNCF project; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
