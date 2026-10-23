@@ -144,6 +144,10 @@ jobs:
         run: task render:build CONFIG_OVERLAY=catalog.index-ocx-sh.json
       - name: task schema:validate:rendered
         run: task schema:validate:rendered
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: index-tree
+          path: dist
 
       # Idempotent: fails harmlessly if the project already exists.
       - name: Ensure Pages project
@@ -256,9 +260,39 @@ jobs:
           dist: dist
           storage-key: ${{ secrets.BUNNY_STORAGE_KEY }}
 
+  # The same index.ocx.sh tree, to the root of Bunny storage zone sh-ocx-index
+  # (SSD, replicated). Cloudflare Pages keeps deploying until index.ocx.sh's
+  # DNS points at Bunny for good; it is the rollback.
+  deploy-index-bunny:
+    name: deploy index.ocx.sh (Bunny)
+    needs: deploy
+    runs-on: ubuntu-latest
+    environment: ocx.sh
+    concurrency:
+      group: ocx-sh-deploy
+      cancel-in-progress: false
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+          package-manager-cache: false
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: index-tree
+          path: dist
+      - name: Upload changed files
+        env:
+          BUNNY_STORAGE_KEY: ${{ secrets.BUNNY_STORAGE_KEY }}
+        run: node scripts/bunny-upload.mjs dist
+
   smoke:
     name: smoke
-    needs: deploy
+    needs: [deploy, deploy-index-bunny]
     runs-on: ubuntu-latest
     permissions:
       contents: read
