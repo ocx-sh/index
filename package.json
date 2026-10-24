@@ -4,5 +4,8 @@
   "type": "module",
   "dependencies": {
     "@ocx-sh/catalog": "^0.6.0"
+  },
+  "patchedDependencies": {
+    "@ocx-sh/catalog@0.6.0": "patches/@ocx-sh%2Fcatalog@0.6.0.patch"
   }
 }

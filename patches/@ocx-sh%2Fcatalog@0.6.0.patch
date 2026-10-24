@@ -1,0 +1,13 @@
+diff --git a/dist/site/layouts/Page.astro b/dist/site/layouts/Page.astro
+index f90912650a4d0b7b17f6ca8b50fa6421ac506d6d..abf755256643cf4c9faade1052f182c94fed8f0d 100644
+--- a/dist/site/layouts/Page.astro
++++ b/dist/site/layouts/Page.astro
+@@ -58,7 +58,7 @@ const catalogLink = { label: "catalog", href: joinBase(base, "/"), ...(underDocs
+ const chromeProps =
+   brand === null
+     ? {
+-        extraNav: docsHref === null ? [] : [{ label: "docs", href: docsHref }],
++        extraNav: [],
+         extraFooterLinks: [catalogJson],
+       }
+     : {
