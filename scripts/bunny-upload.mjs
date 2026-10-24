@@ -1,23 +1,23 @@
 #!/usr/bin/env node
-// Uploads the index.ocx.sh tree (dist/) to the root of Bunny storage zone sh-ocx-index, skipping files
-// whose SHA-256 already matches. Order keeps the wire consistent for a client reading mid-deploy: CAS
-// objects and assets first, then package roots and pages, then c/index.json and config.json.
-// `catalog/` in the zone is the ocx.sh/catalog/ tree (ocx-sh/website's deploy action): never touched.
+// Uploads the wire files of the rendered tree (config.json, c/**, p/**) to Bunny storage zone
+// sh-ocx-index-edge, which serves index.ocx.sh; every other path there redirects to ocx.sh/catalog/.
+// Files whose SHA-256 already matches are skipped. Order keeps the wire consistent for a client
+// reading mid-deploy: CAS objects first, then package roots, then c/index.json and config.json.
 //
-// Usage: BUNNY_STORAGE_KEY=... node scripts/bunny-upload.mjs [dist]
+// Usage: BUNNY_EDGE_STORAGE_KEY=... node scripts/bunny-upload.mjs [dist]
 // ponytail: no prune. Wire files are append-mostly (CAS is immutable, roots are overwritten); a removed
 // package's files stay until deleted by hand.
 import { createHash } from 'node:crypto';
 import { readFile, readdir } from 'node:fs/promises';
 import { join, relative } from 'node:path';
 
-const ZONE = 'sh-ocx-index';
+const ZONE = 'sh-ocx-index-edge';
 const HOST = process.env.BUNNY_STORAGE_HOST || 'storage.bunnycdn.com';
-const KEY = process.env.BUNNY_STORAGE_KEY;
+const KEY = process.env.BUNNY_EDGE_STORAGE_KEY;
 const DIST = process.argv[2] || 'dist';
 const PARALLEL = 16;
 
-if (!KEY) throw new Error('BUNNY_STORAGE_KEY is empty');
+if (!KEY) throw new Error('BUNNY_EDGE_STORAGE_KEY is empty');
 const api = (path) => `https://${HOST}/${ZONE}/${path}`;
 
 async function request(method, path, body) {
@@ -58,14 +58,14 @@ async function remoteChecksums(paths) {
   return sums;
 }
 
+const isWire = (p) => p === 'config.json' || p.startsWith('c/') || p.startsWith('p/');
+
 function phase(p) {
-  if (p === 'config.json' || p === 'c/index.json' || p === 'data/catalog/catalog.json') return 2;
-  if (p.endsWith('.html') || /^p\/[^/]+\/[^/]+\.json$/.test(p)) return 1;
-  return 0;
+  if (p === 'config.json' || p === 'c/index.json') return 2;
+  return /^p\/[^/]+\/[^/]+\.json$/.test(p) ? 1 : 0;
 }
 
-const files = await walk(DIST);
-if (files.some((p) => p.startsWith('catalog/'))) throw new Error(`${DIST}/catalog/ would overwrite the ocx.sh/catalog/ tree`);
+const files = (await walk(DIST)).filter(isWire);
 if (!files.includes('config.json')) throw new Error(`${DIST}/config.json missing: run task render:build first`);
 
 const remote = await remoteChecksums(files);

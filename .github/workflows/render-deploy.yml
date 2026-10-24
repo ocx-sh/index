@@ -260,11 +260,11 @@ jobs:
           dist: dist
           storage-key: ${{ secrets.BUNNY_STORAGE_KEY }}
 
-  # The same index.ocx.sh tree, to the root of Bunny storage zone sh-ocx-index
-  # (SSD, replicated). Cloudflare Pages keeps deploying until index.ocx.sh's
-  # DNS points at Bunny for good; it is the rollback.
+  # The wire files of the same tree (config.json, c/, p/) to Bunny storage zone
+  # sh-ocx-index-edge (Edge SSD, replicated), which serves index.ocx.sh.
+  # Cloudflare Pages keeps deploying as the DNS rollback.
   deploy-index-bunny:
-    name: deploy index.ocx.sh (Bunny)
+    name: deploy index.ocx.sh (Bunny edge)
     needs: deploy
     runs-on: ubuntu-latest
     environment: ocx.sh
@@ -287,7 +287,7 @@ jobs:
           path: dist
       - name: Upload changed files
         env:
-          BUNNY_STORAGE_KEY: ${{ secrets.BUNNY_STORAGE_KEY }}
+          BUNNY_EDGE_STORAGE_KEY: ${{ secrets.BUNNY_EDGE_STORAGE_KEY }}
         run: node scripts/bunny-upload.mjs dist
 
   smoke:
