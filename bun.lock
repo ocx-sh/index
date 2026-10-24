@@ -5,12 +5,9 @@
     "": {
       "name": "ocx-index",
       "dependencies": {
-        "@ocx-sh/catalog": "^0.6.0",
+        "@ocx-sh/catalog": "^0.6.1",
       },
     },
-  },
-  "patchedDependencies": {
-    "@ocx-sh/catalog@0.6.0": "patches/@ocx-sh%2Fcatalog@0.6.0.patch",
   },
   "packages": {
     "@asamuzakjp/css-color": ["@asamuzakjp/css-color@5.1.11", "", { "dependencies": { "@asamuzakjp/generational-cache": "^1.0.1", "@csstools/css-calc": "^3.2.0", "@csstools/css-color-parser": "^4.1.0", "@csstools/css-parser-algorithms": "^4.0.0", "@csstools/css-tokenizer": "^4.0.0" } }, "sha512-KVw6qIiCTUQhByfTd78h2yD1/00waTmm9uy/R7Ck/ctUyAPj+AEDLkQIdJW0T8+qGgj3j5bpNKK7Q3G+LedJWg=="],
@@ -179,9 +176,9 @@
 
     "@napi-rs/wasm-runtime": ["@napi-rs/wasm-runtime@1.2.5", "", { "dependencies": { "@tybys/wasm-util": "^0.10.3" }, "peerDependencies": { "@emnapi/core": "^1.7.1 || ^2.0.0-alpha.4", "@emnapi/runtime": "^1.7.1 || ^2.0.0-alpha.4" } }, "sha512-HshSvXzmBxNzqejd3k/KemgQ3hdREUYFRRrgxOZ+gPljDIsO2SDZrVZMd4Z/HsxudQbE62OVyVFE8z9BCurfjA=="],
 
-    "@ocx-sh/catalog": ["@ocx-sh/catalog@0.6.0", "", { "dependencies": { "@astrojs/markdown-satteri": "0.4.3", "@astrojs/sitemap": "^3.7.4", "@ocx-sh/theme": "^0.2.2", "astro": "~7.3", "commander": "^14.0.2", "dompurify": "^3.4.14", "github-slugger": "^2.0.0", "highlight.js": "^11.12.0", "jsdom": "^29.1.1", "minisearch": "7.2.0", "satteri": "0.10.5", "yaml": "^2.8.0" }, "bin": { "ocx-catalog": "dist/cli/index.js" } }, "sha512-R9df8sAL05Qso17nwhoMkZ2Te5TxiOAUsr+IKEB1hZlGZKK2tdxstEfgz+gfQaDXvVnlHw+62W3hJEKikkk22g=="],
+    "@ocx-sh/catalog": ["@ocx-sh/catalog@0.6.1", "", { "dependencies": { "@astrojs/markdown-satteri": "0.4.3", "@astrojs/sitemap": "^3.7.4", "@ocx-sh/theme": "^0.2.3", "astro": "~7.3", "commander": "^14.0.2", "dompurify": "^3.4.14", "github-slugger": "^2.0.0", "highlight.js": "^11.12.0", "jsdom": "^29.1.1", "minisearch": "7.2.0", "satteri": "0.10.5", "yaml": "^2.8.0" }, "bin": { "ocx-catalog": "dist/cli/index.js" } }, "sha512-GODrPF3eauTZOm6NF1E9nGQHzAQhFV//Jp5UA4AuAIxM1AYcKCopNcY2XgwkdD/Bj72VM+iNNf19J9zedAEv7Q=="],
 
-    "@ocx-sh/theme": ["@ocx-sh/theme@0.2.2", "", { "dependencies": { "@fontsource/ibm-plex-mono": "^5.3.0", "@fontsource/ibm-plex-sans": "^5.3.0", "@pagefind/default-ui": "1.5.2", "@zag-js/accordion": "1.44.0", "@zag-js/async-list": "1.44.0", "@zag-js/checkbox": "1.44.0", "@zag-js/clipboard": "1.44.0", "@zag-js/collapsible": "1.44.0", "@zag-js/combobox": "1.44.0", "@zag-js/dialog": "1.44.0", "@zag-js/drawer": "1.44.0", "@zag-js/listbox": "1.44.0", "@zag-js/menu": "1.44.0", "@zag-js/navigation-menu": "1.44.0", "@zag-js/pagination": "1.44.0", "@zag-js/popover": "1.44.0", "@zag-js/radio-group": "1.44.0", "@zag-js/select": "1.44.0", "@zag-js/slider": "1.44.0", "@zag-js/switch": "1.44.0", "@zag-js/tabs": "1.44.0", "@zag-js/tags-input": "1.44.0", "@zag-js/toast": "1.44.0", "@zag-js/toc": "1.44.0", "@zag-js/toggle-group": "1.44.0", "@zag-js/tooltip": "1.44.0", "@zag-js/tree-view": "1.44.0", "@zag-js/vanilla": "1.44.0", "asciinema-player": "3.15.1", "gemoji": "8.1.0", "shiki": "^4.0.2", "temml": "0.14.0" }, "peerDependencies": { "@astrojs/starlight": ">=0.42.0 <0.43", "astro": "^7" }, "optionalPeers": ["@astrojs/starlight"], "bin": { "ocx-site": "bin/ocx-site.mjs" } }, "sha512-3sLn9SlUIB/K6i0eFVj7wGxMBBmectNBN+NwcvVFST/RQQTjNMXmpCmH7Z+F5QNQtKCq2avr94pJPLrGeW1/gA=="],
+    "@ocx-sh/theme": ["@ocx-sh/theme@0.2.3", "", { "dependencies": { "@fontsource/ibm-plex-mono": "^5.3.0", "@fontsource/ibm-plex-sans": "^5.3.0", "@pagefind/default-ui": "1.5.2", "@zag-js/accordion": "1.44.0", "@zag-js/async-list": "1.44.0", "@zag-js/checkbox": "1.44.0", "@zag-js/clipboard": "1.44.0", "@zag-js/collapsible": "1.44.0", "@zag-js/combobox": "1.44.0", "@zag-js/dialog": "1.44.0", "@zag-js/drawer": "1.44.0", "@zag-js/listbox": "1.44.0", "@zag-js/menu": "1.44.0", "@zag-js/navigation-menu": "1.44.0", "@zag-js/pagination": "1.44.0", "@zag-js/popover": "1.44.0", "@zag-js/radio-group": "1.44.0", "@zag-js/select": "1.44.0", "@zag-js/slider": "1.44.0", "@zag-js/switch": "1.44.0", "@zag-js/tabs": "1.44.0", "@zag-js/tags-input": "1.44.0", "@zag-js/toast": "1.44.0", "@zag-js/toc": "1.44.0", "@zag-js/toggle-group": "1.44.0", "@zag-js/tooltip": "1.44.0", "@zag-js/tree-view": "1.44.0", "@zag-js/vanilla": "1.44.0", "asciinema-player": "3.15.1", "gemoji": "8.1.0", "shiki": "^4.0.2", "temml": "0.14.0" }, "peerDependencies": { "@astrojs/starlight": ">=0.42.0 <0.43", "astro": "^7" }, "optionalPeers": ["@astrojs/starlight"], "bin": { "ocx-site": "bin/ocx-site.mjs" } }, "sha512-TZWROUyXSHz5c/M8gkd5d+ZVF0B3SppS//SUDFVymUxa7mqRnAw02KtXP1AtzCH972IdJ2GTjmmUatMYB4zVEQ=="],
 
     "@oslojs/encoding": ["@oslojs/encoding@1.1.0", "", {}, "sha512-70wQhgYmndg4GCPxPPxPGevRKqTIJ2Nh4OkiMWmDAVYsTQ+Ta7Sq+rPevXyXGdzr30/qZBnyOalCszoMxlyldQ=="],
 
