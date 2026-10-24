@@ -255,7 +255,7 @@ jobs:
           path: dist
       - name: Deploy
         id: deploy
-        uses: ocx-sh/website/.github/actions/deploy@1b898a76d4c3bbe60d9619a931c74f21660f4eb4 # v0.1.1
+        uses: ocx-sh/website/.github/actions/deploy@9e81475301d22651ce1b18682228e9fa5e5eec03 # main: zone sh-ocx-index-catalog
         with:
           dist: dist
           storage-key: ${{ secrets.BUNNY_STORAGE_KEY }}
