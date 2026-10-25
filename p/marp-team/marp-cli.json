@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/marp-team/marp-cli",
+  "repository": "oci://ghcr.io/ocx-contrib/marp-team/marp-cli",
+  "owners": [
+    {
+      "login": "ocx-bot",
+      "id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-10-25",
+  "desc": null,
+  "upstream": {
+    "org": "marp-team",
+    "repository_url": "https://github.com/marp-team/marp-cli",
+    "disclaimer": "Unaffiliated mirror. Marp CLI is a project of the Marp team; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
