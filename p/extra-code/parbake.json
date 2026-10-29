@@ -1,0 +1,28 @@
+{
+  "name": "ocx.sh/extra-code/parbake",
+  "repository": "oci://ghcr.io/extra-code/parbake",
+  "owners": [
+    {
+      "login": "extra-code",
+      "id": 54680436
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-10-29",
+  "desc": {
+    "digest": "sha256:6ddbd19e57af407abb9b316263a3c504c3577dc61868605b6e8ce34af94b7b7a",
+    "title": "Parbake",
+    "description": "Run macOS guests as containers with Apple container on Apple silicon.",
+    "keywords": [
+      "macos",
+      "virtualization",
+      "container",
+      "apple-silicon",
+      "ci"
+    ],
+    "readme": "sha256:76abc3b5037d28a680ac642c5d380a3d02b227b35e608154bd21ec9ebb9708d2",
+    "logo": "sha256:789b9545720883ec1528a4c9beb8caa605030f0d40d9b2d28c41a79956bb6601"
+  },
+  "tags": {}
+}
