@@ -1,0 +1,33 @@
+{
+  "name": "ocx.sh/extra-code/container",
+  "repository": "oci://ghcr.io/extra-code/container",
+  "owners": [
+    {
+      "login": "extra-code",
+      "id": 54680436
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-10-30",
+  "desc": {
+    "digest": "sha256:503d3e2a1261ae562a353fcc515018a4381813be0b3a09ac55159fec6ab552f0",
+    "title": "container (patched for Parbake)",
+    "description": "Temporary patched build of Apple container that runs the Parbake macOS runtime.",
+    "keywords": [
+      "container",
+      "macos",
+      "virtualization",
+      "apple-silicon",
+      "parbake"
+    ],
+    "readme": "sha256:996ffce7aa74d4bc40a640b2103a071a337f6f17c7afa55388202b4608f92782",
+    "logo": "sha256:c313c92310677dba2046f76b03499859d96a5e320e382dc7fd0322fd27b8293d"
+  },
+  "upstream": {
+    "org": "apple",
+    "repository_url": "https://github.com/apple/container",
+    "disclaimer": "Patched build of apple/container for Parbake. Temporary until upstream ships the patches."
+  },
+  "tags": {}
+}
