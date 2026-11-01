@@ -3,6 +3,6 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@ocx-sh/catalog": "^0.6.1"
+    "@ocx-sh/catalog": "^0.6.2"
   }
 }
