@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/git-lfs/git-lfs",
+  "repository": "oci://ghcr.io/ocx-contrib/git-lfs/git-lfs",
+  "owners": [
+    {
+      "login": "ocx-bot",
+      "id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-11-09",
+  "desc": null,
+  "upstream": {
+    "org": "git-lfs",
+    "repository_url": "https://github.com/git-lfs/git-lfs",
+    "disclaimer": "Unaffiliated mirror. Git LFS is a project of GitHub, Inc. and the Git LFS contributors; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
