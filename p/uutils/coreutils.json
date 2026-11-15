@@ -11,7 +11,7 @@
   "deprecated_message": null,
   "created": "2026-11-15",
   "desc": {
-    "digest": "sha256:7adfb9f9b0fe5ff9ffda63a459b9d52d45c010eeff41f4a74919d985872a673e",
+    "digest": "sha256:f9a32bdd6e0628f868e689258e8f4454c59e8b60c39c1a68ab6213f24b53accb",
     "title": "uutils coreutils",
     "description": "A cross-platform Rust rewrite of the GNU coreutils \u2014 ls, cat, sort, wc, sha256sum and ~100 more as one multicall binary",
     "keywords": [
@@ -26,7 +26,7 @@
       "sort",
       "multicall"
     ],
-    "readme": "sha256:7ffd797b9270fb3075f96fba2b760b5b34c105bad779fd3d76557e6e4053f52d",
+    "readme": "sha256:0906dabc672450e83a59124916f652d08cf991eb144be338ba1ba702dcdfc704",
     "logo": "sha256:342c3909ea23364dccb32d3b46a42057a3d8c194d1d3c6f51c27f0ed1d718fdb"
   },
   "upstream": {
@@ -48,12 +48,12 @@
       "observed": "2026-11-15T10:56:06Z"
     },
     "0": {
-      "content": "sha256:157311885c32ad6b813b90273c9634d43768fab4202a529f81881324cb6d8eab",
-      "observed": "2026-11-15T12:11:26Z"
+      "content": "sha256:a285edd1d641b28e979b4423d9497d9e2fa6e4cfedbf6d3403e56afe18f49531",
+      "observed": "2026-11-15T13:22:31Z"
     },
     "latest": {
-      "content": "sha256:157311885c32ad6b813b90273c9634d43768fab4202a529f81881324cb6d8eab",
-      "observed": "2026-11-15T12:11:26Z"
+      "content": "sha256:a285edd1d641b28e979b4423d9497d9e2fa6e4cfedbf6d3403e56afe18f49531",
+      "observed": "2026-11-15T13:22:31Z"
     },
     "0.4.0_20261115": {
       "content": "sha256:3f77e86abd0e1694fe570187f940226f8ff59d2c18c07523b8b88097258b993b",
@@ -128,40 +128,40 @@
       "observed": "2026-11-15T10:56:06Z"
     },
     "0.10.0_20261115": {
-      "content": "sha256:5c5f5b1629674c133ba9cbb2cc6229397bd2b890d6b85f005a568064678fc80f",
-      "observed": "2026-11-15T12:11:26Z"
+      "content": "sha256:597965ca656c9c57776e830865f971e950806d75a3b3cb0272479bf2e1fe59a3",
+      "observed": "2026-11-15T13:22:31Z"
     },
     "0.10.0": {
-      "content": "sha256:5c5f5b1629674c133ba9cbb2cc6229397bd2b890d6b85f005a568064678fc80f",
-      "observed": "2026-11-15T12:11:26Z"
+      "content": "sha256:597965ca656c9c57776e830865f971e950806d75a3b3cb0272479bf2e1fe59a3",
+      "observed": "2026-11-15T13:22:31Z"
     },
     "0.10": {
-      "content": "sha256:5c5f5b1629674c133ba9cbb2cc6229397bd2b890d6b85f005a568064678fc80f",
-      "observed": "2026-11-15T12:11:26Z"
+      "content": "sha256:597965ca656c9c57776e830865f971e950806d75a3b3cb0272479bf2e1fe59a3",
+      "observed": "2026-11-15T13:22:31Z"
     },
     "0.11.0_20261115": {
-      "content": "sha256:8bda2d226ec2a9cc35da95a70f79a5c532d86a4a8f3a87395d099ed9ae374e17",
-      "observed": "2026-11-15T12:11:26Z"
+      "content": "sha256:a314d1ac04bee049ead7b228a75082c35fa26f88722571ab71a70c1cb1447dd1",
+      "observed": "2026-11-15T13:22:31Z"
     },
     "0.11.0": {
-      "content": "sha256:8bda2d226ec2a9cc35da95a70f79a5c532d86a4a8f3a87395d099ed9ae374e17",
-      "observed": "2026-11-15T12:11:26Z"
+      "content": "sha256:a314d1ac04bee049ead7b228a75082c35fa26f88722571ab71a70c1cb1447dd1",
+      "observed": "2026-11-15T13:22:31Z"
     },
     "0.11": {
-      "content": "sha256:8bda2d226ec2a9cc35da95a70f79a5c532d86a4a8f3a87395d099ed9ae374e17",
-      "observed": "2026-11-15T12:11:26Z"
+      "content": "sha256:a314d1ac04bee049ead7b228a75082c35fa26f88722571ab71a70c1cb1447dd1",
+      "observed": "2026-11-15T13:22:31Z"
     },
     "0.12.0_20261115": {
-      "content": "sha256:157311885c32ad6b813b90273c9634d43768fab4202a529f81881324cb6d8eab",
-      "observed": "2026-11-15T12:11:26Z"
+      "content": "sha256:a285edd1d641b28e979b4423d9497d9e2fa6e4cfedbf6d3403e56afe18f49531",
+      "observed": "2026-11-15T13:22:31Z"
     },
     "0.12.0": {
-      "content": "sha256:157311885c32ad6b813b90273c9634d43768fab4202a529f81881324cb6d8eab",
-      "observed": "2026-11-15T12:11:26Z"
+      "content": "sha256:a285edd1d641b28e979b4423d9497d9e2fa6e4cfedbf6d3403e56afe18f49531",
+      "observed": "2026-11-15T13:22:31Z"
     },
     "0.12": {
-      "content": "sha256:157311885c32ad6b813b90273c9634d43768fab4202a529f81881324cb6d8eab",
-      "observed": "2026-11-15T12:11:26Z"
+      "content": "sha256:a285edd1d641b28e979b4423d9497d9e2fa6e4cfedbf6d3403e56afe18f49531",
+      "observed": "2026-11-15T13:22:31Z"
     },
     "0.2.2_20261115": {
       "content": "sha256:64f5bd6eeac9b46e0ebef7ba4d86d4d2ff73baa6771fe020bb0a3348ee93c647",
