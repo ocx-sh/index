@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/bazelbuild/ibazel",
+  "repository": "oci://ghcr.io/ocx-contrib/bazelbuild/ibazel",
+  "owners": [
+    {
+      "login": "ocx-bot",
+      "id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-11-15",
+  "desc": null,
+  "upstream": {
+    "org": "bazelbuild",
+    "repository_url": "https://github.com/bazelbuild/bazel-watcher",
+    "disclaimer": "Unaffiliated mirror. iBazel is a project of the Bazel authors; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
