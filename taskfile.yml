@@ -254,7 +254,7 @@ tasks:
       - python3 deploy/bunny/zone.py apply
 
   zone:verify:
-    desc: Probe the live edge and fail if it answers a wire path from its cache. No key; NOT part of verify.
+    desc: Probe the live edge and fail if it answers a wire path from a copy older than the edge TTL. No key; NOT part of verify.
     cmds:
       - python3 deploy/bunny/zone.py verify
 

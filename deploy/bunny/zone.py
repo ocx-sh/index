@@ -14,6 +14,8 @@ Env: BUNNY_API_KEY (account key, NOT a storage zone password; local only, never 
 """
 import json
 import os
+from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 import sys
 import urllib.error
 import urllib.request
@@ -22,14 +24,19 @@ ZONE = os.environ.get("BUNNY_PULLZONE_ID", "6855500")
 PUBLIC = os.environ.get("BUNNY_PUBLIC_HOST", "index.ocx.sh")
 API = f"https://api.bunny.net/pullzone/{ZONE}"
 
+EDGE_TTL = 10  # seconds a wire file may sit at the edge after a deploy replaced it
+
 # Anything not listed is left exactly as the dashboard has it.
 ZONE_SETTINGS = {
     # Edge cache lifetime in seconds; 0 is the dashboard's "Override: do not cache", -1 respects
     # the origin's Cache-Control. Storage sends none, so before this a package root sat at the
     # edge for days: on 2026-11-15 ocx still listed ocx/cli 0.6.6 after 0.6.7 was deployed.
-    # ponytail: no edge cache at all. If storage load ever matters, cache /p/*/o/sha256/* (immutable)
-    # with an edge rule and keep 0 for the rest.
-    "CacheControlMaxAgeOverride": 0,
+    # Not 0: a BYPASS answer comes straight from storage, which ignores If-None-Match, so the
+    # edge stopped answering 304 and every client conditional GET became a full 200 (smoke
+    # test, 2026-11-15). Only a cached copy gets 304s, so the edge caches, briefly.
+    # ponytail: one short TTL for every path; cache /p/*/o/sha256/* (immutable) longer with an
+    # edge rule if storage load ever matters.
+    "CacheControlMaxAgeOverride": EDGE_TTL,
 }
 
 # Wire paths every deploy has; `verify` asks for each this many times.
@@ -100,7 +107,7 @@ def cmd_apply():
 
 
 def cmd_verify():
-    """Fails when the edge answers a wire path from its cache."""
+    """Fails when the edge answers a wire path from a copy older than EDGE_TTL."""
     bad = 0
     for path in PROBES:
         states = []
@@ -109,11 +116,16 @@ def cmd_verify():
             req = urllib.request.Request(f"https://{PUBLIC}{path}", headers={"Accept-Encoding": "identity"})
             with urllib.request.urlopen(req, timeout=30) as r:
                 r.read()
-                states.append(r.headers.get("CDN-Cache", "<absent>"))
-        cached = [s for s in states if s in ("HIT", "STALE")]
-        bad += bool(cached)
-        print(f"  [{'XX' if cached else 'OK'}] {path:16} CDN-Cache: {' '.join(states)}")
-    print(f"  {'edge serves cached wire files' if bad else 'no cached answers'}")
+                state = r.headers.get("CDN-Cache", "<absent>")
+                # CDN-CachedAt is "MM/DD/YYYY HH:MM:SS" UTC; its distance to Date is the copy's age.
+                cached_at = datetime.strptime(r.headers["CDN-CachedAt"], "%m/%d/%Y %H:%M:%S")
+                age = (parsedate_to_datetime(r.headers["Date"]) - cached_at.replace(tzinfo=timezone.utc)).total_seconds()
+                states.append((state, age))
+        old = [s for s, age in states if s == "STALE" or age > EDGE_TTL + 2]
+        bad += bool(old)
+        shown = " ".join(f"{s}@{age:.0f}s" for s, age in states)
+        print(f"  [{'XX' if old else 'OK'}] {path:16} CDN-Cache: {shown}")
+    print(f"  {'edge serves wire files older than the TTL' if bad else f'no answer older than {EDGE_TTL}s'}")
     return 1 if bad else 0
 
 
