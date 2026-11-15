@@ -162,6 +162,18 @@
     "0.12": {
       "content": "sha256:f2e435a56b19ca85ee92ad867616c81a31114e28338aa8293bd5749678fd56d2",
       "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.2.2_20261115": {
+      "content": "sha256:64f5bd6eeac9b46e0ebef7ba4d86d4d2ff73baa6771fe020bb0a3348ee93c647",
+      "observed": "2026-11-15T11:02:52Z"
+    },
+    "0.2.2": {
+      "content": "sha256:64f5bd6eeac9b46e0ebef7ba4d86d4d2ff73baa6771fe020bb0a3348ee93c647",
+      "observed": "2026-11-15T11:02:52Z"
+    },
+    "0.2": {
+      "content": "sha256:64f5bd6eeac9b46e0ebef7ba4d86d4d2ff73baa6771fe020bb0a3348ee93c647",
+      "observed": "2026-11-15T11:02:52Z"
     }
   }
 }
