@@ -285,9 +285,12 @@ jobs:
         with:
           name: index-tree
           path: dist
-      - name: Upload changed files
+      # BUNNY_API_KEY is the account API key: the purge endpoint takes no
+      # storage-zone password.
+      - name: Upload changed files and purge them from the edge
         env:
           BUNNY_EDGE_STORAGE_KEY: ${{ secrets.BUNNY_EDGE_STORAGE_KEY }}
+          BUNNY_API_KEY: ${{ secrets.BUNNY_API_KEY }}
         run: node scripts/bunny-upload.mjs dist
 
   smoke:
