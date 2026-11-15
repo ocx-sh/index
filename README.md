@@ -44,7 +44,10 @@ index currently exposes `config.json` only.
 
 - **Wire contract is a one-way door** — see above.
 - **Cache Rule**: never enable CDN caching for `*.json` on the index zone —
-  client freshness relies on origin ETags.
+  client freshness relies on origin ETags. On Bunny that is a pull-zone
+  setting, kept in `deploy/bunny/zone.py`: `task zone:plan` / `task zone:apply`
+  (both need `BUNNY_API_KEY`), `task zone:verify` (no key). `BUNNY_API_KEY` is
+  account-wide and stays local; it is never a CI secret.
 
 ## Development
 

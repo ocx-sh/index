@@ -243,6 +243,21 @@ tasks:
 
         echo "schema:validate:rendered: OK"
 
+  zone:plan:
+    desc: Diff the live index.ocx.sh pull-zone settings against deploy/bunny/zone.py (needs BUNNY_API_KEY).
+    cmds:
+      - python3 deploy/bunny/zone.py plan
+
+  zone:apply:
+    desc: Apply the pull-zone settings, read them back and drop the edge cache (needs BUNNY_API_KEY).
+    cmds:
+      - python3 deploy/bunny/zone.py apply
+
+  zone:verify:
+    desc: Probe the live edge and fail if it answers a wire path from its cache. No key; NOT part of verify.
+    cmds:
+      - python3 deploy/bunny/zone.py verify
+
   smoke:test:
     desc: >-
       scripts/smoke-test.sh against a live deploy (default
