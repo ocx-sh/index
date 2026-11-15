@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/hermeticbuild/bsdtar",
+  "repository": "oci://ghcr.io/ocx-contrib/hermeticbuild/bsdtar",
+  "owners": [
+    {
+      "login": "ocx-bot",
+      "id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-11-15",
+  "desc": null,
+  "upstream": {
+    "org": "hermeticbuild",
+    "repository_url": "https://github.com/hermeticbuild/bsdtar-prebuilt",
+    "disclaimer": "Unaffiliated mirror. bsdtar is part of libarchive, and these prebuilt binaries are published by the hermeticbuild project; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
