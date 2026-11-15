@@ -10,11 +10,158 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-11-15",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:f9a32bdd6e0628f868e689258e8f4454c59e8b60c39c1a68ab6213f24b53accb",
+    "title": "uutils coreutils",
+    "description": "A cross-platform Rust rewrite of the GNU coreutils \u2014 ls, cat, sort, wc, sha256sum and ~100 more as one multicall binary",
+    "keywords": [
+      "coreutils",
+      "uutils",
+      "gnu",
+      "rust",
+      "cli",
+      "posix",
+      "ls",
+      "cat",
+      "sort",
+      "multicall"
+    ],
+    "readme": "sha256:0906dabc672450e83a59124916f652d08cf991eb144be338ba1ba702dcdfc704",
+    "logo": "sha256:342c3909ea23364dccb32d3b46a42057a3d8c194d1d3c6f51c27f0ed1d718fdb"
+  },
   "upstream": {
     "org": "uutils",
     "repository_url": "https://github.com/uutils/coreutils",
     "disclaimer": "Unaffiliated mirror. uutils coreutils is a project of the uutils developers; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.3.0_20261115": {
+      "content": "sha256:9bc3a0e12cd7454e6f42076aa4cfdf8097fbe7ae000da23762972ce463217331",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.3.0": {
+      "content": "sha256:9bc3a0e12cd7454e6f42076aa4cfdf8097fbe7ae000da23762972ce463217331",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.3": {
+      "content": "sha256:9bc3a0e12cd7454e6f42076aa4cfdf8097fbe7ae000da23762972ce463217331",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0": {
+      "content": "sha256:f2e435a56b19ca85ee92ad867616c81a31114e28338aa8293bd5749678fd56d2",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "latest": {
+      "content": "sha256:f2e435a56b19ca85ee92ad867616c81a31114e28338aa8293bd5749678fd56d2",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.4.0_20261115": {
+      "content": "sha256:3f77e86abd0e1694fe570187f940226f8ff59d2c18c07523b8b88097258b993b",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.4.0": {
+      "content": "sha256:3f77e86abd0e1694fe570187f940226f8ff59d2c18c07523b8b88097258b993b",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.4": {
+      "content": "sha256:3f77e86abd0e1694fe570187f940226f8ff59d2c18c07523b8b88097258b993b",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.5.0_20261115": {
+      "content": "sha256:492eb5e4aa50047da4d863da48f510d3a268f76246054541a52984bd0f6717f2",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.5.0": {
+      "content": "sha256:492eb5e4aa50047da4d863da48f510d3a268f76246054541a52984bd0f6717f2",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.5": {
+      "content": "sha256:492eb5e4aa50047da4d863da48f510d3a268f76246054541a52984bd0f6717f2",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.6.0_20261115": {
+      "content": "sha256:6af2790252ecb55b1fe75d63a1a905a8bced75b77dce74bf337d93110c9afe55",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.6.0": {
+      "content": "sha256:6af2790252ecb55b1fe75d63a1a905a8bced75b77dce74bf337d93110c9afe55",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.6": {
+      "content": "sha256:6af2790252ecb55b1fe75d63a1a905a8bced75b77dce74bf337d93110c9afe55",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.7.0_20261115": {
+      "content": "sha256:864ca857c55702fc32c46da0ef0357ef344300f77dee56ad6c78cb47a05d006c",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.7.0": {
+      "content": "sha256:864ca857c55702fc32c46da0ef0357ef344300f77dee56ad6c78cb47a05d006c",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.7": {
+      "content": "sha256:864ca857c55702fc32c46da0ef0357ef344300f77dee56ad6c78cb47a05d006c",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.8.0_20261115": {
+      "content": "sha256:01528e1a0285c5aee51d4e03371a3badc519f62478243c7295802ed823377896",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.8.0": {
+      "content": "sha256:01528e1a0285c5aee51d4e03371a3badc519f62478243c7295802ed823377896",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.8": {
+      "content": "sha256:01528e1a0285c5aee51d4e03371a3badc519f62478243c7295802ed823377896",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.9.0_20261115": {
+      "content": "sha256:1d763bbbcd1be1a721e289d1bac541a06f663f7872dad97b181a88ba2f28a5f8",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.9.0": {
+      "content": "sha256:1d763bbbcd1be1a721e289d1bac541a06f663f7872dad97b181a88ba2f28a5f8",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.9": {
+      "content": "sha256:1d763bbbcd1be1a721e289d1bac541a06f663f7872dad97b181a88ba2f28a5f8",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.10.0_20261115": {
+      "content": "sha256:07996d77dd413408742e56768195f909636d64ab835660d6122f52340ac91805",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.10.0": {
+      "content": "sha256:07996d77dd413408742e56768195f909636d64ab835660d6122f52340ac91805",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.10": {
+      "content": "sha256:07996d77dd413408742e56768195f909636d64ab835660d6122f52340ac91805",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.11.0_20261115": {
+      "content": "sha256:2218699974197e43d675bdac36c53dee43a9d8cdae2b98db5a482b1c5af09bc9",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.11.0": {
+      "content": "sha256:2218699974197e43d675bdac36c53dee43a9d8cdae2b98db5a482b1c5af09bc9",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.11": {
+      "content": "sha256:2218699974197e43d675bdac36c53dee43a9d8cdae2b98db5a482b1c5af09bc9",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.12.0_20261115": {
+      "content": "sha256:f2e435a56b19ca85ee92ad867616c81a31114e28338aa8293bd5749678fd56d2",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.12.0": {
+      "content": "sha256:f2e435a56b19ca85ee92ad867616c81a31114e28338aa8293bd5749678fd56d2",
+      "observed": "2026-11-15T10:56:06Z"
+    },
+    "0.12": {
+      "content": "sha256:f2e435a56b19ca85ee92ad867616c81a31114e28338aa8293bd5749678fd56d2",
+      "observed": "2026-11-15T10:56:06Z"
+    }
+  }
 }
