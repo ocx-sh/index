@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/uutils/findutils",
+  "repository": "oci://ghcr.io/ocx-contrib/uutils/findutils",
+  "owners": [
+    {
+      "login": "ocx-bot",
+      "id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-11-16",
+  "desc": null,
+  "upstream": {
+    "org": "uutils",
+    "repository_url": "https://github.com/uutils/findutils",
+    "disclaimer": "Unaffiliated mirror. uutils findutils is a project of the uutils developers; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
