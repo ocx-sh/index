@@ -255,6 +255,10 @@
     "1.130": {
       "content": "sha256:c240c72ddadb62c5f426d7c1b1746e0a35e044c5ba10e46d6d8bb4356254a410",
       "observed": "2026-11-10T20:59:12Z"
+    },
+    "1.131.0": {
+      "content": "sha256:ba8f8b71391d41f0e137bbe4bda51c83b9d22effe9338d7e8aa504db3ff6940a",
+      "observed": "2026-11-17T22:47:32Z"
     }
   }
 }
