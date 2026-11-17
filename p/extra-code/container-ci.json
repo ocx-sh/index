@@ -11,5 +11,10 @@
   "deprecated_message": null,
   "created": "2026-11-16",
   "desc": null,
-  "tags": {}
+  "tags": {
+    "0.1.0": {
+      "content": "sha256:066a0b3f61a49fb0f9082f02de56042621c4046ca54353c55588379ac5b1c781",
+      "observed": "2026-11-17T18:24:19Z"
+    }
+  }
 }
