@@ -1,0 +1,20 @@
+{
+  "name": "ocx.sh/earendil-works/pi",
+  "repository": "oci://ghcr.io/ocx-contrib/earendil-works/pi",
+  "owners": [
+    {
+      "login": "ocx-bot",
+      "id": 309019509
+    }
+  ],
+  "status": "active",
+  "deprecated_message": null,
+  "created": "2026-11-17",
+  "desc": null,
+  "upstream": {
+    "org": "earendil-works",
+    "repository_url": "https://github.com/earendil-works/pi",
+    "disclaimer": "Unaffiliated mirror. pi is a project of Earendil Works; this OCX package republishes upstream release binaries and is not endorsed by them."
+  },
+  "tags": {}
+}
