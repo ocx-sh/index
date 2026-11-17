@@ -10,11 +10,48 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-11-17",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:7e7daeafb44837b2eeb25b526635c9a4232239a551bc9259b4c99c28400fc141",
+    "title": "pi",
+    "description": "A minimal, extensible terminal coding agent \u2014 read, bash, edit and write tools over any LLM provider, with sessions, skills, extensions and MCP",
+    "keywords": [
+      "pi",
+      "coding-agent",
+      "ai",
+      "llm",
+      "agent",
+      "cli",
+      "tui",
+      "earendil"
+    ],
+    "readme": "sha256:78ce1b293e10e420f9842f007a679a6ae2641ce97b979ab1400dbb018f0e2199",
+    "logo": "sha256:a5624bc3b8cac94de75f6f13701eca2ad3ef67bbeba286c4af3f398806f0858a"
+  },
   "upstream": {
     "org": "earendil-works",
     "repository_url": "https://github.com/earendil-works/pi",
     "disclaimer": "Unaffiliated mirror. pi is a project of Earendil Works; this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "1.5.2_20261117": {
+      "content": "sha256:0ad0d0deaa8f0ec57cade029c0d16fb35c34be5adeadd5be1612f41c62beed5a",
+      "observed": "2026-11-17T12:14:47Z"
+    },
+    "1.5.2": {
+      "content": "sha256:0ad0d0deaa8f0ec57cade029c0d16fb35c34be5adeadd5be1612f41c62beed5a",
+      "observed": "2026-11-17T12:14:47Z"
+    },
+    "1.5": {
+      "content": "sha256:0ad0d0deaa8f0ec57cade029c0d16fb35c34be5adeadd5be1612f41c62beed5a",
+      "observed": "2026-11-17T12:14:47Z"
+    },
+    "1": {
+      "content": "sha256:0ad0d0deaa8f0ec57cade029c0d16fb35c34be5adeadd5be1612f41c62beed5a",
+      "observed": "2026-11-17T12:14:47Z"
+    },
+    "latest": {
+      "content": "sha256:0ad0d0deaa8f0ec57cade029c0d16fb35c34be5adeadd5be1612f41c62beed5a",
+      "observed": "2026-11-17T12:14:47Z"
+    }
+  }
 }
