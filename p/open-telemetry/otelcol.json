@@ -10,11 +10,52 @@
   "status": "active",
   "deprecated_message": null,
   "created": "2026-11-19",
-  "desc": null,
+  "desc": {
+    "digest": "sha256:b97c3376309bed50a4bb512c656f071a67cc461d6bb58ab2516090476c70d7ff",
+    "title": "otelcol",
+    "description": "OpenTelemetry Collector, core distribution \u2014 a vendor-neutral agent that receives, processes and exports traces, metrics and logs",
+    "keywords": [
+      "opentelemetry",
+      "otel",
+      "otelcol",
+      "collector",
+      "observability",
+      "telemetry",
+      "tracing",
+      "metrics",
+      "logs",
+      "otlp",
+      "cli",
+      "go"
+    ],
+    "readme": "sha256:8c63d99b67b9654076a848d5fe3091db0ac6bb9811e68bfa5f92dda4768308e2",
+    "logo": "sha256:f19d3aa81895ba0d2102df6bbd76371e55664f8f6714c6ed355f971b7b013906"
+  },
   "upstream": {
     "org": "open-telemetry",
     "repository_url": "https://github.com/open-telemetry/opentelemetry-collector-releases",
     "disclaimer": "Unaffiliated mirror. The OpenTelemetry Collector is a project of the OpenTelemetry Authors (CNCF); this OCX package republishes upstream release binaries and is not endorsed by them."
   },
-  "tags": {}
+  "tags": {
+    "0.165.0_20261119": {
+      "content": "sha256:f762a7f309e5ad386820eddb929b16ecf7b1e80455f390a4d8cc3592091bf922",
+      "observed": "2026-11-19T20:06:52Z"
+    },
+    "0.165.0": {
+      "content": "sha256:f762a7f309e5ad386820eddb929b16ecf7b1e80455f390a4d8cc3592091bf922",
+      "observed": "2026-11-19T20:06:52Z"
+    },
+    "0.165": {
+      "content": "sha256:f762a7f309e5ad386820eddb929b16ecf7b1e80455f390a4d8cc3592091bf922",
+      "observed": "2026-11-19T20:06:52Z"
+    },
+    "0": {
+      "content": "sha256:f762a7f309e5ad386820eddb929b16ecf7b1e80455f390a4d8cc3592091bf922",
+      "observed": "2026-11-19T20:06:52Z"
+    },
+    "latest": {
+      "content": "sha256:f762a7f309e5ad386820eddb929b16ecf7b1e80455f390a4d8cc3592091bf922",
+      "observed": "2026-11-19T20:06:52Z"
+    }
+  }
 }
