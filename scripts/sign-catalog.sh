@@ -7,8 +7,8 @@ IFS=$'\n\t'
 # Usage: scripts/sign-catalog.sh DIR [extra `ocx index sign` flags...]
 #
 # Runs, with the ocx build pinned in scripts/ocx-sign.pin:
-#   ocx package exec <pin> -- ocx index sign DIR --registry ocx.sh \
-#       --expires-in-days 30 --no-tty [extra flags]
+#   <that build's ocx> index sign DIR --registry ocx.sh \
+#       --expires-in-days 30 [--no-tty unless --key] [extra flags]
 # which rewrites DIR/c/index.json with `expires` and writes
 # DIR/c/index.json.sigstore.json. Keyless with the ambient GitHub OIDC token
 # unless the extra flags carry `--key`.
@@ -38,7 +38,17 @@ if [[ ! "$pin" =~ ^ghcr\.io/ocx-sh/dev/cli@sha256:[0-9a-f]{64}$ || "$pin" == *"@
   exit 1
 fi
 
-exec ocx package exec "$pin" -- ocx index sign "$dir" \
+# Resolve the pinned build's executable and run it directly: `ocx package exec`
+# strips credential-class OCX_* variables (OCX_SIGNING_KEY, OCX_KEY_PASSWORD) from its child.
+signer=$(ocx package exec "$pin" -- sh -c 'command -v ocx')
+
+# --no-tty is keyless-only: ocx rejects it next to --key.
+no_tty=(--no-tty)
+for arg in "$@"; do
+  case $arg in --key | --key=*) no_tty=() ;; esac
+done
+
+exec "$signer" index sign "$dir" \
   --registry "${SIGN_REGISTRY:-ocx.sh}" \
   --expires-in-days "${SIGN_EXPIRES_DAYS:-30}" \
-  --no-tty "$@"
+  ${no_tty[@]+"${no_tty[@]}"} "$@"

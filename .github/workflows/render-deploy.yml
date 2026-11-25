@@ -186,8 +186,8 @@ jobs:
         with:
           persist-credentials: false
       # Only bootstraps the ocx CLI; the signer is the dev build named in
-      # scripts/ocx-sign.pin, which sign-catalog.sh runs through
-      # `ocx package exec`. `project: ""` skips ocx.toml auto-load.
+      # scripts/ocx-sign.pin, whose executable sign-catalog.sh
+      # resolves through `ocx package exec` and runs. `project: ""` skips ocx.toml auto-load.
       - uses: ocx-sh/setup-ocx@25fa771f8572572dc64528db89560de68a163a0e # v1
         with:
           project: ""

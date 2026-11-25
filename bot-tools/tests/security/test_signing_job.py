@@ -9,6 +9,7 @@ Stdlib only, like the rest of this suite.
 
 from __future__ import annotations
 
+import hashlib
 import os
 import re
 import shutil
@@ -23,6 +24,8 @@ _SIGN_SCRIPT = _REPO_ROOT / "scripts" / "sign-catalog.sh"
 _UPLOAD = _REPO_ROOT / "scripts" / "bunny-upload.mjs"
 _SMOKE = _REPO_ROOT / "scripts" / "smoke-test.sh"
 _PIN_FILE = _REPO_ROOT / "scripts" / "ocx-sign.pin"
+# The same constant sits in ocx-sh/e2e-index scripts/test_build_index.py: both copies of the script must match.
+_SIGN_SCRIPT_SHA256 = "ee0d3f7eee9b440952bcd8e158187db61f4e6441736f718c67d85018b59a4252"
 _WEEKLY = "17 4 * * 1"
 
 
@@ -206,11 +209,18 @@ _GOOD_PIN = "ghcr.io/ocx-sh/dev/cli@sha256:" + "ab" * 32
 
 
 def _stub(tmp_path: Path) -> tuple[Path, Path]:
+    # `package exec <pin> -- sh -c ...` answers with the stub's own path (the
+    # pinned build's executable); any other call is the signer and is recorded.
     bin_dir = tmp_path / "bin"
     bin_dir.mkdir(exist_ok=True)
     log = tmp_path / "argv"
     ocx = bin_dir / "ocx"
-    ocx.write_text(f'#!/bin/sh\nprintf "%s\\n" "$@" > "{log}"\n')
+    ocx.write_text(
+        "#!/bin/sh\n"
+        f'if [ "$1" = package ]; then printf "%s\\n" "$@" > "{tmp_path / "resolve"}"; echo "$0"; exit 0; fi\n'
+        f'printf "%s\\n" "$@" > "{log}"\n'
+        f'printf "%s\\n" "${{OCX_SIGNING_KEY-unset}}" > "{tmp_path / "key"}"\n'
+    )
     ocx.chmod(0o755)
     return bin_dir, log
 
@@ -236,11 +246,6 @@ def test_sign_script_runs_the_contract_invocation(tmp_path: Path) -> None:
     result, log = _sign(tmp_path, _GOOD_PIN)
     assert result.returncode == 0, result.stderr
     assert log.read_text().splitlines() == [
-        "package",
-        "exec",
-        _GOOD_PIN,
-        "--",
-        "ocx",
         "index",
         "sign",
         str(tmp_path / "dist"),
@@ -250,6 +255,13 @@ def test_sign_script_runs_the_contract_invocation(tmp_path: Path) -> None:
         "30",
         "--no-tty",
     ]
+
+
+def test_sign_script_resolves_the_pinned_build_and_hands_it_the_signing_key(tmp_path: Path) -> None:
+    result, _ = _sign(tmp_path, _GOOD_PIN, extra_env={"OCX_SIGNING_KEY": "not-a-real-key"})
+    assert result.returncode == 0, result.stderr
+    assert (tmp_path / "resolve").read_text().splitlines()[:4] == ["package", "exec", _GOOD_PIN, "--"]
+    assert (tmp_path / "key").read_text().strip() == "not-a-real-key"
 
 
 def test_sign_script_registry_days_and_extra_args_are_overridable(tmp_path: Path) -> None:
@@ -262,7 +274,7 @@ def test_sign_script_registry_days_and_extra_args_are_overridable(tmp_path: Path
     )
     assert result.returncode == 0, result.stderr
     argv = log.read_text().splitlines()
-    assert argv[-7:] == ["--registry", "e2e.example", "--expires-in-days", "0", "--no-tty", "--key", "k.pem"]
+    assert argv[-6:] == ["--registry", "e2e.example", "--expires-in-days", "0", "--key", "k.pem"]  # no --no-tty with a key
 
 
 @pytest.mark.parametrize(
@@ -291,6 +303,10 @@ def test_sign_script_refuses_a_dir_without_a_catalog(tmp_path: Path) -> None:
         capture_output=True,
     )
     assert again.returncode != 0
+
+
+def test_sign_script_is_the_copy_shared_with_e2e_index() -> None:
+    assert hashlib.sha256(_SIGN_SCRIPT.read_bytes()).hexdigest() == _SIGN_SCRIPT_SHA256
 
 
 def test_committed_pin_file_is_well_formed() -> None:
