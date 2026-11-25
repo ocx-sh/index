@@ -20,6 +20,11 @@
         "type": "string",
         "pattern": "^sha256:[a-f0-9]{64}$"
       }
+    },
+    "expires": {
+      "type": "string",
+      "format": "date-time",
+      "description": "RFC 3339 UTC instant after which a client MUST treat this catalog as stale. Inside the signed bytes, so c/index.json.sigstore.json covers it. Absent on unsigned catalogs."
     }
   },
   "required": ["format_version", "packages"],

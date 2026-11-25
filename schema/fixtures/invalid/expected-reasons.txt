@@ -10,6 +10,7 @@ c-index-invalid-bad-digest.json|$.packages['kitware/cmake']: 'd11fc63c8c76e19b1b
 c-index-invalid-bad-key.json|$.packages: '/kitware/cmake' does not match
 c-index-invalid-missing-format-version.json|$: 'format_version' is a required property
 c-index-invalid-unknown-property.json|$: Additional properties are not allowed ('generated_at' was unexpected)
+c-index-invalid-expires-type.json|$.expires: 1796083200 is not of type 'string'
 
 config-invalid-missing-required.json|$: 'format_version' is a required property
 config-invalid-unknown-property.json|$: Additional properties are not allowed ('packages' was unexpected)
