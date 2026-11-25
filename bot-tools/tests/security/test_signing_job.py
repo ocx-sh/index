@@ -74,6 +74,34 @@ def test_sign_job_holds_no_secret_and_only_two_permissions() -> None:
     assert "cache: false" in code  # no cache restore into the job that holds the OIDC token
 
 
+def _steps(job: str) -> list[list[str]]:
+    """The job's steps, each as its code lines (comments dropped).
+
+    Hand-split on the `      - ` step marker: this suite is stdlib only and
+    `uv.lock` carries no YAML parser."""
+    steps: list[list[str]] = []
+    in_steps = False
+    for line in _code(job).splitlines():
+        if line == "    steps:":
+            in_steps = True
+        elif in_steps and line.startswith("      - "):
+            steps.append([line[8:]])
+        elif in_steps and steps and line.startswith("        "):
+            steps[-1].append(line[8:])
+    return steps
+
+
+def test_sign_job_pins_the_ocx_bootstrap_version() -> None:
+    # The one job holding the OIDC token must not float on the action's default ocx.
+    steps = _steps(_job("sign"))
+    assert steps, "found no steps in the sign job"
+    bootstraps = [s for s in steps if re.match(r"uses: ocx-sh/setup-ocx@", s[0])]
+    assert bootstraps, "the sign job has no setup-ocx step"
+    for step in bootstraps:
+        pinned = [ln for ln in step if re.fullmatch(r"  version: '?\d+\.\d+\.\d+'?", ln)]
+        assert pinned, f"setup-ocx in the sign job has no exact `version:` input: {step}"
+
+
 def test_sign_job_never_runs_on_a_pull_request() -> None:
     text = _text()
     on_block = _code(text.split("\npermissions:", 1)[0])
