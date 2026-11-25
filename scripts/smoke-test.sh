@@ -16,6 +16,12 @@ IFS=$'\n\t'
 #                    contribute to the exit code, --allow-empty or not.
 #   --root NS/PKG   Explicit sample package id to digest-chain-verify
 #                    (default: auto-discovered from the local p/ tree)
+#   --signed        Also check the catalog signature: c/index.json.sigstore.json
+#                    is served, and `ocx index update` under
+#                    index_signature = "enforce" passes against BASE_URL, with
+#                    the ocx build pinned in scripts/ocx-sign.pin (via
+#                    `ocx package exec`, so `ocx` must be on PATH). Needs a
+#                    discoverable root (the update target).
 #
 # Checks: config.json (200, ETag, Cache-Control cache-rule guard,
 # format_version), conditional GET (If-None-Match -> 304), c/index.json
@@ -77,6 +83,7 @@ REPO_ROOT=$(cd "${SCRIPT_DIR}/.." && pwd)
 
 BASE_URL="https://index.ocx.sh"
 ALLOW_EMPTY=0
+SIGNED=0
 ROOT_PKG=""
 CONFIG_ETAG=""
 C_INDEX_ETAG=""
@@ -87,10 +94,11 @@ OVERALL_EXIT=$EXIT_OK
 
 usage() {
   cat <<'EOF'
-Usage: smoke-test.sh [BASE_URL] [--allow-empty] [--root NS/PKG]
+Usage: smoke-test.sh [BASE_URL] [--allow-empty] [--signed] [--root NS/PKG]
 
   BASE_URL        Index base URL (default: https://index.ocx.sh)
   --allow-empty   Exit 0 when no /p/ root is discoverable (pre-seed state)
+  --signed        Check the served catalog signature and an enforce-mode update
   --root NS/PKG   Explicit sample package id to digest-chain-verify
                   (default: auto-discovered from the local p/ tree)
 EOF
@@ -440,6 +448,37 @@ check_docs() {
   fi
 }
 
+# The signature must be served next to the catalog, and a client that enforces
+# must accept the pair: the catalog and signature uploads are not atomic, so
+# this is what catches a new catalog left beside an old signature.
+check_signature() {
+  local body="${WORKDIR}/sig.body" headers="${WORKDIR}/sig.headers" status
+  status=$(fetch "${BASE_URL}/c/index.json.sigstore.json" "$body" "$headers")
+  if [[ "$status" != "200" ]]; then
+    fail "c/index.json.sigstore.json" "expected HTTP 200, got ${status}" "$EXIT_HTTP"
+    return
+  fi
+  pass "c/index.json.sigstore.json" "HTTP 200"
+
+  discover_root
+  if [[ -z "$ROOT_PKG" ]]; then
+    fail "enforce update" "no /p/ root to update against" "$EXIT_NO_ROOT"
+    return
+  fi
+  local pin registry home out
+  pin=$(grep -v -e '^[[:space:]]*#' -e '^[[:space:]]*$' "${SCRIPT_DIR}/ocx-sign.pin" | head -n1 || true)
+  registry=${SIGN_REGISTRY:-ocx.sh}
+  home="${WORKDIR}/ocx-home"
+  mkdir -p "$home"
+  printf '[registries."%s"]\nindex_signature = "enforce"\n' "$registry" >"${WORKDIR}/enforce.toml"
+  if out=$(OCX_HOME="$home" OCX_CONFIG="${WORKDIR}/enforce.toml" \
+    ocx package exec "$pin" -- ocx index update "${registry}/${ROOT_PKG}" 2>&1); then
+    pass "enforce update" "ocx index update ${registry}/${ROOT_PKG} under enforce"
+  else
+    fail "enforce update" "ocx index update under enforce failed: ${out##*$'\n'}" "$EXIT_SCHEMA"
+  fi
+}
+
 print_summary() {
   local r name status detail
   printf '\n%-40s %-6s %s\n' "CHECK" "STATUS" "DETAIL"
@@ -461,6 +500,10 @@ parse_args() {
     case "$1" in
       --allow-empty)
         ALLOW_EMPTY=1
+        shift
+        ;;
+      --signed)
+        SIGNED=1
         shift
         ;;
       --root)
@@ -518,6 +561,9 @@ main() {
   check_digest_chain
   check_catalog
   check_docs
+  if [[ "$SIGNED" -eq 1 ]]; then
+    check_signature
+  fi
 
   print_summary
   exit "$OVERALL_EXIT"

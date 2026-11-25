@@ -4,7 +4,10 @@
 // Files whose SHA-256 already matches are skipped. Order keeps the wire consistent for a client
 // reading mid-deploy: CAS objects first, then package roots, then c/index.json and config.json.
 //
+// c/index.json.sigstore.json goes last, directly after the catalog it signs.
+//
 // Usage: BUNNY_EDGE_STORAGE_KEY=... node scripts/bunny-upload.mjs [dist]
+//        node scripts/bunny-upload.mjs --list [dist]   # print "phase<TAB>path" in upload order; no key, no network
 // ponytail: no prune. Wire files are append-mostly (CAS is immutable, roots are overwritten); a removed
 // package's files stay until deleted by hand.
 import { createHash } from 'node:crypto';
@@ -14,10 +17,12 @@ import { join, relative } from 'node:path';
 const ZONE = 'sh-ocx-index-edge';
 const HOST = process.env.BUNNY_STORAGE_HOST || 'storage.bunnycdn.com';
 const KEY = process.env.BUNNY_EDGE_STORAGE_KEY;
-const DIST = process.argv[2] || 'dist';
+const args = process.argv.slice(2);
+const LIST = args[0] === '--list';
+const DIST = (LIST ? args[1] : args[0]) || 'dist';
 const PARALLEL = 16;
 
-if (!KEY) throw new Error('BUNNY_EDGE_STORAGE_KEY is empty');
+if (!KEY && !LIST) throw new Error('BUNNY_EDGE_STORAGE_KEY is empty');
 const api = (path) => `https://${HOST}/${ZONE}/${path}`;
 
 async function request(method, path, body) {
@@ -61,6 +66,7 @@ async function remoteChecksums(paths) {
 const isWire = (p) => p === 'config.json' || p.startsWith('c/') || p.startsWith('p/');
 
 function phase(p) {
+  if (p === 'c/index.json.sigstore.json') return 3;
   if (p === 'config.json' || p === 'c/index.json') return 2;
   return /^p\/[^/]+\/[^/]+\.json$/.test(p) ? 1 : 0;
 }
@@ -68,9 +74,14 @@ function phase(p) {
 const files = (await walk(DIST)).filter(isWire);
 if (!files.includes('config.json')) throw new Error(`${DIST}/config.json missing: run task render:build first`);
 
+if (LIST) {
+  for (const n of [0, 1, 2, 3]) for (const p of files.filter((f) => phase(f) === n).sort()) console.log(`${n}\t${p}`);
+  process.exit(0);
+}
+
 const remote = await remoteChecksums(files);
 let uploaded = 0;
-for (const n of [0, 1, 2]) {
+for (const n of [0, 1, 2, 3]) {
   const group = files.filter((p) => phase(p) === n);
   await pool(group, async (p) => {
     const body = await readFile(join(DIST, p));
