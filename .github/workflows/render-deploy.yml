@@ -40,8 +40,14 @@ on:
   # fork and holds no write access here. Any fix must work without granting it
   # any -- and the one above does: `deploy-on-merge` runs in THIS repository,
   # off base-authored YAML, and holds `actions: write` and nothing else.
+  #
+  # The second cron is the weekly RE-SIGN: the catalog carries `expires`
+  # (30 days) and an `enforce` client refuses an expired one, so a quiet main
+  # must still be re-signed. `guard` lets exactly that cron through with main
+  # unchanged; every `*/15` tick keeps the skip above.
   schedule:
     - cron: '*/15 * * * *'
+    - cron: '17 4 * * 1'
   workflow_dispatch:
 
 permissions: {}
@@ -78,11 +84,18 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
           EVENT: ${{ github.event_name }}
+          SCHEDULE: ${{ github.event.schedule }}
+          RESIGN_CRON: '17 4 * * 1'
           HEAD_SHA: ${{ github.sha }}
         run: |
           set -euo pipefail
           if [ "$EVENT" != "schedule" ]; then
             echo "$EVENT is an explicit deploy request -- not consulting run history."
+            echo "should_deploy=true" >>"$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [ "$SCHEDULE" = "$RESIGN_CRON" ]; then
+            echo "weekly re-sign tick -- deploying even though main has not moved."
             echo "should_deploy=true" >>"$GITHUB_OUTPUT"
             exit 0
           fi
@@ -97,12 +110,13 @@ jobs:
             echo "should_deploy=true" >>"$GITHUB_OUTPUT"
           fi
 
-  deploy:
-    name: deploy
+  # Renders and validates the wire tree. Holds no secret and no OIDC token:
+  # the Cloudflare secrets live in `deploy`, the OIDC token in `sign`.
+  render:
+    name: render
     needs: guard
     if: needs.guard.outputs.should_deploy == 'true'
     runs-on: ubuntu-latest
-    concurrency: deploy-pages
     permissions:
       contents: read
     steps:
@@ -147,6 +161,68 @@ jobs:
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: index-tree
+          path: dist
+          # dist is the rendered wire tree, never a secret; the sign job and
+          # nothing else reads it back.
+
+  # Signs dist/c/index.json (sets `expires`, writes c/index.json.sigstore.json)
+  # keylessly with this job's own GitHub OIDC identity. It is a job of its own
+  # so the OIDC token never shares a runner with the Cloudflare secrets
+  # (`deploy`) or the bot toolchain (`render`): it installs ocx, runs one
+  # script and uploads the result. `main` only: a pull request or a dispatch
+  # from another ref must never mint a certificate that matches the identity
+  # the clients pin (`...render-deploy.yml@refs/heads/main`). No cache: a
+  # restored cache would put attacker-reachable bytes in the signing job.
+  sign:
+    name: sign catalog
+    needs: [guard, render]
+    if: needs.guard.outputs.should_deploy == 'true' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: false
+      # Only bootstraps the ocx CLI; the signer is the dev build named in
+      # scripts/ocx-sign.pin, whose executable sign-catalog.sh
+      # resolves through `ocx package exec` and runs. `project: ""` skips ocx.toml auto-load.
+      - uses: ocx-sh/setup-ocx@25fa771f8572572dc64528db89560de68a163a0e # v1.4.0
+        with:
+          version: '0.6.6'
+          project: ""
+          cache: false
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: index-tree
+          path: dist
+      - name: Sign the catalog
+        run: scripts/sign-catalog.sh dist
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: index-tree-signed
+          path: dist
+
+  deploy:
+    name: deploy
+    needs: sign
+    runs-on: ubuntu-latest
+    concurrency: deploy-pages
+    permissions:
+      contents: read
+    steps:
+      # no-cache: this job publishes to Cloudflare Pages
+      # (cloudflare/wrangler-action) -- default action caching here would be
+      # a cache-poisoning vector into that publish step (zizmor
+      # cache-poisoning finding, high).
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+          package-manager-cache: false
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: index-tree-signed
           path: dist
 
       # Idempotent: fails harmlessly if the project already exists.
@@ -265,7 +341,7 @@ jobs:
   # Cloudflare Pages keeps deploying as the DNS rollback.
   deploy-index-bunny:
     name: deploy index.ocx.sh (Bunny edge)
-    needs: deploy
+    needs: [sign, deploy]
     runs-on: ubuntu-latest
     environment: ocx.sh
     concurrency:
@@ -283,7 +359,7 @@ jobs:
           package-manager-cache: false
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
-          name: index-tree
+          name: index-tree-signed
           path: dist
       - name: Upload changed files
         env:
@@ -304,5 +380,12 @@ jobs:
       # the digest-chain section tolerates a config.json-only deploy; every
       # other check (ETag, cache-rule, catalog, docs) still runs and still
       # contributes to the exit code.
+      # --signed: the served signature exists and `ocx index update` under
+      # index_signature = "enforce" passes with the pinned dev build -- the
+      # only check that catches a catalog left beside a stale signature.
+      - uses: ocx-sh/setup-ocx@25fa771f8572572dc64528db89560de68a163a0e # v1
+        with:
+          project: ""
+          cache: false
       - name: scripts/smoke-test.sh
-        run: scripts/smoke-test.sh https://index.ocx.sh --allow-empty
+        run: scripts/smoke-test.sh https://index.ocx.sh --allow-empty --signed

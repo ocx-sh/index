@@ -85,9 +85,16 @@ Schema: [`https://index.ocx.sh/schema/c-index.schema.json`](https://index.ocx.sh
   "packages": {
     "kitware/cmake": "sha256:9f2c...",
     "ocx/cli": "sha256:1a2b..."
-  }
+  },
+  "expires": "2026-12-01T00:00:00Z"
 }
 ```
+
+`expires` is optional: an RFC 3339 UTC timestamp after which a client MUST
+treat the catalog as stale. It sits inside the served bytes, so the
+signature covers it. A signed catalog is accompanied by a Sigstore bundle at
+`/c/index.json.sigstore.json`, a signature over the exact bytes of
+`/c/index.json`. The bundle has no schema of its own.
 
 `packages` is a map, sorted by key, from every published bare
 `<namespace>/<package>` name to a digest. The key is not a URL fragment on

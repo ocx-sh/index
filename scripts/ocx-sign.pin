@@ -1,0 +1,6 @@
+# The ocx build that signs and checks the index catalog: one package
+# reference, read by scripts/sign-catalog.sh and scripts/smoke-test.sh.
+# All-zero digest = pin not set; both scripts refuse it.
+# Swap for the digest of a dev build of ocx `main` (release.yml, dev mode)
+# before the signing PR merges, then for the released ocx.sh/ocx package.
+ghcr.io/ocx-sh/dev/cli@sha256:0000000000000000000000000000000000000000000000000000000000000000

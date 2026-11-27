@@ -1,0 +1,7 @@
+{
+  "format_version": 1,
+  "packages": {
+    "kitware/cmake": "sha256:d11fc63c8c76e19b1b8b507384a61c604fce20dd2db6a1b70738c1a5da3e00ad"
+  },
+  "expires": 1796083200
+}
